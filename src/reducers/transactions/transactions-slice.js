@@ -26,7 +26,8 @@ export const transactionsSlice = createSlice({
       category: [],
     },
     isLoading: false,
-    hasError: false
+    hasError: false,
+    showDeleteBtn: false
   },
   reducers: {
     setUserInput: (state, action) => {
@@ -67,6 +68,7 @@ export const transactionsSlice = createSlice({
           ...state.allTransactions,
           ...action.payload,
         ],
+        showDeleteBtn: false
       };
     },
     resetState: (state, action) => {
@@ -80,6 +82,7 @@ export const transactionsSlice = createSlice({
           account: [],
           category: [],
         },
+        showDeleteBtn: false
       };
     },
     deleteTransaction: (state, action) => {
@@ -88,6 +91,7 @@ export const transactionsSlice = createSlice({
       return {
         ...state,
         allTransactions: newTransactions,
+        showDeleteBtn: false
       };
     },
   },
@@ -103,6 +107,7 @@ export const transactionsSlice = createSlice({
       }
       state.isLoading = false;
       state.hasError = false;
+      state.showDeleteBtn = false;
     },
     [loadTransactions.rejected]: (state) => {
       state.isLoading = false;
@@ -115,6 +120,7 @@ export const selectAllTransactionsState = (state) => state.transactions.allTrans
 export const selectNewTransactionState = (state) => state.transactions.newTransaction;
 export const isLoading = (state) => state.transactions.isLoading;
 export const hasError = (state) => state.transactions.hasError;
+export const showDeleteBtn = (state) => state.transactions.showDeleteBtn;
 
 export const selectFilteredTransactions = (state) => {
   const allTransactions = selectAllTransactionsState(state);
@@ -132,6 +138,6 @@ export const {
   setTransactionId,
   addTransaction,
   resetState,
-  deleteTransaction
+  deleteTransaction,
 } = transactionsSlice.actions;
 export default transactionsSlice.reducer;

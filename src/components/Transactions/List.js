@@ -1,4 +1,4 @@
-import TransactionItem from "./Item";
+import TransactionItemContainer from "./ItemContainer";
 import {formatDate} from "../../utils/utils";
 
 function TransactionsList({transactions}) {
@@ -12,7 +12,7 @@ function TransactionsList({transactions}) {
           <div className="transactions-list__day">
             <p>{date}</p>
           </div>
-          <TransactionItem date={date} transactions={transactions} />
+          <TransactionItemContainer date={date} transactions={transactions} />
         </ul>
       ))}
     </section>

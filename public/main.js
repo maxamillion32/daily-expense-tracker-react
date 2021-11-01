@@ -29,23 +29,9 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (() => {
 
 window.onload = function () {
-var transactionItems = document.querySelectorAll(".transactions-list__item");
 var transactionAdd = document.querySelector(".transaction-add");
 var transactionAddButton = document.querySelector(".transaction-add__btn");
 var transactionSubmitButton = document.querySelector(".button");
-
-  transactionItems.forEach(function (item) {
-    var transactionEditButton = item.querySelector(".transactions-list__item--edit");
-    // var transactionCloseButton = item.querySelector(".transactions-list__item--close");
-
-    item.onmouseover = function () {
-      transactionEditButton.classList.remove("hidden");
-    };
-
-    item.onmouseout = function () {
-      transactionEditButton.classList.add("hidden");
-    };
-  });
 
   transactionAddButton.onclick = function () {
     if (transactionAdd.classList.contains("transaction-add__fade-in")) {
