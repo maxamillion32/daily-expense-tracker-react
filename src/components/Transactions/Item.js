@@ -1,9 +1,9 @@
 import {useDispatch} from 'react-redux';
-import {formatCommentDate} from "../../utils/utils";
+import {formatDate} from "../../utils/utils";
 import {deleteTransaction} from '../../reducers/transactions/transactions-slice';
 
 function TransactionsItem({date, transactions}) {
-  const dayTransactions = transactions.filter((transaction) => formatCommentDate(transaction.date) === date);
+  const dayTransactions = transactions.filter((transaction) => formatDate(transaction.date) === date);
   const dispatch = useDispatch();
 
   const onClickDeleteButton = ({target}) => {

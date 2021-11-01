@@ -1,9 +1,9 @@
 import TransactionItem from "./Item";
-import {formatCommentDate} from "../../utils/utils";
+import {formatDate} from "../../utils/utils";
 
 function TransactionsList({transactions}) {
   const dates = [...new Set(transactions
-    .map(date => formatCommentDate(date.date)))];
+    .map(date => formatDate(date.date)))];
   return (
     <section className="transactions-list">
       <h2>Transactions List</h2>
