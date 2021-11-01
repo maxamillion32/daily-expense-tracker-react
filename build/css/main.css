@@ -554,11 +554,11 @@ input[type="radio"].visually-hidden {
     display: none; }
   .transaction-add__fade-in {
     animation-iteration-count: 1;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
     animation-name: slidegdz; }
   .transaction-add__fade-out {
     animation-iteration-count: 1;
-    animation-duration: 1s;
+    animation-duration: 0.5s;
     animation-name: slidegdz1; }
 
 @keyframes slidegdz {

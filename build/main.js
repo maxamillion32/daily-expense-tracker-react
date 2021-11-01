@@ -54,7 +54,7 @@ var transactionSubmitButton = document.querySelector(".button");
       transactionAddButton.classList.toggle("transaction-add__btn--click");
       setTimeout(function () {
         return transactionAdd.classList.toggle("transaction-add__hidden");
-      }, 1000);
+      }, 500);
     } else {
       if (transactionAdd.classList.contains("transaction-add__fade-out")) {
         transactionAdd.classList.toggle("transaction-add__hidden");
@@ -72,7 +72,7 @@ var transactionSubmitButton = document.querySelector(".button");
       transactionAddButton.classList.toggle("transaction-add__btn--click");
       setTimeout(function () {
         return transactionAdd.classList.toggle("transaction-add__hidden");
-      }, 1000)
+      }, 500)
     }, 500)
   };
 };
