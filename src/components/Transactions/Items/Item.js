@@ -1,6 +1,6 @@
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {deleteTransaction} from '../../reducers/transactions/transactions-slice';
+import {deleteTransaction} from '../../../reducers/transactions/transactions-slice';
 
 function TransactionsItem({categoryTitle, accountTitle, outcome, sum, id}) {
   const dispatch = useDispatch();

@@ -1,7 +1,7 @@
-import {formatDate} from "../../utils/utils";
+import {formatDate} from "../../../utils/utils";
 import TransactionItem from "./Item";
 
-function TransactionsItemContainer({date, transactions}) {
+function TransactionsItemsContainer({date, transactions}) {
   const dayTransactions = transactions.filter((transaction) => formatDate(transaction.date) === date);
 
   return (
@@ -19,4 +19,4 @@ function TransactionsItemContainer({date, transactions}) {
   );
 }
 
-export default TransactionsItemContainer;
+export default TransactionsItemsContainer;
