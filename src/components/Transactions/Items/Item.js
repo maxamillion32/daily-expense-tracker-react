@@ -5,7 +5,7 @@ import {deleteTransaction} from '../../../reducers/transactions/transactions-sli
 function TransactionsItem({categoryTitle, accountTitle, outcome, sum, id}) {
   const dispatch = useDispatch();
 
-  let [showDeleteBtn, setShowDeleteBtn] = useState(false);
+  const [showDeleteBtn, setShowDeleteBtn] = useState(false);
 
   const onClickDeleteButton = ({target}) => {
     const id = target.id;

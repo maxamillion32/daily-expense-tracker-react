@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   setUserInput,
@@ -11,6 +12,9 @@ import {
 function TransactionCreateForm({categories, accounts}){
   const newTransactionState = useSelector(selectNewTransactionState);
   const dispatch = useDispatch();
+
+  const [onClickAddBtn, setOnClickAddBtn] = useState(false);
+  const [isHidden, setIsHidden] = useState(true);
 
   const {sum, date} = newTransactionState;
 
@@ -44,16 +48,42 @@ function TransactionCreateForm({categories, accounts}){
   const onClickSubmitButton = () => {
     dispatch(addTransaction([newTransactionState]));
     dispatch(resetState());
+    setOnClickAddBtn(false);
+
+    setTimeout(function () {
+      setIsHidden(true);
+    }, 500)
+  };
+
+  const onClickAddButton = () => {
+    const isAddBtnClick = (onClickAddBtn === true) ? false : true;
+    const hiddenToggle = (isHidden === true) ? false : true;
+
+    setOnClickAddBtn(isAddBtnClick);
+
+    if (hiddenToggle === false) {
+      setIsHidden(hiddenToggle);
+    } else {
+      setTimeout(function () {
+        setIsHidden(hiddenToggle);
+      }, 500)
+    }
   };
 
   return (
     <section className="transactions">
       <div className="transactions__title">
         <h2>Transactions</h2>
-        <p className="transaction-add__btn">Add</p>
+        <p
+          className={`transaction-add__btn ${onClickAddBtn ? "transaction-add__btn--click" : ""}`}
+          onClick={onClickAddButton}
+          >
+          Add
+        </p>
       </div>
       <div className="transactions__wrapper">
-        <div className="transaction-add transaction-add__hidden transaction-add__fade-out">
+        <div
+          className={`transaction-add ${isHidden ? "transaction-add__hidden" : ""} ${onClickAddBtn ? "transaction-add__fade-in" : "transaction-add__fade-out"}`}>
           <input
             type="number"
             name="sum"
