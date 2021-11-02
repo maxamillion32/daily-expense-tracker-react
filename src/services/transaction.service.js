@@ -1,8 +1,8 @@
-import mocks from "./mocks/mocks";
+import {transactions} from "./mocks/mocks";
 
 class TransactionDataService {
   constructor() {
-  const {transactions} = mocks;
+  // const {transactions} = mocks;
   this.transactions = transactions;
   }
   async getAll() {

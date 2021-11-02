@@ -1,12 +1,11 @@
-import mocks from "./mocks/mocks";
+import {accounts} from "./mocks/mocks";
 
 class AccountDataService {
   constructor() {
-  const {account} = mocks;
-  this.account = account;
+  this.accounts = accounts;
   }
   async getAll() {
-    const json = this.account;
+    const json = this.accounts;
     return json;
   }
 }

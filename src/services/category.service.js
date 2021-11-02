@@ -1,12 +1,11 @@
-import mocks from "./mocks/mocks";
+import {categories} from "./mocks/mocks";
 
 class CategoryDataService {
   constructor() {
-  const {category} = mocks;
-  this.category = category;
+  this.categories = categories;
   }
   async getAll() {
-    const json = this.category;
+    const json = this.categories;
     return json;
   }
 }

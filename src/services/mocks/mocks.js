@@ -1,4 +1,6 @@
-const category = [
+const {nanoid} = require(`nanoid`);
+
+export const categories = [
   {id: 1, title: `Salary`},
   {id: 2, title: `Rent`},
   {id: 3, title: `Groceries`},
@@ -9,65 +11,49 @@ const category = [
   {id: 8, title: `Health`},
 ];
 
-const account = [
+export const accounts = [
   {id: 1, title: `Cash`, balance: 2000, startBalance: 0, archive: false},
   {id: 2, title: `Postbank`, balance: 55000, startBalance: 0, archive: false},
   {id: 3, title: `N26`, balance: 550000, startBalance: 0, archive: false},
 ];
 
-const transactions = [
-  {
-    id: 1,
-    sum: 70,
-    date: `2021-11-02`,
-    outcome: true,
-    account: {id: 1, title: `N26`},
-    category: {id: 1, title: `Health`},
-  },
-  {
-    id: 2,
-    sum: 11.50,
-    date: `2021-11-02`,
-    outcome: true,
-    account: {id: 1, title: `Cash`},
-    category: {id: 1, title: `Coffee`},
-  },
-  {
-    id: 3,
-    sum: 350,
-    date: `2021-11-02`,
-    outcome: true,
-    account: {id: 1, title: `Postbank`},
-    category: {id: 1, title: `Clothing & shoes`},
-  },
-  {
-    id: 4,
-    sum: 120,
-    date: `2021-11-01`,
-    outcome: true,
-    account: {id: 1, title: `N26`},
-    category: {id: 1, title: `Groceries`},
-  },
-  {
-    id: 5,
-    sum: 3500,
-    date: `2021-11-01`,
-    outcome: false,
-    account: {id: 1, title: `N26`},
-    category: {id: 1, title: `Salary`},
-  },
-  {
-    id: 5,
-    sum: 47.3,
-    date: `2021-11-03`,
-    outcome: true,
-    account: {id: 1, title: `N26`},
-    category: {id: 1, title: `Family`},
-  },
-];
-
-module.exports = {
-  category,
-  account,
-  transactions,
+const getRandomInt = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
+
+const getRandomSubarray = (items) => {
+  items = items.slice();
+  let count = 1;
+  const result = [];
+  while (count--) {
+    result.push(
+        ...items.splice(
+            getRandomInt(0, items.length - 1), 1)
+    );
+  }
+  return result[0];
+};
+
+const getRandomDate = () => {
+  const startPoint = new Date().getTime();
+  const endPoint = startPoint - new Date(90 * (24 * 3600 * 1000)).getTime();
+  const date = new Date(endPoint + Math.random() * (startPoint - endPoint));
+
+  return date.toISOString().slice(0, -14);
+};
+
+const MAX_ID_LENGTH = 6;
+
+const generateTransactions = (count, accounts, categories) => (Array(count).fill({}).map(() => ({
+    id: nanoid(MAX_ID_LENGTH),
+    sum: getRandomInt(1, 500),
+    date: getRandomDate(),
+    outcome: Boolean(Math.round(Math.random())),
+    account: getRandomSubarray(accounts),
+    category: getRandomSubarray(categories),
+  }))
+);
+
+export const transactions = generateTransactions(20, accounts, categories);
