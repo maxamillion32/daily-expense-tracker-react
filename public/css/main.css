@@ -372,7 +372,8 @@ input[type="radio"].visually-hidden {
 .page-main {
   box-sizing: border-box;
   padding: 20px 20px;
-  background-color: #fff; }
+  background-color: #fff;
+  min-height: 100vh; }
   .page-main input, .page-main select {
     box-sizing: border-box;
     width: 100%;

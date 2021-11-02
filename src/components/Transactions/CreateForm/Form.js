@@ -104,7 +104,8 @@ function TransactionCreateForm({categories, accounts}){
                   key={category.id}
                   value={category.title}
                   selected={category.id ===  newTransactionState.category.id ? true: false}
-                >{category.title}
+                >
+                {category.title}
                 </option>
               ))}
           </select>
@@ -121,7 +122,8 @@ function TransactionCreateForm({categories, accounts}){
                   key={account.id}
                   value={account.title}
                   selected={account.id ===  newTransactionState.account.id ? true: false}
-                >{account.title}
+                >
+                {account.title}
                 </option>
               ))}
           </select>
