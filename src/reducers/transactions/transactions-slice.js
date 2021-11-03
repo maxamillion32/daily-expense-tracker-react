@@ -84,7 +84,7 @@ export const transactionsSlice = createSlice({
     },
     deleteTransaction: (state, action) => {
       const id = action.payload;
-      const newTransactions = state.allTransactions.filter(transaction => transaction.id !== +id)
+      const newTransactions = state.allTransactions.filter(transaction => transaction.id !== id)
       return {
         ...state,
         allTransactions: newTransactions,

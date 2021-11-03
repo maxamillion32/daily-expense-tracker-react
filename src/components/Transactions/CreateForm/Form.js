@@ -90,7 +90,7 @@ function TransactionCreateForm({categories, accounts}){
             <input
               type="number"
               name="sum"
-              placeholder="Enter an amount"
+              placeholder="0.00"
               value={sum}
               onChange={onChangeUserInput}
               required

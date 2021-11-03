@@ -9,6 +9,7 @@ function TransactionsItem({categoryTitle, accountTitle, outcome, sum, id}) {
 
   const onClickDeleteButton = ({target}) => {
     const id = target.id;
+    console.log(`🚀 ~ file: Item.js ~ line 12 ~ onClickDeleteButton ~ id`, id);
     dispatch(deleteTransaction(id));
   };
 
