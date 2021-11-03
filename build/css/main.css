@@ -439,6 +439,12 @@ input[type="radio"].visually-hidden {
   font-size: 16px;
   font-weight: 700; }
 
+.transactions-list__list {
+  margin-bottom: 10px;
+  padding-left: 10px;
+  border: 1px solid #e1e1e1;
+  border-radius: 5px; }
+
 .transactions-list__day {
   display: flex;
   justify-content: space-between;
@@ -464,7 +470,8 @@ input[type="radio"].visually-hidden {
     color: #727272;
     cursor: pointer; }
   .transactions-list__item:hover {
-    background-color: #f1f1f1;
+    /* background-color: #f1f1f1; */
+    cursor: pointer;
     border-radius: 5px; }
   .transactions-list__item--on-click {
     background-color: #f1f1f1;
