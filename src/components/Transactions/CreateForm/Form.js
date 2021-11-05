@@ -58,8 +58,8 @@ function TransactionCreateForm({categories, accounts}){
   };
 
   const onClickAddButton = () => {
-    const isAddBtnClick = (onClickAddBtn === true) ? false : true;
-    const hiddenToggle = (isHidden === true) ? false : true;
+    const isAddBtnClick = !onClickAddBtn;
+    const hiddenToggle = !isHidden;
 
     setOnClickAddBtn(isAddBtnClick);
 

@@ -32,7 +32,7 @@ export const transactionsSlice = createSlice({
     setUserInput: (state, action) => {
       let {name, value} = action.payload;
       if (name === `outcome`) {
-        value = (state.newTransaction.outcome === true) ? false : true;
+        value = !state.newTransaction.outcome;
       }
       return {
         ...state,
