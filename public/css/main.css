@@ -371,7 +371,7 @@ input[type="radio"].visually-hidden {
 
 .page-main {
   box-sizing: border-box;
-  padding: 20px 20px;
+  padding: 20px 0;
   background-color: #fff;
   min-height: 100vh; }
   .page-main input, .page-main select {
@@ -384,6 +384,7 @@ input[type="radio"].visually-hidden {
 
 .search {
   position: relative;
+  margin: 0 10px;
   margin-bottom: 20px;
   border: 1px solid #a7a7a7;
   border-radius: 5px; }
@@ -418,67 +419,157 @@ input[type="radio"].visually-hidden {
       .search__close-btn:hover:before, .search__close-btn:hover:after, .search__close-btn:focus:before, .search__close-btn:focus:after {
         background: #000000; }
 
-.transactions {
+.transaction {
+  padding: 0 10px;
   padding-bottom: 20px; }
-  .transactions__wrapper {
+  .transaction__dialog-wrapper {
     overflow: hidden; }
-  .transactions__title {
+  .transaction__title {
     display: flex;
     justify-content: space-between; }
-    .transactions__title p {
+    .transaction__title p {
       padding: 0 17px 0 0; }
-  .transactions__title h2 {
+  .transaction__title h2 {
     font-size: 16px;
     font-weight: 700; }
-  .transactions__on-click {
+  .transaction__on-click {
     font-weight: 700;
     background-color: #f1f1f1; }
+  .transaction__dialog {
+    padding: 15px 15px;
+    background-color: #f1f1f1;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px; }
+  .transaction input, .transaction select {
+    margin: 5px 0; }
+  .transaction__dialog-type-wrapper {
+    display: flex;
+    justify-content: flex-end;
+    padding: 5px 0; }
+  .transaction__delete-btn {
+    margin-right: auto;
+    color: red;
+    background-color: transparent;
+    border: none; }
+  .transaction__dialog-type {
+    display: flex;
+    align-items: center; }
+    .transaction__dialog-type input {
+      display: inline-block;
+      width: 15px;
+      height: 15px;
+      margin: 0;
+      margin-right: 5px;
+      cursor: pointer; }
+    .transaction__dialog-type label {
+      cursor: pointer; }
+  .transaction__dialog-btn {
+    color: black;
+    padding-top: 1.8em;
+    display: inline-block;
+    /* or block */
+    position: relative;
+    border-color: black;
+    text-decoration: none;
+    cursor: pointer;
+    transition: all .3s ease-out; }
+    .transaction__dialog-btn::before {
+      content: '▲';
+      position: absolute;
+      top: 0;
+      right: 0;
+      margin-left: -.7em;
+      transition: transform .5s ease-in; }
+    .transaction__dialog-btn:hover:before {
+      transform: rotate(180deg); }
+    .transaction__dialog-btn--click::before {
+      transform: rotate(180deg); }
+  .transaction__dialog--hidden {
+    display: none; }
+  .transaction__dialog--fade-in {
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-name: slidegdz; }
+  .transaction__dialog--fade-out {
+    animation-iteration-count: 1;
+    animation-duration: 1s;
+    animation-name: slidegdz1; }
 
-.transactions-list h2 {
-  margin-bottom: 5px;
+@keyframes slidegdz {
+  0% {
+    transform: translate(0, -100%); }
+  100% {
+    transform: translate(0, 0); } }
+
+@keyframes slidegdz1 {
+  0% {
+    transform: translate(0, 0); }
+  100% {
+    transform: translate(0, -100%); } }
+
+.transactions h2 {
+  margin-bottom: 15px;
   font-size: 16px;
-  font-weight: 700; }
+  font-weight: 700;
+  text-align: center; }
 
-.transactions-list__list {
-  margin-bottom: 10px;
-  padding-left: 10px;
-  border: 1px solid #e1e1e1;
-  border-radius: 5px; }
-
-.transactions-list__day {
+.transactions__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 30px;
-  font-weight: 700;
-  font-size: 12px;
-  border-radius: 5px; }
+  padding: 10px 15px;
+  border-bottom: 1px dashed #d4d4d4; }
+  .transactions__header > p {
+    font-weight: 700; }
 
-.transactions-list__item {
+.transactions__date-content {
+  display: flex;
+  align-items: center; }
+  .transactions__date-content p {
+    font-size: 30px;
+    margin-right: 15px; }
+
+.transactions__date-wrapper {
+  line-height: 14px; }
+  .transactions__date-wrapper p {
+    font-size: 12px;
+    color: #727272; }
+
+.transactions__item {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 50px;
-  padding: 0 15px; }
-  .transactions-list__item--account {
+  padding: 10px 15px;
+  padding-left: 65px; }
+  .transactions__item::before {
+    content: '';
+    position: absolute;
+    left: 15px;
+    display: block;
+    width: 35px;
+    height: 35px;
+    background-color: #f1f1f1;
+    border-radius: 20%; }
+  .transactions__item--account {
     color: #727272;
     cursor: pointer; }
-  .transactions-list__item--edit {
+  .transactions__item--edit {
     color: #727272;
     cursor: pointer; }
-  .transactions-list__item--close {
+  .transactions__item--close {
     color: #727272;
     cursor: pointer; }
-  .transactions-list__item:hover {
-    /* background-color: #f1f1f1; */
-    cursor: pointer;
+  .transactions__item:hover {
+    background-color: #f1f1f1;
     border-radius: 5px; }
-  .transactions-list__item--on-click {
+  .transactions__item--on-click {
     background-color: #f1f1f1;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px; }
 
-.transactions-list__item-wrapper {
+.transactions__item-wrapper {
   display: flex;
   justify-content: space-between;
   align-items: center; }
@@ -509,78 +600,6 @@ input[type="radio"].visually-hidden {
       margin: 0;
       margin-right: 5px; }
 
-.transaction-add {
-  padding: 15px 15px;
-  background-color: #f1f1f1;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px; }
-  .transaction-add input, .transaction-add select {
-    margin: 5px 0; }
-  .transaction-add__wrapper {
-    display: flex;
-    justify-content: flex-end;
-    padding: 5px 0; }
-  .transaction-add__delete-btn {
-    margin-right: auto;
-    color: red;
-    background-color: transparent;
-    border: none; }
-  .transaction-add__type {
-    display: flex;
-    align-items: center; }
-    .transaction-add__type input {
-      display: inline-block;
-      width: 15px;
-      height: 15px;
-      margin: 0;
-      margin-right: 5px;
-      cursor: pointer; }
-    .transaction-add__type label {
-      cursor: pointer; }
-  .transaction-add__btn {
-    color: black;
-    padding-top: 1.8em;
-    display: inline-block;
-    /* or block */
-    position: relative;
-    border-color: black;
-    text-decoration: none;
-    cursor: pointer;
-    transition: all .3s ease-out; }
-    .transaction-add__btn::before {
-      content: '▲';
-      position: absolute;
-      top: 0;
-      right: 0;
-      margin-left: -.7em;
-      transition: transform .5s ease-in; }
-    .transaction-add__btn:hover:before {
-      transform: rotate(180deg); }
-    .transaction-add__btn--click::before {
-      transform: rotate(180deg); }
-  .transaction-add__hidden {
-    display: none; }
-  .transaction-add__fade-in {
-    animation-iteration-count: 1;
-    animation-duration: 0.5s;
-    animation-name: slidegdz; }
-  .transaction-add__fade-out {
-    animation-iteration-count: 1;
-    animation-duration: 0.5s;
-    animation-name: slidegdz1; }
-
-@keyframes slidegdz {
-  0% {
-    transform: translate(0, -100%); }
-  100% {
-    transform: translate(0, 0); } }
-
-@keyframes slidegdz1 {
-  0% {
-    transform: translate(0, 0); }
-  100% {
-    transform: translate(0, -100%); } }
-
 .button {
   width: 100%;
   height: 35px;
@@ -597,7 +616,8 @@ input[type="radio"].visually-hidden {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px; }
+  margin-bottom: 20px;
+  padding: 0 10px; }
   .balance__container {
     display: flex;
     flex-direction: column;

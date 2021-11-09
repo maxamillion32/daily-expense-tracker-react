@@ -1,8 +1,8 @@
-import {formatDate} from "../../../utils/utils";
+// import {formatDate} from "../../../utils/utils";
 import TransactionItem from "./Item";
 
 function TransactionsItemsContainer({date, transactions}) {
-  const dayTransactions = transactions.filter((transaction) => formatDate(transaction.date) === date);
+  const dayTransactions = transactions.filter((transaction) => transaction.date === date);
 
   return (
     dayTransactions.map((transaction, index) => (

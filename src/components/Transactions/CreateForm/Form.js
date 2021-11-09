@@ -73,20 +73,20 @@ function TransactionCreateForm({categories, accounts}){
   };
 
   return (
-    <section className="transactions">
-      <div className="transactions__title">
+    <section className="transaction">
+      <div className="transaction__title">
         <h2>Transactions</h2>
         <p
-          className={`transaction-add__btn ${onClickAddBtn ? "transaction-add__btn--click" : ""}`}
+          className={`transaction__dialog-btn ${onClickAddBtn ? "transaction__dialog-btn--click" : ""}`}
           onClick={onClickAddButton}
           >
           Add
         </p>
       </div>
-      <div className="transactions__wrapper">
+      <div className="transaction__dialog-wrapper">
         <form onSubmit={onClickSubmitButton}>
           <div
-            className={`transaction-add ${isHidden ? "transaction-add__hidden" : ""} ${onClickAddBtn ? "transaction-add__fade-in" : "transaction-add__fade-out"}`}>
+            className={`transaction__dialog ${isHidden ? "transaction__dialog--hidden" : ""} ${onClickAddBtn ? "transaction__dialog--fade-in" : "transaction__dialog--fade-out"}`}>
             <input
               type="number"
               name="sum"
@@ -142,8 +142,8 @@ function TransactionCreateForm({categories, accounts}){
               required
               />
 
-            <div className="transaction-add__wrapper">
-              <div className="transaction-add__type">
+            <div className="transaction__dialog-wrapper">
+              <div className="transaction__dialog-type">
                 <input
                   type="checkbox"
                   id="type"

@@ -19,18 +19,18 @@ function TransactionsItem({categoryTitle, accountTitle, outcome, sum, id}) {
 
   return (
     <li
-      className="transactions-list__item"
+      className="transactions__item"
       onMouseOver={handleDeleteButtonToggle}
       onMouseOut={handleDeleteButtonToggle}
       >
-      <div className="transactions-list__item-wrapper">
+      <div className="transactions__item-wrapper">
         <p>{categoryTitle}</p>
-        <p className="transactions-list__item--expense">{outcome ? `- ` : `+ `}{sum} €</p>
+        <p className="transactions__item--expense">{outcome ? `-` : `+`}{sum} €</p>
       </div>
-      <div className="transactions-list__item-wrapper">
-        <p className="transactions-list__item--account">{accountTitle}</p>
+      <div className="transactions__item-wrapper">
+        <p className="transactions__item--account">{accountTitle}</p>
         <p
-          className={`transactions-list__item--edit ${showDeleteBtn ? "" : "hidden"}`}
+          className={`transactions__item--edit ${showDeleteBtn ? "" : "hidden"}`}
           id={id}
           onClick={onClickDeleteButton}
           >

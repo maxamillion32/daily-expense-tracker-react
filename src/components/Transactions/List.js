@@ -1,17 +1,16 @@
 import TransactionItemsContainer from "./Items/ItemsContainer";
-import {formatDate} from "../../utils/utils";
+import TransactionsItemHeader from "./Items/ItemHeader";
+// import {formatDate} from "../../utils/utils";
 
 function TransactionsList({transactions}) {
   const dates = [...new Set(transactions
-    .map(date => formatDate(date.date)))];
+    .map(date => date.date))];
   return (
-    <section className="transactions-list">
-      <h2>Transactions List</h2>
+    <section className="transactions">
+      {/* <h2>Transactions List</h2> */}
       {dates.map((date, index) => (
-        <ul className="transactions-list__list" key={index}>
-          <div className="transactions-list__day">
-            <p>{date}</p>
-          </div>
+        <ul className="transactions__list" key={index}>
+          <TransactionsItemHeader date={date} transactions={transactions} />
           <TransactionItemsContainer date={date} transactions={transactions} />
         </ul>
       ))}
