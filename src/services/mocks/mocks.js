@@ -1,4 +1,4 @@
-const {nanoid} = require(`nanoid`);
+import {nanoid} from 'nanoid';
 
 export const categories = [
   {id: 1, title: `Salary`},

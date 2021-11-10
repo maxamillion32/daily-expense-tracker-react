@@ -1,8 +1,9 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-
+import {nanoid} from 'nanoid';
 import TransactionDataService from '../../services/transaction.service';
 import {selectSearchTerm} from '../search/search-slice';
 
+const MAX_ID_LENGTH = 6;
 
 export const loadTransactions = createAsyncThunk(
   'transactions/loadData',
@@ -18,7 +19,7 @@ export const transactionsSlice = createSlice({
   initialState: {
     allTransactions: [],
     newTransaction: {
-      id: new Date().getTime(),
+      id: nanoid(MAX_ID_LENGTH),
       sum: ``,
       date: new Date().toISOString().slice(0, -14),
       outcome: true,
@@ -33,6 +34,9 @@ export const transactionsSlice = createSlice({
       let {name, value} = action.payload;
       if (name === `outcome`) {
         value = !state.newTransaction.outcome;
+      }
+      if (name === `sum`) {
+        value = +value;
       }
       return {
         ...state,

@@ -9,9 +9,9 @@ function TransactionsItemHeader({date, transactions}) {
 
   return (
     <div className="transactions__header">
-      <div class="transactions__date-content">
+      <div className="transactions__date-content">
           <p>{formatDay(currentDate)}</p>
-          <div class="transactions__date-wrapper">
+          <div className="transactions__date-wrapper">
             <p>{formatWeekday(currentDate)}</p>
             <p>{formatMonth(currentDate)}</p>
           </div>
