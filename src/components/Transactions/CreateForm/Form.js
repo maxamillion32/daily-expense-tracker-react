@@ -14,8 +14,6 @@ function TransactionCreateForm({categories, accounts}){
   const dispatch = useDispatch();
 
   const [onClickAddBtn, setOnClickAddBtn] = useState(false);
-  const [isHidden, setIsHidden] = useState(true);
-
   const {sum, date} = newTransactionState;
 
   const onChangeUserInput = ({target}) => {
@@ -51,25 +49,12 @@ function TransactionCreateForm({categories, accounts}){
     dispatch(addTransaction([newTransactionState]));
     dispatch(resetState());
     setOnClickAddBtn(false);
-
-    setTimeout(function () {
-      setIsHidden(true);
-    }, 500)
   };
 
   const onClickAddButton = () => {
     const isAddBtnClick = !onClickAddBtn;
-    const hiddenToggle = !isHidden;
 
     setOnClickAddBtn(isAddBtnClick);
-
-    if (hiddenToggle === false) {
-      setIsHidden(hiddenToggle);
-    } else {
-      setTimeout(function () {
-        setIsHidden(hiddenToggle);
-      }, 500)
-    }
   };
 
   return (
@@ -86,7 +71,7 @@ function TransactionCreateForm({categories, accounts}){
       <div className="transaction__dialog-wrapper">
         <form onSubmit={onClickSubmitButton}>
           <div
-            className={`transaction__dialog ${isHidden ? "transaction__dialog--hidden" : ""} ${onClickAddBtn ? "transaction__dialog--fade-in" : "transaction__dialog--fade-out"}`}>
+            className={`transaction__dialog ${onClickAddBtn ? "transaction__dialog--fade-in" : "transaction__dialog--fade-out"}`}>
             <input
               type="number"
               name="sum"

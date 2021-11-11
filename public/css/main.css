@@ -436,11 +436,13 @@ input[type="radio"].visually-hidden {
     font-weight: 700;
     background-color: #f1f1f1; }
   .transaction__dialog {
-    padding: 15px 15px;
+    max-height: 0;
+    padding: 0;
+    box-sizing: border-box;
+    transition: max-height .5s, padding .5s;
     background-color: #f1f1f1;
     border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    height: 100%; }
+    border-bottom-right-radius: 5px; }
   .transaction input, .transaction select {
     margin: 5px 0; }
   .transaction__dialog-type-wrapper {
@@ -489,29 +491,30 @@ input[type="radio"].visually-hidden {
   .transaction__dialog--hidden {
     display: none; }
   .transaction__dialog--fade-in {
-    animation-iteration-count: 1;
-    animation-duration: .5s;
-    animation-name: slide-fade-in; }
+    padding: 15px 15px;
+    max-height: 287px;
+    padding: 15px 15px;
+    transition: max-height .3s, padding .3s; }
   .transaction__dialog--fade-out {
-    animation-iteration-count: 1;
-    animation-duration: .5s;
-    animation-name: slide-fade-out; }
+    max-height: 0;
+    padding: 0;
+    transition: max-height .3s, padding .3s; }
 
 @keyframes slide-fade-in {
   0% {
     height: 0;
     opacity: .2; }
   100% {
-    height: 255px;
+    height: 287px;
     opacity: 1; } }
 
 @keyframes slide-fade-out {
   0% {
-    height: 255px;
+    height: 287px;
     opacity: 1; }
   100% {
-    height: 0;
-    opacity: 0; } }
+    height: 0px;
+    opacity: .2; } }
 
 .transactions h2 {
   margin-bottom: 15px;
