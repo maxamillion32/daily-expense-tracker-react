@@ -26,7 +26,7 @@ body {
   background-color: #e5e5e5; }
 
 .container {
-  width: 380px;
+  max-width: 440px;
   margin: 0 auto;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.25); }
 
@@ -384,7 +384,7 @@ input[type="radio"].visually-hidden {
 
 .search {
   position: relative;
-  margin: 0 10px;
+  margin: 0 20px;
   margin-bottom: 20px;
   border: 1px solid #a7a7a7;
   border-radius: 5px; }
@@ -420,7 +420,7 @@ input[type="radio"].visually-hidden {
         background: #000000; }
 
 .transaction {
-  padding: 0 10px;
+  padding: 0 20px;
   padding-bottom: 20px; }
   .transaction__dialog-wrapper {
     overflow: hidden; }
@@ -454,7 +454,8 @@ input[type="radio"].visually-hidden {
     border: none; }
   .transaction__dialog-type {
     display: flex;
-    align-items: center; }
+    align-items: center;
+    justify-content: end; }
     .transaction__dialog-type input {
       display: inline-block;
       width: 15px;
@@ -522,7 +523,7 @@ input[type="radio"].visually-hidden {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px 15px;
+  padding: 10px 20px;
   border-bottom: 1px dashed #d4d4d4; }
   .transactions__header > p {
     font-weight: 700; }
@@ -546,12 +547,12 @@ input[type="radio"].visually-hidden {
   flex-direction: column;
   justify-content: center;
   height: 50px;
-  padding: 10px 15px;
-  padding-left: 65px; }
+  padding: 10px 20px;
+  padding-left: 70px; }
   .transactions__item::before {
     content: '';
     position: absolute;
-    left: 15px;
+    left: 20px;
     display: block;
     width: 35px;
     height: 35px;
@@ -567,8 +568,7 @@ input[type="radio"].visually-hidden {
     color: #727272;
     cursor: pointer; }
   .transactions__item:hover {
-    background-color: #f1f1f1;
-    border-radius: 5px; }
+    background-color: #f1f1f1; }
   .transactions__item--on-click {
     background-color: #f1f1f1;
     border-top-right-radius: 5px;
@@ -622,7 +622,7 @@ input[type="radio"].visually-hidden {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
-  padding: 0 10px; }
+  padding: 0 20px; }
   .balance__container {
     display: flex;
     flex-direction: column;
