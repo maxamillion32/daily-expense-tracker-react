@@ -4,7 +4,7 @@
   box-sizing: border-box;
   margin: 0 auto;
   padding: 20px 20px;
-  background-color: #eee;
+  background-color: #f1f1f1;
 }
 
 .wrapper {
@@ -43,5 +43,7 @@
 }
 
 .hidden {
-  display: none;
+  transform: translateY(-210px) translateX(15px)rotate(45deg);
+  background-color: transparent;
+  transition: transform .22s ease-in;
 }
