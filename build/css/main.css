@@ -371,7 +371,7 @@ input[type="radio"].visually-hidden {
 
 .page-main {
   box-sizing: border-box;
-  padding: 20px 0;
+  padding: 20px 0 0 0;
   background-color: #fff;
   min-height: 100vh; }
   .page-main input, .page-main select {
@@ -420,8 +420,7 @@ input[type="radio"].visually-hidden {
         background: #000000; }
 
 .transaction {
-  padding: 0 20px;
-  padding-bottom: 20px; }
+  padding: 0 20px; }
   .transaction__dialog-wrapper {
     overflow: hidden; }
   .transaction__title {

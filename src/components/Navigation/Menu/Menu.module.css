@@ -1,0 +1,48 @@
+.menu {
+  position: sticky;
+  bottom: 0;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 20px 20px;
+  background-color: #eee;
+}
+
+.wrapper {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+}
+
+.active {
+  font-weight: 700;
+}
+
+.menuAddBtn {
+  position: fixed;
+  bottom: 75px;
+  right: 50%;
+  z-index: 100;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  background-color: #eee;
+  border-radius: 25px;
+  margin-right: -200px;
+
+  font-size: 20px;
+  cursor: pointer;
+  color: #000;
+
+  transition: opacity, left .22s ease-in;
+}
+
+.menuAddBtn:hover {
+  opacity: .7;
+}
+
+.hidden {
+  display: none;
+}

@@ -6,9 +6,9 @@ import {loadCategories, selectAllCategoriesState} from './reducers/categories/ca
 import {loadAccounts, selectAllAccountsState} from './reducers/accounts/accounts-slice'
 
 import Search from './components/Search/Search';
-import TransactionCreateForm from './components/Transactions/CreateForm/Form';
 import Balance from './components/Balance/Balance';
 import TransactionsList from './components/Transactions/List';
+import Menu from './components/Navigation/Menu/Menu';
 
 function App() {
   const allTransactions = useSelector(selectAllTransactionsState);
@@ -27,12 +27,12 @@ function App() {
     <div className="container">
       <main className="page-main">
         <Search />
-        <TransactionCreateForm
-          categories={allCategories}
-          accounts={allAccounts}
-          />
         <Balance transactions={allTransactions} />
         <TransactionsList transactions={filteredTransactions} />
+        <Menu
+          categories={allCategories}
+          accounts={allAccounts}
+        />
       </main>
     </div>
   );

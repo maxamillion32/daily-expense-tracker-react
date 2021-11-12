@@ -1,4 +1,4 @@
-import {useState} from 'react';
+// import {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   setUserInput,
@@ -9,11 +9,11 @@ import {
   resetState
 } from '../../../reducers/transactions/transactions-slice';
 
-function TransactionCreateForm({categories, accounts}){
+function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickAddBtn}){
   const newTransactionState = useSelector(selectNewTransactionState);
   const dispatch = useDispatch();
 
-  const [onClickAddBtn, setOnClickAddBtn] = useState(false);
+  // const [onClickAddBtn, setOnClickAddBtn] = useState(false);
   const {sum, date} = newTransactionState;
 
   const onChangeUserInput = ({target}) => {
@@ -51,15 +51,15 @@ function TransactionCreateForm({categories, accounts}){
     setOnClickAddBtn(false);
   };
 
-  const onClickAddButton = () => {
-    const isAddBtnClick = !onClickAddBtn;
+  // const onClickAddButton = () => {
+  //   const isAddBtnClick = !onClickAddBtn;
 
-    setOnClickAddBtn(isAddBtnClick);
-  };
+  //   setOnClickAddBtn(isAddBtnClick);
+  // };
 
   return (
     <section className="transaction">
-      <div className="transaction__title">
+      {/* <div className="transaction__title">
         <h2>Transactions</h2>
         <p
           className={`transaction__dialog-btn ${onClickAddBtn ? "transaction__dialog-btn--click" : ""}`}
@@ -67,7 +67,7 @@ function TransactionCreateForm({categories, accounts}){
           >
           Add
         </p>
-      </div>
+      </div> */}
       <div className="transaction__dialog-wrapper">
         <form onSubmit={onClickSubmitButton}>
           <div
