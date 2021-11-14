@@ -1,6 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
+import {NavLink} from 'react-router-dom';
 
 import classes from './Menu.module.css';
 import Form from '../../Transactions/CreateForm/Form'
@@ -24,6 +25,8 @@ function Menu({categories, accounts}) {
     }
   };
 
+  const isActiveLink = ({isActive}) => (isActive ? `${classes.active}` : '');
+
   return (
     <nav className={classes.menu}>
       <Form
@@ -37,9 +40,26 @@ function Menu({categories, accounts}) {
           className={classesAddBtn}
           onClick={onClickAddButton}
         />
-        <p className={classes.active}>Transactions</p>
-        <p>Budget</p>
-        <p>Settings</p>
+        <NavLink
+            to={'/'}
+            className={isActiveLink}
+        >
+          Transactions
+        </NavLink>
+
+        <NavLink
+            to={'/budget'}
+            className={isActiveLink}
+        >
+          Budget
+        </NavLink>
+
+        <NavLink
+            to={'/settings'}
+            className={isActiveLink}
+        >
+          Settings
+        </NavLink>
       </div>
     </nav>
   )

@@ -370,6 +370,9 @@ input[type="radio"].visually-hidden {
   overflow: hidden; }
 
 .page-main {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   box-sizing: border-box;
   padding: 20px 0 0 0;
   background-color: #fff;

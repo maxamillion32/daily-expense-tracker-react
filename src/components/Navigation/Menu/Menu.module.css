@@ -13,16 +13,17 @@
     justify-content: space-between;
 }
 
-.wrapper p {
+.wrapper a {
   width: 30%;
   text-align: center;
+  color: #000;
 }
 
-.wrapper p:first-of-type {
+.wrapper a:first-of-type {
   text-align: start;
 }
 
-.wrapper p:last-of-type {
+.wrapper a:last-of-type {
   text-align: end;
 }
 
