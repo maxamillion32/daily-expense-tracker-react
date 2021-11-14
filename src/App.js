@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import Layout from '../src/hoc/Layout/Layout'
 
 import {loadTransactions, selectFilteredTransactions, selectAllTransactionsState} from './reducers/transactions/transactions-slice'
 import {loadCategories, selectAllCategoriesState} from './reducers/categories/categories-slice'
@@ -24,17 +25,15 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div className="container">
-      <main className="page-main">
-        <Search />
-        <Balance transactions={allTransactions} />
-        <TransactionsList transactions={filteredTransactions} />
-        <Menu
-          categories={allCategories}
-          accounts={allAccounts}
-        />
-      </main>
-    </div>
+    <Layout>
+      <Search />
+      <Balance transactions={allTransactions} />
+      <TransactionsList transactions={filteredTransactions} />
+      <Menu
+        categories={allCategories}
+        accounts={allAccounts}
+      />
+    </Layout>
   );
 }
 
