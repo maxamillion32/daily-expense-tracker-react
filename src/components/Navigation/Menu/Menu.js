@@ -1,11 +1,14 @@
 import React from 'react';
 import {useState} from 'react';
+import {useDispatch} from 'react-redux';
 
 import classes from './Menu.module.css';
 import Form from '../../Transactions/CreateForm/Form'
+import {resetState} from '../../../reducers/transactions/transactions-slice';
 
 function Menu({categories, accounts}) {
   const [onClickAddBtn, setOnClickAddBtn] = useState(false);
+  const dispatch = useDispatch();
   const classesAddBtn = [
     classes.menuAddBtn,
     'fa',
@@ -15,6 +18,10 @@ function Menu({categories, accounts}) {
 
   const onClickAddButton = () => {
     setOnClickAddBtn(!onClickAddBtn);
+
+    if (onClickAddBtn) {
+      dispatch(resetState());
+    }
   };
 
   return (
