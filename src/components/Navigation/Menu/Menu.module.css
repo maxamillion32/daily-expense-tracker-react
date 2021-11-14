@@ -13,6 +13,19 @@
     justify-content: space-between;
 }
 
+.wrapper p {
+  width: 30%;
+  text-align: center;
+}
+
+.wrapper p:first-of-type {
+  text-align: start;
+}
+
+.wrapper p:last-of-type {
+  text-align: end;
+}
+
 .active {
   font-weight: 700;
 }
@@ -31,19 +44,23 @@
 
   font-size: 20px;
   cursor: pointer;
-  color: #000;
-  background-color: #eee;
+  color: #fff;
+  background-color: #2e2e2e;
   border-radius: 25px;
+  box-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
 
-  transition: opacity, left .22s ease-in;
+  transition: opacity .22s ease-in;
 }
 
 .menuAddBtn:hover {
-  opacity: .7;
+  cursor: pointer;
 }
 
-.hidden {
-  transform: translateY(-210px) translateX(15px)rotate(45deg);
-  background-color: transparent;
+.close {
+  transform: translateY(-240px);
+  /* background-color: transparent; */
   transition: transform .22s ease-in;
+  /* color: #000; */
+  width: 30px;
+  height: 30px;
 }

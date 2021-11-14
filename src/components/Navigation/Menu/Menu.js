@@ -1,16 +1,22 @@
 import React from 'react';
 import {useState} from 'react';
+
 import classes from './Menu.module.css';
 import Form from '../../Transactions/CreateForm/Form'
 
 function Menu({categories, accounts}) {
   const [onClickAddBtn, setOnClickAddBtn] = useState(false);
+  const classesAddBtn = [
+    classes.menuAddBtn,
+    'fa',
+    onClickAddBtn ? 'fa-times' : 'fa-plus',
+    onClickAddBtn ? classes.close : ''
+  ].join(' ');
 
   const onClickAddButton = () => {
-    const isAddBtnClick = !onClickAddBtn;
-
-    setOnClickAddBtn(isAddBtnClick);
+    setOnClickAddBtn(!onClickAddBtn);
   };
+
   return (
     <nav className={classes.menu}>
       <Form
@@ -21,7 +27,7 @@ function Menu({categories, accounts}) {
       />
       <div className={classes.wrapper}>
         <i
-          className={`${classes.menuAddBtn} fa fa-plus ${onClickAddBtn ? classes.hidden : ''}`}
+          className={classesAddBtn}
           onClick={onClickAddButton}
         />
         <p className={classes.active}>Transactions</p>

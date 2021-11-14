@@ -1,0 +1,59 @@
+.form {
+  /* padding: 0 20px 20px; */
+}
+
+.form input,
+.form select {
+  margin: 5px 0;
+}
+
+.dialogWrapper {
+  overflow: hidden;
+}
+
+.dialog {
+  max-height: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: max-height .5s, padding .5s;
+  background-color: #f1f1f1;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.dialogTypeWrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px 0;
+}
+
+.dialogType {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.dialogType input {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  margin-right: 5px;
+  cursor: pointer;
+}
+
+.dialogType label {
+  cursor: pointer;
+}
+
+.dialogFadeIn {
+  padding: 15px 15px 35px;
+  max-height: 307px;
+  transition: max-height .3s, padding .3s;
+}
+
+.dialogFadeOut {
+  max-height: 0;
+  padding: 0;
+  transition: max-height .3s, padding .3s;
+}

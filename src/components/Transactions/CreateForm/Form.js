@@ -1,4 +1,3 @@
-// import {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {
   setUserInput,
@@ -8,13 +7,12 @@ import {
   addTransaction,
   resetState
 } from '../../../reducers/transactions/transactions-slice';
+import classes from './Form.module.css'
 
 function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickAddBtn}){
   const newTransactionState = useSelector(selectNewTransactionState);
-  const dispatch = useDispatch();
-
-  // const [onClickAddBtn, setOnClickAddBtn] = useState(false);
   const {sum, date} = newTransactionState;
+  const dispatch = useDispatch();
 
   const onChangeUserInput = ({target}) => {
     const {name, value} = target;
@@ -51,27 +49,17 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
     setOnClickAddBtn(false);
   };
 
-  // const onClickAddButton = () => {
-  //   const isAddBtnClick = !onClickAddBtn;
-
-  //   setOnClickAddBtn(isAddBtnClick);
-  // };
+  const classesDialog = [
+    classes.dialog,
+    onClickAddBtn ? classes.dialogFadeIn : classes.dialogFadeOut
+  ].join(' ');
 
   return (
-    <section className="transaction">
-      {/* <div className="transaction__title">
-        <h2>Transactions</h2>
-        <p
-          className={`transaction__dialog-btn ${onClickAddBtn ? "transaction__dialog-btn--click" : ""}`}
-          onClick={onClickAddButton}
-          >
-          Add
-        </p>
-      </div> */}
-      <div className="transaction__dialog-wrapper">
+    <section className={classes.form} >
+      <div className={classes.dialogWrapper}>
         <form onSubmit={onClickSubmitButton}>
           <div
-            className={`transaction__dialog ${onClickAddBtn ? "transaction__dialog--fade-in" : "transaction__dialog--fade-out"}`}>
+            className={classesDialog}>
             <input
               type="number"
               name="sum"
@@ -82,7 +70,6 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
               />
 
             <select
-              className="form-select"
               aria-label="Default select example"
               onChange={onChangeSelectHandler("category")}
               required
@@ -101,7 +88,6 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
             </select>
 
             <select
-              className="form-select"
               aria-label="Default select example"
               onChange={onChangeSelectHandler("account")}
               required
@@ -127,8 +113,8 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
               required
               />
 
-            <div className="transaction__dialog-wrapper">
-              <div className="transaction__dialog-type">
+            <div className={classes.dialogTypeWrapper}>
+              <div className={classes.dialogType}>
                 <input
                   type="checkbox"
                   id="type"
