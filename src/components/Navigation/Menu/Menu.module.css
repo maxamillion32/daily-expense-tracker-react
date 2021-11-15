@@ -59,7 +59,7 @@
 
 .close {
   transform: translateY(-240px);
-  transition: transform .22s ease-in;
+  transition: transform .3s, width .22s, height .22s ease-in;
   width: 30px;
   height: 30px;
 }

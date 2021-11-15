@@ -13,8 +13,7 @@ function TransactionsItem({categoryTitle, accountTitle, outcome, sum, id}) {
   };
 
   const handleDeleteButtonToggle = () => {
-    const isShowDeleteBtn = (showDeleteBtn === true) ? false : true;
-    setShowDeleteBtn(isShowDeleteBtn)
+    setShowDeleteBtn(!showDeleteBtn)
   };
 
   return (

@@ -13,6 +13,7 @@ function App() {
           <Route path="/" element={<Transactions />} />
           <Route path="/budget" element={<Budget />} />
           <Route path="/settings" element={<Settings />} />
+          <Route path="*" element={<Transactions />} />
         </Routes>
       </Layout>
     );
