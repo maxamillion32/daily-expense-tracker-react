@@ -22,6 +22,7 @@ export const transactionsSlice = createSlice({
       id: nanoid(MAX_ID_LENGTH),
       sum: ``,
       date: new Date().toISOString().slice(0, -14),
+      // date: '',
       outcome: true,
       account: [],
       category: [],
