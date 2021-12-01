@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from "react";
 import {useSelector, useDispatch} from 'react-redux';
+import {CSSTransition} from 'react-transition-group';
 import {
   setUserInput,
   setCategory,
@@ -28,6 +29,7 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
     const formControls = updateFormControls("date", date, state.formControls);
 
     setState({formControls});
+    // eslint-disable-next-line
   }, [])
 
   const onChangeUserInput = (value, name) => {
@@ -88,78 +90,86 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
     setOnClickAddBtn(false);
   };
 
-  const classesDialog = [
-    classes.dialog,
-    onClickAddBtn ? classes.dialogFadeIn : classes.dialogFadeOut
-  ].join(' ');
+  const nodeRef = React.useRef(null);
 
   return (
     <section className={classes.form} >
       <div className={classes.dialogWrapper}>
         <form onSubmit={onClickSubmitButton}>
-          <div className={classesDialog}>
-            <Input
-              type="number"
-              name="sum"
-              placeholder="0.00"
-              value={sum}
-              valid={state.formControls.sum.valid}
-              shouldValidate={!!state.formControls.sum.validation}
-              touched={state.formControls.sum.touched}
-              errorMessage={state.formControls.sum.errorMessage}
-              onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
-            />
-
-            <Select
-              options={categories}
-              defaultOption="Choose a category"
-              onChange={onChangeSelectHandler("category")}
-
-              valid={state.formControls.category.valid}
-              shouldValidate={!!state.formControls.category.validation}
-              touched={state.formControls.category.touched}
-              errorMessage={state.formControls.category.errorMessage}
-            />
-
-            <Select
-              options={accounts}
-              defaultOption="Choose an account"
-              onChange={onChangeSelectHandler("account")}
-
-              valid={state.formControls.account.valid}
-              shouldValidate={!!state.formControls.account.validation}
-              touched={state.formControls.account.touched}
-              errorMessage={state.formControls.account.errorMessage}
-            />
-
-            <Input
-              type="date"
-              name="date"
-              value={date}
-              valid={state.formControls.date.valid}
-              shouldValidate={!!state.formControls.date.validation}
-              touched={state.formControls.date.touched}
-              errorMessage={state.formControls.date.errorMessage}
-              onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
-            />
-
-            <div className={classes.dialogType}>
+          <CSSTransition
+            in={onClickAddBtn}
+            timeout={300}
+            classNames={{
+              enterActive: `${classes.addFormEnterActive}`,
+              exitActive: `${classes.addFormExitActive}`,
+            }}
+            unmountOnExit
+            nodeRef={nodeRef}
+          >
+            <div className={classes.dialog} ref={nodeRef}>
               <Input
-                label={"Income"}
-                type="checkbox"
-                name="outcome"
+                type="number"
+                name="sum"
+                placeholder="0.00"
+                value={sum}
+                valid={state.formControls.sum.valid}
+                shouldValidate={!!state.formControls.sum.validation}
+                touched={state.formControls.sum.touched}
+                errorMessage={state.formControls.sum.errorMessage}
                 onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
               />
-            </div>
 
-            <Button
-              type="submit"
-              onClick={addTransactionHandler}
-              disabled={!state.isFormValid}
-            >
-              Create
-            </Button>
-          </div>
+              <Select
+                options={categories}
+                defaultOption="Choose a category"
+                onChange={onChangeSelectHandler("category")}
+
+                valid={state.formControls.category.valid}
+                shouldValidate={!!state.formControls.category.validation}
+                touched={state.formControls.category.touched}
+                errorMessage={state.formControls.category.errorMessage}
+              />
+
+              <Select
+                options={accounts}
+                defaultOption="Choose an account"
+                onChange={onChangeSelectHandler("account")}
+
+                valid={state.formControls.account.valid}
+                shouldValidate={!!state.formControls.account.validation}
+                touched={state.formControls.account.touched}
+                errorMessage={state.formControls.account.errorMessage}
+              />
+
+              <Input
+                type="date"
+                name="date"
+                value={date}
+                valid={state.formControls.date.valid}
+                shouldValidate={!!state.formControls.date.validation}
+                touched={state.formControls.date.touched}
+                errorMessage={state.formControls.date.errorMessage}
+                onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
+              />
+
+              <div className={classes.dialogType}>
+                <Input
+                  label={"Income"}
+                  type="checkbox"
+                  name="outcome"
+                  onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
+                />
+              </div>
+
+              <Button
+                type="submit"
+                onClick={addTransactionHandler}
+                disabled={!state.isFormValid}
+              >
+                Create
+              </Button>
+            </div>
+          </CSSTransition>
         </form>
       </div>
     </section>

@@ -1,5 +1,6 @@
 .form {
-  /* padding: 0 20px 20px; */
+  position: sticky;
+  bottom: 62px;
 }
 
 .form input,
@@ -12,13 +13,10 @@
 }
 
 .dialog {
-  max-height: 0;
-  padding: 0;
+  max-height: 307px;
+  padding: 30px 30px 15px;
   box-sizing: border-box;
-  transition: max-height .5s, padding .5s;
   background-color: #f1f1f1;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
 }
 
 .dialogTypeWrapper {
@@ -46,14 +44,22 @@
   cursor: pointer;
 }
 
-.dialogFadeIn {
-  padding: 15px 15px 35px;
-  max-height: 307px;
-  transition: max-height .3s, padding .3s;
+.addFormEnterActive {
+  animation: showForm 300ms ease-out forwards;
 }
 
-.dialogFadeOut {
-  max-height: 0;
-  padding: 0;
-  transition: max-height .3s, padding .3s;
+.addFormExitActive {
+  animation: showForm 500ms ease-in alternate-reverse;
+}
+
+@keyframes showForm {
+  0% {
+    opacity: 0;
+    transform: translateY(307px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

@@ -2,6 +2,7 @@ import React from 'react';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {NavLink} from 'react-router-dom';
+import {CSSTransition} from 'react-transition-group';
 
 import classes from './Menu.module.css';
 import Form from '../../Transactions/CreateForm/Form'
@@ -26,42 +27,58 @@ function Menu({categories, accounts}) {
   };
 
   const isActiveLink = ({isActive}) => (isActive ? `${classes.active}` : '');
+  const nodeRef = React.useRef(null);
 
   return (
-    <nav className={classes.menu}>
+    <>
       <Form
         categories={categories}
         accounts={accounts}
         onClickAddBtn={onClickAddBtn}
         setOnClickAddBtn={setOnClickAddBtn}
       />
-      <div className={classes.wrapper}>
-        <i
-          className={classesAddBtn}
-          onClick={onClickAddButton}
-        />
-        <NavLink
-            to={'/'}
-            className={isActiveLink}
-        >
-          Transactions
-        </NavLink>
 
-        <NavLink
-            to={'/budget'}
-            className={isActiveLink}
-        >
-          Analytics
-        </NavLink>
+      <nav className={classes.menu}>
+        <div className={classes.wrapper}>
+          <CSSTransition
+              in={onClickAddBtn}
+              timeout={300}
+              classNames={{
+                enterActive: `${classes.addBtnEnterActive}`,
+                enterDone: `${classes.addBtnEnterDone}`,
+              }}
+              nodeRef={nodeRef}
+            >
+            <i
+              className={classesAddBtn}
+              onClick={onClickAddButton}
+              ref={nodeRef}
+            />
+          </CSSTransition>
 
-        <NavLink
-            to={'/settings'}
-            className={isActiveLink}
-        >
-          Settings
-        </NavLink>
-      </div>
-    </nav>
+          <NavLink
+              to={'/'}
+              className={isActiveLink}
+          >
+            Transactions
+          </NavLink>
+
+          <NavLink
+              to={'/budget'}
+              className={isActiveLink}
+          >
+            Analytics
+          </NavLink>
+
+          <NavLink
+              to={'/settings'}
+              className={isActiveLink}
+          >
+            Settings
+          </NavLink>
+        </div>
+      </nav>
+    </>
   )
 }
 

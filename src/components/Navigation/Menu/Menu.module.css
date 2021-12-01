@@ -2,7 +2,6 @@
   position: sticky;
   bottom: 0;
   box-sizing: border-box;
-  /* margin: 0 auto; */
   padding: 20px 20px;
   background-color: #f1f1f1;
 }
@@ -50,16 +49,30 @@
   border-radius: 25px;
   box-shadow: 0px 5px 6px rgba(0, 0, 0, 0.25);
 
-  transition: opacity .22s ease-in;
+  /* transition: opacity .22s ease-in; */
+  transition: transform .3s, width .22s, height .22s ease-in;
 }
 
 .menuAddBtn:hover {
   cursor: pointer;
 }
 
-.close {
+/* .close {
   transform: translateY(-240px);
   transition: transform .3s, width .22s, height .22s ease-in;
   width: 30px;
   height: 30px;
+} */
+
+.addBtnEnterActive {
+  transform: translateY(-240px);
+  width: 30px;
+  height: 30px;
 }
+
+.addBtnEnterDone {
+  transform: translateY(-240px);
+  width: 30px;
+  height: 30px;
+}
+
