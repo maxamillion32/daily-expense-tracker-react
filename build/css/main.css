@@ -6,13 +6,13 @@
   font-family: "Roboto";
   font-weight: 300;
   font-style: normal;
-  src: url(../4f7b3398a8f008587f8d.woff) format("woff"), url(../94564e23efc973b5f1a6.woff2) format("woff2"); }
+  src: url(../fonts/roboto-lite-latin.woff) format("woff"), url(../fonts/roboto-lite-latin.woff2) format("woff2"); }
 
 @font-face {
   font-family: "Roboto";
   font-weight: 700;
   font-style: normal;
-  src: url(../b17af6d5480a759998c4.woff) format("woff"), url(../b5dcc610b0b54d625d1e.woff2) format("woff2"); }
+  src: url(../fonts/roboto-bold-latin.woff) format("woff"), url(../fonts/roboto-bold-latin.woff2) format("woff2"); }
 
 body {
   min-width: 320px;
