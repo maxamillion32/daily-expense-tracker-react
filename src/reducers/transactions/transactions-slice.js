@@ -20,7 +20,7 @@ export const transactionsSlice = createSlice({
     allTransactions: [],
     newTransaction: {
       id: nanoid(MAX_ID_LENGTH),
-      sum: ``,
+      sum: '',
       date: new Date().toISOString().slice(0, -14),
       // date: '',
       outcome: true,
@@ -37,7 +37,7 @@ export const transactionsSlice = createSlice({
         value = !state.newTransaction.outcome;
       }
       if (name === `sum`) {
-        value = +value;
+        value = +value === 0 ? '' : +value;
       }
       return {
         ...state,
@@ -79,7 +79,7 @@ export const transactionsSlice = createSlice({
         ...state,
         newTransaction: {
           id: new Date().getTime(),
-          sum: ``,
+          sum: '',
           date: new Date().toISOString().slice(0, -14),
           outcome: true,
           account: [],

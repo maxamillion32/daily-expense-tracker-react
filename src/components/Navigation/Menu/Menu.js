@@ -15,7 +15,6 @@ function Menu({categories, accounts}) {
     classes.menuAddBtn,
     'fa',
     onClickAddBtn ? 'fa-times' : 'fa-plus',
-    onClickAddBtn ? classes.close : ''
   ].join(' ');
 
   const onClickAddButton = () => {
