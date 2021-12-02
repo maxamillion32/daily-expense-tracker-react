@@ -1,6 +1,5 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-// import Layout from '../../hoc/Layout/Layout'
 
 import {loadTransactions, selectFilteredTransactions, selectAllTransactionsState} from '../../reducers/transactions/transactions-slice'
 import {loadCategories} from '../../reducers/categories/categories-slice'
@@ -19,7 +18,9 @@ function Transactions() {
     dispatch(loadTransactions());
     dispatch(loadCategories());
     dispatch(loadAccounts());
-  }, [dispatch]);
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <>
       <Search />

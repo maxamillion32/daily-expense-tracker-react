@@ -88,6 +88,11 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
     dispatch(addTransaction([newTransactionState]));
     dispatch(resetState());
     setOnClickAddBtn(false);
+
+    setState({
+      ...state,
+      isFormValid: false
+    });
   };
 
   const nodeRef = React.useRef(null);
