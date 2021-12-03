@@ -623,60 +623,6 @@ input[type="radio"].visually-hidden {
   background-color: #646464;
   cursor: pointer; }
 
-.balance {
-  position: sticky;
-  top: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  /* margin-bottom: 20px; */
-  padding: 0 20px 20px;
-  background-color: white;
-  z-index: 50; }
-  .balance__container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-top: 20px;
-    color: #fff;
-    border-radius: 5px; }
-    .balance__container div {
-      text-align: center; }
-  .balance__container:first-of-type {
-    justify-content: center;
-    height: 140px;
-    color: #000;
-    background-color: #f1f1f1; }
-  .balance__container--scroll:first-of-type {
-    height: 60px; }
-  .balance__amount {
-    font-size: 18px;
-    font-weight: 700; }
-  .balance__wrapper {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 140px; }
-  .balance__income {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    height: 67px;
-    text-align: center;
-    background-color: #72b966;
-    border-radius: 5px; }
-  .balance__expense {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 100%;
-    height: 67px;
-    text-align: center;
-    background-color: #fd6666;
-    border-radius: 5px; }
-
 .page-footer {
   position: sticky;
   bottom: 0;
