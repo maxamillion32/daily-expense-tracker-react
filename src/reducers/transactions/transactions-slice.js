@@ -78,7 +78,7 @@ export const transactionsSlice = createSlice({
       return {
         ...state,
         newTransaction: {
-          id: new Date().getTime(),
+          id: nanoid(MAX_ID_LENGTH),
           sum: '',
           date: new Date().toISOString().slice(0, -14),
           outcome: true,
