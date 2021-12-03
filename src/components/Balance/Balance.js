@@ -7,10 +7,10 @@ function Balance({transactions}) {
   const [balance, setBalance] = useState(classes.Balance)
 
   const listenScrollEvent = () => {
-    if (window.scrollY < 73) {
+    if (window.scrollY < 60) {
       setBalanceContainer(classes.BalanceContainer);
       setBalance(classes.Balance);
-    } else if (window.scrollY > 70) {
+    } else if (window.scrollY > 60) {
       setBalanceContainer(classes.BalanceContainerScroll);
       setBalance(classes.BalanceScroll)
     }
