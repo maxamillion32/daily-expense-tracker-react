@@ -388,6 +388,7 @@ input[type="radio"].visually-hidden {
 .search {
   position: relative;
   margin: 0 20px;
+  margin-top: 160px;
   margin-bottom: 20px;
   border: 1px solid #a7a7a7;
   border-radius: 5px;
