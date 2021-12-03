@@ -5,7 +5,7 @@ function TransactionsItemHeader({date, transactions}) {
   const currentDate = [...new Set(currentTransactions.map((transaction) => transaction.date))];
   const expenseBalance = currentTransactions.filter((transaction) => transaction.outcome === true).map((transaction) => transaction.sum).reduce((cur, transaction) => cur + transaction, 0);
   const incomeBalance = currentTransactions.filter((transaction) => transaction.outcome === false).map((transaction) => transaction.sum).reduce((cur, transaction) => cur + transaction, 0);
-  const overallBalance = incomeBalance - expenseBalance;
+  const overallBalance = Math.round((incomeBalance - expenseBalance) * 100) / 100;
 
   return (
     <div className="transactions__header">

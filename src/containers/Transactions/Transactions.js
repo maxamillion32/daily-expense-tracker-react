@@ -23,8 +23,8 @@ function Transactions() {
 
   return (
     <>
-      <Search />
       <Balance transactions={allTransactions} />
+      <Search />
       <TransactionsList transactions={filteredTransactions} />
     </>
   );

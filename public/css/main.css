@@ -374,7 +374,7 @@ input[type="radio"].visually-hidden {
   flex-direction: column;
   justify-content: flex-start;
   box-sizing: border-box;
-  padding: 20px 0 0 0;
+  /* padding: 20px 0 0 0; */
   background-color: #fff;
   min-height: 100vh; }
   .page-main input, .page-main select {
@@ -390,7 +390,8 @@ input[type="radio"].visually-hidden {
   margin: 0 20px;
   margin-bottom: 20px;
   border: 1px solid #a7a7a7;
-  border-radius: 5px; }
+  border-radius: 5px;
+  background-color: white; }
   .search__close-btn {
     position: absolute;
     top: 4px;
@@ -623,16 +624,21 @@ input[type="radio"].visually-hidden {
   cursor: pointer; }
 
 .balance {
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-  padding: 0 20px; }
+  /* margin-bottom: 20px; */
+  padding: 0 20px 20px;
+  background-color: white;
+  z-index: 50; }
   .balance__container {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
+    margin-top: 20px;
     color: #fff;
     border-radius: 5px; }
     .balance__container div {
@@ -642,6 +648,8 @@ input[type="radio"].visually-hidden {
     height: 140px;
     color: #000;
     background-color: #f1f1f1; }
+  .balance__container--scroll:first-of-type {
+    height: 60px; }
   .balance__amount {
     font-size: 18px;
     font-weight: 700; }
