@@ -22,3 +22,11 @@ export function formatMonth (dateString) {
   };
   return date.toLocaleString(`en-EN`, options);
 };
+
+export function formatMonthList (dateString) {
+  const date = new Date(dateString);
+  const options = {
+    month: `long`
+  };
+  return date.toLocaleString(`en-EN`, options);
+};

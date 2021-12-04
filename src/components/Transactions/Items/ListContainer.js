@@ -24,7 +24,7 @@ function TransactionsListContainer({date, transactions, ...rest}) {
     <ul className="transactions__list" ref={nodeRef}>
       <li>
         <TransactionsItemHeader date={date} transactions={transactions} />
-        <TransactionItemsContainer date={date} transactions={transactions} />
+        {/* <TransactionItemsContainer date={date} transactions={transactions} /> */}
       </li>
     </ul>
     </CSSTransition>
