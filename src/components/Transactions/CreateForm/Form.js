@@ -28,7 +28,7 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
   useEffect(() => {
     const formControls = updateFormControls("date", date, state.formControls);
 
-    setState({formControls});
+    setState({...state, formControls});
     // eslint-disable-next-line
   }, [])
 
@@ -89,8 +89,11 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
     dispatch(resetState());
     setOnClickAddBtn(false);
 
+    let formControls = createFormControls();
+    formControls = updateFormControls("date", date, formControls);
+
     setState({
-      ...state,
+      formControls: formControls,
       isFormValid: false
     });
   };
