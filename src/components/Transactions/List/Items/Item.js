@@ -1,13 +1,12 @@
 import React from 'react';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {deleteTransaction} from '../../../reducers/transactions/transactions-slice';
+import {deleteTransaction} from '../../../../reducers/transactions/transactions-slice';
 import {CSSTransition} from 'react-transition-group';
-import classes from '../ListAnimation.module.css';
+import classes from '../ListContainer.module.css';
 
 function TransactionsItem({categoryTitle, accountTitle, outcome, sum, id, ...rest}) {
   const dispatch = useDispatch();
-
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
 
   const onClickDeleteButton = ({target}) => {

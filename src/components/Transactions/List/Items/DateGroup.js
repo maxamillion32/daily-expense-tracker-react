@@ -3,11 +3,11 @@ import TransactionItem from "./Item";
 import {TransitionGroup} from 'react-transition-group';
 
 function TransactionsItemsContainer({date, transactions}) {
-  const dayTransactions = transactions.filter((transaction) => transaction.date === date);
+  const transactionsDay = transactions.filter((transaction) => transaction.date === date);
 
   return (
     <TransitionGroup component={'ul'}>
-      {dayTransactions.map((transaction) => (
+      {transactionsDay.map((transaction) => (
         <TransactionItem
           categoryTitle={transaction.category.title}
           accountTitle={transaction.account.title}

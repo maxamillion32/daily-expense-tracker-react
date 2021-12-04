@@ -14,7 +14,7 @@ export function formatWeekday (dateString) {
   return date.toLocaleString(`en-EN`, options);
 };
 
-export function formatMonth (dateString) {
+export function formatMonthYear (dateString) {
   const date = new Date(dateString);
   const options = {
     month: `long`,
@@ -23,7 +23,7 @@ export function formatMonth (dateString) {
   return date.toLocaleString(`en-EN`, options);
 };
 
-export function formatMonthList (dateString) {
+export function formatMonth (dateString) {
   const date = new Date(dateString);
   const options = {
     month: `long`
