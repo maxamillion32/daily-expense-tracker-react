@@ -35,19 +35,19 @@ function TransactionsItem({categoryTitle, accountTitle, outcome, sum, id, ...res
       nodeRef={nodeRef}
     >
       <li
-        className="transactions__item"
+        className={classes.TransactionsItem}
         onMouseOver={handleDeleteButtonToggle}
         onMouseOut={handleDeleteButtonToggle}
         ref={nodeRef}
       >
-        <div className="transactions__item-wrapper">
+        <div className={classes.TransactionsItemWrapper}>
           <p>{categoryTitle}</p>
-          <p className="transactions__item--expense">{outcome ? `-` : `+`}{sum} €</p>
+          <p>{outcome ? `-` : `+`}{sum} €</p>
         </div>
-        <div className="transactions__item-wrapper">
-          <p className="transactions__item--account">{accountTitle}</p>
+        <div className={classes.TransactionsItemWrapper}>
+          <p className={classes.TransactionsItemAccount}>{accountTitle}</p>
           <p
-            className={`transactions__item--edit ${showDeleteBtn ? "" : "hidden"}`}
+            className={`${classes.TransactionsItemEdit} ${showDeleteBtn ? "" : classes.TransactionsHidden}`}
             id={id}
             onClick={onClickDeleteButton}
             >

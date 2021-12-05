@@ -10,6 +10,20 @@
   font-weight: 700;
 }
 
-/* .Input.invalid label {
-  color: #f01f30;
-} */
+.InputType input {
+  box-sizing: border-box;
+  width: 100%;
+  height: 35px;
+  padding: 0 15px;
+  border: none;
+  border-radius: 5px;
+}
+
+.InputTypeCheckbox input {
+  display: inline-block;
+  width: 15px;
+  height: 15px;
+  margin: 0;
+  margin-right: 5px;
+  cursor: pointer;
+}

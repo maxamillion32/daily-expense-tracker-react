@@ -31,15 +31,6 @@
   justify-content: flex-end;
 }
 
-.dialogType input {
-  display: inline-block;
-  width: 15px;
-  height: 15px;
-  margin: 0;
-  margin-right: 5px;
-  cursor: pointer;
-}
-
 .dialogType label {
   cursor: pointer;
 }

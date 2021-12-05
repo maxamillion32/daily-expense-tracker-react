@@ -1,6 +1,7 @@
 import React from 'react';
 import {Route, Routes, Navigate} from 'react-router-dom';
 import Layout from '../src/hoc/Layout/Layout'
+import './App.css'
 
 import Transactions from './containers/Transactions/Transactions';
 import Analytics from './containers/Analytics/Analytics';

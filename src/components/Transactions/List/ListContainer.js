@@ -1,5 +1,5 @@
 import React from "react";
-import TransactionsItemsMonthGroup from './Items/MonthGroup';
+import TransactionsItemsMonthGroup from "./Items/MonthGroup";
 import {formatMonth} from "../../../utils/utils";
 
 function TransactionsListContainer({transactions}) {

@@ -4,6 +4,7 @@ import {
   formatMonthYear,
   formatWeekday
 } from "../../../../utils/utils";
+import classes from "../ListContainer.module.css";
 
 function TransactionsDateHeader({date, transactions}) {
   const transactionsDay = transactions
@@ -19,10 +20,10 @@ function TransactionsDateHeader({date, transactions}) {
   const overallBalance = Math.round((incomeBalance - expenseBalance) * 100) / 100;
 
   return (
-    <div className="transactions__header">
-      <div className="transactions__date-content">
+    <div className={classes.TransactionsHeader}>
+      <div className={classes.TransactionsDateContent}>
           <p>{formatDay(date)}</p>
-          <div className="transactions__date-wrapper">
+          <div className={classes.TransactionsDateWrapper}>
             <p>{formatWeekday(date)}</p>
             <p>{formatMonthYear(date)}</p>
           </div>

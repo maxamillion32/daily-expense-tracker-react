@@ -2,6 +2,7 @@ import React from 'react';
 import {TransitionGroup} from 'react-transition-group';
 import TransactionsItemsDateGroupWrapper from './DateGroupWrapper';
 import {formatMonth} from "../../../../utils/utils";
+import classes from "../ListContainer.module.css";
 
 function TransactionsItemsMonthGroup({month, transactions}) {
   const transactionsDates = transactions
@@ -11,7 +12,7 @@ function TransactionsItemsMonthGroup({month, transactions}) {
 
   return (
     <ul className="transactions__list">
-      <p style={{paddingLeft: 20, fontWeight: 700}} ref={nodeRef}>{month}</p>
+      <p className={classes.TransactionsMonth} ref={nodeRef}>{month}</p>
       <TransitionGroup>
         {transactionsDates.map((transactionDate) =>
           (

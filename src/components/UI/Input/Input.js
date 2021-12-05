@@ -10,6 +10,8 @@ const Input = (props) => {
   const cls = [classes.Input];
   const htmlFor = `${inputType}-${Math.random()}`;
 
+  inputType === "checkbox" ? cls.push(classes.InputTypeCheckbox) : cls.push(classes.InputType)
+
   if (isInvalid(props)) {
     cls.push(classes.invalid)
   }
