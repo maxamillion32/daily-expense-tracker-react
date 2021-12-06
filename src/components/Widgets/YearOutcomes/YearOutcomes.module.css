@@ -3,7 +3,7 @@
   padding: 20px 20px 15px;
   /* margin: 20px; */
   background-color: #f1f1f1;
-  border-top: 1px dashed gray;
+  /* border-top: 1px dashed gray; */
   /* border: none; */
   /* border-radius: 5px; */
 }
@@ -14,11 +14,14 @@
 }
 
 .List {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  height: 50px;
   width: 7%;
 }
 
 .List div {
-  height: 50px;
   background-color: #d3d3d3;
 }
 
