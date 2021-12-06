@@ -1,10 +1,9 @@
 import React from 'react';
+import Dummy from '../../components/Dummy/Dummy';
 
 function Analytics() {
   return (
-    <div>
-      <h1>Analytics</h1>
-    </div>
+    <Dummy/>
   )
 }
 

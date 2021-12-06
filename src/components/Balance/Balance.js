@@ -24,13 +24,11 @@ function Balance({transactions}) {
   }, []);
 
   const sumOutcomes = transactions.map((transaction) => {
-      transaction.outcome ? transaction = +transaction.sum : transaction = null;
-      return transaction;
+      return transaction.outcome ? transaction = +transaction.sum : transaction = null;
     }).reduce((a, b) => a + b, 0);
 
   const sumIncomes = transactions.map((item) => {
-    !item.outcome ? item = +item.sum : item = null;
-    return item;
+    return !item.outcome ? item = +item.sum : item = null;
   }).reduce((a, b) => a + b, 0);
 
   const currentBalance = Math.round((sumIncomes - sumOutcomes) * 100) / 100;

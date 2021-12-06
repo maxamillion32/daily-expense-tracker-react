@@ -1,6 +1,7 @@
 .form {
   position: sticky;
   bottom: 62px;
+  margin-top: auto;
 }
 
 .form input,

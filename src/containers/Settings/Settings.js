@@ -1,10 +1,9 @@
 import React from 'react';
+import Dummy from '../../components/Dummy/Dummy';
 
 function Settings() {
   return (
-    <div>
-      <h1>Settings</h1>
-    </div>
+    <Dummy />
   )
 }
 
