@@ -21,6 +21,10 @@
   width: 7%;
 }
 
+.List:hover {
+  cursor: pointer;
+}
+
 .List div {
   background-color: #d3d3d3;
 }
