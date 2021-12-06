@@ -1,0 +1,36 @@
+.YearOutcomes {
+  margin-bottom: 20px;
+  padding: 20px 20px 15px;
+  margin: 20px;
+  background-color: #f1f1f1;
+  border: none;
+  border-radius: 5px;
+}
+
+.Wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.List {
+  width: 7%;
+}
+
+.List div {
+  height: 50px;
+  background-color: #d3d3d3;
+}
+
+.List p {
+  font-size: 12px;
+  text-align: center;
+}
+
+.Active div {
+  background-color: #ff6060;
+}
+
+.Active p {
+  color: #ff6060;
+  font-weight: 700;
+}
