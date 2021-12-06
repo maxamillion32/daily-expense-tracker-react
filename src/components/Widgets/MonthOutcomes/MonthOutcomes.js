@@ -8,12 +8,15 @@ import {
   selectAllTransactionsState
 } from '../../../reducers/transactions/transactions-slice'
 
-function MonthOutcomes() {
+function MonthOutcomes({currentMonth}) {
   const allTransactions = useSelector(selectAllTransactionsState);
   const dispatch = useDispatch();
 
-  const currentMonth = 'November';
-  // const currentMonth = formatMonth(new Date());
+  useEffect(() => {
+    dispatch(loadTransactions());
+    // eslint-disable-next-line
+  }, []);
+
   const filteredTransactions = allTransactions
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
   const categoriesForOutcomes = [...new Set(filteredTransactions
@@ -48,11 +51,6 @@ function MonthOutcomes() {
 
       return outcome;
   }
-
-  useEffect(() => {
-    dispatch(loadTransactions());
-    // eslint-disable-next-line
-  }, []);
 
   return (
     <>

@@ -8,12 +8,15 @@ import {
   selectAllTransactionsState
 } from '../../../reducers/transactions/transactions-slice'
 
-function MonthBalance() {
+function MonthBalance({currentMonth}) {
   const allTransactions = useSelector(selectAllTransactionsState);
   const dispatch = useDispatch();
 
-  const currentMonth = 'November';
-  // const currentMonth = formatMonth(new Date());
+  useEffect(() => {
+    dispatch(loadTransactions());
+    // eslint-disable-next-line
+  }, []);
+
   const filteredTransactions = allTransactions
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
 
@@ -25,13 +28,9 @@ function MonthBalance() {
     return !item.outcome ? item = +item.sum : item = null;
   }).reduce((a, b) => a + b, 0);
 
-  useEffect(() => {
-    dispatch(loadTransactions());
-    // eslint-disable-next-line
-  }, []);
   return (
     <section className={classes.MonthBalance}>
-      <h3>{currentMonth}</h3>
+      <h2 >{currentMonth}</h2>
       <ul className={classes.List}>
         <li className={classes.Wrapper}>
           <p>income:</p>

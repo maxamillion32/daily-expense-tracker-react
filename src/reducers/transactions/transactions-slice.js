@@ -2,6 +2,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {nanoid} from 'nanoid';
 import TransactionDataService from '../../services/transaction.service';
 import {selectSearchTerm} from '../search/search-slice';
+import {formatMonth} from '../../utils/utils'
 
 const MAX_ID_LENGTH = 6;
 
@@ -29,6 +30,7 @@ export const transactionsSlice = createSlice({
     },
     isLoading: false,
     hasError: false,
+    currentMonth: formatMonth(new Date())
   },
   reducers: {
     setUserInput: (state, action) => {
@@ -95,6 +97,12 @@ export const transactionsSlice = createSlice({
         allTransactions: newTransactions,
       };
     },
+    updateMonth: (state, action) => {
+      return {
+        ...state,
+        currentMonth: action.payload,
+      };
+    },
   },
   extraReducers: {
     [loadTransactions.pending]: (state) => {
@@ -121,6 +129,7 @@ export const selectAllTransactionsState = (state) => state.transactions.allTrans
 export const selectNewTransactionState = (state) => state.transactions.newTransaction;
 export const isLoading = (state) => state.transactions.isLoading;
 export const hasError = (state) => state.transactions.hasError;
+export const currentMonth = (state) => state.transactions.currentMonth;
 
 export const selectFilteredTransactions = (state) => {
   const allTransactions = selectAllTransactionsState(state);
@@ -139,5 +148,6 @@ export const {
   addTransaction,
   resetState,
   deleteTransaction,
+  updateMonth
 } = transactionsSlice.actions;
 export default transactionsSlice.reducer;

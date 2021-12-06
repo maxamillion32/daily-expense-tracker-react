@@ -1,10 +1,11 @@
 .YearOutcomes {
   margin-bottom: 20px;
   padding: 20px 20px 15px;
-  margin: 20px;
+  /* margin: 20px; */
   background-color: #f1f1f1;
-  border: none;
-  border-radius: 5px;
+  border-top: 1px dashed gray;
+  /* border: none; */
+  /* border-radius: 5px; */
 }
 
 .Wrapper {
