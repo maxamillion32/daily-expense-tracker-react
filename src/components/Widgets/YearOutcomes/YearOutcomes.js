@@ -12,13 +12,15 @@ function YearOutcomes({currentMonth}) {
   const allTransactions = useSelector(selectAllTransactionsState);
   const dispatch = useDispatch();
 
+  const maxMonthExpense = 3000;
+
   const getOverallPercent = (month) => {
     const outcome = allTransactions
       .filter((transaction) => formatMonth(transaction.date) === month)
       .map((transaction) => transaction.outcome ? transaction = +transaction.sum : transaction = null)
       .reduce((acc, sum) => acc + sum, 0);
 
-    let overallPercent = outcome / 1000 * 100;
+    let overallPercent = outcome / maxMonthExpense * 100;
 
     return overallPercent === 0 ? 1 : overallPercent;
   }

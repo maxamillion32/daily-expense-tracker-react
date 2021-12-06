@@ -38,7 +38,7 @@ const getRandomSubarray = (items) => {
 
 const getRandomDate = () => {
   const startPoint = new Date().getTime();
-  const endPoint = startPoint - new Date(90 * (24 * 3600 * 1000)).getTime();
+  const endPoint = startPoint - new Date(360 * (24 * 3600 * 1000)).getTime();
   const date = new Date(endPoint + Math.random() * (startPoint - endPoint));
 
   return date.toISOString().slice(0, -14);
