@@ -18,7 +18,9 @@ function YearExpenses({currentMonth, transactions}) {
       .map((transaction) => transaction.expense ? transaction = +transaction.sum : transaction = null)
       .reduce((acc, sum) => acc + sum, 0);
 
-    let expensesPercent = expenses / maxMonthExpense * 100;
+    const percent = (expenses / maxMonthExpense * 100);
+
+    let expensesPercent = percent >= 100 ? 100 : percent;
 
     return expensesPercent === 0 ? 1 : expensesPercent;
   }
@@ -29,7 +31,9 @@ function YearExpenses({currentMonth, transactions}) {
       .map((transaction) => !transaction.expense ? transaction = +transaction.sum : transaction = null)
       .reduce((acc, sum) => acc + sum, 0);
 
-    let incomesPercent = incomes / maxMonthExpense * 100;
+    const percent = (incomes / maxMonthExpense * 100);
+
+    let incomesPercent = percent >= 100 ? 100 : percent;
 
     return incomesPercent === 0 ? 1 : incomesPercent;
   }
