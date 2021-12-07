@@ -38,15 +38,47 @@ function MonthExpenses({currentMonth, transactions}) {
       return expense;
   }
 
+  const getExpensesPercent = (balance) => {
+    let percent = (balance / sumExpenses * 100);
+
+    percent = Math.round(percent);
+
+    let expensesPercent = percent >= 100 ? 100 : percent;
+
+    return expensesPercent === 0 ? 1 : expensesPercent;
+  }
+
+  const getIncomesPercent = (balance) => {
+    let percent = (balance / sumIncomes * 100);
+
+    percent = Math.round(percent);
+
+    let expensesPercent = percent >= 100 ? 100 : percent;
+
+    return expensesPercent === 0 ? 1 : expensesPercent;
+  }
+
+  const getTotalPercent = (balance) => {
+    const percent = (balance / 3000 * 100);
+
+    let expensesPercent = percent >= 100 ? 100 : percent;
+
+    return expensesPercent === 0 ? 1 : expensesPercent;
+  }
+
   return (
     <>
       <section className={classes.MonthExpenses}>
-        <div className={classes.Total}></div>
-        <h3>Expenses: -{sumExpenses} €</h3>
+        <div className={classes.TotalBg}></div>
+        <div className={classes.TotalExpense} style={{width: `${getTotalPercent(sumExpenses)}%`}}></div>
+        <h4 className={classes.TotalTitle}>Expenses</h4>
+        <h4 className={classes.TotalSum}>-{sumExpenses} €</h4>
         <ul className={classes.List}>
           {categoriesForExpenses.map((category) => (
               <li className={classes.Wrapper} key={category}>
-                <p>{category}:</p>
+                <div className={classes.TotalBg}></div>
+                <div className={classes.Expense} style={{width: `${getExpensesPercent(getExpenses(category))}%`}}></div>
+                <p className={classes.Category}>{`${getExpensesPercent(getExpenses(category))}% ${category}`}</p>
                 <p className={classes.Balance}>-{getExpenses(category)} €</p>
               </li>
             ))
@@ -54,11 +86,16 @@ function MonthExpenses({currentMonth, transactions}) {
         </ul>
       </section>
       <section className={classes.MonthExpenses}>
-        <h3>Incomes: +{sumIncomes} €</h3>
+        <div className={classes.TotalBg}></div>
+        <div className={classes.TotalExpense} style={{width: `${getTotalPercent(sumIncomes)}%`}}></div>
+        <h4 className={classes.TotalTitle}>Incomes</h4>
+        <h4 className={classes.TotalSum}>+{sumIncomes} €</h4>
         <ul className={classes.List}>
           {categoriesForIncomes.map((category) => (
               <li className={classes.Wrapper} key={category}>
-                <p>{category}:</p>
+                <div className={classes.TotalBg}></div>
+                <div className={classes.Expense} style={{width: `${getIncomesPercent(getIncomes(category))}%`}}></div>
+                <p className={classes.Category}>{`${getIncomesPercent(getIncomes(category))}% ${category}`}</p>
                 <p className={classes.Balance}>+{getIncomes(category)} €</p>
               </li>
             ))

@@ -1,4 +1,5 @@
 .MonthExpenses {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -13,14 +14,67 @@
 }
 
 .List {
-  padding: 10px 20px 0;
+  /* padding: 10px 20px 0; */
+  width: 100%;
+  margin-top: 5px;
 }
 
 .Wrapper {
+  position: relative;
   display: flex;
+  margin-top: 5px;
+}
+
+.Category {
+  position: absolute;
+  top: -1px;
+  left: 5px;
+  font-size: 13px;
 }
 
 .Balance {
-  margin-left: 5px;
-  font-weight: 700;
+  position: absolute;
+  top: -1px;
+  right: 5px;
+  font-size: 13px;
+}
+
+.TotalBg {
+  box-sizing: border-box;
+  top: 20px;
+  height: 20px;
+  width: 100%;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
+.TotalTitle {
+  position: absolute;
+  top: 19px;
+  left: 25px;
+  z-index: 1;
+}
+
+.TotalSum {
+  position: absolute;
+  top: 19px;
+  right: 25px;
+}
+
+.TotalExpense {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  height: 20px;
+  background-color: #dddddd;
+  border-radius: 5px;
+}
+
+.Expense {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  background-color: #dddddd;
+  border-radius: 5px;
 }
