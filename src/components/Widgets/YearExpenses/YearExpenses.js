@@ -57,14 +57,14 @@ function YearExpenses({currentMonth, transactions}) {
               onClick={monthHandler}
             >
               <div
-                className={classes.Expenses}
-                id={month}
-                style={{height: `${getExpensesPercent(month)}%`}}
-              ></div>
-              <div
                 className={classes.Incomes}
                 id={month}
                 style={{height: `${getIncomesPercent(month)}%`}}
+              ></div>
+              <div
+                className={classes.Expenses}
+                id={month}
+                style={{height: `${getExpensesPercent(month)}%`}}
               ></div>
               <p id={month}>{month.slice(0, 3)}</p>
             </div>
