@@ -25,8 +25,13 @@
   cursor: pointer;
 }
 
-.List div {
+.Expenses {
   background-color: #d3d3d3;
+}
+
+.Incomes {
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0) 49.9%, black 49.9%, black 60%, rgba(0, 0, 0, 0) 60%) fixed,linear-gradient(135deg, black 10%, rgba(0, 0, 0, 10%) 10%) fixed;
+  background-size: 0.3em 0.3em;
 }
 
 .List p {

@@ -12,15 +12,26 @@ function YearExpenses({currentMonth, transactions}) {
 
   const maxMonthExpense = 3000;
 
-  const getOverallPercent = (month) => {
-    const expense = transactions
+  const getExpensesPercent = (month) => {
+    const expenses = transactions
       .filter((transaction) => formatMonth(transaction.date) === month)
       .map((transaction) => transaction.expense ? transaction = +transaction.sum : transaction = null)
       .reduce((acc, sum) => acc + sum, 0);
 
-    let overallPercent = expense / maxMonthExpense * 100;
+    let expensesPercent = expenses / maxMonthExpense * 100;
 
-    return overallPercent === 0 ? 1 : overallPercent;
+    return expensesPercent === 0 ? 1 : expensesPercent;
+  }
+
+  const getIncomesPercent = (month) => {
+    const incomes = transactions
+      .filter((transaction) => formatMonth(transaction.date) === month)
+      .map((transaction) => !transaction.expense ? transaction = +transaction.sum : transaction = null)
+      .reduce((acc, sum) => acc + sum, 0);
+
+    let incomesPercent = incomes / maxMonthExpense * 100;
+
+    return incomesPercent === 0 ? 1 : incomesPercent;
   }
 
   const monthExpenses = [
@@ -45,7 +56,16 @@ function YearExpenses({currentMonth, transactions}) {
               id={month}
               onClick={monthHandler}
             >
-              <div id={month} style={{height: `${getOverallPercent(month)}%`}}></div>
+              <div
+                className={classes.Expenses}
+                id={month}
+                style={{height: `${getExpensesPercent(month)}%`}}
+              ></div>
+              <div
+                className={classes.Incomes}
+                id={month}
+                style={{height: `${getIncomesPercent(month)}%`}}
+              ></div>
               <p id={month}>{month.slice(0, 3)}</p>
             </div>
             ))

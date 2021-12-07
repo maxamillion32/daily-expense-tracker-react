@@ -41,6 +41,7 @@ function MonthExpenses({currentMonth, transactions}) {
   return (
     <>
       <section className={classes.MonthExpenses}>
+        <div className={classes.Total}></div>
         <h3>Expenses: -{sumExpenses} €</h3>
         <ul className={classes.List}>
           {categoriesForExpenses.map((category) => (
