@@ -1,31 +1,29 @@
 import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import classes from './YearOutcomes.module.css';
+import {useDispatch} from 'react-redux';
+import classes from './YearExpenses.module.css';
 import {formatMonth} from '../../../utils/utils';
 
 import {
   updateMonth,
-  selectAllTransactionsState
 } from '../../../reducers/transactions/transactions-slice'
 
-function YearOutcomes({currentMonth}) {
-  const allTransactions = useSelector(selectAllTransactionsState);
+function YearExpenses({currentMonth, transactions}) {
   const dispatch = useDispatch();
 
   const maxMonthExpense = 3000;
 
   const getOverallPercent = (month) => {
-    const outcome = allTransactions
+    const expense = transactions
       .filter((transaction) => formatMonth(transaction.date) === month)
-      .map((transaction) => transaction.outcome ? transaction = +transaction.sum : transaction = null)
+      .map((transaction) => transaction.expense ? transaction = +transaction.sum : transaction = null)
       .reduce((acc, sum) => acc + sum, 0);
 
-    let overallPercent = outcome / maxMonthExpense * 100;
+    let overallPercent = expense / maxMonthExpense * 100;
 
     return overallPercent === 0 ? 1 : overallPercent;
   }
 
-  const monthOutcomes = [
+  const monthExpenses = [
     'January', 'February', 'March',
     'April', 'May', 'June',
     'July', 'August', 'September',
@@ -38,9 +36,9 @@ function YearOutcomes({currentMonth}) {
 
   return (
     <>
-      <section className={classes.YearOutcomes}>
+      <section className={classes.YearExpenses}>
         <div className={classes.Wrapper}>
-          {monthOutcomes.map((month) => (
+          {monthExpenses.map((month) => (
             <div
               className={`${classes.List} ${month === currentMonth ? classes.Active : ''}`}
               key={month}
@@ -58,4 +56,4 @@ function YearOutcomes({currentMonth}) {
   )
 }
 
-export default YearOutcomes;
+export default YearExpenses;

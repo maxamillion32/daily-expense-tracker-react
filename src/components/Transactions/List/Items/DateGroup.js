@@ -11,7 +11,7 @@ function TransactionsItemsContainer({date, transactions}) {
         <TransactionItem
           categoryTitle={transaction.category.title}
           accountTitle={transaction.account.title}
-          outcome={transaction.outcome}
+          expense={transaction.expense}
           sum={transaction.sum}
           id={transaction.id}
           key={transaction.id}

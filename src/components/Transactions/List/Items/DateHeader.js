@@ -10,11 +10,11 @@ function TransactionsDateHeader({date, transactions}) {
   const transactionsDay = transactions
     .filter((transaction) => transaction.date === date);
   const expenseBalance = transactionsDay
-    .filter((transaction) => transaction.outcome === true)
+    .filter((transaction) => transaction.expense === true)
     .map((transaction) => transaction.sum)
     .reduce((acc, transaction) => acc + transaction, 0);
   const incomeBalance = transactionsDay
-    .filter((transaction) => transaction.outcome === false)
+    .filter((transaction) => transaction.expense === false)
     .map((transaction) => transaction.sum)
     .reduce((acc, transaction) => acc + transaction, 0);
   const overallBalance = Math.round((incomeBalance - expenseBalance) * 100) / 100;

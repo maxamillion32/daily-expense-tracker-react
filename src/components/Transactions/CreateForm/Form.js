@@ -164,7 +164,7 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
                 <Input
                   label={"Income"}
                   type="checkbox"
-                  name="outcome"
+                  name="expense"
                   onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
                 />
               </div>

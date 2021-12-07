@@ -5,7 +5,7 @@ import {deleteTransaction} from '../../../../reducers/transactions/transactions-
 import {CSSTransition} from 'react-transition-group';
 import classes from '../ListContainer.module.css';
 
-function TransactionsItem({categoryTitle, accountTitle, outcome, sum, id, ...rest}) {
+function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, ...rest}) {
   const dispatch = useDispatch();
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
 
@@ -42,7 +42,7 @@ function TransactionsItem({categoryTitle, accountTitle, outcome, sum, id, ...res
       >
         <div className={classes.TransactionsItemWrapper}>
           <p>{categoryTitle}</p>
-          <p>{outcome ? `-` : `+`}{sum} €</p>
+          <p>{expense ? `-` : `+`}{sum} €</p>
         </div>
         <div className={classes.TransactionsItemWrapper}>
           <p className={classes.TransactionsItemAccount}>{accountTitle}</p>

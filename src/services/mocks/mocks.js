@@ -50,10 +50,10 @@ const generateTransactions = (count, accounts, categories) => (Array(count).fill
     id: nanoid(MAX_ID_LENGTH),
     sum: getRandomInt(1, 500),
     date: getRandomDate(),
-    outcome: Boolean(Math.round(Math.random())),
+    expense: Boolean(Math.round(Math.random())),
     account: getRandomSubarray(accounts),
     category: getRandomSubarray(categories),
   }))
 );
 
-export const transactions = generateTransactions(20, accounts, categories);
+export const transactions = generateTransactions(100, accounts, categories);

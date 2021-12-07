@@ -24,7 +24,7 @@ export const transactionsSlice = createSlice({
       sum: '',
       date: new Date().toISOString().slice(0, -14),
       // date: '',
-      outcome: true,
+      expense: true,
       account: [],
       category: [],
     },
@@ -35,8 +35,8 @@ export const transactionsSlice = createSlice({
   reducers: {
     setUserInput: (state, action) => {
       let {name, value} = action.payload;
-      if (name === `outcome`) {
-        value = !state.newTransaction.outcome;
+      if (name === `expense`) {
+        value = !state.newTransaction.expense;
       }
       if (name === `sum`) {
         value = +value === 0 ? '' : +value;
@@ -83,7 +83,7 @@ export const transactionsSlice = createSlice({
           id: nanoid(MAX_ID_LENGTH),
           sum: '',
           date: new Date().toISOString().slice(0, -14),
-          outcome: true,
+          expense: true,
           account: [],
           category: [],
         },

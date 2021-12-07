@@ -66,7 +66,7 @@ function Menu({categories, accounts}) {
               to={'/budget'}
               className={isActiveLink}
           >
-            Analytics
+            Statistics
           </NavLink>
 
           <NavLink

@@ -4,7 +4,7 @@ import classes from './Settings.module.css';
 
 function Settings() {
   return (
-    <section className={classes.Analytics}>
+    <section className={classes.Settings}>
       <Dummy />
     </section>
   )

@@ -23,15 +23,15 @@ function Balance({transactions}) {
       window.removeEventListener('scroll', listenScrollEvent);
   }, []);
 
-  const sumOutcomes = transactions.map((transaction) => {
-      return transaction.outcome ? transaction = +transaction.sum : transaction = null;
+  const sumExpenses = transactions.map((transaction) => {
+      return transaction.expense ? transaction = +transaction.sum : transaction = null;
     }).reduce((a, b) => a + b, 0);
 
   const sumIncomes = transactions.map((item) => {
-    return !item.outcome ? item = +item.sum : item = null;
+    return !item.expense ? item = +item.sum : item = null;
   }).reduce((a, b) => a + b, 0);
 
-  const currentBalance = Math.round((sumIncomes - sumOutcomes) * 100) / 100;
+  const currentBalance = Math.round((sumIncomes - sumExpenses) * 100) / 100;
 
   return (
     <section className={balance}>
