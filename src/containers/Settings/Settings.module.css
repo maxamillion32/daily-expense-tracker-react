@@ -1,3 +1,6 @@
 .Settings {
-  padding: 20px 0;
+  /* padding: 20px 0; */
+  display: flex;
+  flex-grow: 1;
+  flex-direction: column;
 }

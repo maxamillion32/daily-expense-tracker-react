@@ -72,14 +72,14 @@ function MonthExpenses({currentMonth, transactions}) {
         <div className={classes.TotalBg}></div>
         <div className={classes.TotalExpense} style={{width: `${getTotalPercent(sumExpenses)}%`}}></div>
         <h4 className={classes.TotalTitle}>Expenses</h4>
-        <h4 className={classes.TotalSum}>-{sumExpenses} €</h4>
+        <h4 className={classes.TotalSum}>-{sumExpenses}€ out of 3000€</h4>
         <ul className={classes.List}>
           {categoriesForExpenses.map((category) => (
               <li className={classes.Wrapper} key={category}>
                 <div className={classes.TotalBg}></div>
                 <div className={classes.Expense} style={{width: `${getExpensesPercent(getExpenses(category))}%`}}></div>
                 <p className={classes.Category}>{`${getExpensesPercent(getExpenses(category))}% ${category}`}</p>
-                <p className={classes.Balance}>-{getExpenses(category)} €</p>
+                <p className={classes.Balance}>-{getExpenses(category)}€</p>
               </li>
             ))
           }
@@ -89,19 +89,20 @@ function MonthExpenses({currentMonth, transactions}) {
         <div className={classes.TotalBg}></div>
         <div className={classes.TotalExpense} style={{width: `${getTotalPercent(sumIncomes)}%`}}></div>
         <h4 className={classes.TotalTitle}>Incomes</h4>
-        <h4 className={classes.TotalSum}>+{sumIncomes} €</h4>
+        <h4 className={classes.TotalSum}>+{sumIncomes}€ out of 3000€</h4>
         <ul className={classes.List}>
           {categoriesForIncomes.map((category) => (
               <li className={classes.Wrapper} key={category}>
                 <div className={classes.TotalBg}></div>
                 <div className={classes.Expense} style={{width: `${getIncomesPercent(getIncomes(category))}%`}}></div>
                 <p className={classes.Category}>{`${getIncomesPercent(getIncomes(category))}% ${category}`}</p>
-                <p className={classes.Balance}>+{getIncomes(category)} €</p>
+                <p className={classes.Balance}>+{getIncomes(category)}€</p>
               </li>
             ))
           }
         </ul>
       </section>
+      {/* <section className={classes.MonthExpenses} style={{flex: '1 1 auto'}}></section> */}
     </>
   )
 }

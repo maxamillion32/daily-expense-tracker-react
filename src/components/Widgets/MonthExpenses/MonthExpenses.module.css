@@ -4,19 +4,19 @@
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  margin-bottom: 20px;
+  /* margin-bottom: 1px; */
   padding: 20px 20px;
-  margin: 20px;
-  background-color: #f1f1f1;
+  /* margin: 20px 0; */
+  /* background-color: #f1f1f1; */
   border: none;
-  /* border: 1px dashed gray; */
-  border-radius: 5px;
+  border-bottom: 1px dashed #d4d4d4;
+  /* border-radius: 5px; */
 }
 
 .List {
   /* padding: 10px 20px 0; */
   width: 100%;
-  margin-top: 5px;
+  /* margin-top: 2px; */
 }
 
 .Wrapper {
@@ -27,14 +27,14 @@
 
 .Category {
   position: absolute;
-  top: -1px;
+  top: 2px;
   left: 5px;
   font-size: 13px;
 }
 
 .Balance {
   position: absolute;
-  top: -1px;
+  top: 2px;
   right: 5px;
   font-size: 13px;
 }
@@ -42,22 +42,24 @@
 .TotalBg {
   box-sizing: border-box;
   top: 20px;
-  height: 20px;
+  height: 25px;
   width: 100%;
-  background-color: #fff;
-  border-radius: 5px;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0) 49.9%, #d8d8d8 49.9%, #f1f1f1 60%, rgba(0, 0, 0, 0) 60%) fixed,linear-gradient(135deg, #f1f1f1 10%, rgba(0, 0, 0, 0) 10%) fixed;
+  background-size: 0.3em 0.3em;
+  /* background-color: #fff; */
+  /* border-radius: 5px; */
 }
 
 .TotalTitle {
   position: absolute;
-  top: 19px;
+  top: 22px;
   left: 25px;
   z-index: 1;
 }
 
 .TotalSum {
   position: absolute;
-  top: 19px;
+  top: 22px;
   right: 25px;
 }
 
@@ -65,16 +67,18 @@
   position: absolute;
   top: 20px;
   left: 20px;
-  height: 20px;
-  background-color: #dddddd;
-  border-radius: 5px;
+  height: 25px;
+  background-color: #d9d9d9;
+  opacity: .8;
+  /* border-radius: 5px; */
 }
 
 .Expense {
   position: absolute;
   top: 0;
   left: 0;
-  height: 20px;
-  background-color: #dddddd;
-  border-radius: 5px;
+  height: 25px;
+  background-color: #d9d9d9;
+  opacity: .8;
+  /* border-radius: 5px; */
 }
