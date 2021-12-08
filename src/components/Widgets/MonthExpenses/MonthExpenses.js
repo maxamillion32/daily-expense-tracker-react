@@ -15,7 +15,6 @@ function MonthExpenses({currentMonth, transactions}) {
   const sumExpenses = filteredTransactions.map((transaction) => {
       return transaction.expense ? transaction = +transaction.sum : transaction = null;
     }).reduce((acc, sum) => acc + sum, 0);
-  console.log(`🚀 ~ file: MonthExpenses.js ~ line 18 ~ sumExpenses ~ sumExpenses`, sumExpenses);
 
   const sumIncomes = filteredTransactions.map((item) => {
     return !item.expense ? item = +item.sum : item = null;
@@ -24,7 +23,6 @@ function MonthExpenses({currentMonth, transactions}) {
   const sumExpensesPerYear = transactions.map((transaction) => {
       return transaction.expense ? transaction = +transaction.sum : transaction = null;
     }).reduce((acc, sum) => acc + sum, 0);
-  console.log(`🚀 ~ file: MonthExpenses.js ~ line 27 ~ sumExpensesPerYear ~ sumExpensesPerYear`, sumExpensesPerYear);
 
   const sumIncomesPerYear = transactions.map((item) => {
     return !item.expense ? item = +item.sum : item = null;
@@ -79,6 +77,28 @@ function MonthExpenses({currentMonth, transactions}) {
     return expensesPercent === 0 ? 1 : expensesPercent;
   }
 
+  const getAboveExpensesPercent = (balance) => {
+    const percent = (balance / (sumExpensesPerYear / 12) * 100);
+    let expensesPercent = 0;
+
+    if (percent > 100) {
+      return expensesPercent = percent - 100;
+    }
+
+    return expensesPercent;
+  }
+
+  const getAboveIncomesPercent = (balance) => {
+    const percent = (balance / (sumIncomesPerYear / 12) * 100);
+    let expensesPercent = 0;
+
+    if (percent > 100) {
+      return expensesPercent = percent - 100;
+    }
+
+    return expensesPercent;
+  }
+
   const getAverageExpense = (expense) => {
     const averageValue = averageExpense - sumExpenses;
 
@@ -98,6 +118,10 @@ function MonthExpenses({currentMonth, transactions}) {
             width: '100%',
             display: 'flex'
           }}>
+          <div
+            className={classes.TotalBg1}
+            style={{width: `${getAboveExpensesPercent(sumExpenses)}%`}}
+          ></div>
           <div
             className={classes.TotalExpense}
             style={{width: `${getTotalPercent(sumExpenses)}%`}}
@@ -137,6 +161,10 @@ function MonthExpenses({currentMonth, transactions}) {
             width: '100%',
             display: 'flex'
           }}>
+          <div
+            className={classes.TotalBg1}
+            style={{width: `${getAboveIncomesPercent(sumIncomes)}%`}}
+          ></div>
           <div
             className={classes.TotalExpense}
             style={{width: `${getTotalPercent(sumIncomes)}%`}}
