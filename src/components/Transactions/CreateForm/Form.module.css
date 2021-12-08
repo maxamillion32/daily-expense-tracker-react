@@ -2,6 +2,7 @@
   position: sticky;
   bottom: 62px;
   margin-top: auto;
+  z-index: 100;
 }
 
 .form input,

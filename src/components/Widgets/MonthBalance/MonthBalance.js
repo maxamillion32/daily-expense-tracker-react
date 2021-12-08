@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './MonthBalance.module.css';
 import {formatMonth} from '../../../utils/utils'
 
-function MonthBalance({currentMonth, transactions}) {
+function WidgetsMonthBalance({currentMonth, transactions}) {
   const filteredTransactions = transactions
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
 
@@ -31,4 +31,4 @@ function MonthBalance({currentMonth, transactions}) {
   )
 }
 
-export default MonthBalance;
+export default WidgetsMonthBalance;

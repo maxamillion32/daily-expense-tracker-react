@@ -1,92 +1,49 @@
 import React from 'react';
-import classes from './MonthExpenses.module.css';
+import Item from './Items/Item'
 import {formatMonth} from '../../../utils/utils'
 
-function MonthExpenses({currentMonth, transactions}) {
+function WidgetsMonthExpenses({currentMonth, transactions}) {
   const filteredTransactions = transactions
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
-  const categoriesForExpenses = [...new Set(filteredTransactions
-    .filter((transaction) => transaction.expense ? transaction.sum !== 0 : transaction = null)
+
+  const getCategories = (transactions, type) => {
+    return [...new Set(transactions
+    .filter((transaction) => (type === 'expenses' ? transaction.expense : !transaction.expense)
+      ? transaction.sum !== 0
+      : transaction = null)
     .map(transaction => transaction.category.title))];
-  const categoriesForIncomes = [...new Set(filteredTransactions
-    .filter((transaction) => !transaction.expense ? transaction.sum !== 0 : transaction = null)
-    .map(transaction => transaction.category.title))];
-
-  const sumExpenses = filteredTransactions.map((transaction) => {
-      return transaction.expense ? transaction = +transaction.sum : transaction = null;
-    }).reduce((acc, sum) => acc + sum, 0);
-
-  const sumIncomes = filteredTransactions.map((item) => {
-    return !item.expense ? item = +item.sum : item = null;
-  }).reduce((acc, sum) => acc + sum, 0);
-
-  const sumExpensesPerYear = transactions.map((transaction) => {
-      return transaction.expense ? transaction = +transaction.sum : transaction = null;
-    }).reduce((acc, sum) => acc + sum, 0);
-
-  const sumIncomesPerYear = transactions.map((item) => {
-    return !item.expense ? item = +item.sum : item = null;
-  }).reduce((acc, sum) => acc + sum, 0);
-
-  const averageExpense = Math.round(((sumExpensesPerYear * 100 / 12 / 100)));
-  const averageIncome = Math.round(((sumIncomesPerYear * 100 / 12 / 100)));
-
-  const getExpenses = (category) => {
-    const expense = filteredTransactions
-      .filter((transaction) => transaction.category.title === category)
-      .map((transaction) => transaction.expense ? transaction = +transaction.sum : transaction = null)
-      .reduce((acc, sum) => acc + sum, 0);
-
-      return expense;
   }
 
-  const getIncomes = (category) => {
-    const expense = filteredTransactions
-      .filter((transaction) => transaction.category.title === category)
-      .map((transaction) => !transaction.expense ? transaction = +transaction.sum : transaction = null)
-      .reduce((acc, sum) => acc + sum, 0);
-
-      return expense;
+  const getSum = (transactions, type) => {
+      return transactions
+        .map((transaction) => (type === 'expenses' ? transaction.expense : !transaction.expense)
+        ? transaction = +transaction.sum
+        : transaction = null)
+        .reduce((acc, sum) => acc + sum, 0);
   }
 
-  const getExpensesPercent = (balance) => {
-    let percent = (balance / sumExpenses * 100);
+  const averageExpense = Math.round(((getSum(transactions, 'expenses') * 100 / 12 / 100)));
+  const averageIncome = Math.round(((getSum(transactions, 'incomes') * 100 / 12 / 100)));
 
+  const getTransactionPercent = (balance, sum) => {
+    let percent = (balance / sum * 100);
     percent = Math.round(percent);
-
     let expensesPercent = percent >= 100 ? 100 : percent;
 
     return expensesPercent === 0 ? 1 : expensesPercent;
   }
 
-  const getIncomesPercent = (balance) => {
-    let percent = (balance / sumIncomes * 100);
-
-    percent = Math.round(percent);
-
-    let expensesPercent = percent >= 100 ? 100 : percent;
-
-    return expensesPercent === 0 ? 1 : expensesPercent;
-  }
-
-  const getTotalExpensesPercent = (balance) => {
-    const percent = (balance / (sumExpensesPerYear / 12) * 100);
-
-    let expensesPercent = percent >= 100 ? 100 : percent;
+  const getTotalPercent = (balance, sum) => {
+    const percent = (balance / (getSum(transactions, 'expenses') / 12) * 100);
+    let expensesPercent = percent >= 100
+      ? 100
+      : percent;
 
     return expensesPercent === 0 ? 1 : expensesPercent;
   }
 
-  const getTotalIncomesPercent = (balance) => {
-    const percent = (balance / (sumIncomesPerYear / 12) * 100);
-
-    let expensesPercent = percent >= 100 ? 100 : percent;
-
-    return expensesPercent === 0 ? 1 : expensesPercent;
-  }
-
-  const getAboveExpensesPercent = (balance) => {
-    const percent = (balance / (sumExpensesPerYear / 12) * 100);
+  const getAbovePercent = (balance, sum) => {
+    const percent = (balance / (sum / 12) * 100);
     let expensesPercent = 0;
 
     if (percent > 100) {
@@ -96,120 +53,48 @@ function MonthExpenses({currentMonth, transactions}) {
     return expensesPercent;
   }
 
-  const getAboveIncomesPercent = (balance) => {
-    const percent = (balance / (sumIncomesPerYear / 12) * 100);
-    let expensesPercent = 0;
+  const getAveragePercent = (expense, sum) => {
+    const averageValue = expense - sum;
 
-    if (percent > 100) {
-      return expensesPercent = percent - 100;
-    }
-
-    return expensesPercent;
+    return averageValue >= 0
+      ? `${averageValue}€ up to average`
+      : `${Math.abs(averageValue)}€ above to average`;
   }
 
-  const getAverageExpense = (expense) => {
-    const averageValue = averageExpense - sumExpenses;
+  const getBalance = (category, title) => {
+    const balance = filteredTransactions
+      .filter((transaction) => transaction.category.title === category)
+      .map((transaction) => (title === 'Incomes' ? !transaction.expense : transaction.expense) ? transaction = +transaction.sum : transaction = null)
+      .reduce((acc, sum) => acc + sum, 0);
 
-    return averageValue >= 0 ? `${averageValue}€ up to average` : `${Math.abs(averageValue)}€ above to average`;
-  }
-
-  const getAverageIncome = (expense) => {
-    const averageValue = averageIncome - sumIncomes;
-
-    return averageValue >= 0 ? `${averageValue}€ up to average` : `${Math.abs(averageValue)}€ above to average`;
+      return balance;
   }
 
   return (
     <>
-      <section className={classes.MonthExpenses}>
-        <div style={{
-            width: '100%',
-            display: 'flex'
-          }}>
-          <div
-            className={classes.TotalBg1}
-            style={{width: `${getAboveExpensesPercent(sumExpenses)}%`}}
-          ></div>
-          <div
-            className={classes.TotalExpense}
-            style={{width: `${getTotalExpensesPercent(sumExpenses)}%`}}
-          ></div>
-          <div
-            className={classes.TotalBg}
-            style={{width: `${100 - getTotalExpensesPercent(sumExpenses)}%`}}
-          ></div>
-        </div>
-        <h4 className={classes.TotalTitle}>Expenses</h4>
-        <div className={classes.TotalSumWrapper}>
-          <h4 className={classes.TotalSumAverage}>{getAverageExpense(averageExpense)}</h4>
-          <h4 className={classes.TotalSum}>-{sumExpenses}€</h4>
-        </div>
-        <ul className={classes.List}>
-          {categoriesForExpenses.map((category) => (
-              <li className={classes.Wrapper} key={category}>
-                <div className={classes.TotalBg}></div>
-                <div
-                  className={classes.Expense}
-                  style={{width: `${getExpensesPercent(getExpenses(category))}%`}}>
-                </div>
-                <p className={classes.Category}>
-                  {`${getExpensesPercent(getExpenses(category))}% ${category}`}
-                </p>
-                <div className={classes.AverageWrapper}>
-                  <p className={classes.TotalSumAverage}>0€ up to average</p>
-                  <p className={classes.Balance}>-{getExpenses(category)}€</p>
-                </div>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-      <section className={classes.MonthExpenses}>
-        <div style={{
-            width: '100%',
-            display: 'flex'
-          }}>
-          <div
-            className={classes.TotalBg2}
-            style={{width: `${getAboveIncomesPercent(sumIncomes)}%`}}
-          ></div>
-          <div
-            className={classes.TotalExpense}
-            style={{width: `${getTotalIncomesPercent(sumIncomes)}%`}}
-          ></div>
-          <div
-            className={classes.TotalBg}
-            style={{width: `${100 - getTotalIncomesPercent(sumIncomes)}%`}}
-          ></div>
-        </div>
-        <h4 className={classes.TotalTitle}>Incomes</h4>
-        <div className={classes.TotalSumWrapper}>
-          <h4 className={classes.TotalSumAverage}>{getAverageIncome(averageIncome)}</h4>
-          <h4 className={classes.TotalSum}>+{sumIncomes}€</h4>
-        </div>
-        <ul className={classes.List}>
-          {categoriesForIncomes.map((category) => (
-              <li className={classes.Wrapper} key={category}>
-                <div className={classes.TotalBg}></div>
-                <div
-                  className={classes.Expense}
-                  style={{width: `${getIncomesPercent(getIncomes(category))}%`}}>
-                </div>
-                <p className={classes.Category}>
-                  {`${getIncomesPercent(getIncomes(category))}% ${category}`}
-                </p>
-                <div className={classes.AverageWrapper}>
-                  <p className={classes.TotalSumAverage}>0€ up to average</p>
-                  <p className={classes.Balance}>+{getIncomes(category)}€</p>
-                </div>
-              </li>
-            ))
-          }
-        </ul>
-      </section>
-      {/* <section className={classes.MonthExpenses} style={{flex: '1 1 auto'}}></section> */}
+      <Item
+        categories={getCategories(filteredTransactions, 'expenses')}
+        abovePercent={getAbovePercent(getSum(filteredTransactions, 'expenses'), getSum(transactions, 'expenses'))}
+        totalPercent={getTotalPercent(getSum(filteredTransactions, 'expenses'), getSum(transactions, 'expenses'))}
+        averagePercent={getAveragePercent(averageExpense, getSum(filteredTransactions, 'expenses'))}
+        transactionPercent={getTransactionPercent}
+        transactionsSum={getSum(filteredTransactions, 'expenses')}
+        title={"Expenses"}
+        balance={getBalance}
+      />
+
+      <Item
+        categories={getCategories(filteredTransactions, 'incomes')}
+        abovePercent={getAbovePercent(getSum(filteredTransactions, 'incomes'), getSum(transactions, 'incomes'))}
+        totalPercent={getTotalPercent(getSum(filteredTransactions, 'incomes'), getSum(transactions, 'incomes'))}
+        averagePercent={getAveragePercent(averageIncome, getSum(filteredTransactions, 'incomes'))}
+        transactionPercent={getTransactionPercent}
+        transactionsSum={getSum(filteredTransactions, 'incomes')}
+        title={"Incomes"}
+        balance={getBalance}
+      />
     </>
   )
 }
 
-export default MonthExpenses;
+export default WidgetsMonthExpenses;

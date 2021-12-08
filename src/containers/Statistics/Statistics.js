@@ -1,8 +1,8 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
-import MonthBalance from '../../components/Widgets/MonthBalance/MonthBalance';
-import MonthExpenses from '../../components/Widgets/MonthExpenses/MonthExpenses';
-import YearExpenses from '../../components/Widgets/YearExpenses/YearExpenses';
+import WidgetsMonthBalance from '../../components/Widgets/MonthBalance/MonthBalance';
+import WidgetsMonthExpenses from '../../components/Widgets/MonthExpenses/MonthExpenses';
+import WidgetsYearExpenses from '../../components/Widgets/YearExpenses/YearExpenses';
 import classes from './Statistics.module.css';
 import {currentMonth} from '../../reducers/transactions/transactions-slice';
 import {
@@ -22,9 +22,9 @@ function Statistics() {
 
   return (
     <section className={classes.Statistics}>
-      <MonthBalance currentMonth={month} transactions={allTransactions} />
-      <YearExpenses currentMonth={month} transactions={allTransactions} />
-      <MonthExpenses currentMonth={month} transactions={allTransactions} />
+      <WidgetsMonthBalance currentMonth={month} transactions={allTransactions} />
+      <WidgetsYearExpenses currentMonth={month} transactions={allTransactions} />
+      <WidgetsMonthExpenses currentMonth={month} transactions={allTransactions} />
     </section>
   )
 }

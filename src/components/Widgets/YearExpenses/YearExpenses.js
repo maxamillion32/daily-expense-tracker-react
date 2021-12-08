@@ -7,7 +7,7 @@ import {
   updateMonth,
 } from '../../../reducers/transactions/transactions-slice'
 
-function YearExpenses({currentMonth, transactions}) {
+function WidgetsYearExpenses({currentMonth, transactions}) {
   const dispatch = useDispatch();
 
   const maxMonthExpense = 3000;
@@ -80,4 +80,4 @@ function YearExpenses({currentMonth, transactions}) {
   )
 }
 
-export default YearExpenses;
+export default WidgetsYearExpenses;

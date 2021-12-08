@@ -2,7 +2,7 @@ import React from 'react';
 import TransactionItem from "./Item";
 import {TransitionGroup} from 'react-transition-group';
 
-function TransactionsItemsContainer({date, transactions}) {
+function TransactionsItemsDateGroup({date, transactions}) {
   const transactionsDay = transactions.filter((transaction) => transaction.date === date);
 
   return (
@@ -21,4 +21,4 @@ function TransactionsItemsContainer({date, transactions}) {
   );
 }
 
-export default TransactionsItemsContainer;
+export default TransactionsItemsDateGroup;
