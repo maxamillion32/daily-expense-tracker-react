@@ -33,15 +33,14 @@
 }
 
 .Balance {
-  position: absolute;
+  /* position: absolute;
   top: 2px;
-  right: 5px;
+  right: 5px; */
   font-size: 13px;
 }
 
 .TotalBg {
   box-sizing: border-box;
-  top: 20px;
   height: 25px;
   width: 100%;
   background: linear-gradient(135deg, rgba(0, 0, 0, 0) 49.9%, #d8d8d8 49.9%, #f1f1f1 60%, rgba(0, 0, 0, 0) 60%) fixed,linear-gradient(135deg, #f1f1f1 10%, rgba(0, 0, 0, 0) 10%) fixed;
@@ -57,14 +56,34 @@
   z-index: 1;
 }
 
-.TotalSum {
+.TotalSumWrapper {
   position: absolute;
   top: 22px;
   right: 25px;
+  display: flex;
+}
+
+.TotalSumAverage {
+  margin-right: 10px;
+  font-size: 12px;
+  font-weight: 400;
+  color: gray;
+}
+
+.TotalSum {
+  /* position: absolute;
+  top: 22px;
+  right: 25px; */
+}
+
+.AverageWrapper {
+  position: absolute;
+  right: 5px;
+  display: flex;
 }
 
 .TotalExpense {
-  position: absolute;
+  /* position: absolute; */
   top: 20px;
   left: 20px;
   height: 25px;
