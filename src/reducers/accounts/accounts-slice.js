@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 import AccountDataService from '../../services/account.service';
+import {accounts} from '../../services/mocks/mocks';
 
 export const loadAccounts = createAsyncThunk(
   'accounts/loadData',
@@ -14,7 +15,6 @@ export const loadAccounts = createAsyncThunk(
 export const postAccounts = createAsyncThunk(
   'accounts/addData',
   async (newAccount) => {
-    console.log(`🚀 ~ file: accounts-slice.js ~ line 17 ~ newAccount`, newAccount);
     const data = await AccountDataService.create(newAccount);
     const json = await data;
     return json;
@@ -24,7 +24,7 @@ export const postAccounts = createAsyncThunk(
 export const accountsSlice = createSlice({
   name: "accounts",
   initialState: {
-    allAccounts: [],
+    allAccounts: accounts,
     newAccount: {
       title: ``,
       balance: 0,

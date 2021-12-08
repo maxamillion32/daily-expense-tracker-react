@@ -1,13 +1,13 @@
-import React, {useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import React from 'react';
+import {useSelector} from 'react-redux';
 
 import {
-  loadTransactions,
+  // loadTransactions,
   selectFilteredTransactions,
   selectAllTransactionsState
 } from '../../reducers/transactions/transactions-slice'
-import {loadCategories} from '../../reducers/categories/categories-slice'
-import {loadAccounts} from '../../reducers/accounts/accounts-slice'
+// import {loadCategories} from '../../reducers/categories/categories-slice'
+// import {loadAccounts} from '../../reducers/accounts/accounts-slice'
 
 import Search from '../../components/Search/Search';
 import Balance from '../../components/Balance/Balance';
@@ -16,14 +16,14 @@ import TransactionsListContainer from '../../components/Transactions/List/ListCo
 function Transactions() {
   const allTransactions = useSelector(selectAllTransactionsState);
   const filteredTransactions = useSelector(selectFilteredTransactions);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(loadTransactions());
-    dispatch(loadCategories());
-    dispatch(loadAccounts());
-    // eslint-disable-next-line
-  }, []);
+  // useEffect(() => {
+  //   dispatch(loadTransactions());
+  //   dispatch(loadCategories());
+  //   dispatch(loadAccounts());
+  //   // eslint-disable-next-line
+  // }, []);
 
   return (
     <>

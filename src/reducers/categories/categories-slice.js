@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 import CategoryDataService from '../../services/category.service';
+import {categories} from '../../services/mocks/mocks';
 
 export const loadCategories = createAsyncThunk(
   'categories/loadData',
@@ -23,7 +24,7 @@ export const postCategories = createAsyncThunk(
 export const categoriesSlice = createSlice({
   name: "categories",
   initialState: {
-    allCategories: [],
+    allCategories: categories,
     newCategory: {
       title: ``,
     },

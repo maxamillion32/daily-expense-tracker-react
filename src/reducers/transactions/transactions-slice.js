@@ -3,6 +3,7 @@ import {nanoid} from 'nanoid';
 import TransactionDataService from '../../services/transaction.service';
 import {selectSearchTerm} from '../search/search-slice';
 import {formatMonth} from '../../utils/utils'
+import {transactions} from '../../services/mocks/mocks';
 
 const MAX_ID_LENGTH = 6;
 
@@ -18,7 +19,7 @@ export const loadTransactions = createAsyncThunk(
 export const transactionsSlice = createSlice({
   name: "transactions",
   initialState: {
-    allTransactions: [],
+    allTransactions: transactions,
     newTransaction: {
       id: nanoid(MAX_ID_LENGTH),
       sum: '',
