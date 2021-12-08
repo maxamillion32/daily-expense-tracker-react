@@ -69,8 +69,16 @@ function MonthExpenses({currentMonth, transactions}) {
     return expensesPercent === 0 ? 1 : expensesPercent;
   }
 
-  const getTotalPercent = (balance) => {
+  const getTotalExpensesPercent = (balance) => {
     const percent = (balance / (sumExpensesPerYear / 12) * 100);
+
+    let expensesPercent = percent >= 100 ? 100 : percent;
+
+    return expensesPercent === 0 ? 1 : expensesPercent;
+  }
+
+  const getTotalIncomesPercent = (balance) => {
+    const percent = (balance / (sumIncomesPerYear / 12) * 100);
 
     let expensesPercent = percent >= 100 ? 100 : percent;
 
@@ -124,11 +132,11 @@ function MonthExpenses({currentMonth, transactions}) {
           ></div>
           <div
             className={classes.TotalExpense}
-            style={{width: `${getTotalPercent(sumExpenses)}%`}}
+            style={{width: `${getTotalExpensesPercent(sumExpenses)}%`}}
           ></div>
           <div
             className={classes.TotalBg}
-            style={{width: `${100 - getTotalPercent(sumExpenses)}%`}}
+            style={{width: `${100 - getTotalExpensesPercent(sumExpenses)}%`}}
           ></div>
         </div>
         <h4 className={classes.TotalTitle}>Expenses</h4>
@@ -162,16 +170,16 @@ function MonthExpenses({currentMonth, transactions}) {
             display: 'flex'
           }}>
           <div
-            className={classes.TotalBg1}
+            className={classes.TotalBg2}
             style={{width: `${getAboveIncomesPercent(sumIncomes)}%`}}
           ></div>
           <div
             className={classes.TotalExpense}
-            style={{width: `${getTotalPercent(sumIncomes)}%`}}
+            style={{width: `${getTotalIncomesPercent(sumIncomes)}%`}}
           ></div>
           <div
             className={classes.TotalBg}
-            style={{width: `${100 - getTotalPercent(sumIncomes)}%`}}
+            style={{width: `${100 - getTotalIncomesPercent(sumIncomes)}%`}}
           ></div>
         </div>
         <h4 className={classes.TotalTitle}>Incomes</h4>
