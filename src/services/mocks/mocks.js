@@ -4,7 +4,7 @@ export const categories = [
   {id: 1, title: `Salary`},
   {id: 2, title: `Rent`},
   {id: 3, title: `Groceries`},
-  {id: 4, title: `Transportation & parking fees`},
+  {id: 4, title: `Parking fees`},
   {id: 5, title: `Clothing & shoes`},
   {id: 6, title: `Family`},
   {id: 7, title: `Coffee`},

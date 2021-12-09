@@ -1,5 +1,4 @@
-.MonthExpenses {
-  position: relative;
+.MonthExpensesItem {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -11,6 +10,16 @@
   border: none;
   border-bottom: 1px dashed #d4d4d4;
   /* border-radius: 5px; */
+}
+
+.IndicatorWrapper {
+  width: 100%;
+  display: flex;
+}
+
+.Indicator {
+  width: 100%;
+  display: flex;
 }
 
 .List {
@@ -25,7 +34,7 @@
   margin-top: 5px;
 }
 
-.Category {
+.CategoryTitle {
   position: absolute;
   top: 5px;
   left: 10px;
@@ -39,7 +48,7 @@
   font-size: 13px;
 }
 
-.TotalBg {
+.IndicatorTotal {
   box-sizing: border-box;
   height: 30px;
   width: 100%;
@@ -49,7 +58,7 @@
   /* border-radius: 5px; */
 }
 
-.TotalBg1 {
+.IndicatorExpenses {
   box-sizing: border-box;
   height: 30px;
   width: 100%;
@@ -59,7 +68,7 @@
   /* border-radius: 5px; */
 }
 
-.TotalBg2 {
+.IndicatorIncomes {
   box-sizing: border-box;
   height: 30px;
   width: 100%;
@@ -74,11 +83,12 @@
   top: 24px;
   left: 30px;
   z-index: 1;
+  font-weight: 700;
 }
 
 .TotalSumWrapper {
   position: absolute;
-  top: 24px;
+  top: 4px;
   right: 30px;
   display: flex;
 }
@@ -103,7 +113,7 @@
   display: flex;
 }
 
-.TotalExpense {
+.TotalExpenses {
   /* position: absolute; */
   top: 20px;
   left: 20px;
