@@ -15,6 +15,14 @@ function WidgetsMonthExpensesIndicator({
 
         {/* Indicator */}
         <div
+          className={classes.TotalExpenses}
+          style={{width: `${totalPercent}%`}}
+        ></div>
+        <div
+          className={classes.IndicatorTotal}
+          style={{width: `${100 - totalPercent}%`}}
+        ></div>
+        <div
           className={
               `${
                 type === 'incomes'
@@ -23,14 +31,6 @@ function WidgetsMonthExpensesIndicator({
               }`
             }
           style={{width: `${abovePercent}%`}}
-        ></div>
-        <div
-          className={classes.TotalExpenses}
-          style={{width: `${totalPercent}%`}}
-        ></div>
-        <div
-          className={classes.IndicatorTotal}
-          style={{width: `${100 - totalPercent}%`}}
         ></div>
 
         {/* Contents */}

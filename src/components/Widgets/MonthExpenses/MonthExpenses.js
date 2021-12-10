@@ -72,7 +72,7 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
     let expensesPercent = 0;
 
     if (percent > 100) {
-      expensesPercent = percent - 100
+      expensesPercent = percent - 100;
       return expensesPercent ;
     }
 
@@ -83,8 +83,8 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
     const averageValue =  (expense - sum).toFixed(2);
 
     return averageValue >= 0
-      ? `${averageValue}€ up to average`
-      : `${Math.abs(averageValue)}€ above to average`;
+      ? `${averageValue}€ below typical`
+      : `${Math.abs(averageValue)}€ above typical`;
   }
 
   const getAveragePercentPerCategory = (category, type) => {
@@ -94,8 +94,8 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
     const averageValue = ((balancePerCategory / 12) - transactionsSumPerCategory).toFixed(2);
 
     return averageValue >= 0
-      ? `${averageValue}€ up to average`
-      : `${averageValue}€ above to average`;
+      ? `${averageValue}€ below typical`
+      : `${Math.abs(averageValue)}€ above typical`;
   }
 
   const getBalance = (category, type, items = filteredTransactions) => {
