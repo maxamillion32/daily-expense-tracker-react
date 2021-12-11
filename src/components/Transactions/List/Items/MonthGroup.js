@@ -1,10 +1,12 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {TransitionGroup} from 'react-transition-group';
 import TransactionsItemsDateGroupWrapper from './DateGroupWrapper';
 import {formatMonth} from "../../../../utils/utils";
 import classes from "../ListContainer.module.css";
+import {TransactionsContext} from "../../../../containers/Transactions/Transactions";
 
-function TransactionsItemsMonthGroup({month, transactions}) {
+function TransactionsItemsMonthGroup({month}) {
+  const transactions = useContext(TransactionsContext);
   const transactionsDates = transactions
     .filter((transaction) => formatMonth(transaction.date) === month)
     .map((transaction) => transaction.date);
@@ -18,7 +20,6 @@ function TransactionsItemsMonthGroup({month, transactions}) {
           (
             <TransactionsItemsDateGroupWrapper
               date={transactionDate}
-              transactions={transactions}
               key={transactionDate}
             />
           )

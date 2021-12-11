@@ -118,6 +118,7 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
         averagePercent={getAveragePercent(averageExpense, getSum(filteredTransactions, 'expenses'))}
         averagePercentPerCategory={getAveragePercentPerCategory}
         transactionPercent={getTransactionPercent}
+        // transactionsSum={getSum(filteredTransactions, 'expenses')}
         transactionsSum={getSum(filteredTransactions, 'expenses')}
         type={"expenses"}
         title={"Expenses"}

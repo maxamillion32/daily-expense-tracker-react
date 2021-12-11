@@ -12,11 +12,15 @@ import {
 import Search from '../../components/Search/Search';
 import Balance from '../../components/Balance/Balance';
 import TransactionsListContainer from '../../components/Transactions/List/ListContainer';
+// import { transactions } from '../../services/mocks/mocks';
+
+export const TransactionsContext = React.createContext();
 
 function Transactions() {
   const allTransactions = useSelector(selectAllTransactionsState);
   const filteredTransactions = useSelector(selectFilteredTransactions);
   // const dispatch = useDispatch();
+
 
   // useEffect(() => {
   //   dispatch(loadTransactions());
@@ -29,7 +33,9 @@ function Transactions() {
     <>
       <Balance transactions={allTransactions} />
       <Search />
-      <TransactionsListContainer transactions={filteredTransactions} />
+      <TransactionsContext.Provider value={filteredTransactions}>
+        <TransactionsListContainer />
+      </TransactionsContext.Provider>
     </>
   );
 }

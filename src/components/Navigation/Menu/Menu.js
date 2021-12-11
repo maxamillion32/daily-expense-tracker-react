@@ -63,7 +63,7 @@ function Menu({categories, accounts}) {
           </NavLink>
 
           <NavLink
-              to={'/budget'}
+              to={'/statistics'}
               className={isActiveLink}
           >
             Statistics

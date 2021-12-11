@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import classes from '../ListContainer.module.css';
 import {CSSTransition} from 'react-transition-group';
 
 import TransactionItemsDateGroup from './DateGroup';
 import TransactionsDateHeader from './DateHeader';
+import {TransactionsContext} from "../../../../containers/Transactions/Transactions";
 
-function TransactionsItemsDateGroupWrapper({date, transactions, ...rest}) {
+function TransactionsItemsDateGroupWrapper({date, ...rest}) {
+  const transactions = useContext(TransactionsContext);
   const nodeRef = React.useRef(null);
 
   return (
