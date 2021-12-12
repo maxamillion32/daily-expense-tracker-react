@@ -1,13 +1,15 @@
-import React, {useContext} from 'react';
-import classes from '../ListContainer.module.css';
+import React from 'react';
+import {useSelector} from 'react-redux';
 import {CSSTransition} from 'react-transition-group';
+
+import {selectFilteredTransactions} from '../../../../reducers/transactions/transactions-slice'
+import classes from '../ListContainer.module.css';
 
 import TransactionItemsDateGroup from './DateGroup';
 import TransactionsDateHeader from './DateHeader';
-import {TransactionsContext} from "../../../../containers/Transactions/Transactions";
 
 function TransactionsItemsDateGroupWrapper({date, ...rest}) {
-  const transactions = useContext(TransactionsContext);
+  const transactions = useSelector(selectFilteredTransactions);
   const nodeRef = React.useRef(null);
 
   return (

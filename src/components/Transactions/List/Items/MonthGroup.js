@@ -1,12 +1,14 @@
-import React, {useContext} from 'react';
+import React from 'react';
+import {useSelector} from 'react-redux';
 import {TransitionGroup} from 'react-transition-group';
+
+import {selectFilteredTransactions} from '../../../../reducers/transactions/transactions-slice'
 import TransactionsItemsDateGroupWrapper from './DateGroupWrapper';
 import {formatMonth} from "../../../../utils/utils";
 import classes from "../ListContainer.module.css";
-import {TransactionsContext} from "../../../../containers/Transactions/Transactions";
 
 function TransactionsItemsMonthGroup({month}) {
-  const transactions = useContext(TransactionsContext);
+  const transactions = useSelector(selectFilteredTransactions);
   const transactionsDates = transactions
     .filter((transaction) => formatMonth(transaction.date) === month)
     .map((transaction) => transaction.date);

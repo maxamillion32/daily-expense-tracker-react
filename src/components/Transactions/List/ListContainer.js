@@ -1,10 +1,13 @@
-import React, {useContext} from "react";
-import TransactionsItemsMonthGroup from "./Items/MonthGroup";
+import React from "react";
+import {useSelector} from 'react-redux';
+
+import {selectFilteredTransactions} from '../../../reducers/transactions/transactions-slice'
 import {formatMonth} from "../../../utils/utils";
-import {TransactionsContext} from "../../../containers/Transactions/Transactions";
+
+import TransactionsItemsMonthGroup from "./Items/MonthGroup";
 
 function TransactionsListContainer() {
-  const transactions = useContext(TransactionsContext);
+  const transactions = useSelector(selectFilteredTransactions);
   const months = [...new Set(transactions
     .map(date => formatMonth(date.date)))];
 
