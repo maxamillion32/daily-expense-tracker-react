@@ -11,6 +11,9 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
     expenses: 2000
   }
 
+  const DaysAmount = new Date(new Date().getFullYear(), new Date().getMonth(), 0).getDate();
+  const currentDayStep = (new Date().getDate() / DaysAmount * 100).toFixed(2);
+
   const monthTransactions = transactions
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
 
@@ -34,6 +37,7 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
 
         monthTransactions={monthTransactions}
         transactions={transactions}
+        currentDayStep={currentDayStep}
 
         type={TRANSACTION_TYPE.EXPENSES}
         title={"Expenses"}
@@ -54,6 +58,7 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
 
         monthTransactions={monthTransactions}
         transactions={transactions}
+        currentDayStep={currentDayStep}
 
         type={TRANSACTION_TYPE.INCOMES}
         title={"Incomes"}

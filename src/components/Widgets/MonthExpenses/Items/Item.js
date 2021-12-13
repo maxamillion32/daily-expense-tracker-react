@@ -10,11 +10,15 @@ function WidgetsMonthExpensesItem(
       totalCategoryPercent, percentOfTotal,
       percentCategoryOfTotal, categoryPercent,
       transactionsSum, type, title,
-      monthTransactions, transactions
+      monthTransactions, transactions,
+      currentDayStep
     }
   ) {
   return (
     <section className={classes.MonthExpensesItem}>
+      <div className={classes.DayIndicatorWrapper}>
+        <div className={classes.DayIndicator} style={{left: `${currentDayStep}%`}}></div>
+      </div>
       <Indicator
         excessPercent={excessPercent}
         percentOfTotal={percentOfTotal}
