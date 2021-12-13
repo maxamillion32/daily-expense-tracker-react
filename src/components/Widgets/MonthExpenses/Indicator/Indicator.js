@@ -2,8 +2,8 @@ import React from 'react';
 import classes from './Indicator.module.css';
 
 function WidgetsMonthExpensesIndicator({
-  abovePercent,
-  averagePercent,
+  excessPercent,
+  percentOfTotal,
   totalPercent,
   transactionsSum,
   type,
@@ -30,7 +30,7 @@ function WidgetsMonthExpensesIndicator({
                   : classes.IndicatorExpenses
               }`
             }
-          style={{width: `${abovePercent}%`}}
+          style={{width: `${excessPercent}%`}}
         ></div>
 
         {/* Contents */}
@@ -42,7 +42,7 @@ function WidgetsMonthExpensesIndicator({
           {title}
         </p>
         <div className={classes.TotalSumWrapper}>
-          <h4 className={classes.TotalSumAverage}>{averagePercent}</h4>
+          <h4 className={classes.TotalSumAverage}>{percentOfTotal}</h4>
           <h4 className={
               title === 'Incomes' || title === 'Expenses'
               ? classes.TotalSum

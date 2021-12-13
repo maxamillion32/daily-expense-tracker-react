@@ -1,13 +1,23 @@
 import React from 'react';
 import Indicator from '../Indicator/Indicator';
 import classes from './Item.module.css';
+import {getBalance} from '../utils';
 
-function WidgetsMonthExpensesItem({categories, abovePercent, aboveCategoryPercent, totalPercent, totalCategoryPercent, averagePercent, averageCategoryPercent, categoryPercent, transactionsSum, type, title, balance, transactionsPerMonth}) {
+function WidgetsMonthExpensesItem(
+    {
+      categories, excessPercent,
+      excessCategoryPercent, totalPercent,
+      totalCategoryPercent, percentOfTotal,
+      percentCategoryOfTotal, categoryPercent,
+      transactionsSum, type, title,
+      monthTransactions, transactions
+    }
+  ) {
   return (
     <section className={classes.MonthExpensesItem}>
       <Indicator
-        abovePercent={abovePercent}
-        averagePercent={averagePercent}
+        excessPercent={excessPercent}
+        percentOfTotal={percentOfTotal}
         totalPercent={totalPercent}
         transactionsSum={transactionsSum}
         type={type}
@@ -18,12 +28,12 @@ function WidgetsMonthExpensesItem({categories, abovePercent, aboveCategoryPercen
         {categories.map((category) => (
             <li className={classes.Wrapper} key={category}>
               <Indicator
-                abovePercent={aboveCategoryPercent(category, type)}
-                averagePercent={averageCategoryPercent(category, type)}
-                totalPercent={totalCategoryPercent(category, type)}
-                transactionsSum={balance(category, type, transactionsPerMonth)}
+                excessPercent={excessCategoryPercent(category, type, transactions, monthTransactions)}
+                percentOfTotal={percentCategoryOfTotal(category, type, transactions, monthTransactions)}
+                totalPercent={totalCategoryPercent(category, type, transactions, monthTransactions)}
+                transactionsSum={getBalance(category, type, monthTransactions)}
                 type={type}
-                title={`${categoryPercent(balance(category, type, transactionsPerMonth), transactionsSum)}%
+                title={`${categoryPercent(getBalance(category, type, monthTransactions), transactionsSum)}%
                   ${category}`}
               />
             </li>

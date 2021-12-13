@@ -1,15 +1,10 @@
 import React from 'react';
 import WidgetsMonthExpensesItem from './Items/Item'
 import {formatMonth} from '../../../utils/utils'
-import {
-  getSum, getBalance,
-  getPercentPerMonth,
-  getTotalPercentPerMonth,
-  MOTH_COUNT
-} from './utils';
+import {Statistics} from './Statistics';
 
 function WidgetsMonthExpenses({currentMonth, transactions}) {
-  const transactionsPerMonth = transactions
+  const monthTransactions = transactions
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
 
   const getCategories = (transactions, type) => {
@@ -20,108 +15,59 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
     .map(transaction => transaction.category.title))];
   }
 
-  const averageExpense = (getPercentPerMonth(getSum(transactions, 'expenses')));
-  const averageIncome = (getPercentPerMonth(getSum(transactions, 'incomes')));
-
-  const getCategoryPercent = (balance, sum) => {
-    let percent = (balance / sum * 100).toFixed(2);
-    const expensesPercent = percent > 99.9 ? 100 : percent;
-
-    return expensesPercent;
+  // for test
+  const budget = {
+    incomes: 2000,
+    expenses: 2000
   }
 
-  const getTotalPercent = (balance) => {
-    const percent = getTotalPercentPerMonth(balance, getSum(transactions, 'expenses'));
-    let expensesPercent = percent >= 100
-      ? 100
-      : percent;
-
-    return expensesPercent === 0 ? 1 : expensesPercent;
+  const TRANSACTION_TYPE = {
+    EXPENSES: 'expenses',
+    INCOMES: 'incomes',
   }
 
-  const getTotalCategoryPercent = (category, type) => {
-    const balancePerCategory = getBalance(category, type, transactions);
-    const balance = getBalance(category, type, transactionsPerMonth);
-    const percent = getTotalPercentPerMonth(balance, balancePerCategory);
-    let expensesPercent = percent >= 100
-      ? 100
-      : percent;
-
-    return expensesPercent === 0 ? 0 : expensesPercent;
-  }
-
-  const getAbovePercent = (balance, sum) => {
-    const percent = getTotalPercentPerMonth(balance, sum);
-    const expensesPercent = percent > 100 ? percent - 100 : 0;
-
-    return expensesPercent;
-  }
-
-  const getAboveCategoryPercent = (category, type) => {
-    const balancePerCategory = getBalance(category, type, transactions);
-    const balance = getBalance(category, type, transactionsPerMonth);
-    const percent = getTotalPercentPerMonth(balance, balancePerCategory);
-    const expensesPercent = percent > 100 ? percent - 100 : 0;
-
-    return expensesPercent;
-  }
-
-  const getAveragePercent = (expense, sum) => {
-    const averageValue =  (expense - sum).toFixed(2);
-
-    return averageValue >= 0
-      ? `${averageValue}€ below typical`
-      : `${Math.abs(averageValue)}€ above typical`;
-  }
-
-  const getAverageCategoryPercent = (category, type) => {
-    const balancePerCategory = getBalance(category, type, transactions);
-    const transactionsSumPerCategory = getBalance(category, type, transactionsPerMonth)
-
-    const averageValue = ((balancePerCategory / MOTH_COUNT) - transactionsSumPerCategory).toFixed(2);
-
-    return averageValue >= 0
-      ? `${averageValue}€ below typical`
-      : `${Math.abs(averageValue)}€ above typical`;
-  }
+  const expenses = new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget.expenses, currentMonth);
+  const incomes = new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget.incomes, currentMonth);
 
   return (
     <>
       <WidgetsMonthExpensesItem
-        categories={getCategories(transactionsPerMonth, 'expenses')}
-        categoryPercent={getCategoryPercent}
-        aboveCategoryPercent={getAboveCategoryPercent}
-        averageCategoryPercent={getAverageCategoryPercent}
-        totalCategoryPercent={getTotalCategoryPercent}
+        categories={getCategories(monthTransactions, 'expenses')}
 
-        abovePercent={getAbovePercent(getSum(transactionsPerMonth, 'expenses'), getSum(transactions, 'expenses'))}
-        averagePercent={getAveragePercent(averageExpense, getSum(transactionsPerMonth, 'expenses'))}
-        totalPercent={getTotalPercent(getSum(transactionsPerMonth, 'expenses'), getSum(transactions, 'expenses'))}
-        transactionsSum={getSum(transactionsPerMonth, 'expenses')}
+        categoryPercent={expenses.percentCategory}
+        excessCategoryPercent={expenses.excessCategoryPercent}
+        percentCategoryOfTotal={expenses.percentCategoryOfTotal}
+        totalCategoryPercent={expenses.totalCategoryPercent}
 
-        balance={getBalance}
-        transactionsPerMonth={transactionsPerMonth}
+        excessPercent={expenses.excessPercent()}
+        percentOfTotal={expenses.percentOfTotal()}
+        totalPercent={expenses.totalPercent()}
+        transactionsSum={expenses.sum()}
 
-        type={"expenses"}
+        monthTransactions={monthTransactions}
+        transactions={transactions}
+
+        type={TRANSACTION_TYPE.EXPENSES}
         title={"Expenses"}
       />
 
       <WidgetsMonthExpensesItem
-        categories={getCategories(transactionsPerMonth, 'incomes')}
-        categoryPercent={getCategoryPercent}
-        aboveCategoryPercent={getAboveCategoryPercent}
-        averageCategoryPercent={getAverageCategoryPercent}
-        totalCategoryPercent={getTotalCategoryPercent}
+        categories={getCategories(monthTransactions, 'incomes')}
 
-        abovePercent={getAbovePercent(getSum(transactionsPerMonth, 'incomes'), getSum(transactions, 'incomes'))}
-        averagePercent={getAveragePercent(averageIncome, getSum(transactionsPerMonth, 'incomes'))}
-        totalPercent={getTotalPercent(getSum(transactionsPerMonth, 'incomes'), getSum(transactions, 'incomes'))}
-        transactionsSum={getSum(transactionsPerMonth, 'incomes')}
+        categoryPercent={incomes.percentCategory}
+        excessCategoryPercent={incomes.excessCategoryPercent}
+        percentCategoryOfTotal={incomes.percentCategoryOfTotal}
+        totalCategoryPercent={incomes.totalCategoryPercent}
 
-        balance={getBalance}
-        transactionsPerMonth={transactionsPerMonth}
+        excessPercent={incomes.excessPercent()}
+        percentOfTotal={incomes.percentOfTotal()}
+        totalPercent={incomes.totalPercent()}
+        transactionsSum={incomes.sum()}
 
-        type={"incomes"}
+        monthTransactions={monthTransactions}
+        transactions={transactions}
+
+        type={TRANSACTION_TYPE.INCOMES}
         title={"Incomes"}
       />
     </>
