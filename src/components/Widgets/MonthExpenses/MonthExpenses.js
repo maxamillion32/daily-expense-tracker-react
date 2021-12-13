@@ -4,15 +4,9 @@ import {formatMonth} from '../../../utils/utils'
 import {Statistics} from './Statistics';
 
 function WidgetsMonthExpenses({currentMonth, transactions}) {
-  const monthTransactions = transactions
-    .filter((transaction) => formatMonth(transaction.date) === currentMonth);
-
-  const getCategories = (transactions, type) => {
-    return [...new Set(transactions
-    .filter((transaction) => (type === 'expenses' ? transaction.expense : !transaction.expense)
-      ? transaction.sum !== 0
-      : transaction = null)
-    .map(transaction => transaction.category.title))];
+  const TRANSACTION_TYPE = {
+    EXPENSES: 'expenses',
+    INCOMES: 'incomes',
   }
 
   // for test
@@ -21,9 +15,15 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
     expenses: 2000
   }
 
-  const TRANSACTION_TYPE = {
-    EXPENSES: 'expenses',
-    INCOMES: 'incomes',
+  const monthTransactions = transactions
+    .filter((transaction) => formatMonth(transaction.date) === currentMonth);
+
+  const getCategories = (transactions, type) => {
+    return [...new Set(transactions
+    .filter((transaction) => (type === TRANSACTION_TYPE.EXPENSES ? transaction.expense : !transaction.expense)
+      ? transaction.sum !== 0
+      : transaction = null)
+    .map(transaction => transaction.category.title))];
   }
 
   const expenses = new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget.expenses, currentMonth);
@@ -32,7 +32,7 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
   return (
     <>
       <WidgetsMonthExpensesItem
-        categories={getCategories(monthTransactions, 'expenses')}
+        categories={getCategories(monthTransactions, TRANSACTION_TYPE.EXPENSES)}
 
         categoryPercent={expenses.percentCategory}
         excessCategoryPercent={expenses.excessCategoryPercent}
@@ -52,7 +52,7 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
       />
 
       <WidgetsMonthExpensesItem
-        categories={getCategories(monthTransactions, 'incomes')}
+        categories={getCategories(monthTransactions, TRANSACTION_TYPE.INCOMES)}
 
         categoryPercent={incomes.percentCategory}
         excessCategoryPercent={incomes.excessCategoryPercent}
