@@ -5,19 +5,14 @@ import {
   getBalance,
   MOTH_COUNT
 } from "./utils";
-
-import {formatMonth} from "../../../utils/utils";
+import {TRANSACTION_TYPE} from './const';
 
 export class Statistics {
-  constructor(transactions, type, budget, currentMonth) {
+  constructor(transactions, type, budget, monthTransactions) {
     this.transactions = transactions;
     this.type = type;
     this.budget = budget;
-    this.currentMonth = currentMonth;
-  }
-
-  _monthTransactions() {
-    return this.transactions.filter((transaction) => formatMonth(transaction.date) === this.currentMonth);
+    this.monthTransactions = monthTransactions;
   }
 
   _getExcessPercent = (balance, sum) => {
@@ -43,8 +38,16 @@ export class Statistics {
     return expensesPercent === 0 ? 1 : expensesPercent;
   }
 
+  categories(type) {
+    return [...new Set(this.monthTransactions
+    .filter((transaction) => (type === TRANSACTION_TYPE.EXPENSES ? transaction.expense : !transaction.expense)
+      ? transaction.sum !== 0
+      : transaction = null)
+    .map(transaction => transaction.category.title))];
+  }
+
   sum() {
-    return getSum(this._monthTransactions(), this.type);
+    return getSum(this.monthTransactions, this.type);
   }
 
   averageSum() {
@@ -55,12 +58,12 @@ export class Statistics {
 
   excessPercent() {
     return this.budget
-    ? this._getExcessBudgetPercent(getSum(this._monthTransactions(), this.type), this.averageSum())
-    : this._getExcessPercent(getSum(this._monthTransactions(), this.type), getSum(this.transactions, this.type));
+    ? this._getExcessBudgetPercent(getSum(this.monthTransactions, this.type), this.averageSum())
+    : this._getExcessPercent(getSum(this.monthTransactions, this.type), getSum(this.transactions, this.type));
   }
 
   percentOfTotal() {
-    const averageValue =  (this.averageSum() - getSum(this._monthTransactions(), this.type)).toFixed(2);
+    const averageValue =  (this.averageSum() - getSum(this.monthTransactions, this.type)).toFixed(2);
 
     return averageValue >= 0
       ? `${averageValue}€ below ${this.budget ? "budget" : "typical"}`
@@ -69,10 +72,10 @@ export class Statistics {
 
   totalPercent() {
     return this.budget
-    ? (((getSum(this._monthTransactions(), this.type) / this.averageSum()) * 100) >= 100
+    ? (((getSum(this.monthTransactions, this.type) / this.averageSum()) * 100) >= 100
       ? 100
-      : (getSum(this._monthTransactions(), this.type) / this.averageSum()) * 100)
-    : this._getTotalPercent(getSum(this._monthTransactions(), this.type), getSum(this.transactions, this.type));
+      : (getSum(this.monthTransactions, this.type) / this.averageSum()) * 100)
+    : this._getTotalPercent(getSum(this.monthTransactions, this.type), getSum(this.transactions, this.type));
   }
 
   percentCategory(balance, sum) {

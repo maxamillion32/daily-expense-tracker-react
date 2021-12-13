@@ -2,13 +2,9 @@ import React from 'react';
 import WidgetsMonthExpensesItem from './Items/Item'
 import {formatMonth} from '../../../utils/utils'
 import {Statistics} from './Statistics';
+import {TRANSACTION_TYPE} from './const';
 
 function WidgetsMonthExpenses({currentMonth, transactions}) {
-  const TRANSACTION_TYPE = {
-    EXPENSES: 'expenses',
-    INCOMES: 'incomes',
-  }
-
   // for test
   const budget = {
     incomes: 2000,
@@ -18,21 +14,13 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
   const monthTransactions = transactions
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
 
-  const getCategories = (transactions, type) => {
-    return [...new Set(transactions
-    .filter((transaction) => (type === TRANSACTION_TYPE.EXPENSES ? transaction.expense : !transaction.expense)
-      ? transaction.sum !== 0
-      : transaction = null)
-    .map(transaction => transaction.category.title))];
-  }
-
-  const expenses = new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget.expenses, currentMonth);
-  const incomes = new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget.incomes, currentMonth);
+  const expenses = new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget.expenses, monthTransactions);
+  const incomes = new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget.incomes, monthTransactions);
 
   return (
     <>
       <WidgetsMonthExpensesItem
-        categories={getCategories(monthTransactions, TRANSACTION_TYPE.EXPENSES)}
+        categories={expenses.categories(TRANSACTION_TYPE.EXPENSES)}
 
         categoryPercent={expenses.percentCategory}
         excessCategoryPercent={expenses.excessCategoryPercent}
@@ -52,7 +40,7 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
       />
 
       <WidgetsMonthExpensesItem
-        categories={getCategories(monthTransactions, TRANSACTION_TYPE.INCOMES)}
+        categories={incomes.categories(TRANSACTION_TYPE.INCOMES)}
 
         categoryPercent={incomes.percentCategory}
         excessCategoryPercent={incomes.excessCategoryPercent}
