@@ -2,7 +2,7 @@ import React from 'react';
 import Indicator from '../Indicator/Indicator';
 import classes from './Item.module.css';
 
-function WidgetsMonthExpensesItem({categories, abovePercent, abovePercentPerCategory, totalPercent, totalPercentPerCategory, averagePercent, averagePercentPerCategory, transactionPercent, transactionsSum, type, title, balance, transactionsPerMonth}) {
+function WidgetsMonthExpensesItem({categories, abovePercent, aboveCategoryPercent, totalPercent, totalCategoryPercent, averagePercent, averageCategoryPercent, categoryPercent, transactionsSum, type, title, balance, transactionsPerMonth}) {
   return (
     <section className={classes.MonthExpensesItem}>
       <Indicator
@@ -18,12 +18,12 @@ function WidgetsMonthExpensesItem({categories, abovePercent, abovePercentPerCate
         {categories.map((category) => (
             <li className={classes.Wrapper} key={category}>
               <Indicator
-                abovePercent={abovePercentPerCategory(category, type)}
-                averagePercent={averagePercentPerCategory(category, type)}
-                totalPercent={totalPercentPerCategory(category, type)}
+                abovePercent={aboveCategoryPercent(category, type)}
+                averagePercent={averageCategoryPercent(category, type)}
+                totalPercent={totalCategoryPercent(category, type)}
                 transactionsSum={balance(category, type, transactionsPerMonth)}
                 type={type}
-                title={`${transactionPercent(balance(category, type, transactionsPerMonth), transactionsSum)}%
+                title={`${categoryPercent(balance(category, type, transactionsPerMonth), transactionsSum)}%
                   ${category}`}
               />
             </li>

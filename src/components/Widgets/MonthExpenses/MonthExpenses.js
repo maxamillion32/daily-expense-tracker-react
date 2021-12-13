@@ -23,11 +23,11 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
   const averageExpense = (getPercentPerMonth(getSum(transactions, 'expenses')));
   const averageIncome = (getPercentPerMonth(getSum(transactions, 'incomes')));
 
-  const getTransactionPercent = (balance, sum) => {
-    let percent = getTotalPercentPerMonth(balance, sum);
-    let expensesPercent = percent >= 100 ? 100 : percent;
+  const getCategoryPercent = (balance, sum) => {
+    let percent = (balance / sum * 100).toFixed(2);
+    const expensesPercent = percent > 99.9 ? 100 : percent;
 
-    return expensesPercent === 0 ? 0 : expensesPercent;
+    return expensesPercent;
   }
 
   const getTotalPercent = (balance) => {
@@ -39,7 +39,7 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
     return expensesPercent === 0 ? 1 : expensesPercent;
   }
 
-  const getTotalPercentPerCategory = (category, type) => {
+  const getTotalCategoryPercent = (category, type) => {
     const balancePerCategory = getBalance(category, type, transactions);
     const balance = getBalance(category, type, transactionsPerMonth);
     const percent = getTotalPercentPerMonth(balance, balancePerCategory);
@@ -57,7 +57,7 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
     return expensesPercent;
   }
 
-  const getAbovePercentPerCategory = (category, type) => {
+  const getAboveCategoryPercent = (category, type) => {
     const balancePerCategory = getBalance(category, type, transactions);
     const balance = getBalance(category, type, transactionsPerMonth);
     const percent = getTotalPercentPerMonth(balance, balancePerCategory);
@@ -74,7 +74,7 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
       : `${Math.abs(averageValue)}€ above typical`;
   }
 
-  const getAveragePercentPerCategory = (category, type) => {
+  const getAverageCategoryPercent = (category, type) => {
     const balancePerCategory = getBalance(category, type, transactions);
     const transactionsSumPerCategory = getBalance(category, type, transactionsPerMonth)
 
@@ -89,34 +89,40 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
     <>
       <WidgetsMonthExpensesItem
         categories={getCategories(transactionsPerMonth, 'expenses')}
+        categoryPercent={getCategoryPercent}
+        aboveCategoryPercent={getAboveCategoryPercent}
+        averageCategoryPercent={getAverageCategoryPercent}
+        totalCategoryPercent={getTotalCategoryPercent}
+
         abovePercent={getAbovePercent(getSum(transactionsPerMonth, 'expenses'), getSum(transactions, 'expenses'))}
-        abovePercentPerCategory={getAbovePercentPerCategory}
-        totalPercent={getTotalPercent(getSum(transactionsPerMonth, 'expenses'), getSum(transactions, 'expenses'))}
-        totalPercentPerCategory={getTotalPercentPerCategory}
         averagePercent={getAveragePercent(averageExpense, getSum(transactionsPerMonth, 'expenses'))}
-        averagePercentPerCategory={getAveragePercentPerCategory}
-        transactionPercent={getTransactionPercent}
+        totalPercent={getTotalPercent(getSum(transactionsPerMonth, 'expenses'), getSum(transactions, 'expenses'))}
         transactionsSum={getSum(transactionsPerMonth, 'expenses')}
-        type={"expenses"}
-        title={"Expenses"}
+
         balance={getBalance}
         transactionsPerMonth={transactionsPerMonth}
+
+        type={"expenses"}
+        title={"Expenses"}
       />
 
       <WidgetsMonthExpensesItem
         categories={getCategories(transactionsPerMonth, 'incomes')}
+        categoryPercent={getCategoryPercent}
+        aboveCategoryPercent={getAboveCategoryPercent}
+        averageCategoryPercent={getAverageCategoryPercent}
+        totalCategoryPercent={getTotalCategoryPercent}
+
         abovePercent={getAbovePercent(getSum(transactionsPerMonth, 'incomes'), getSum(transactions, 'incomes'))}
-        abovePercentPerCategory={getAbovePercentPerCategory}
-        totalPercent={getTotalPercent(getSum(transactionsPerMonth, 'incomes'), getSum(transactions, 'incomes'))}
-        totalPercentPerCategory={getTotalPercentPerCategory}
         averagePercent={getAveragePercent(averageIncome, getSum(transactionsPerMonth, 'incomes'))}
-        averagePercentPerCategory={getAveragePercentPerCategory}
-        transactionPercent={getTransactionPercent}
+        totalPercent={getTotalPercent(getSum(transactionsPerMonth, 'incomes'), getSum(transactions, 'incomes'))}
         transactionsSum={getSum(transactionsPerMonth, 'incomes')}
-        type={"incomes"}
-        title={"Incomes"}
+
         balance={getBalance}
         transactionsPerMonth={transactionsPerMonth}
+
+        type={"incomes"}
+        title={"Incomes"}
       />
     </>
   )
