@@ -62,7 +62,7 @@ export class Statistics {
     : this._getExcessPercent(getSum(this.monthTransactions, this.type), getSum(this.transactions, this.type));
   }
 
-  percentOfTotal() {
+  balanceOfCurrent() {
     const averageValue =  (this.averageSum() - getSum(this.monthTransactions, this.type)).toFixed(2);
 
     return averageValue >= 0
@@ -94,7 +94,7 @@ export class Statistics {
     return expensesPercent;
   }
 
-  percentCategoryOfTotal(category, type, transactions, monthTransactions) {
+  balanceCategoryOfCurrent(category, type, transactions, monthTransactions) {
     const balancePerCategory = getBalance(category, type, transactions);
     const transactionsSumPerCategory = getBalance(category, type, monthTransactions)
 

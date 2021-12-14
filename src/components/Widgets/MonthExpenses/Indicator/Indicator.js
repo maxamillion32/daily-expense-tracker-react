@@ -3,7 +3,7 @@ import classes from './Indicator.module.css';
 
 function WidgetsMonthExpensesIndicator({
   excessPercent,
-  percentOfTotal,
+  balanceOfCurrent,
   totalPercent,
   transactionsSum,
   type,
@@ -42,7 +42,7 @@ function WidgetsMonthExpensesIndicator({
           {title}
         </p>
         <div className={classes.TotalSumWrapper}>
-          <h4 className={classes.TotalSumAverage}>{percentOfTotal}</h4>
+          <h4 className={classes.TotalSumAverage}>{balanceOfCurrent}</h4>
           <h4 className={
               title === 'Incomes' || title === 'Expenses'
               ? classes.TotalSum

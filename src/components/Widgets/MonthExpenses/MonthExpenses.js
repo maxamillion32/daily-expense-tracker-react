@@ -24,11 +24,11 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
 
         categoryPercent={expenses.percentCategory}
         excessCategoryPercent={expenses.excessCategoryPercent}
-        percentCategoryOfTotal={expenses.percentCategoryOfTotal}
+        balanceCategoryOfCurrent={expenses.balanceCategoryOfCurrent}
         totalCategoryPercent={expenses.totalCategoryPercent}
 
         excessPercent={expenses.excessPercent()}
-        percentOfTotal={expenses.percentOfTotal()}
+        balanceOfCurrent={expenses.balanceOfCurrent()}
         totalPercent={expenses.totalPercent()}
         transactionsSum={expenses.sum()}
 
@@ -45,11 +45,11 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
 
         categoryPercent={incomes.percentCategory}
         excessCategoryPercent={incomes.excessCategoryPercent}
-        percentCategoryOfTotal={incomes.percentCategoryOfTotal}
+        balanceCategoryOfCurrent={incomes.balanceCategoryOfCurrent}
         totalCategoryPercent={incomes.totalCategoryPercent}
 
         excessPercent={incomes.excessPercent()}
-        percentOfTotal={incomes.percentOfTotal()}
+        balanceOfCurrent={incomes.balanceOfCurrent()}
         totalPercent={incomes.totalPercent()}
         transactionsSum={incomes.sum()}
 
