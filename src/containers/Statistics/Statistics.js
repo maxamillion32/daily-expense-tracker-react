@@ -3,6 +3,7 @@ import {useSelector} from 'react-redux';
 import WidgetsMonthBalance from '../../components/Widgets/MonthBalance/MonthBalance';
 import WidgetsMonthExpenses from '../../components/Widgets/MonthExpenses/MonthExpenses';
 import WidgetsYearExpenses from '../../components/Widgets/YearExpenses/YearExpenses';
+import WidgetsBudget from '../../components/Widgets/Budget/Budget'
 import classes from './Statistics.module.css';
 import {currentMonth} from '../../reducers/transactions/transactions-slice';
 import {
@@ -25,6 +26,7 @@ function Statistics() {
       <WidgetsMonthBalance currentMonth={month} transactions={allTransactions} />
       <WidgetsYearExpenses currentMonth={month} transactions={allTransactions} />
       <WidgetsMonthExpenses currentMonth={month} transactions={allTransactions} />
+      <WidgetsBudget />
     </section>
   )
 }

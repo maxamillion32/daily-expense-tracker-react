@@ -7,8 +7,32 @@ import {TRANSACTION_TYPE} from './const';
 function WidgetsMonthExpenses({currentMonth, transactions}) {
   // for test
   const budget = {
-    incomes: 2000,
-    expenses: 2000
+    incomes: {
+      total: 2000,
+      category: {
+        Salary: 500,
+        Rent: 500,
+        Groceries: 500,
+        'Parking fees': 500,
+        'Clothing & shoes': 500,
+        Family: 500,
+        Coffee: 500,
+        Health: 500,
+      }
+    },
+    expenses: {
+      total: 2000,
+      category: {
+        Salary: 300,
+        Rent: 300,
+        Groceries: 300,
+        'Parking fees': 300,
+        'Clothing & shoes': 300,
+        Family: 300,
+        Coffee: 300,
+        Health: 300,
+      }
+    }
   }
 
   const monthTransactions = transactions
@@ -33,7 +57,6 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
         transactionsSum={expenses.sum()}
 
         monthTransactions={monthTransactions}
-        transactions={transactions}
 
         type={TRANSACTION_TYPE.EXPENSES}
         title={"Expenses"}
@@ -54,7 +77,6 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
         transactionsSum={incomes.sum()}
 
         monthTransactions={monthTransactions}
-        transactions={transactions}
 
         type={TRANSACTION_TYPE.INCOMES}
         title={"Incomes"}

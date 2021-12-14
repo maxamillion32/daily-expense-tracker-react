@@ -11,7 +11,7 @@ function WidgetsMonthExpensesItem(
       totalCategoryPercent, balanceOfCurrent,
       balanceCategoryOfCurrent, categoryPercent,
       transactionsSum, type, title,
-      monthTransactions, transactions,
+      monthTransactions,
       month
     }
   ) {
@@ -47,9 +47,9 @@ function WidgetsMonthExpensesItem(
         {categories.map((category) => (
             <li className={classes.Wrapper} key={category}>
               <Indicator
-                excessPercent={excessCategoryPercent(category, type, transactions, monthTransactions)}
-                balanceOfCurrent={balanceCategoryOfCurrent(category, type, transactions, monthTransactions)}
-                totalPercent={totalCategoryPercent(category, type, transactions, monthTransactions)}
+                excessPercent={excessCategoryPercent(category, type)}
+                balanceOfCurrent={balanceCategoryOfCurrent(category, type)}
+                totalPercent={totalCategoryPercent(category, type)}
                 transactionsSum={getBalance(category, type, monthTransactions)}
                 type={type}
                 title={`${categoryPercent(getBalance(category, type, monthTransactions), transactionsSum)}%
