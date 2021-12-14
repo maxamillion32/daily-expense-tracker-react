@@ -65,6 +65,10 @@
   color: gray;
 }
 
+.TotalSum {
+  font-weight: 700;
+}
+
 .Balance {
   font-weight: 400;
   font-size: 13px;

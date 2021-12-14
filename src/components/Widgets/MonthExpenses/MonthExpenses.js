@@ -8,7 +8,7 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
   // for test
   const budget = {
     incomes: {
-      total: 2000,
+      total: 4000,
       category: {
         Salary: 500,
         Rent: 500,
@@ -21,7 +21,7 @@ function WidgetsMonthExpenses({currentMonth, transactions}) {
       }
     },
     expenses: {
-      total: 2000,
+      total: 2400,
       category: {
         Salary: 300,
         Rent: 300,

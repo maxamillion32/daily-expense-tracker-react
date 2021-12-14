@@ -1,3 +1,20 @@
 .BudgetWrapper {
   padding: 20px 20px;
 }
+
+.Block {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+
+.Block:nth-of-type(10) {
+  margin-top: 20px;
+}
+
+.Value {
+  width: 60px;
+  text-align: right;
+}
+
+

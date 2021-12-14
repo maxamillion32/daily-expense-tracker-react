@@ -42,15 +42,15 @@ function WidgetsMonthExpensesIndicator({
           {title}
         </p>
         <div className={classes.TotalSumWrapper}>
-          <h4 className={classes.TotalSumAverage}>{balanceOfCurrent}</h4>
-          <h4 className={
+          <p className={classes.TotalSumAverage}>{balanceOfCurrent}</p>
+          <p className={
               title === 'Incomes' || title === 'Expenses'
               ? classes.TotalSum
               : classes.Balance
             }>
             {type === 'incomes' ? '+' : '-'}
             {transactionsSum}€
-          </h4>
+          </p>
         </div>
 
       </div>
