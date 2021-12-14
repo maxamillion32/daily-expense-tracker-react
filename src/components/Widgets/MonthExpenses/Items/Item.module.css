@@ -40,6 +40,37 @@
   border-right: 1px dashed #bebebe;
 }
 
+.DayIndicatorDate {
+  position: absolute;
+  top: 0px;
+  width: 100px;
+  font-size: 9px;
+}
+
+.Right {
+  left: 13px;
+}
+
+.Left {
+  left: -107px;
+}
+
+.DayIndicator::before {
+  content: ">";
+  position: absolute;
+  top: -1px;
+  left: -8px;
+  color: #979797;
+}
+
+.DayIndicator::after {
+  content: "<";
+  position: absolute;
+  top: -1px;
+  left: 2px;
+  color: #979797;
+}
+
 .List {
   /* padding: 10px 20px 0; */
   width: 100%;
