@@ -1,39 +1,67 @@
 import React from 'react';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {selectAllCategoriesState} from '../../../reducers/categories/categories-slice';
 import classes from './Budget.module.css';
+import WidgetsBudgetItem from './Items/Item';
+import {selectBudgetState, updateBudget} from '../../../reducers/budget/budget-slice';
 
-function WidgetsBudget() {
+function WidgetsBudget({currentMonth}) {
+  const dispatch = useDispatch();
   const categories = useSelector(selectAllCategoriesState);
+  const budget = useSelector(selectBudgetState);
+
+  const onChange = ({target}) => {
+    const type = target.id;
+    const name = target.name;
+    const value = target.value;
+    const month = currentMonth;
+
+    dispatch(updateBudget({type, name, value, month}));
+  }
 
   return (
     <section className={classes.BudgetWrapper}>
-      <p style={{marginBottom: 15, fontWeight: 700}}>Budget</p>
-      <div className={classes.Block}>
-        <p className={classes.Title}>Expenses</p>
-        <input type="number" className={classes.Value} value="2400" />
+      <p className={classes.Header}>Budget</p>
+
+      <div className={classes.Content}>
+        <WidgetsBudgetItem
+          title={"Expenses"}
+          id={"expenses"}
+          value={budget[currentMonth]["expenses"]["Expenses"] ? budget[currentMonth]["expenses"]["Expenses"] : ''}
+          onChange={onChange}
+        />
+
+        {categories.map((category) => (
+          <WidgetsBudgetItem
+            key={category.id}
+            title={category.title}
+            id={"expenses"}
+            value={budget[currentMonth]["expenses"][category.title] ? budget[currentMonth]["expenses"][category.title] : ''}
+            onChange={onChange}
+          />
+          ))
+        }
       </div>
 
-      {categories.map((category) => (
-        <div className={classes.Block} key={category.id}>
-          <p className={classes.Title}>{category.title}</p>
-          <input type="number" className={classes.Value} value="300" />
-        </div>
-        ))
-      }
+      <div className={classes.Content}>
+        <WidgetsBudgetItem
+          title={"Incomes"}
+          id={"incomes"}
+          value={budget[currentMonth]["incomes"]["Incomes"] ? budget[currentMonth]["incomes"]["Incomes"] : ''}
+          onChange={onChange}
+        />
 
-      <div className={classes.Block}>
-        <p className={classes.Title}>Incomes</p>
-        <input type="number" className={classes.Value} value="4000" />
+        {categories.map((category) => (
+            <WidgetsBudgetItem
+              key={category.id}
+              title={category.title}
+              id={"incomes"}
+              value={budget[currentMonth]["incomes"][category.title] ? budget[currentMonth]["incomes"][category.title] : ''}
+              onChange={onChange}
+            />
+          ))
+        }
       </div>
-
-      {categories.map((category) => (
-        <div className={classes.Block} key={category.id}>
-          <p className={classes.Title}>{category.title}</p>
-          <input type="number" className={classes.Value} value="500" />
-        </div>
-        ))
-      }
     </section>
   )
 }

@@ -1,20 +1,19 @@
 .BudgetWrapper {
-  padding: 20px 20px;
+  padding: 20px 30px;
+  background-color: #f1f1f1;
 }
 
-.Block {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 5px;
+.Header {
+  margin-bottom: 15px;
+  font-weight: 700;
 }
 
-.Block:nth-of-type(10) {
-  margin-top: 20px;
+.Content {
+  margin-top: 30px;
 }
 
-.Value {
-  width: 60px;
-  text-align: right;
-}
 
+.Content:first-of-type {
+  margin-top: 0;
+}
 

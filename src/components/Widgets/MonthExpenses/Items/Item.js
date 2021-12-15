@@ -1,5 +1,5 @@
 import React from 'react';
-import Indicator from '../Indicator/Indicator';
+import Indicator from './Indicator/Indicator';
 import classes from './Item.module.css';
 import {getBalance} from '../utils';
 import {formatMonth} from '../../../../utils/utils';

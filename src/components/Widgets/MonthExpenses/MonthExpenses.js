@@ -1,45 +1,19 @@
 import React from 'react';
+import {useSelector} from 'react-redux';
 import WidgetsMonthExpensesItem from './Items/Item'
 import {formatMonth} from '../../../utils/utils'
 import {Statistics} from './Statistics';
 import {TRANSACTION_TYPE} from './const';
+import {selectBudgetState} from '../../../reducers/budget/budget-slice';
 
 function WidgetsMonthExpenses({currentMonth, transactions}) {
-  // for test
-  const budget = {
-    incomes: {
-      total: 4000,
-      category: {
-        Salary: 500,
-        Rent: 500,
-        Groceries: 500,
-        'Parking fees': 500,
-        'Clothing & shoes': 500,
-        Family: 500,
-        Coffee: 500,
-        Health: 500,
-      }
-    },
-    expenses: {
-      total: 2400,
-      category: {
-        Salary: 300,
-        Rent: 300,
-        Groceries: 300,
-        'Parking fees': 300,
-        'Clothing & shoes': 300,
-        Family: 300,
-        Coffee: 300,
-        Health: 300,
-      }
-    }
-  }
+  const budget = useSelector(selectBudgetState);
 
   const monthTransactions = transactions
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
 
-  const expenses = new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget.expenses, monthTransactions);
-  const incomes = new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget.incomes, monthTransactions);
+  const expenses = new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget, monthTransactions, currentMonth);
+  const incomes = new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget, monthTransactions, currentMonth);
 
   return (
     <>

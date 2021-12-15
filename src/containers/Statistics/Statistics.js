@@ -26,7 +26,7 @@ function Statistics() {
       <WidgetsMonthBalance currentMonth={month} transactions={allTransactions} />
       <WidgetsYearExpenses currentMonth={month} transactions={allTransactions} />
       <WidgetsMonthExpenses currentMonth={month} transactions={allTransactions} />
-      <WidgetsBudget />
+      <WidgetsBudget currentMonth={month} />
     </section>
   )
 }
