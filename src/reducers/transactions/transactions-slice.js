@@ -31,7 +31,8 @@ export const transactionsSlice = createSlice({
     },
     isLoading: false,
     hasError: false,
-    currentMonth: formatMonth(new Date())
+    currentMonth: formatMonth(new Date()),
+    isButtonShow: false
   },
   reducers: {
     setUserInput: (state, action) => {
@@ -104,6 +105,12 @@ export const transactionsSlice = createSlice({
         currentMonth: action.payload,
       };
     },
+    showButton: (state, action) => {
+      return {
+        ...state,
+        isButtonShow: !state.isButtonShow,
+      };
+    },
   },
   extraReducers: {
     [loadTransactions.pending]: (state) => {
@@ -131,6 +138,7 @@ export const selectNewTransactionState = (state) => state.transactions.newTransa
 export const isLoading = (state) => state.transactions.isLoading;
 export const hasError = (state) => state.transactions.hasError;
 export const currentMonth = (state) => state.transactions.currentMonth;
+export const isButtonShow = (state) => state.transactions.isButtonShow;
 
 export const selectFilteredTransactions = (state) => {
   const allTransactions = selectAllTransactionsState(state);
@@ -149,6 +157,7 @@ export const {
   addTransaction,
   resetState,
   deleteTransaction,
-  updateMonth
+  updateMonth,
+  showButton
 } = transactionsSlice.actions;
 export default transactionsSlice.reducer;

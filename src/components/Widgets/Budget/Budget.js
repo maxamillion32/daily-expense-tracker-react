@@ -27,7 +27,7 @@ function WidgetsBudget({currentMonth}) {
         <WidgetsBudgetItem
           title={"Expenses"}
           id={"expenses"}
-          value={budget[currentMonth]["expenses"]["Expenses"] ? budget[currentMonth]["expenses"]["Expenses"] : ''}
+          value={budget[currentMonth]["expenses"]["Expenses"] || ''}
           onChange={onChange}
         />
 
@@ -36,7 +36,7 @@ function WidgetsBudget({currentMonth}) {
             key={category.id}
             title={category.title}
             id={"expenses"}
-            value={budget[currentMonth]["expenses"][category.title] ? budget[currentMonth]["expenses"][category.title] : ''}
+            value={budget[currentMonth]["expenses"][category.title] || ''}
             onChange={onChange}
           />
           ))
@@ -47,7 +47,7 @@ function WidgetsBudget({currentMonth}) {
         <WidgetsBudgetItem
           title={"Incomes"}
           id={"incomes"}
-          value={budget[currentMonth]["incomes"]["Incomes"] ? budget[currentMonth]["incomes"]["Incomes"] : ''}
+          value={budget[currentMonth]["incomes"]["Incomes"] || ''}
           onChange={onChange}
         />
 
@@ -56,7 +56,7 @@ function WidgetsBudget({currentMonth}) {
               key={category.id}
               title={category.title}
               id={"incomes"}
-              value={budget[currentMonth]["incomes"][category.title] ? budget[currentMonth]["incomes"][category.title] : ''}
+              value={budget[currentMonth]["incomes"][category.title] || ''}
               onChange={onChange}
             />
           ))

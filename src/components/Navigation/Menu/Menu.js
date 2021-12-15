@@ -1,16 +1,18 @@
 import React from 'react';
 import {useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {NavLink} from 'react-router-dom';
 import {CSSTransition} from 'react-transition-group';
 
 import classes from './Menu.module.css';
 import Form from '../../Transactions/CreateForm/Form'
-import {resetState} from '../../../reducers/transactions/transactions-slice';
+import {resetState, isButtonShow} from '../../../reducers/transactions/transactions-slice';
 
 function Menu({categories, accounts}) {
   const [onClickAddBtn, setOnClickAddBtn] = useState(false);
   const dispatch = useDispatch();
+  const showButton = useSelector(isButtonShow);
+
   const classesAddBtn = [
     classes.menuAddBtn,
     'fa',
@@ -39,7 +41,7 @@ function Menu({categories, accounts}) {
 
       <nav className={classes.menu}>
         <div className={classes.wrapper}>
-          <CSSTransition
+          {showButton && <CSSTransition
               in={onClickAddBtn}
               timeout={300}
               classNames={{
@@ -53,7 +55,7 @@ function Menu({categories, accounts}) {
               onClick={onClickAddButton}
               ref={nodeRef}
             />
-          </CSSTransition>
+          </CSSTransition>}
 
           <NavLink
               to={'/'}

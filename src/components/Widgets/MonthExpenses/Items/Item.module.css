@@ -15,6 +15,10 @@
   box-sizing: border-box;
 }
 
+.MonthExpensesItem:nth-of-type(4) {
+  border: none;
+}
+
 .IndicatorWrapper {
   width: 100%;
   display: flex;
