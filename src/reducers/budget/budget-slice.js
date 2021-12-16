@@ -1,5 +1,28 @@
 import {createSlice} from '@reduxjs/toolkit';
 
+const getOverall = (budget, type, currentMonth) => {
+    if (Object.keys(budget[currentMonth][type]).length === 0) {
+      return;
+    };
+    const upperCase = type[0].toUpperCase() + type.slice(1);
+    const balanceTotal = budget[currentMonth][type][upperCase];
+    const balanceBudget = Object.values(budget[currentMonth][type]).reduce((a, b) => +a + +b);
+
+    const overall = Math.abs((!balanceTotal ? 0 : balanceTotal) - balanceBudget);
+
+    return overall;
+  }
+
+  const getBalance = (budget, type, currentMonth) => {
+    if (Object.keys(budget[currentMonth][type]).length === 0) {
+      return;
+    };
+    const upperCase = type[0].toUpperCase() + type.slice(1);
+    const balanceTotal = budget[currentMonth][type][upperCase];
+
+    return !balanceTotal ? 0 : balanceTotal;
+  }
+
 export const budgetSlice = createSlice({
   name: "budget",
   initialState: {
@@ -56,6 +79,7 @@ export const budgetSlice = createSlice({
     updateBudget: (state, action) => {
       const type = action.payload.type;
       const name = action.payload.name;
+      const nameUpperCase = action.payload.nameUpperCase;
       const value = action.payload.value;
       const month = action.payload.month;
 
@@ -66,6 +90,18 @@ export const budgetSlice = createSlice({
       currentMonth[type] = currentType;
 
       budget[month] = currentMonth;
+
+      const overall = getOverall(budget, type, month);
+      const balance = getBalance(budget, type, month);
+
+      if (overall > balance) {
+        const currentMonth = {...budget[month]};
+        const currentType = {...currentMonth[type]};
+        currentType[nameUpperCase] = overall;
+        currentMonth[type] = currentType;
+
+        budget[month] = currentMonth;
+      }
 
       return {
         ...budget,
