@@ -72,6 +72,7 @@ function Settings() {
         onChange={onChangeCategory}
         items={categories}
         title={"Categories"}
+        placeholder={"Type the new name for the category"}
       />
 
       <SettingsBlock
@@ -83,6 +84,7 @@ function Settings() {
         onChange={onChangeAccount}
         items={accounts}
         title={"Accounts"}
+        placeholder={"Type the new name for the account"}
       />
     </>
   )

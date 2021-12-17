@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Item.module.css';
 
-function SettingsItem({id, onChange, onClickSubmitButton, value, submitTitle, onClickButton}) {
+function SettingsItem({id, onChange, onClickSubmitButton, value, submitTitle, onClickButton, placeholder}) {
   return (
     <form
       className={classes.ItemWrapper}
@@ -14,6 +14,7 @@ function SettingsItem({id, onChange, onClickSubmitButton, value, submitTitle, on
         value={value}
         id={id}
         onChange={onChange}
+        placeholder={placeholder}
       />
       <div className={classes.ButtonWrapper}>
         <button
