@@ -1,28 +1,27 @@
 import React from 'react';
-import {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {NavLink} from 'react-router-dom';
 import {CSSTransition} from 'react-transition-group';
 
 import classes from './Menu.module.css';
 import Form from '../../Transactions/CreateForm/Form'
-import {resetState, isButtonShow} from '../../../reducers/transactions/transactions-slice';
+import {resetState, isButtonShow, isButtonClick, clickButton} from '../../../reducers/transactions/transactions-slice';
 
 function Menu({categories, accounts}) {
-  const [onClickAddBtn, setOnClickAddBtn] = useState(false);
   const dispatch = useDispatch();
-  const showButton = useSelector(isButtonShow);
+  const clickAddButton = useSelector(isButtonClick);
+  const showAddButton = useSelector(isButtonShow);
 
   const classesAddBtn = [
     classes.menuAddBtn,
     'fa',
-    onClickAddBtn ? 'fa-times' : 'fa-plus',
+    clickAddButton ? 'fa-times' : 'fa-plus',
   ].join(' ');
 
   const onClickAddButton = () => {
-    setOnClickAddBtn(!onClickAddBtn);
+    dispatch(clickButton());
 
-    if (onClickAddBtn) {
+    if (clickAddButton) {
       dispatch(resetState());
     }
   };
@@ -35,14 +34,13 @@ function Menu({categories, accounts}) {
       <Form
         categories={categories}
         accounts={accounts}
-        onClickAddBtn={onClickAddBtn}
-        setOnClickAddBtn={setOnClickAddBtn}
+        onClickAddBtn={clickAddButton}
       />
 
       <nav className={classes.menu}>
         <div className={classes.wrapper}>
-          {showButton && <CSSTransition
-              in={onClickAddBtn}
+          {showAddButton && <CSSTransition
+              in={clickAddButton}
               timeout={300}
               classNames={{
                 enterActive: `${classes.addBtnEnterActive}`,

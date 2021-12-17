@@ -7,7 +7,8 @@ import {
   setAccount,
   selectNewTransactionState,
   addTransaction,
-  resetState
+  resetState,
+  clickButton
 } from '../../../reducers/transactions/transactions-slice';
 import classes from './Form.module.css'
 import Input from '../../UI/Input/Input';
@@ -87,7 +88,8 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
   const addTransactionHandler = () => {
     dispatch(addTransaction([newTransactionState]));
     dispatch(resetState());
-    setOnClickAddBtn(false);
+    // setOnClickAddBtn(false);
+    dispatch(clickButton());
 
     let formControls = createFormControls();
     formControls = updateFormControls("date", date, formControls);
