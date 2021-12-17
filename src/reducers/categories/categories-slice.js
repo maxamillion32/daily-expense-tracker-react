@@ -42,7 +42,40 @@ export const categoriesSlice = createSlice({
           title: action.payload,
         }
       };
-    }
+    },
+    editCategory: (state, action) => {
+      const categories = [...state.allCategories];
+      const newCategories = categories.map(category => {
+          if (category.id === action.payload.id) {
+            return action.payload;
+          }
+          return category;
+        })
+
+      return {
+        ...state,
+        allCategories: newCategories
+      };
+    },
+    createCategory: (state, action) => {
+      return {
+        ...state,
+        allCategories: [
+          ...state.allCategories,
+          ...action.payload
+        ]
+      };
+    },
+    deleteCategory: (state, action) => {
+      const id = action.payload;
+      const newCategories = [...state.allCategories].filter((item) => item.id !== id)
+      return {
+        ...state,
+        allCategories: [
+          ...newCategories
+        ]
+      };
+    },
   },
   extraReducers: {
     [loadCategories.pending]: (state) => {
@@ -82,5 +115,5 @@ export const selectNewCategoryState = (state) => state.categories.newCategory;
 export const isLoading = (state) => state.categories.isLoading;
 export const isPending = (state) => state.categories.isPending;
 
-export const {addCategory} = categoriesSlice.actions;
+export const {addCategory, editCategory, createCategory, deleteCategory} = categoriesSlice.actions;
 export default categoriesSlice.reducer;

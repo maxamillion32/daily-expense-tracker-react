@@ -1,11 +1,11 @@
 import React from 'react';
-import Dummy from '../../components/Dummy/Dummy';
+import SettingsScreen from '../../components/Settings/Settings'
 import classes from './Settings.module.css';
 
 function Settings() {
   return (
     <section className={classes.Settings}>
-      <Dummy />
+      <SettingsScreen />
     </section>
   )
 }

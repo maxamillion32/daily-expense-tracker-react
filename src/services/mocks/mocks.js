@@ -1,20 +1,22 @@
 import {nanoid} from 'nanoid';
 
+const MAX_ID_LENGTH = 6;
+
 export const categories = [
-  {id: 1, title: `Salary`},
-  {id: 2, title: `Rent`},
-  {id: 3, title: `Groceries`},
-  {id: 4, title: `Parking fees`},
-  {id: 5, title: `Clothing & shoes`},
-  {id: 6, title: `Family`},
-  {id: 7, title: `Coffee`},
-  {id: 8, title: `Health`},
+  {id: nanoid(MAX_ID_LENGTH), title: `Salary`},
+  {id: nanoid(MAX_ID_LENGTH), title: `Rent`},
+  {id: nanoid(MAX_ID_LENGTH), title: `Groceries`},
+  {id: nanoid(MAX_ID_LENGTH), title: `Parking fees`},
+  {id: nanoid(MAX_ID_LENGTH), title: `Clothing & shoes`},
+  {id: nanoid(MAX_ID_LENGTH), title: `Family`},
+  {id: nanoid(MAX_ID_LENGTH), title: `Coffee`},
+  {id: nanoid(MAX_ID_LENGTH), title: `Health`},
 ];
 
 export const accounts = [
-  {id: 1, title: `Cash`, balance: 2000, startBalance: 0, archive: false},
-  {id: 2, title: `Postbank`, balance: 55000, startBalance: 0, archive: false},
-  {id: 3, title: `N26`, balance: 550000, startBalance: 0, archive: false},
+  {id: nanoid(MAX_ID_LENGTH), title: `Cash`, balance: 2000, startBalance: 0, archive: false},
+  {id: nanoid(MAX_ID_LENGTH), title: `Postbank`, balance: 55000, startBalance: 0, archive: false},
+  {id: nanoid(MAX_ID_LENGTH), title: `N26`, balance: 550000, startBalance: 0, archive: false},
 ];
 
 const getRandomInt = (min, max) => {
@@ -43,8 +45,6 @@ const getRandomDate = () => {
 
   return date.toISOString().slice(0, -14);
 };
-
-const MAX_ID_LENGTH = 6;
 
 const generateTransactions = (count, accounts, categories) => (Array(count).fill({}).map(() => ({
     id: nanoid(MAX_ID_LENGTH),

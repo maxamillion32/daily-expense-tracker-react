@@ -45,7 +45,40 @@ export const accountsSlice = createSlice({
           title: action.payload,
         }
       };
-    }
+    },
+    editAccount: (state, action) => {
+      const accounts = [...state.allAccounts];
+      const newAccounts = accounts.map(account => {
+          if (account.id === action.payload.id) {
+            return action.payload;
+          }
+          return account;
+        })
+
+      return {
+        ...state,
+        allAccounts: newAccounts
+      };
+    },
+    createAccount: (state, action) => {
+      return {
+        ...state,
+        allAccounts: [
+          ...state.allAccounts,
+          ...action.payload
+        ]
+      };
+    },
+    deleteAccount: (state, action) => {
+      const id = action.payload;
+      const newAccounts = [...state.allAccounts].filter((item) => item.id !== id)
+      return {
+        ...state,
+        allAccounts: [
+          ...newAccounts
+        ]
+      };
+    },
   },
   extraReducers: {
     [loadAccounts.pending]: (state) => {
@@ -88,5 +121,5 @@ export const selectNewAccountsState = (state) => state.accounts.newAccount;
 export const isLoading = (state) => state.accounts.isLoading;
 export const isPending = (state) => state.accounts.isPending;
 
-export const {addAccount} = accountsSlice.actions;
+export const {addAccount, editAccount, createAccount, deleteAccount} = accountsSlice.actions;
 export default accountsSlice.reducer;
