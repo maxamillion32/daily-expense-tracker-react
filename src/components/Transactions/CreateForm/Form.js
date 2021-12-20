@@ -6,9 +6,10 @@ import {
   setCategory,
   setAccount,
   selectNewTransactionState,
-  addTransaction,
+  postTransaction,
   resetState,
-  clickButton
+  clickButton,
+  loadTransactions
 } from '../../../reducers/transactions/transactions-slice';
 import classes from './Form.module.css'
 import Input from '../../UI/Input/Input';
@@ -65,7 +66,7 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
       });
 
       const accountId = getId(accounts, e.target.value);
-      dispatch(setAccount({id: accountId, title: e.target.value}));
+      dispatch(setAccount(accountId));
     }
 
     if (selector === "category") {
@@ -77,7 +78,7 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
       });
 
       const categoryId = getId(categories, e.target.value);
-      dispatch(setCategory({id: categoryId, title: e.target.value}));
+      dispatch(setCategory(categoryId));
     }
   };
 
@@ -86,10 +87,10 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
   };
 
   const addTransactionHandler = () => {
-    dispatch(addTransaction([newTransactionState]));
+    dispatch(postTransaction(newTransactionState));
     dispatch(resetState());
-    // setOnClickAddBtn(false);
     dispatch(clickButton());
+    dispatch(loadTransactions());
 
     let formControls = createFormControls();
     formControls = updateFormControls("date", date, formControls);

@@ -1,30 +1,40 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
-import CategoryDataService from '../../services/category.service';
-import {categories} from '../../services/mocks/mocks';
+import {getAll, create, deleteId, update} from '../../services/category.service';
+// import {categories} from '../../services/mocks/mocks';l
 
 export const loadCategories = createAsyncThunk(
   'categories/loadData',
   async () => {
-    const data = await CategoryDataService.getAll();
-    const json = await data;
-    return json;
+    return await getAll();
   }
 )
 
-export const postCategories = createAsyncThunk(
+export const postCategory = createAsyncThunk(
   'categories/addData',
   async (newCategory) => {
-    const data = await CategoryDataService.create(newCategory);
-    const json = await data;
-    return json;
+    return await create(newCategory);
+  }
+)
+
+export const updateCategory = createAsyncThunk(
+  'categories/updateData',
+  async ({id, title}) => {
+    return await update(id, title);
+  }
+)
+
+export const deleteCategory = createAsyncThunk(
+  'categories/deleteData',
+  async (categoryId) => {
+    return await deleteId(categoryId);
   }
 )
 
 export const categoriesSlice = createSlice({
   name: "categories",
   initialState: {
-    allCategories: categories,
+    allCategories: [],
     newCategory: {
       title: ``,
     },
@@ -34,48 +44,48 @@ export const categoriesSlice = createSlice({
     isFailedToCreate: false,
   },
   reducers: {
-    addCategory: (state, action) => {
-      return {
-        ...state,
-        newCategory: {
-          ...state.newCategory,
-          title: action.payload,
-        }
-      };
-    },
-    editCategory: (state, action) => {
-      const categories = [...state.allCategories];
-      const newCategories = categories.map(category => {
-          if (category.id === action.payload.id) {
-            return action.payload;
-          }
-          return category;
-        })
+    // addCategory: (state, action) => {
+    //   return {
+    //     ...state,
+    //     newCategory: {
+    //       ...state.newCategory,
+    //       title: action.payload,
+    //     }
+    //   };
+    // },
+    // editCategory: (state, action) => {
+    //   const categories = [...state.allCategories];
+    //   const newCategories = categories.map(category => {
+    //       if (category.id === action.payload.id) {
+    //         return action.payload;
+    //       }
+    //       return category;
+    //     })
 
-      return {
-        ...state,
-        allCategories: newCategories
-      };
-    },
-    createCategory: (state, action) => {
-      return {
-        ...state,
-        allCategories: [
-          ...state.allCategories,
-          ...action.payload
-        ]
-      };
-    },
-    deleteCategory: (state, action) => {
-      const id = action.payload;
-      const newCategories = [...state.allCategories].filter((item) => item.id !== id)
-      return {
-        ...state,
-        allCategories: [
-          ...newCategories
-        ]
-      };
-    },
+    //   return {
+    //     ...state,
+    //     allCategories: newCategories
+    //   };
+    // },
+    // createCategory: (state, action) => {
+    //   return {
+    //     ...state,
+    //     allCategories: [
+    //       ...state.allCategories,
+    //       ...action.payload
+    //     ]
+    //   };
+    // },
+    // deleteCategory: (state, action) => {
+    //   const id = action.payload;
+    //   const newCategories = [...state.allCategories].filter((item) => item.id !== id)
+    //   return {
+    //     ...state,
+    //     allCategories: [
+    //       ...newCategories
+    //     ]
+    //   };
+    // },
   },
   extraReducers: {
     [loadCategories.pending]: (state) => {
@@ -92,18 +102,50 @@ export const categoriesSlice = createSlice({
       state.hasError = true;
     },
 
-    [postCategories.pending]: (state) => {
+    [postCategory.pending]: (state) => {
       state.isPending = true;
       state.isFailedToCreate = false;
     },
-    [postCategories.fulfilled]: (state) => {
+    [postCategory.fulfilled]: (state) => {
       state.newCategory = {
         title: ``,
       }
       state.isPending = false;
       state.isFailedToCreate = false;
     },
-    [postCategories.rejected]: (state) => {
+    [postCategory.rejected]: (state) => {
+      state.isPending = false;
+      state.isFailedToCreate = true;
+    },
+
+    [updateCategory.pending]: (state) => {
+      state.isPending = true;
+      state.isFailedToCreate = false;
+    },
+    [updateCategory.fulfilled]: (state) => {
+      state.newCategory = {
+        title: ``,
+      }
+      state.isPending = false;
+      state.isFailedToCreate = false;
+    },
+    [updateCategory.rejected]: (state) => {
+      state.isPending = false;
+      state.isFailedToCreate = true;
+    },
+
+    [deleteCategory.pending]: (state) => {
+      state.isPending = true;
+      state.isFailedToCreate = false;
+    },
+    [deleteCategory.fulfilled]: (state) => {
+      // state.newCategory = {
+      //   title: ``,
+      // }
+      state.isPending = false;
+      state.isFailedToCreate = false;
+    },
+    [deleteCategory.rejected]: (state) => {
       state.isPending = false;
       state.isFailedToCreate = true;
     }
@@ -115,5 +157,5 @@ export const selectNewCategoryState = (state) => state.categories.newCategory;
 export const isLoading = (state) => state.categories.isLoading;
 export const isPending = (state) => state.categories.isPending;
 
-export const {addCategory, editCategory, createCategory, deleteCategory} = categoriesSlice.actions;
+export const {addCategory, editCategory, createCategory} = categoriesSlice.actions;
 export default categoriesSlice.reducer;

@@ -2,7 +2,11 @@ import React from 'react';
 import classes from '../Settings.module.css';
 import SettingsItem from '../Items/Item';
 
-function SettingsBlock({onClickSubmitButton, onClickCreateButton, value, onChange, onClickDeleteButton, items, title, placeholder}) {
+function SettingsBlock({
+  onClickSubmitButton, onClickCreateButton,
+  value, onChange, onClickDeleteButton,
+  items, title, placeholder, onClickEditButton
+}) {
   return (
     <section className={classes.Wrapper}>
       <div className={classes.Content}>
@@ -20,11 +24,12 @@ function SettingsBlock({onClickSubmitButton, onClickCreateButton, value, onChang
           <SettingsItem
             onClickSubmitButton={onClickSubmitButton}
             value={category.title}
-            submitTitle={"Delete"}
-            onClickButton={onClickDeleteButton}
+            submitTitle={"Edit"}
+            onClickButton={onClickEditButton}
             onChange={onChange}
             id={category.id}
             key={category.id}
+            onClickDeleteButton={onClickDeleteButton}
           />
           ))
         }

@@ -1,33 +1,39 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import {nanoid} from 'nanoid';
-import TransactionDataService from '../../services/transaction.service';
+import {getAll, create, deleteId} from '../../services/transaction.service';
 import {selectSearchTerm} from '../search/search-slice';
 import {formatMonth} from '../../utils/utils'
-import {transactions} from '../../services/mocks/mocks';
-
-const MAX_ID_LENGTH = 6;
 
 export const loadTransactions = createAsyncThunk(
   'transactions/loadData',
   async () => {
-    const data = await TransactionDataService.getAll();
-    const json = await data;
-    return json;
+    return await getAll();
+  }
+)
+
+export const postTransaction = createAsyncThunk(
+  'transactions/postData',
+  async (data) => {
+    return await create(data);
+  }
+)
+
+export const deleteTransaction = createAsyncThunk(
+  'transactions/deleteData',
+  async (transactionId) => {
+    return await deleteId(transactionId);
   }
 )
 
 export const transactionsSlice = createSlice({
   name: "transactions",
   initialState: {
-    allTransactions: transactions,
+    allTransactions: [],
     newTransaction: {
-      id: nanoid(MAX_ID_LENGTH),
+      // id: nanoid(MAX_ID_LENGTH),
       sum: '',
       date: new Date().toISOString().slice(0, -14),
       // date: '',
       expense: true,
-      account: [],
-      category: [],
     },
     isLoading: false,
     hasError: false,
@@ -57,7 +63,7 @@ export const transactionsSlice = createSlice({
         ...state,
         newTransaction: {
           ...state.newTransaction,
-          category: action.payload,
+          categoryId: action.payload,
         }
       };
     },
@@ -66,40 +72,38 @@ export const transactionsSlice = createSlice({
         ...state,
         newTransaction: {
           ...state.newTransaction,
-          account: action.payload,
+          accountId: action.payload,
         }
       };
     },
-    addTransaction: (state, action) => {
-      return {
-        ...state,
-        allTransactions: [
-          ...state.allTransactions,
-          ...action.payload,
-        ],
-      };
-    },
+    // addTransaction: (state, action) => {
+    //   return {
+    //     ...state,
+    //     allTransactions: [
+    //       ...state.allTransactions,
+    //       ...action.payload,
+    //     ],
+    //   };
+    // },
     resetState: (state, action) => {
       return {
         ...state,
         newTransaction: {
-          id: nanoid(MAX_ID_LENGTH),
+          // id: nanoid(MAX_ID_LENGTH),
           sum: '',
           date: new Date().toISOString().slice(0, -14),
           expense: true,
-          account: [],
-          category: [],
         },
       };
     },
-    deleteTransaction: (state, action) => {
-      const id = action.payload;
-      const newTransactions = state.allTransactions.filter(transaction => transaction.id !== id)
-      return {
-        ...state,
-        allTransactions: newTransactions,
-      };
-    },
+    // deleteTransaction: (state, action) => {
+    //   const id = action.payload;
+    //   const newTransactions = state.allTransactions.filter(transaction => transaction.id !== id)
+    //   return {
+    //     ...state,
+    //     allTransactions: newTransactions,
+    //   };
+    // },
     updateMonth: (state, action) => {
       return {
         ...state,
@@ -164,7 +168,6 @@ export const {
   setTransactionId,
   addTransaction,
   resetState,
-  deleteTransaction,
   updateMonth,
   clickButton,
   showButton,

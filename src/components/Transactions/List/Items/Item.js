@@ -1,7 +1,7 @@
 import React from 'react';
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
-import {deleteTransaction} from '../../../../reducers/transactions/transactions-slice';
+import {deleteTransaction, loadTransactions} from '../../../../reducers/transactions/transactions-slice';
 import {CSSTransition} from 'react-transition-group';
 import classes from '../ListContainer.module.css';
 
@@ -13,6 +13,7 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, ...res
     const id = target.id;
 
     dispatch(deleteTransaction(id));
+    dispatch(loadTransactions());
   };
 
   const handleDeleteButtonToggle = () => {

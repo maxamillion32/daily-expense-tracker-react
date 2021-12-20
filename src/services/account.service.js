@@ -1,13 +1,27 @@
-import {accounts} from "./mocks/mocks";
+import {addDoc, collection, updateDoc, doc, deleteDoc, getDocs} from "@firebase/firestore";
+import db from "./firebase";
 
-class AccountDataService {
-  constructor() {
-  this.accounts = accounts;
-  }
-  async getAll() {
-    const json = this.accounts;
-    return json;
-  }
+const accountsRef = collection(db, "accounts");
+
+export const getAll = async () => {
+  const snapshot = await getDocs(accountsRef);
+  const results = snapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
+  return results;
 }
 
-export default new AccountDataService();
+export const create = async (title) => {
+  const payload = {title};
+  await addDoc(accountsRef, payload);
+}
+
+export const deleteId = async (id) => {
+    const docRef = doc(accountsRef, id);
+    await deleteDoc(docRef);
+}
+
+export const update = async (id, title) => {
+  const docRef = doc(accountsRef, id);
+  const payload = {title};
+
+  updateDoc(docRef, payload);
+}

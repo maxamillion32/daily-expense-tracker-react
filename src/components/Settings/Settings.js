@@ -1,13 +1,13 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import {selectAllCategoriesState, editCategory, createCategory, deleteCategory} from '../../reducers/categories/categories-slice';
-import {selectAllAccountsState, editAccount, createAccount, deleteAccount} from '../../reducers/accounts/accounts-slice';
+import {selectAllCategoriesState, deleteCategory, postCategory, loadCategories, updateCategory} from '../../reducers/categories/categories-slice';
+import {selectAllAccountsState, editAccount, deleteAccount, postAccount, loadAccounts} from '../../reducers/accounts/accounts-slice';
 // import classes from './Settings.module.css';
 // import SettingsItem from './Items/Item';
-import {nanoid} from 'nanoid';
+// import {nanoid} from 'nanoid';
 import SettingsBlock from './Blocks/Block';
 
-const MAX_ID_LENGTH = 6;
+// const MAX_ID_LENGTH = 6;
 
 function Settings() {
   const dispatch = useDispatch();
@@ -22,7 +22,8 @@ function Settings() {
     const title = target.value;
 
     if (id) {
-      dispatch(editCategory({id, title}));
+      dispatch(updateCategory({id, title}));
+      dispatch(loadCategories());
     } else {
       setInputCategory(title);
     }
@@ -40,21 +41,37 @@ function Settings() {
   }
 
   const onClickCreateCategoryButton = () => {
-    dispatch(createCategory([{id: nanoid(MAX_ID_LENGTH), title: inputCategory}]));
+    dispatch(postCategory(inputCategory));
     setInputCategory('');
+    dispatch(loadCategories());
   };
 
   const onClickCreateAccountButton = () => {
-    dispatch(createAccount([{id: nanoid(MAX_ID_LENGTH), title: inputAccount}]));
+    dispatch(postAccount(inputAccount));
     setInputAccount('');
+    dispatch(loadAccounts());
+  };
+
+  const onClickEditCategoryButton = ({target}) => {
+    inputCategory !== '' && dispatch(updateCategory(target.id, inputCategory));
+    // setInputCategory('');
+    dispatch(loadCategories());
+  };
+
+  const onClickEditAccountButton = ({target}) => {
+    // dispatch(updateCategory(inputCategory));
+    // setInputCategory('');
+    // dispatch(loadCategories());
   };
 
   function onClickDeleteCategoryButton({target}) {
     dispatch(deleteCategory(target.id));
+    dispatch(loadCategories());
   };
 
   function onClickDeleteAccountButton({target}) {
     dispatch(deleteAccount(target.id));
+    dispatch(loadAccounts());
   };
 
   const onClickSubmitButton = (e) => {
@@ -67,6 +84,7 @@ function Settings() {
         onClickSubmitButton={onClickSubmitButton}
         onClickCreateButton={onClickCreateCategoryButton}
         onClickDeleteButton={onClickDeleteCategoryButton}
+        onClickEditButton={onClickEditCategoryButton}
         value={inputCategory}
         submitTitle={"Create"}
         onChange={onChangeCategory}
@@ -79,6 +97,7 @@ function Settings() {
         onClickSubmitButton={onClickSubmitButton}
         onClickCreateButton={onClickCreateAccountButton}
         onClickDeleteButton={onClickDeleteAccountButton}
+        onClickEditButton={onClickEditAccountButton}
         value={inputAccount}
         submitTitle={"Create"}
         onChange={onChangeAccount}

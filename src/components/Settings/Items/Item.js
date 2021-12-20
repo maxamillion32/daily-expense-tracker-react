@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Item.module.css';
 
-function SettingsItem({id, onChange, onClickSubmitButton, value, submitTitle, onClickButton, placeholder}) {
+function SettingsItem({id, onChange, onClickSubmitButton, value, submitTitle, onClickButton, placeholder, onClickDeleteButton}) {
   return (
     <form
       className={classes.ItemWrapper}
@@ -22,16 +22,18 @@ function SettingsItem({id, onChange, onClickSubmitButton, value, submitTitle, on
           id={id}
           type="submit"
           onClick={onClickButton}
+          disabled={!value}
         >
           {submitTitle}
         </button>
-        {/* {onClickDeleteBtn && <button
+        {onClickDeleteButton && <button
+          id={id}
           className={classes.Button}
           type="button"
-          onClick={onClickDeleteBtn}
+          onClick={onClickDeleteButton}
         >
           Delete
-        </button>} */}
+        </button>}
       </div>
     </form>
   )

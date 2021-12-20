@@ -1,14 +1,42 @@
-import {transactions} from "./mocks/mocks";
+import {addDoc, collection, updateDoc, doc, deleteDoc, getDocs} from "@firebase/firestore";
+import db from "./firebase";
 
-class TransactionDataService {
-  constructor() {
-  // const {transactions} = mocks;
-  this.transactions = transactions;
-  }
-  async getAll() {
-    const json = this.transactions;
-    return json;
-  }
+const transactionsRef = collection(db, "transactions");
+const categoriesRef = collection(db, "categories");
+const accountsRef = collection(db, "accounts");
+
+export const getAll = async () => {
+  const snapshotTransactions = await getDocs(transactionsRef);
+  const snapshotCategories = await getDocs(categoriesRef);
+  const snapshotAccounts = await getDocs(accountsRef);
+
+  let transactions = {};
+  const categories = snapshotCategories.docs.map((doc) => ({...doc.data(), id: doc.id}));
+  const accounts = snapshotAccounts.docs.map((doc) => ({...doc.data(), id: doc.id}));
+
+  transactions = snapshotTransactions.docs.map((doc) => {
+    transactions = {id: doc.id, ...doc.data()}
+    transactions.category = categories.find((category) => category.id === transactions.categoryId);
+    transactions.account = accounts.find((account) => account.id === transactions.accountId);
+    return transactions;
+  });
+  return transactions;
 }
 
-export default new TransactionDataService();
+export const create = async (data) => {
+  const {sum, expense, date, categoryId, accountId} = data;
+  const payload = {sum, expense, date, categoryId, accountId};
+  await addDoc(transactionsRef, payload);
+}
+
+export const deleteId = async (id) => {
+    const docRef = doc(transactionsRef, id);
+    await deleteDoc(docRef);
+}
+
+export const update = async (id, title) => {
+  const docRef = doc(transactionsRef, id);
+  const payload = {title};
+
+  updateDoc(docRef, payload);
+}

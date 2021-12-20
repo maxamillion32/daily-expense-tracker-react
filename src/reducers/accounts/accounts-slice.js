@@ -1,30 +1,33 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
-import AccountDataService from '../../services/account.service';
-import {accounts} from '../../services/mocks/mocks';
+import {getAll, create, deleteId} from '../../services/account.service';
+// import {accounts} from '../../services/mocks/mocks';
 
 export const loadAccounts = createAsyncThunk(
   'accounts/loadData',
   async () => {
-    const data = await AccountDataService.getAll();
-    const json = await data;
-    return json;
+    return await getAll();
   }
 )
 
-export const postAccounts = createAsyncThunk(
+export const postAccount = createAsyncThunk(
   'accounts/addData',
   async (newAccount) => {
-    const data = await AccountDataService.create(newAccount);
-    const json = await data;
-    return json;
+    return await create(newAccount);
+  }
+)
+
+export const deleteAccount = createAsyncThunk(
+  'accounts/deleteData',
+  async (accountId) => {
+    return await deleteId(accountId);
   }
 )
 
 export const accountsSlice = createSlice({
   name: "accounts",
   initialState: {
-    allAccounts: accounts,
+    allAccounts: [],
     newAccount: {
       title: ``,
       balance: 0,
@@ -69,16 +72,16 @@ export const accountsSlice = createSlice({
         ]
       };
     },
-    deleteAccount: (state, action) => {
-      const id = action.payload;
-      const newAccounts = [...state.allAccounts].filter((item) => item.id !== id)
-      return {
-        ...state,
-        allAccounts: [
-          ...newAccounts
-        ]
-      };
-    },
+    // deleteAccount: (state, action) => {
+    //   const id = action.payload;
+    //   const newAccounts = [...state.allAccounts].filter((item) => item.id !== id)
+    //   return {
+    //     ...state,
+    //     allAccounts: [
+    //       ...newAccounts
+    //     ]
+    //   };
+    // },
   },
   extraReducers: {
     [loadAccounts.pending]: (state) => {
@@ -95,11 +98,11 @@ export const accountsSlice = createSlice({
       state.hasError = true;
     },
 
-    [postAccounts.pending]: (state) => {
+    [postAccount.pending]: (state) => {
       state.isPending = true;
       state.isFailedToCreate = false;
     },
-    [postAccounts.fulfilled]: (state) => {
+    [postAccount.fulfilled]: (state) => {
       state.newAccount = {
         title: ``,
         balance: 0,
@@ -109,7 +112,20 @@ export const accountsSlice = createSlice({
       state.isPending = false;
       state.isFailedToCreate = false;
     },
-    [postAccounts.rejected]: (state) => {
+    [postAccount.rejected]: (state) => {
+      state.isPending = false;
+      state.isFailedToCreate = true;
+    },
+
+    [deleteAccount.pending]: (state) => {
+      state.isPending = true;
+      state.isFailedToCreate = false;
+    },
+    [deleteAccount.fulfilled]: (state) => {
+      state.isPending = false;
+      state.isFailedToCreate = false;
+    },
+    [deleteAccount.rejected]: (state) => {
       state.isPending = false;
       state.isFailedToCreate = true;
     }
@@ -121,5 +137,5 @@ export const selectNewAccountsState = (state) => state.accounts.newAccount;
 export const isLoading = (state) => state.accounts.isLoading;
 export const isPending = (state) => state.accounts.isPending;
 
-export const {addAccount, editAccount, createAccount, deleteAccount} = accountsSlice.actions;
+export const {addAccount, editAccount, createAccount} = accountsSlice.actions;
 export default accountsSlice.reducer;

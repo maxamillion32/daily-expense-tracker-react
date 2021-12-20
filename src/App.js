@@ -7,7 +7,6 @@ import ScrollToTop from './hoc/ScrollToTop/ScrollToTop';
 import Transactions from './containers/Transactions/Transactions';
 import Statistics from './containers/Statistics/Statistics';
 import Settings from './containers/Settings/Settings';
-
 function App() {
     return (
       <Layout>
