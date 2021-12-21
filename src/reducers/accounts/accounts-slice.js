@@ -1,7 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
-import {getAll, create, deleteId} from '../../services/account.service';
-// import {accounts} from '../../services/mocks/mocks';
+import {getAll, create, update, deleteId} from '../../services/account.service';
 
 export const loadAccounts = createAsyncThunk(
   'accounts/loadData',
@@ -14,6 +13,13 @@ export const postAccount = createAsyncThunk(
   'accounts/addData',
   async (newAccount) => {
     return await create(newAccount);
+  }
+)
+
+export const updateAccount = createAsyncThunk(
+  'accounts/updateData',
+  async ({id, title}) => {
+    return await update(id, title);
   }
 )
 
@@ -39,50 +45,7 @@ export const accountsSlice = createSlice({
     isPending: false,
     isFailedToCreate: false,
   },
-  reducers: {
-    addAccount: (state, action) => {
-      return {
-        ...state,
-        newAccount: {
-          ...state.newAccount,
-          title: action.payload,
-        }
-      };
-    },
-    editAccount: (state, action) => {
-      const accounts = [...state.allAccounts];
-      const newAccounts = accounts.map(account => {
-          if (account.id === action.payload.id) {
-            return action.payload;
-          }
-          return account;
-        })
-
-      return {
-        ...state,
-        allAccounts: newAccounts
-      };
-    },
-    createAccount: (state, action) => {
-      return {
-        ...state,
-        allAccounts: [
-          ...state.allAccounts,
-          ...action.payload
-        ]
-      };
-    },
-    // deleteAccount: (state, action) => {
-    //   const id = action.payload;
-    //   const newAccounts = [...state.allAccounts].filter((item) => item.id !== id)
-    //   return {
-    //     ...state,
-    //     allAccounts: [
-    //       ...newAccounts
-    //     ]
-    //   };
-    // },
-  },
+  reducers: {},
   extraReducers: {
     [loadAccounts.pending]: (state) => {
       state.isLoading = true;
@@ -97,38 +60,6 @@ export const accountsSlice = createSlice({
       state.isLoading = false;
       state.hasError = true;
     },
-
-    [postAccount.pending]: (state) => {
-      state.isPending = true;
-      state.isFailedToCreate = false;
-    },
-    [postAccount.fulfilled]: (state) => {
-      state.newAccount = {
-        title: ``,
-        balance: 0,
-        startBalance: 0,
-        archive: false
-      }
-      state.isPending = false;
-      state.isFailedToCreate = false;
-    },
-    [postAccount.rejected]: (state) => {
-      state.isPending = false;
-      state.isFailedToCreate = true;
-    },
-
-    [deleteAccount.pending]: (state) => {
-      state.isPending = true;
-      state.isFailedToCreate = false;
-    },
-    [deleteAccount.fulfilled]: (state) => {
-      state.isPending = false;
-      state.isFailedToCreate = false;
-    },
-    [deleteAccount.rejected]: (state) => {
-      state.isPending = false;
-      state.isFailedToCreate = true;
-    }
   },
 });
 

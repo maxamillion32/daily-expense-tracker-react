@@ -1,14 +1,20 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {selectAllCategoriesState} from '../../../reducers/categories/categories-slice';
 import classes from './Budget.module.css';
 import WidgetsBudgetItem from './Items/Item';
-import {selectBudgetState, updateBudget} from '../../../reducers/budget/budget-slice';
+import {selectBudgetState, updateBudget, postBudget, loadBudgets, selectAllBudgetState} from '../../../reducers/budget/budget-slice';
 
-function WidgetsBudget({currentMonth}) {
+function WidgetsBudget({currentMonth, budget}) {
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategoriesState);
-  const budget = useSelector(selectBudgetState);
+  // const budget = useSelector(selectBudgetState);
+  const userId = 'userId';
+
+  // useEffect(() => {
+  //   dispatch(loadBudgets());
+  //   // eslint-disable-next-line
+  // }, []);
 
   const onChange = ({target}) => {
     const type = target.id;
@@ -17,7 +23,13 @@ function WidgetsBudget({currentMonth}) {
     const value = target.value;
     const month = currentMonth;
 
-    dispatch(updateBudget({type, name, nameUpperCase, value, month}));
+    dispatch(updateBudget({type, name, nameUpperCase, value, month, budget}));
+    dispatch(postBudget({type, name, nameUpperCase, value, month, budget}));
+    dispatch(loadBudgets());
+  }
+
+  if (!budget) {
+    return (<p>Loading...</p>)
   }
 
   return (
@@ -28,7 +40,7 @@ function WidgetsBudget({currentMonth}) {
         <WidgetsBudgetItem
           title={"Expenses"}
           id={"expenses"}
-          value={budget[currentMonth]["expenses"]["Expenses"] || ''}
+          value={budget[userId][currentMonth]["expenses"]["Expenses"] || ''}
           onChange={onChange}
         />
 
@@ -37,7 +49,7 @@ function WidgetsBudget({currentMonth}) {
             key={category.id}
             title={category.title}
             id={"expenses"}
-            value={budget[currentMonth]["expenses"][category.title] || ''}
+            value={budget[userId][currentMonth]["expenses"][category.title] || ''}
             onChange={onChange}
           />
           ))
@@ -48,7 +60,7 @@ function WidgetsBudget({currentMonth}) {
         <WidgetsBudgetItem
           title={"Incomes"}
           id={"incomes"}
-          value={budget[currentMonth]["incomes"]["Incomes"] || ''}
+          value={budget[userId][currentMonth]["incomes"]["Incomes"] || ''}
           onChange={onChange}
         />
 
@@ -57,7 +69,7 @@ function WidgetsBudget({currentMonth}) {
               key={category.id}
               title={category.title}
               id={"incomes"}
-              value={budget[currentMonth]["incomes"][category.title] || ''}
+              value={budget[userId][currentMonth]["incomes"][category.title] || ''}
               onChange={onChange}
             />
           ))

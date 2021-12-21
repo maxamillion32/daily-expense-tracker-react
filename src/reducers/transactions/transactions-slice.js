@@ -29,7 +29,6 @@ export const transactionsSlice = createSlice({
   initialState: {
     allTransactions: [],
     newTransaction: {
-      // id: nanoid(MAX_ID_LENGTH),
       sum: '',
       date: new Date().toISOString().slice(0, -14),
       // date: '',
@@ -76,15 +75,6 @@ export const transactionsSlice = createSlice({
         }
       };
     },
-    // addTransaction: (state, action) => {
-    //   return {
-    //     ...state,
-    //     allTransactions: [
-    //       ...state.allTransactions,
-    //       ...action.payload,
-    //     ],
-    //   };
-    // },
     resetState: (state, action) => {
       return {
         ...state,
@@ -96,14 +86,6 @@ export const transactionsSlice = createSlice({
         },
       };
     },
-    // deleteTransaction: (state, action) => {
-    //   const id = action.payload;
-    //   const newTransactions = state.allTransactions.filter(transaction => transaction.id !== id)
-    //   return {
-    //     ...state,
-    //     allTransactions: newTransactions,
-    //   };
-    // },
     updateMonth: (state, action) => {
       return {
         ...state,

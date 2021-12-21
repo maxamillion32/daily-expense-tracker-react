@@ -1,13 +1,8 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {selectAllCategoriesState, deleteCategory, postCategory, loadCategories, updateCategory} from '../../reducers/categories/categories-slice';
-import {selectAllAccountsState, editAccount, deleteAccount, postAccount, loadAccounts} from '../../reducers/accounts/accounts-slice';
-// import classes from './Settings.module.css';
-// import SettingsItem from './Items/Item';
-// import {nanoid} from 'nanoid';
+import {selectAllAccountsState, updateAccount, deleteAccount, postAccount, loadAccounts} from '../../reducers/accounts/accounts-slice';
 import SettingsBlock from './Blocks/Block';
-
-// const MAX_ID_LENGTH = 6;
 
 function Settings() {
   const dispatch = useDispatch();
@@ -34,7 +29,8 @@ function Settings() {
     const title = target.value;
 
     if (id) {
-      dispatch(editAccount({id, title}));
+      dispatch(updateAccount({id, title}));
+      dispatch(loadAccounts());
     } else {
       setInputAccount(title);
     }
@@ -53,7 +49,7 @@ function Settings() {
   };
 
   const onClickEditCategoryButton = ({target}) => {
-    inputCategory !== '' && dispatch(updateCategory(target.id, inputCategory));
+    // inputCategory !== '' && dispatch(updateCategory(target.id, inputCategory));
     // setInputCategory('');
     dispatch(loadCategories());
   };

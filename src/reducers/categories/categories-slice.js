@@ -1,7 +1,6 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 import {getAll, create, deleteId, update} from '../../services/category.service';
-// import {categories} from '../../services/mocks/mocks';l
 
 export const loadCategories = createAsyncThunk(
   'categories/loadData',
@@ -43,50 +42,7 @@ export const categoriesSlice = createSlice({
     isPending: false,
     isFailedToCreate: false,
   },
-  reducers: {
-    // addCategory: (state, action) => {
-    //   return {
-    //     ...state,
-    //     newCategory: {
-    //       ...state.newCategory,
-    //       title: action.payload,
-    //     }
-    //   };
-    // },
-    // editCategory: (state, action) => {
-    //   const categories = [...state.allCategories];
-    //   const newCategories = categories.map(category => {
-    //       if (category.id === action.payload.id) {
-    //         return action.payload;
-    //       }
-    //       return category;
-    //     })
-
-    //   return {
-    //     ...state,
-    //     allCategories: newCategories
-    //   };
-    // },
-    // createCategory: (state, action) => {
-    //   return {
-    //     ...state,
-    //     allCategories: [
-    //       ...state.allCategories,
-    //       ...action.payload
-    //     ]
-    //   };
-    // },
-    // deleteCategory: (state, action) => {
-    //   const id = action.payload;
-    //   const newCategories = [...state.allCategories].filter((item) => item.id !== id)
-    //   return {
-    //     ...state,
-    //     allCategories: [
-    //       ...newCategories
-    //     ]
-    //   };
-    // },
-  },
+  reducers: {},
   extraReducers: {
     [loadCategories.pending]: (state) => {
       state.isLoading = true;
@@ -101,54 +57,6 @@ export const categoriesSlice = createSlice({
       state.isLoading = false;
       state.hasError = true;
     },
-
-    [postCategory.pending]: (state) => {
-      state.isPending = true;
-      state.isFailedToCreate = false;
-    },
-    [postCategory.fulfilled]: (state) => {
-      state.newCategory = {
-        title: ``,
-      }
-      state.isPending = false;
-      state.isFailedToCreate = false;
-    },
-    [postCategory.rejected]: (state) => {
-      state.isPending = false;
-      state.isFailedToCreate = true;
-    },
-
-    [updateCategory.pending]: (state) => {
-      state.isPending = true;
-      state.isFailedToCreate = false;
-    },
-    [updateCategory.fulfilled]: (state) => {
-      state.newCategory = {
-        title: ``,
-      }
-      state.isPending = false;
-      state.isFailedToCreate = false;
-    },
-    [updateCategory.rejected]: (state) => {
-      state.isPending = false;
-      state.isFailedToCreate = true;
-    },
-
-    [deleteCategory.pending]: (state) => {
-      state.isPending = true;
-      state.isFailedToCreate = false;
-    },
-    [deleteCategory.fulfilled]: (state) => {
-      // state.newCategory = {
-      //   title: ``,
-      // }
-      state.isPending = false;
-      state.isFailedToCreate = false;
-    },
-    [deleteCategory.rejected]: (state) => {
-      state.isPending = false;
-      state.isFailedToCreate = true;
-    }
   },
 });
 
