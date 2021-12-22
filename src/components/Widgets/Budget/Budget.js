@@ -27,7 +27,7 @@ function WidgetsBudget({currentMonth, budget}) {
     }
     // console.log(`🚀 ~ file: Budget.js ~ line 9 ~ WidgetsBudget ~ budget`, !Object.keys(budget[userId]).length);
 
-  const isBudget = Object.keys(budget[userId]).length !== 0;
+  // const isBudget = Object.keys(budget[userId]).length !== 0;
 
   const onChange = ({target}) => {
     const type = target.id;
@@ -49,7 +49,7 @@ function WidgetsBudget({currentMonth, budget}) {
         <WidgetsBudgetItem
           title={"Expenses"}
           id={"expenses"}
-          value={isBudget && budget[userId][currentMonth]["expenses"]["Expenses"]}
+          value={budget[userId][currentMonth]["expenses"]["Expenses"] || ''}
           onChange={onChange}
         />
 
@@ -58,7 +58,7 @@ function WidgetsBudget({currentMonth, budget}) {
             key={category.id}
             title={category.title}
             id={"expenses"}
-            value={isBudget && budget[userId][currentMonth]["expenses"][category.title]}
+            value={budget[userId][currentMonth]["expenses"][category.title] || ''}
             onChange={onChange}
           />
           ))
@@ -69,7 +69,7 @@ function WidgetsBudget({currentMonth, budget}) {
         <WidgetsBudgetItem
           title={"Incomes"}
           id={"incomes"}
-          value={isBudget && budget[userId][currentMonth]["incomes"]["Incomes"]}
+          value={budget[userId][currentMonth]["incomes"]["Incomes"]  || ''}
           onChange={onChange}
         />
 
@@ -78,7 +78,7 @@ function WidgetsBudget({currentMonth, budget}) {
               key={category.id}
               title={category.title}
               id={"incomes"}
-              value={isBudget && budget[userId][currentMonth]["incomes"][category.title]}
+              value={budget[userId][currentMonth]["incomes"][category.title]  || ''}
               onChange={onChange}
             />
           ))
