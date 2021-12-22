@@ -19,7 +19,6 @@ function WidgetsMonthExpenses({currentMonth, transactions, budget}) {
   const expenses = new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget, monthTransactions, currentMonth);
   const incomes = new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget, monthTransactions, currentMonth);
 
-
   return (
     <>
       <WidgetsMonthExpensesItem

@@ -46,6 +46,7 @@ export class Statistics {
     .filter((transaction) => (type === TRANSACTION_TYPE.EXPENSES ? transaction.expense : !transaction.expense)
       ? transaction.sum !== 0
       : transaction = null)
+    .sort((a, b) => b.sum - a.sum)
     .map(transaction => transaction.category.title))];
   }
 
