@@ -8,11 +8,11 @@ function WidgetsMonthBalance({currentMonth, transactions}) {
 
   const sumExpenses = filteredTransactions.map((transaction) => {
       return transaction.expense ? transaction = +transaction.sum : transaction = null;
-    }).reduce((a, b) => a + b, 0);
+    }).reduce((a, b) => a + b, 0).toFixed(2);
 
   const sumIncomes = filteredTransactions.map((item) => {
     return !item.expense ? item = +item.sum : item = null;
-  }).reduce((a, b) => a + b, 0);
+  }).reduce((a, b) => a + b, 0).toFixed(2);
 
   return (
     <section className={classes.MonthBalance}>

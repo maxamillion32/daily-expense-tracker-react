@@ -1,29 +1,33 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import {useSelector} from 'react-redux';
-import {getAll, create, deleteId, update} from '../../services/budget.service';
+// import {useSelector} from 'react-redux';
+import {
+  getAll,
+  // create, deleteId,
+  update
+} from '../../services/budget.service';
 
-const getOverall = (budget, type, currentMonth) => {
-    if (Object.keys(budget[currentMonth][type]).length === 0) {
-      return;
-    };
-    const upperCase = type[0].toUpperCase() + type.slice(1);
-    const balanceTotal = budget[currentMonth][type][upperCase];
-    const balanceBudget = Object.values(budget[currentMonth][type]).reduce((a, b) => +a + +b);
+// const getOverall = (budget, type, currentMonth) => {
+//     if (Object.keys(budget[currentMonth][type]).length === 0) {
+//       return;
+//     };
+//     const upperCase = type[0].toUpperCase() + type.slice(1);
+//     const balanceTotal = budget[currentMonth][type][upperCase];
+//     const balanceBudget = Object.values(budget[currentMonth][type]).reduce((a, b) => +a + +b);
 
-    const overall = Math.abs((!balanceTotal ? 0 : balanceTotal) - balanceBudget);
+//     const overall = Math.abs((!balanceTotal ? 0 : balanceTotal) - balanceBudget);
 
-    return overall;
-  }
+//     return overall;
+//   }
 
-  const getBalance = (budget, type, currentMonth) => {
-    if (Object.keys(budget[currentMonth][type]).length === 0) {
-      return;
-    };
-    const upperCase = type[0].toUpperCase() + type.slice(1);
-    const balanceTotal = budget[currentMonth][type][upperCase];
+//   const getBalance = (budget, type, currentMonth) => {
+//     if (Object.keys(budget[currentMonth][type]).length === 0) {
+//       return;
+//     };
+//     const upperCase = type[0].toUpperCase() + type.slice(1);
+//     const balanceTotal = budget[currentMonth][type][upperCase];
 
-    return !balanceTotal ? 0 : balanceTotal;
-  }
+//     return !balanceTotal ? 0 : balanceTotal;
+//   }
 
 export const loadBudgets = createAsyncThunk(
   'budgets/loadData',
@@ -31,14 +35,14 @@ export const loadBudgets = createAsyncThunk(
     return await getAll();
   }
 )
-const userId = 'userId';
+// const userId = 'userId';
 
 export const postBudget = createAsyncThunk(
   'budgets/addData',
   async (action) => {
     const type = action.type;
     const name = action.name;
-    const nameUpperCase = action.nameUpperCase;
+    // const nameUpperCase = action.nameUpperCase;
     const value = action.value;
     const month = action.month;
     // const budget = action.budget;
@@ -53,10 +57,10 @@ export const postBudget = createAsyncThunk(
 
     currentUser[month] = currentMonth;
 
-    const overall = getOverall(budget, type, month);
-    console.log(`🚀 ~ file: budget-slice.js ~ line 58 ~ overall`, overall);
-    const balance = getBalance(budget, type, month);
-    console.log(`🚀 ~ file: budget-slice.js ~ line 60 ~ balance`, balance);
+    // const overall = getOverall(budget, type, month);
+    // console.log(`🚀 ~ file: budget-slice.js ~ line 58 ~ overall`, overall);
+    // const balance = getBalance(budget, type, month);
+    // console.log(`🚀 ~ file: budget-slice.js ~ line 60 ~ balance`, balance);
 
     // if (overall > balance) {
     //   const currentMonth = {...currentUser[month]};
@@ -80,7 +84,7 @@ export const budgetSlice = createSlice({
     updateBudget: (state, action) => {
       const type = action.payload.type;
       const name = action.payload.name;
-      const nameUpperCase = action.payload.nameUpperCase;
+      // const nameUpperCase = action.payload.nameUpperCase;
       const value = action.payload.value;
       const month = action.payload.month;
       const id = 'userId';
