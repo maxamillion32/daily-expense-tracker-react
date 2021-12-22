@@ -6,15 +6,24 @@ import WidgetsBudgetItem from './Items/Item';
 import {selectBudgetState, updateBudget, postBudget, loadBudgets, selectAllBudgetState} from '../../../reducers/budget/budget-slice';
 
 function WidgetsBudget({currentMonth, budget}) {
+  // console.log(`🚀 ~ file: Budget.js ~ line 9 ~ WidgetsBudget ~ budget`, budget);
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategoriesState);
   // const budget = useSelector(selectBudgetState);
   const userId = 'userId';
 
   // useEffect(() => {
-  //   dispatch(loadBudgets());
-  //   // eslint-disable-next-line
-  // }, []);
+    //   dispatch(loadBudgets());
+    //   // eslint-disable-next-line
+    // }, []);
+
+
+    if (!budget) {
+      return (<p>Loading...</p>)
+    }
+    // console.log(`🚀 ~ file: Budget.js ~ line 9 ~ WidgetsBudget ~ budget`, !Object.keys(budget[userId]).length);
+
+  const isBudget = Object.keys(budget[userId]).length !== 0;
 
   const onChange = ({target}) => {
     const type = target.id;
@@ -23,13 +32,9 @@ function WidgetsBudget({currentMonth, budget}) {
     const value = target.value;
     const month = currentMonth;
 
-    dispatch(updateBudget({type, name, nameUpperCase, value, month, budget}));
-    dispatch(postBudget({type, name, nameUpperCase, value, month, budget}));
+    // dispatch(updateBudget({type, name, nameUpperCase, value, month, budget}));
+    dispatch(postBudget({type, name, nameUpperCase, value, month}));
     dispatch(loadBudgets());
-  }
-
-  if (!budget) {
-    return (<p>Loading...</p>)
   }
 
   return (
@@ -40,7 +45,7 @@ function WidgetsBudget({currentMonth, budget}) {
         <WidgetsBudgetItem
           title={"Expenses"}
           id={"expenses"}
-          value={budget[userId][currentMonth]["expenses"]["Expenses"] || ''}
+          value={isBudget && budget[userId][currentMonth]["expenses"]["Expenses"]}
           onChange={onChange}
         />
 
@@ -49,7 +54,7 @@ function WidgetsBudget({currentMonth, budget}) {
             key={category.id}
             title={category.title}
             id={"expenses"}
-            value={budget[userId][currentMonth]["expenses"][category.title] || ''}
+            value={isBudget && budget[userId][currentMonth]["expenses"][category.title]}
             onChange={onChange}
           />
           ))
@@ -60,7 +65,7 @@ function WidgetsBudget({currentMonth, budget}) {
         <WidgetsBudgetItem
           title={"Incomes"}
           id={"incomes"}
-          value={budget[userId][currentMonth]["incomes"]["Incomes"] || ''}
+          value={isBudget && budget[userId][currentMonth]["incomes"]["Incomes"]}
           onChange={onChange}
         />
 
@@ -69,7 +74,7 @@ function WidgetsBudget({currentMonth, budget}) {
               key={category.id}
               title={category.title}
               id={"incomes"}
-              value={budget[userId][currentMonth]["incomes"][category.title] || ''}
+              value={isBudget && budget[userId][currentMonth]["incomes"][category.title]}
               onChange={onChange}
             />
           ))

@@ -69,7 +69,7 @@ export class Statistics {
     const averageValue =  (this.averageSum() - getSum(this.monthTransactions, this.type)).toFixed(2);
 
     return averageValue >= 0
-      ? `${averageValue}€ below ${this.budget[this.userId][this.currentMonth][this.type][this.category] ? "budget[this.userId]" : "typical"}`
+      ? `${averageValue}€ below ${this.budget[this.userId][this.currentMonth][this.type][this.category] ? "budget" : "typical"}`
       : `${Math.abs(averageValue)}€ above ${this.budget[this.userId][this.currentMonth][this.type][this.category] ? "budget" : "typical"}`;
   }
 

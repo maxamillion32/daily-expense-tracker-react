@@ -24,5 +24,5 @@ export const update = async (id, budget) => {
   const docRef = doc(db, "budgets", id);
   const payload = {...budget};
 
-  setDoc(docRef, payload);
+  setDoc(docRef, payload, {merge:true});
 }

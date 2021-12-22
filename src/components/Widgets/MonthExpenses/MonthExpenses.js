@@ -9,15 +9,16 @@ import {selectBudgetState} from '../../../reducers/budget/budget-slice';
 function WidgetsMonthExpenses({currentMonth, transactions, budget}) {
   // const budget = useSelector(selectBudgetState);
 
-  const monthTransactions = transactions
-    .filter((transaction) => formatMonth(transaction.date) === currentMonth);
-
-  const expenses = new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget, monthTransactions, currentMonth);
-  const incomes = new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget, monthTransactions, currentMonth);
-
   if (!budget) {
     return (<p>Loading...</p>)
   }
+
+  const monthTransactions = transactions
+    .filter((transaction) => formatMonth(transaction.date) === currentMonth);
+
+  const expenses = budget.length !== 0 && new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget, monthTransactions, currentMonth);
+  const incomes = budget !== 0 && new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget, monthTransactions, currentMonth);
+
 
   return (
     <>

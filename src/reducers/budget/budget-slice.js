@@ -41,11 +41,11 @@ export const postBudget = createAsyncThunk(
     const nameUpperCase = action.nameUpperCase;
     const value = action.value;
     const month = action.month;
-    const budget = action.budget;
+    // const budget = action.budget;
     const id = 'userId';
 
-    const allBudget = {...budget};
-    let currentUser = {...allBudget[id]};
+    const budget = {};
+    let currentUser = {...budget[id]};
     const currentMonth = {...currentUser[month]};
     const currentType = {...currentMonth[type]};
     currentType[name] = value;
@@ -53,8 +53,10 @@ export const postBudget = createAsyncThunk(
 
     currentUser[month] = currentMonth;
 
-    // const overall = getOverall(budget, type, month);
-    // const balance = getBalance(budget, type, month);
+    const overall = getOverall(budget, type, month);
+    console.log(`🚀 ~ file: budget-slice.js ~ line 58 ~ overall`, overall);
+    const balance = getBalance(budget, type, month);
+    console.log(`🚀 ~ file: budget-slice.js ~ line 60 ~ balance`, balance);
 
     // if (overall > balance) {
     //   const currentMonth = {...currentUser[month]};

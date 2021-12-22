@@ -16,9 +16,11 @@ function Statistics() {
   const allTransactions = useSelector(selectAllTransactionsState);
   const month = useSelector(currentMonth);
   const budget = useSelector(selectBudgetState);
+  // console.log(`🚀 ~ file: Statistics.js ~ line 19 ~ Statistics ~ budget`, budget);
   const dispatch = useDispatch();
   const userId = 'userId';
   const newBudget = budget && budget.find((item) => item[userId])
+  // console.log(`🚀 ~ file: Statistics.js ~ line 23 ~ Statistics ~ newBudget`, {...newBudget});
 
   useEffect(() => {
     dispatch(loadBudgets());
