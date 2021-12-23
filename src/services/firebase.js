@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 import {useDispatch} from 'react-redux';
 import { setUserId } from "../reducers/user/user-slice";
 import {
-  addDoc, collection,
+  // addDoc, collection,
   // updateDoc,
-  setDoc, doc, deleteDoc, getDocs
+  setDoc, doc,
+  // deleteDoc, getDocs
 } from "@firebase/firestore";
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
@@ -64,6 +65,7 @@ export function useAuth() {
     setCurrentUser(user)
     });
     return unsub;
+// eslint-disable-next-line
   }, [])
 
   return currentUser;

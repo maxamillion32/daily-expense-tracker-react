@@ -41,15 +41,15 @@ function Auth() {
 
   return (
     <section className={classes.Main}>
-      <p className={classes.Header}>Currently logged in as: <strong>{currentUser?.email}</strong></p>
+      {currentUser && <p className={classes.Header}>{currentUser?.email}</p>}
       {!currentUser && <div className={classes.Fields}>
         <input ref={emailRef} placeholder="Email" />
         <input ref={passwordRef} type="password" placeholder="Password" />
       </div>}
 
-      {!currentUser && <button disabled={loading || currentUser} onClick={handleSignup}>Sing Up</button>}
-      {!currentUser && <button disabled={loading || currentUser} onClick={handleLogin}>Log In</button>}
-      {currentUser && <button disabled={loading || !currentUser} onClick={handleLogout}>Log Out</button>}
+      {!currentUser && <button className={classes.Button} disabled={loading || currentUser} onClick={handleSignup}>Sing Up</button>}
+      {!currentUser && <button className={classes.Button} disabled={loading || currentUser} onClick={handleLogin}>Log In</button>}
+      {currentUser && <button className={classes.Button} disabled={loading || !currentUser} onClick={handleLogout}>Log Out</button>}
 
     </section>
   );
