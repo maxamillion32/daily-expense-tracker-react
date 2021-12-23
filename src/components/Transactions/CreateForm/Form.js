@@ -17,7 +17,8 @@ import Select from "../../UI/Select/Select";
 import Button from "../../UI/Button/Button";
 import {validateForm, updateFormControls, createFormControls} from "./utils";
 
-function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickAddBtn}){
+function TransactionCreateForm({categories, accounts, onClickAddBtn, userId}){
+  // console.log(`🚀 ~ file: Form.js ~ line 21 ~ TransactionCreateForm ~ userId`, userId);
   const newTransactionState = useSelector(selectNewTransactionState);
   const {sum, date} = newTransactionState;
   const dispatch = useDispatch();
@@ -87,7 +88,7 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, setOnClickA
   };
 
   const addTransactionHandler = () => {
-    dispatch(postTransaction(newTransactionState));
+    dispatch(postTransaction({...newTransactionState, userId}));
     dispatch(resetState());
     dispatch(clickButton());
     dispatch(loadTransactions());

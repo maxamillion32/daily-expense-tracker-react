@@ -9,8 +9,8 @@ export const getAll = async () => {
   return results;
 }
 
-export const create = async (title) => {
-  const payload = {title};
+export const create = async (account) => {
+  const payload = {...account};
   await addDoc(accountsRef, payload);
 }
 

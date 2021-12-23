@@ -8,17 +8,17 @@ import Transactions from './containers/Transactions/Transactions';
 import Statistics from './containers/Statistics/Statistics';
 import Settings from './containers/Settings/Settings';
 function App() {
-    return (
-      <Layout>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Transactions />} />
-          <Route path="/statistics" element={<Statistics />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
-      </Layout>
-    );
+  return (
+    <Layout>
+      <ScrollToTop />
+      <Routes>
+        <Route path="/" element={<Transactions />} />
+        <Route path="/statistics" element={<Statistics />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="*" element={<Navigate to="/" />} />
+      </Routes>
+    </Layout>
+  );
 }
 
 export default App;

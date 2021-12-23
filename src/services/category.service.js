@@ -13,8 +13,8 @@ export const getAll = async () => {
   return results;
 }
 
-export const create = async (title) => {
-  const payload = {title};
+export const create = async (category) => {
+  const payload = {...category};
   await addDoc(categoriesRef, payload);
 }
 

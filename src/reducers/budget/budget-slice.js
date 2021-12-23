@@ -1,4 +1,5 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import {selectUserId} from '../user/user-slice';
 // import {useSelector} from 'react-redux';
 import {
   getAll,
@@ -46,7 +47,7 @@ export const postBudget = createAsyncThunk(
     const value = action.value;
     const month = action.month;
     // const budget = action.budget;
-    const id = 'userId';
+    const id = action.userId;
 
     const budget = {};
     let currentUser = {...budget[id]};
@@ -140,8 +141,15 @@ export const budgetSlice = createSlice({
   },
 });
 
-export const selectBudgetState = (state) => state.budget.budget;
-export const selectAllBudgetState = (state) => state.budget.allBudgets;
+export const allBudgetState = (state) => state.budget.budget;
+
+export const selectAllBudgetState = (state) => {
+  const allBudget = allBudgetState(state);
+  const userId = selectUserId(state);
+
+  return allBudget
+          .find((item) => item[userId])
+};
 
 export const {
   updateBudget,

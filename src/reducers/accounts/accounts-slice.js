@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 import {getAll, create, update, deleteId} from '../../services/account.service';
+import {selectUserId} from '../user/user-slice';
 
 export const loadAccounts = createAsyncThunk(
   'accounts/loadData',
@@ -63,10 +64,18 @@ export const accountsSlice = createSlice({
   },
 });
 
-export const selectAllAccountsState = (state) => state.accounts.allAccounts;
+export const allAccountsState = (state) => state.accounts.allAccounts;
 export const selectNewAccountsState = (state) => state.accounts.newAccount;
 export const isLoading = (state) => state.accounts.isLoading;
 export const isPending = (state) => state.accounts.isPending;
+
+export const selectAllAccountsState = (state) => {
+  const allAccounts = allAccountsState(state);
+  const userId = selectUserId(state);
+
+  return allAccounts
+          .filter((transaction) => transaction.userId === userId)
+};
 
 export const {addAccount, editAccount, createAccount} = accountsSlice.actions;
 export default accountsSlice.reducer;

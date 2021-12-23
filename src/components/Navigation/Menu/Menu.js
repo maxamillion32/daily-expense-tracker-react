@@ -7,7 +7,7 @@ import classes from './Menu.module.css';
 import Form from '../../Transactions/CreateForm/Form'
 import {resetState, isButtonShow, isButtonClick, clickButton} from '../../../reducers/transactions/transactions-slice';
 
-function Menu({categories, accounts}) {
+function Menu({categories, accounts, userId}) {
   const dispatch = useDispatch();
   const clickAddButton = useSelector(isButtonClick);
   const showAddButton = useSelector(isButtonShow);
@@ -34,6 +34,7 @@ function Menu({categories, accounts}) {
       <Form
         categories={categories}
         accounts={accounts}
+        userId={userId}
         onClickAddBtn={clickAddButton}
       />
 

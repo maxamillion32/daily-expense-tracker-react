@@ -8,14 +8,14 @@ import {
 import {TRANSACTION_TYPE} from './const';
 
 export class Statistics {
-  constructor(transactions, type, budget, monthTransactions, currentMonth) {
+  constructor(transactions, type, budget, monthTransactions, currentMonth, userId) {
     this.transactions = transactions;
     this.type = type;
     this.budget = budget;
     this.monthTransactions = monthTransactions;
     this.currentMonth = currentMonth;
     this.category = this.type[0].toUpperCase() + this.type.slice(1);
-    this.userId = 'userId';
+    this.userId = userId;
   }
 
   _getExcessPercent = (balance, sum) => {

@@ -2,12 +2,14 @@ import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {selectAllCategoriesState, deleteCategory, postCategory, loadCategories, updateCategory} from '../../reducers/categories/categories-slice';
 import {selectAllAccountsState, updateAccount, deleteAccount, postAccount, loadAccounts} from '../../reducers/accounts/accounts-slice';
+import { selectUserId } from '../../reducers/user/user-slice';
 import SettingsBlock from './Blocks/Block';
 
 function Settings() {
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategoriesState);
   const accounts = useSelector(selectAllAccountsState);
+  const userId = useSelector(selectUserId);
 
   const [inputCategory, setInputCategory] = useState('');
   const [inputAccount, setInputAccount] = useState('');
@@ -37,13 +39,13 @@ function Settings() {
   }
 
   const onClickCreateCategoryButton = () => {
-    dispatch(postCategory(inputCategory));
+    dispatch(postCategory({title: inputCategory, userId}));
     setInputCategory('');
     dispatch(loadCategories());
   };
 
   const onClickCreateAccountButton = () => {
-    dispatch(postAccount(inputAccount));
+    dispatch(postAccount({title: inputAccount, userId}));
     setInputAccount('');
     dispatch(loadAccounts());
   };

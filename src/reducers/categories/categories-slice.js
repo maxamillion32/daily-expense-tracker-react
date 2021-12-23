@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 
 import {getAll, create, deleteId, update} from '../../services/category.service';
+import {selectUserId} from '../user/user-slice';
 
 export const loadCategories = createAsyncThunk(
   'categories/loadData',
@@ -60,10 +61,18 @@ export const categoriesSlice = createSlice({
   },
 });
 
-export const selectAllCategoriesState = (state) => state.categories.allCategories;
+export const allCategoriesState = (state) => state.categories.allCategories;
 export const selectNewCategoryState = (state) => state.categories.newCategory;
 export const isLoading = (state) => state.categories.isLoading;
 export const isPending = (state) => state.categories.isPending;
+
+export const selectAllCategoriesState = (state) => {
+  const allCategories = allCategoriesState(state);
+  const userId = selectUserId(state);
+
+  return allCategories
+          .filter((transaction) => transaction.userId === userId)
+};
 
 export const {addCategory, editCategory, createCategory} = categoriesSlice.actions;
 export default categoriesSlice.reducer;

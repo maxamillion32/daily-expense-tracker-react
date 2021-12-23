@@ -1,0 +1,17 @@
+.Main {
+  margin: 20px;
+  z-index: 100;
+}
+
+.Header {
+  margin-bottom: 10px;
+}
+
+.Fields {
+  display: flex;
+  flex-direction: column;
+}
+
+.Fields input {
+  margin: 0 0 10px;
+}

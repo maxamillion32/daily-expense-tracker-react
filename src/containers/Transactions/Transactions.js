@@ -23,7 +23,6 @@ function Transactions() {
   const allTransactions = useSelector(selectAllTransactionsState);
   const filteredTransactions = useSelector(selectFilteredTransactions);
   const dispatch = useDispatch();
-
   //
   // let [loadedTransactions, setLoadedTransactions] = useState([{sum: "Loading..."}]);
   // let [loadedCategories, setCategories] = useState([{sum: "Loading..."}]);

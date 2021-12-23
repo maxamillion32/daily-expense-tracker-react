@@ -9,12 +9,12 @@ import {
   // selectAllBudgetState
 } from '../../../reducers/budget/budget-slice';
 
-function WidgetsBudget({currentMonth, budget}) {
+function WidgetsBudget({currentMonth, budget, userId}) {
   // console.log(`🚀 ~ file: Budget.js ~ line 9 ~ WidgetsBudget ~ budget`, budget);
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategoriesState);
   // const budget = useSelector(selectBudgetState);
-  const userId = 'userId';
+  // const userId = 'userId';
 
   // useEffect(() => {
     //   dispatch(loadBudgets());
@@ -37,7 +37,7 @@ function WidgetsBudget({currentMonth, budget}) {
     const month = currentMonth;
 
     // dispatch(updateBudget({type, name, nameUpperCase, value, month, budget}));
-    dispatch(postBudget({type, name, nameUpperCase, value, month}));
+    dispatch(postBudget({type, name, nameUpperCase, value, month, userId}));
     dispatch(loadBudgets());
   }
 

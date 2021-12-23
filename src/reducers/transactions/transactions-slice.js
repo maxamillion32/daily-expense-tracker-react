@@ -1,6 +1,7 @@
 import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {getAll, create, deleteId} from '../../services/transaction.service';
 import {selectSearchTerm} from '../search/search-slice';
+import {selectUserId} from '../user/user-slice';
 import {formatMonth} from '../../utils/utils'
 
 export const loadTransactions = createAsyncThunk(
@@ -13,6 +14,7 @@ export const loadTransactions = createAsyncThunk(
 export const postTransaction = createAsyncThunk(
   'transactions/postData',
   async (data) => {
+    console.log(`🚀 ~ file: transactions-slice.js ~ line 16 ~ data`, data);
     return await create(data);
   }
 )
@@ -126,7 +128,7 @@ export const transactionsSlice = createSlice({
   },
 });
 
-export const selectAllTransactionsState = (state) => state.transactions.allTransactions;
+const allTransactionsState = (state) => state.transactions.allTransactions;
 export const selectNewTransactionState = (state) => state.transactions.newTransaction;
 export const isLoading = (state) => state.transactions.isLoading;
 export const hasError = (state) => state.transactions.hasError;
@@ -134,11 +136,21 @@ export const currentMonth = (state) => state.transactions.currentMonth;
 export const isButtonClick = (state) => state.transactions.isButtonClick;
 export const isButtonShow = (state) => state.transactions.isButtonShow;
 
+export const selectAllTransactionsState = (state) => {
+  const allTransactions = allTransactionsState(state);
+  const userId = selectUserId(state);
+
+  return allTransactions
+          .filter((transaction) => transaction.userId === userId)
+};
+
 export const selectFilteredTransactions = (state) => {
   const allTransactions = selectAllTransactionsState(state);
   const searchTerm = selectSearchTerm(state);
+  const userId = selectUserId(state);
 
   return allTransactions
+          .filter((transaction) => transaction.userId === userId)
           .filter((transaction) => transaction.category.title.toLowerCase().includes(searchTerm.toLowerCase()))
           .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 };
