@@ -10,7 +10,7 @@ function WidgetsMonthExpenses({currentMonth, transactions, budget, userId}) {
   // const budget = useSelector(selectBudgetState);
 
   if (!budget) {
-    return (<p>Loading...</p>)
+    return (<p></p>)
   }
 
   const monthTransactions = transactions

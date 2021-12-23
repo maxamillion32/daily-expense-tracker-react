@@ -23,7 +23,7 @@ function WidgetsBudget({currentMonth, budget, userId}) {
 
 
     if (!budget) {
-      return (<p>Loading...</p>)
+      return (<p></p>)
     }
     // console.log(`🚀 ~ file: Budget.js ~ line 9 ~ WidgetsBudget ~ budget`, !Object.keys(budget[userId]).length);
 
