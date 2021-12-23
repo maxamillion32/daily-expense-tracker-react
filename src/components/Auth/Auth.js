@@ -38,6 +38,7 @@ function Auth() {
     }
     setLoading(false);
   }
+
   return (
     <section className={classes.Main}>
       <p className={classes.Header}>Currently logged in as: <strong>{currentUser?.email}</strong></p>
@@ -46,9 +47,9 @@ function Auth() {
         <input ref={passwordRef} type="password" placeholder="Password" />
       </div>}
 
-      <button disabled={loading || currentUser} onClick={handleSignup}>Sing Up</button>
-      <button disabled={loading || currentUser} onClick={handleLogin}>Log In</button>
-      <button disabled={loading || !currentUser} onClick={handleLogout}>Log Out</button>
+      {!currentUser && <button disabled={loading || currentUser} onClick={handleSignup}>Sing Up</button>}
+      {!currentUser && <button disabled={loading || currentUser} onClick={handleLogin}>Log In</button>}
+      {currentUser && <button disabled={loading || !currentUser} onClick={handleLogout}>Log Out</button>}
 
     </section>
   );

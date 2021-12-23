@@ -60,8 +60,8 @@ export function useAuth() {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
       dispatch(setUserId(user.uid))
-      setCurrentUser(user)
-      }
+    }
+    setCurrentUser(user)
     });
     return unsub;
   }, [])
