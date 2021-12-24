@@ -1,20 +1,12 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import {useDispatch} from 'react-redux';
-import { setUserId } from "../reducers/user/user-slice";
-import {
-  // addDoc, collection,
-  // updateDoc,
-  setDoc, doc,
-  // deleteDoc, getDocs
-} from "@firebase/firestore";
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import {setUserId} from "../reducers/user/user-slice";
 
-// Your web app's Firebase configuration
+import {initializeApp} from "firebase/app";
+import {setDoc, doc, getFirestore} from "@firebase/firestore";
+import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'firebase/auth';
+
+// Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyA-jcEb53c4muML3hfX3HA7WYvqCSwBNNY",
   authDomain: "expense-tracker-4e13a.firebaseapp.com",
@@ -33,7 +25,6 @@ export function singUp(email, password) {
     createUserWithEmailAndPassword(auth, email, password)
     .then(data => {
       const id = data.user.uid;
-
       const docRef = doc(getFirestore(), "budgets", id);
       const payload = {December: {expenses:{}, incomes:{}}};
 
@@ -60,9 +51,11 @@ export function useAuth() {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
-      dispatch(setUserId(user.uid))
+      dispatch(setUserId(user.uid));
+    } else {
+      dispatch(setUserId(null));
     }
-    setCurrentUser(user)
+      setCurrentUser(user)
     });
     return unsub;
 // eslint-disable-next-line
@@ -70,4 +63,5 @@ export function useAuth() {
 
   return currentUser;
 }
+
 export default getFirestore();

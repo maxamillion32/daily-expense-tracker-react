@@ -1,8 +1,4 @@
-import {
-  addDoc, collection,
-  // updateDoc,
-  setDoc, doc, deleteDoc, getDocs
-} from "@firebase/firestore";
+import {addDoc, collection, setDoc, doc, deleteDoc, getDocs} from "@firebase/firestore";
 import db from "./firebase";
 
 const categoriesRef = collection(db, "categories");
@@ -26,7 +22,6 @@ export const deleteId = async (id) => {
 export const update = async (id, title, userId) => {
   const docRef = doc(db, "categories", id);
   const payload = {title, userId};
-  console.log(`🚀 ~ file: category.service.js ~ line 29 ~ update ~ payload`, payload);
 
   setDoc(docRef, payload);
 }

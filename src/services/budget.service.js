@@ -1,8 +1,4 @@
-import {
-  addDoc, collection,
-  // updateDoc,
-  setDoc, doc, deleteDoc, getDocs
-} from "@firebase/firestore";
+import {addDoc, collection, setDoc, doc, deleteDoc, getDocs} from "@firebase/firestore";
 import db from "./firebase";
 
 const budgetRef = collection(db, "budgets");
