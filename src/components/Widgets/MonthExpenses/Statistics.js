@@ -110,12 +110,13 @@ export class Statistics {
     const budget = this.budget[this.userId][this.currentMonth][this.type][category];
 
     const averageValue = budget
-      ? (budget - transactionsSumPerCategory).toFixed(2)
-      : ((balancePerCategory / MOTH_COUNT) - transactionsSumPerCategory).toFixed(2);
+    ? (budget - transactionsSumPerCategory).toFixed(2)
+    : ((balancePerCategory / MOTH_COUNT) - transactionsSumPerCategory).toFixed(2);
 
-    return averageValue >= 0
+    return averageValue > 0
       ? `${averageValue}€ below ${budget ? "budget" : "typical"}`
-      : `${Math.abs(averageValue)}€ above ${budget ? "budget" : "typical"}`;
+      : averageValue === '0.00' ? "equal to budget"
+      : `${Math.abs(averageValue)}€ above ${budget ? "budget" : "typical"}`
   }
 
   totalCategoryPercent = (category, type) => {
