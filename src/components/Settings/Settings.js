@@ -19,7 +19,7 @@ function Settings() {
     const title = target.value;
 
     if (id) {
-      dispatch(updateCategory({id, title}));
+      dispatch(updateCategory({id, title, userId}));
       dispatch(loadCategories());
     } else {
       setInputCategory(title);
@@ -31,7 +31,7 @@ function Settings() {
     const title = target.value;
 
     if (id) {
-      dispatch(updateAccount({id, title}));
+      dispatch(updateAccount({id, title, userId}));
       dispatch(loadAccounts());
     } else {
       setInputAccount(title);

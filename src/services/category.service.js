@@ -23,9 +23,10 @@ export const deleteId = async (id) => {
     await deleteDoc(docRef);
 }
 
-export const update = async (id, title) => {
+export const update = async (id, title, userId) => {
   const docRef = doc(db, "categories", id);
-  const payload = {title};
+  const payload = {title, userId};
+  console.log(`🚀 ~ file: category.service.js ~ line 29 ~ update ~ payload`, payload);
 
   setDoc(docRef, payload);
 }

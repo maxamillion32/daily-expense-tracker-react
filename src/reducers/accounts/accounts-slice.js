@@ -19,8 +19,8 @@ export const postAccount = createAsyncThunk(
 
 export const updateAccount = createAsyncThunk(
   'accounts/updateData',
-  async ({id, title}) => {
-    return await update(id, title);
+  async ({id, title, userId}) => {
+    return await update(id, title, userId);
   }
 )
 
