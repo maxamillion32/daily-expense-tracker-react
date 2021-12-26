@@ -15,6 +15,7 @@ import {selectAllBudgetState, loadBudgets} from '../../reducers/budget/budget-sl
 
 function Statistics() {
   const allTransactions = useSelector(selectAllTransactionsState);
+  const year = "< 2021 >";
   const month = useSelector(currentMonth);
   const budget = useSelector(selectAllBudgetState);
   // console.log(`🚀 ~ file: Statistics.js ~ line 19 ~ Statistics ~ budget`, budget);
@@ -31,7 +32,7 @@ function Statistics() {
 
   return (
     <section className={classes.Statistics}>
-      <WidgetsMonthBalance currentMonth={month} transactions={allTransactions} />
+      <WidgetsMonthBalance currentYear={year} currentMonth={month} transactions={allTransactions} />
       <WidgetsYearExpenses currentMonth={month} transactions={allTransactions} />
       <WidgetsMonthExpenses currentMonth={month} transactions={allTransactions} budget={newBudget} userId={userId} />
       <WidgetsBudget currentMonth={month} budget={newBudget} userId={userId} />

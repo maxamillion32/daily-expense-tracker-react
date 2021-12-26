@@ -2,7 +2,8 @@ import React from 'react';
 import classes from './MonthBalance.module.css';
 import {formatMonth} from '../../../utils/utils'
 
-function WidgetsMonthBalance({currentMonth, transactions}) {
+function WidgetsMonthBalance({currentMonth, transactions, currentYear}) {
+  console.log(`🚀 ~ file: MonthBalance.js ~ line 6 ~ WidgetsMonthBalance ~ currentYear`, currentYear);
   const filteredTransactions = transactions
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
 
@@ -16,7 +17,7 @@ function WidgetsMonthBalance({currentMonth, transactions}) {
 
   return (
     <section className={classes.MonthBalance}>
-      <h2 >{currentMonth}</h2>
+      <h2>{currentMonth}</h2>
       <ul className={classes.List}>
         <li className={classes.Wrapper}>
           <p>incomes:</p>
@@ -27,6 +28,7 @@ function WidgetsMonthBalance({currentMonth, transactions}) {
           <p className={classes.Balance}>-{sumExpenses} €</p>
         </li>
       </ul>
+      <h4>{currentYear}</h4>
     </section>
   )
 }
