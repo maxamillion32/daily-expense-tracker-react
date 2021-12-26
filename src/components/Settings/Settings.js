@@ -12,14 +12,41 @@ function Settings() {
   const userId = useSelector(selectUserId);
 
   const [inputCategory, setInputCategory] = useState('');
+  const [inputType, setInputType] = useState(false);
   const [inputAccount, setInputAccount] = useState('');
+
+  const onChangeType = async ({target}) => {
+    const id = target.id;
+    const value = target.value;
+    setInputType(target.checked);
+    const name = target.name;
+
+    // if (name === "transactionType") {
+    // setInputType(!inputType);
+    // console.log(`🚀 ~ file: Settings.js ~ line 34 ~ onChangeType ~ inputType`, inputType);
+    //   // dispatch(updateCategory({incomes: inputType}));
+    // // }
+
+    if (id) {
+      dispatch(updateCategory({id, incomes: target.checked}));
+      dispatch(loadCategories());
+    }
+  }
 
   const onChangeCategory = ({target}) => {
     const id = target.id;
     const title = target.value;
+    // const name = target.name;
+    const incomes = inputType;
+
+    // if (name === "transactionType") {
+    //   setInputType(!title);
+    //   // title ? setInputType(false) : setInputType(!inputType);
+    //   // dispatch(updateCategory({incomes: inputType}));
+    // }
 
     if (id) {
-      dispatch(updateCategory({id, title, userId}));
+      dispatch(updateCategory({id, title, userId, incomes}));
       dispatch(loadCategories());
     } else {
       setInputCategory(title);
@@ -39,8 +66,9 @@ function Settings() {
   }
 
   const onClickCreateCategoryButton = () => {
-    dispatch(postCategory({title: inputCategory, userId}));
+    dispatch(postCategory({title: inputCategory, userId, incomes: inputType}));
     setInputCategory('');
+    setInputType(false);
     dispatch(loadCategories());
   };
 
@@ -86,9 +114,11 @@ function Settings() {
         value={inputCategory}
         submitTitle={"Create"}
         onChange={onChangeCategory}
+        onChangeType={onChangeType}
         items={categories}
         title={"Categories"}
         placeholder={"Type the new name for the category"}
+        transactionType={"true"}
       />
 
       <SettingsBlock
@@ -99,9 +129,11 @@ function Settings() {
         value={inputAccount}
         submitTitle={"Create"}
         onChange={onChangeAccount}
+        onChangeType={onChangeType}
         items={accounts}
         title={"Accounts"}
         placeholder={"Type the new name for the account"}
+        transactionType={undefined}
       />
     </>
   )

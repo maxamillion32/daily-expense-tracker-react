@@ -5,7 +5,8 @@ import SettingsItem from '../Items/Item';
 function SettingsBlock({
   onClickSubmitButton, onClickCreateButton,
   value, onChange, onClickDeleteButton,
-  items, title, placeholder, onClickEditButton
+  items, title, placeholder, onClickEditButton,
+  onChangeType
 }) {
   return (
     <section className={classes.Wrapper}>
@@ -17,19 +18,25 @@ function SettingsBlock({
           value={value}
           submitTitle={"Create"}
           onChange={onChange}
+          onChangeType={onChangeType}
           placeholder={placeholder}
+          transactionType={null}
+          title={title}
         />
 
         {items.map((category) => (
           <SettingsItem
             onClickSubmitButton={onClickSubmitButton}
             value={category.title}
-            submitTitle={"Edit"}
+            // submitTitle={"Edit"}
             onClickButton={onClickEditButton}
             onChange={onChange}
+            onChangeType={onChangeType}
             id={category.id}
             key={category.id}
             onClickDeleteButton={onClickDeleteButton}
+            transactionType={category.incomes}
+            title={title}
           />
           ))
         }

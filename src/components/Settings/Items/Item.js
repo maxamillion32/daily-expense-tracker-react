@@ -1,7 +1,8 @@
 import React from 'react';
 import classes from './Item.module.css';
 
-function SettingsItem({id, onChange, onClickSubmitButton, value, submitTitle, onClickButton, placeholder, onClickDeleteButton}) {
+function SettingsItem({id, onChange, onClickSubmitButton, value, submitTitle, onClickButton, placeholder, onClickDeleteButton, transactionType, onChangeType, title}) {
+  const htmlFor = `${'checkbox'}-${Math.random()}`;
   return (
     <form
       className={classes.ItemWrapper}
@@ -16,8 +17,29 @@ function SettingsItem({id, onChange, onClickSubmitButton, value, submitTitle, on
         onChange={onChange}
         placeholder={placeholder}
       />
+      {
+        value && title !== "Accounts" &&
+        <>
+          <div className={classes.Type}>
+            <input
+            type="checkbox"
+            name="transactionType"
+            // placeholder={props.placeholder}
+            id={id}
+            // id={htmlFor}
+            // value
+            // onChange={props.onChange}
+            checked={transactionType}
+            onChange={onChangeType}
+            />
+            <label
+              // htmlFor={htmlFor}
+            >Incomes</label>
+          </div>
+        </>
+      }
       <div className={classes.ButtonWrapper}>
-        <button
+        {submitTitle && <button
           className={classes.Button}
           id={id}
           type="submit"
@@ -25,7 +47,7 @@ function SettingsItem({id, onChange, onClickSubmitButton, value, submitTitle, on
           disabled={!value}
         >
           {submitTitle}
-        </button>
+        </button>}
         {onClickDeleteButton && <button
           id={id}
           className={classes.Button}

@@ -19,8 +19,9 @@ export const postCategory = createAsyncThunk(
 
 export const updateCategory = createAsyncThunk(
   'categories/updateData',
-  async ({id, title, userId}) => {
-    return await update(id, title, userId);
+  async (data) => {
+    const {id} = data;
+    return await update(id, data);
   }
 )
 

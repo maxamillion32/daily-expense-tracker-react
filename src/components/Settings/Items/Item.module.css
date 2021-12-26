@@ -1,13 +1,15 @@
 .ItemWrapper {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-end;
+  flex-wrap: wrap;
   margin-bottom: 5px;
 }
 
 .Input {
   width: 100%;
   height: 25px;
-  margin-right: 10px;
+  /* margin-right: 10px; */
+  margin-bottom: 10px;
   padding-left: 10px;
   text-align: left;
   border: none;
@@ -25,3 +27,13 @@
   height: 100%;
 }
 
+.Type {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 10px;
+}
+
+.Type input {
+  margin-right: 5px;
+}

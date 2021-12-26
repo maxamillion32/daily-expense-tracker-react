@@ -19,9 +19,10 @@ export const deleteId = async (id) => {
     await deleteDoc(docRef);
 }
 
-export const update = async (id, title, userId) => {
+export const update = async (id, data) => {
+  // const id = data.id
   const docRef = doc(db, "categories", id);
-  const payload = {title, userId};
+  const payload = {...data};
 
-  setDoc(docRef, payload);
+  setDoc(docRef, payload, {merge:true});
 }
