@@ -13,6 +13,7 @@ import TransactionsListContainer from '../../components/Transactions/List/ListCo
 
 function Transactions() {
   const allTransactions = useSelector(selectAllTransactionsState);
+  console.log(`🚀 ~ file: Transactions.js ~ line 16 ~ Transactions ~ allTransactions`, allTransactions);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -27,7 +28,9 @@ function Transactions() {
   return (
     <>
       <Balance transactions={allTransactions} />
-      <Search />
+      {
+        !!allTransactions.length && <Search />
+      }
       <TransactionsListContainer />
     </>
   );
