@@ -53,14 +53,16 @@ function WidgetsBudget({currentMonth, budget, userId}) {
           onChange={onChange}
         />
 
-        {categories.map((category) => (
-          <WidgetsBudgetItem
-            key={category.id}
-            title={category.title}
-            id={"expenses"}
-            value={budget[userId][currentMonth]["expenses"][category.title] || ''}
-            onChange={onChange}
-          />
+        {categories
+          .filter((category) => !category.incomes)
+          .map((category) => (
+            <WidgetsBudgetItem
+              key={category.id}
+              title={category.title}
+              id={"expenses"}
+              value={budget[userId][currentMonth]["expenses"][category.title] || ''}
+              onChange={onChange}
+            />
           ))
         }
       </div>
@@ -73,7 +75,9 @@ function WidgetsBudget({currentMonth, budget, userId}) {
           onChange={onChange}
         />
 
-        {categories.map((category) => (
+        {categories
+          .filter((category) => category.incomes)
+          .map((category) => (
             <WidgetsBudgetItem
               key={category.id}
               title={category.title}
