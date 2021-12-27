@@ -1,11 +1,13 @@
-import {addDoc, collection, setDoc, doc, deleteDoc, getDocs} from "@firebase/firestore";
+import {addDoc, collection, setDoc, doc, deleteDoc, getDocs, query, where} from "@firebase/firestore";
 import db from "./firebase";
 
 const budgetRef = collection(db, "budgets");
 
-export const getAll = async () => {
-  const snapshot = await getDocs(budgetRef);
-  const results = snapshot.docs.map((doc) => ({[doc.id]: {...doc.data()}}));
+export const getAll = async (userId) => {
+  const snapshot = await getDocs(budgetRef, userId);
+  const filter = snapshot.docs.filter((doc) => doc.id === userId);
+  const map = filter.map((doc) => (doc.data()));
+  const results = map.find((doc) => doc);
   return results;
 }
 

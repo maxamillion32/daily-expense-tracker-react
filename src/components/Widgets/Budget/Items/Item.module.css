@@ -12,7 +12,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 7px;
 }
 
 /* .Block:nth-of-type(10) {
@@ -39,9 +39,29 @@
   width: 80px;
   height: 25px;
   padding: 0 5px;
+  margin-left: auto;
   text-align: right;
   border: none;
   border-radius: 5px;
+}
+
+.Button {
+  width: 50px;
+  height: 25px;
+  margin-left: 5px;
+  font-size: 14px;
+  /* font-weight: 700; */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  background-color: #646464;
+  cursor: pointer;
+}
+
+.Button:disabled {
+  background: #ccc;
+  /* color: #000; */
+  cursor: not-allowed;
 }
 
 

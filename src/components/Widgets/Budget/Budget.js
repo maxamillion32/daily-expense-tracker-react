@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {selectAllCategoriesState} from '../../../reducers/categories/categories-slice';
 import classes from './Budget.module.css';
@@ -6,63 +6,76 @@ import WidgetsBudgetItem from './Items/Item';
 import {
   // selectBudgetState, updateBudget,
   postBudget, loadBudgets,
+  updateBudget
   // selectAllBudgetState
 } from '../../../reducers/budget/budget-slice';
+import {loadTransactions} from '../../../reducers/transactions/transactions-slice';
 
-function WidgetsBudget({currentMonth, budget, userId}) {
-  // console.log(`🚀 ~ file: Budget.js ~ line 9 ~ WidgetsBudget ~ budget`, budget);
+function WidgetsBudget({currentMonth, budget, userId, updatedBudget, prevBudget}) {
+  // console.log(`🚀 ~ file: Budget.js ~ line 14 ~ WidgetsBudget ~ userId`, userId);
+
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategoriesState);
-  // const budget = useSelector(selectBudgetState);
-  // const userId = 'userId';
 
-  // useEffect(() => {
-    //   dispatch(loadBudgets());
-    //   // eslint-disable-next-line
-    // }, []);
+  const [inputValue, setInputValue] = useState('');
 
 
-    if (!budget) {
-      return (<p></p>)
-    }
-    // console.log(`🚀 ~ file: Budget.js ~ line 9 ~ WidgetsBudget ~ budget`, !Object.keys(budget[userId]).length);
+  if (!updatedBudget) {
+    return (<p></p>)
+  }
 
-  // const isBudget = Object.keys(budget[userId]).length !== 0;
-
-  const onChange = ({target}) => {
+  const onInputChange = ({target}) => {
     const type = target.id;
     const name = target.name;
     const nameUpperCase = type[0].toUpperCase() + type.slice(1);
     const value = target.value;
     const month = currentMonth;
 
-    // dispatch(updateBudget({type, name, nameUpperCase, value, month, budget}));
-    dispatch(postBudget({type, name, nameUpperCase, value, month, userId}));
-    dispatch(loadBudgets());
+    setInputValue({type, name, nameUpperCase, value, month, userId});
+    dispatch(updateBudget({type, name, nameUpperCase, value, month, userId, budget}));
+  }
+
+  const onEditClick = () => {
+    dispatch(postBudget(inputValue));
+    dispatch(loadBudgets(userId));
+    dispatch(loadTransactions());// ??? update edit button
   }
 
   return (
     <section className={classes.BudgetWrapper}>
-      <p className={classes.Header}>Budget</p>
+      <div className={classes.HeaderWrapper}>
+        <p className={classes.Header}>Budget</p>
+        <button
+            className={classes.Button}
+            type="submit"
+            onClick={onEditClick}
+            disabled={prevBudget}
+          >
+            Edit
+          </button>
+      </div>
 
       <div className={classes.Content}>
         <WidgetsBudgetItem
           title={"Expenses"}
           id={"expenses"}
-          value={budget[userId][currentMonth]["expenses"]["Expenses"] || ''}
-          onChange={onChange}
+          value={updatedBudget[currentMonth]["expenses"]["Expenses"] || ''}
+          onChange={onInputChange}
+          onEditClick={onEditClick}
+          // prevAmount={usePrevious(value)}
         />
 
         {categories
           .filter((category) => !category.incomes)
-          .sort((a, b) => budget[userId][currentMonth]["expenses"][b.title] - budget[userId][currentMonth]["expenses"][a.title])
+          .sort((a, b) => updatedBudget[currentMonth]["expenses"][b.title] - updatedBudget[currentMonth]["expenses"][a.title])
           .map((category) => (
             <WidgetsBudgetItem
               key={category.id}
               title={category.title}
               id={"expenses"}
-              value={budget[userId][currentMonth]["expenses"][category.title] || ''}
-              onChange={onChange}
+              value={updatedBudget[currentMonth]["expenses"][category.title] || ''}
+              onChange={onInputChange}
+              onEditClick={onEditClick}
             />
           ))
         }
@@ -72,20 +85,22 @@ function WidgetsBudget({currentMonth, budget, userId}) {
         <WidgetsBudgetItem
           title={"Incomes"}
           id={"incomes"}
-          value={budget[userId][currentMonth]["incomes"]["Incomes"]  || ''}
-          onChange={onChange}
+          value={updatedBudget[currentMonth]["incomes"]["Incomes"]  || ''}
+          onChange={onInputChange}
+          onClick={onEditClick}
         />
 
         {categories
           .filter((category) => category.incomes)
-          .sort((a, b) => budget[userId][currentMonth]["incomes"][b.title] - budget[userId][currentMonth]["incomes"][a.title])
+          .sort((a, b) => updatedBudget[currentMonth]["incomes"][b.title] - updatedBudget[currentMonth]["incomes"][a.title])
           .map((category) => (
             <WidgetsBudgetItem
               key={category.id}
               title={category.title}
               id={"incomes"}
-              value={budget[userId][currentMonth]["incomes"][category.title]  || ''}
-              onChange={onChange}
+              value={updatedBudget[currentMonth]["incomes"][category.title]  || ''}
+              onChange={onInputChange}
+              onClick={onEditClick}
             />
           ))
         }

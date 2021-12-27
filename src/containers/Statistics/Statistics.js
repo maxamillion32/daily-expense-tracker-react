@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import WidgetsMonthBalance from '../../components/Widgets/MonthBalance/MonthBalance';
 import WidgetsMonthExpenses from '../../components/Widgets/MonthExpenses/MonthExpenses';
@@ -11,31 +11,44 @@ import {
   loadTransactions,
   selectAllTransactionsState
 } from '../../reducers/transactions/transactions-slice';
-import {selectAllBudgetState, loadBudgets} from '../../reducers/budget/budget-slice';
+import {selectAllBudgetState, loadBudgets, selectUpdatedBudgetState} from '../../reducers/budget/budget-slice';
 
 function Statistics() {
   const allTransactions = useSelector(selectAllTransactionsState);
   const year = "< 2021 >";
   const month = useSelector(currentMonth);
   const budget = useSelector(selectAllBudgetState);
-  // console.log(`🚀 ~ file: Statistics.js ~ line 19 ~ Statistics ~ budget`, budget);
+  const updatedBudget = useSelector(selectUpdatedBudgetState);
+  console.log(`🚀 ~ file: Statistics.js ~ line 22 ~ Statistics ~ updatedBudget`, updatedBudget);
   const dispatch = useDispatch();
   const userId = useSelector(selectUserId);
-  const newBudget = budget && budget;
-  // console.log(`🚀 ~ file: Statistics.js ~ line 23 ~ Statistics ~ newBudget`, {...newBudget});
+  const newBudget = budget && Object.keys(budget).length !== 0 && budget;
+  const newUpdatedBudget = updatedBudget && Object.keys(updatedBudget).length !== 0 && updatedBudget;
 
   useEffect(() => {
-    dispatch(loadBudgets());
+    dispatch(loadBudgets(userId));
     dispatch(loadTransactions());
     // eslint-disable-next-line
-  }, [dispatch]);
+  }, [userId]);
+
+
+  const usePrevious = (value) => {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
+
+  const prevBudget = JSON.stringify(usePrevious(budget)) === JSON.stringify(updatedBudget);
+
 
   return (
     <section className={classes.Statistics}>
       <WidgetsMonthBalance currentYear={year} currentMonth={month} transactions={allTransactions} />
       <WidgetsYearExpenses currentMonth={month} transactions={allTransactions} />
       <WidgetsMonthExpenses currentMonth={month} transactions={allTransactions} budget={newBudget} userId={userId} />
-      <WidgetsBudget currentMonth={month} budget={newBudget} userId={userId} />
+      <WidgetsBudget currentMonth={month} budget={newBudget} updatedBudget={newUpdatedBudget} prevBudget={prevBudget} userId={userId} />
     </section>
   )
 }

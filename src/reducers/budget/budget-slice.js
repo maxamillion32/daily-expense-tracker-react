@@ -32,8 +32,8 @@ import {
 
 export const loadBudgets = createAsyncThunk(
   'budgets/loadData',
-  async () => {
-    return await getAll();
+  async (userId) => {
+    return await getAll(userId);
   }
 )
 // const userId = 'userId';
@@ -50,13 +50,14 @@ export const postBudget = createAsyncThunk(
     const id = action.userId;
 
     const budget = {};
-    let currentUser = {...budget[id]};
-    const currentMonth = {...currentUser[month]};
+    // let currentUser = {...budget[id]};
+    const currentMonth = {...budget[month]};
     const currentType = {...currentMonth[type]};
     currentType[name] = value;
     currentMonth[type] = currentType;
 
-    currentUser[month] = currentMonth;
+    budget[month] = currentMonth;
+    console.log(`🚀 ~ file: budget-slice.js ~ line 60 ~ budget`, budget);
 
     // const overall = getOverall(budget, type, month);
     // console.log(`🚀 ~ file: budget-slice.js ~ line 58 ~ overall`, overall);
@@ -72,14 +73,15 @@ export const postBudget = createAsyncThunk(
     //   currentUser[month] = currentMonth;
     // }
 
-    return await update(id, currentUser);
+    return await update(id, budget);
   }
 )
 
 export const budgetSlice = createSlice({
   name: "budget",
   initialState: {
-    budget: []
+    budget: {},
+    budgetUpdated: {},
   },
   reducers: {
     updateBudget: (state, action) => {
@@ -88,16 +90,16 @@ export const budgetSlice = createSlice({
       // const nameUpperCase = action.payload.nameUpperCase;
       const value = action.payload.value;
       const month = action.payload.month;
-      const id = 'userId';
+      const id =  action.payload.userId;
+      const budget =  action.payload.budget;
 
-      const budget = {...state};
-      let currentUser = {...budget[id]};
-      const currentMonth = {...currentUser[month]};
+      const allBudget = {...budget};
+      const currentMonth = {...allBudget[month]};
       const currentType = {...currentMonth[type]};
       currentType[name] = value;
       currentMonth[type] = currentType;
 
-      currentUser[month] = currentMonth;
+      allBudget[month] = currentMonth;
 
       // const overall = getOverall(budget, type, month);
       // const balance = getBalance(budget, type, month);
@@ -110,9 +112,13 @@ export const budgetSlice = createSlice({
 
       //   currentUser[month] = currentMonth;
       // }
-      currentUser = {[id]: currentUser};
+      // currentUser = {[id]: currentUser};
+      // console.log(`🚀 ~ file: budget-slice.js ~ line 115 ~ currentUser`, currentUser);
+      // const newBudget = {...state.budget};
+      // console.log(`🚀 ~ file: budget-slice.js ~ line 117 ~ newBudget`, newBudget[id]);
       return {
-        ...currentUser,
+        ...state,
+        budgetUpdated: {...allBudget}
       };
     },
   },
@@ -122,6 +128,7 @@ export const budgetSlice = createSlice({
     },
     [loadBudgets.fulfilled]: (state, action) => {
       state.budget = action.payload;
+      state.budgetUpdated = action.payload;
     },
     [loadBudgets.rejected]: (state) => {
     },
@@ -141,15 +148,17 @@ export const budgetSlice = createSlice({
   },
 });
 
-export const allBudgetState = (state) => state.budget.budget;
+export const selectAllBudgetState = (state) => state.budget.budget;
+export const selectUpdatedBudgetState = (state) => state.budget.budgetUpdated;
 
-export const selectAllBudgetState = (state) => {
-  const allBudget = allBudgetState(state);
-  const userId = selectUserId(state);
+// export const selectAllBudgetState = (state) => {
+//   const allBudget = allBudgetState(state);
+//   // console.log(`🚀 ~ file: budget-slice.js ~ line 156 ~ selectAllBudgetState ~ allBudget`, allBudget);
+//   const userId = selectUserId(state);
 
-  return allBudget
-          .find((item) => item[userId])
-};
+//   return allBudget
+//           .find((item) => item[userId])
+// };
 
 export const {
   updateBudget,
