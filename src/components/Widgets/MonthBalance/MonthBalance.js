@@ -3,7 +3,6 @@ import classes from './MonthBalance.module.css';
 import {formatMonth} from '../../../utils/utils'
 
 function WidgetsMonthBalance({currentMonth, transactions, currentYear}) {
-  console.log(`🚀 ~ file: MonthBalance.js ~ line 6 ~ WidgetsMonthBalance ~ currentYear`, currentYear);
   const filteredTransactions = transactions
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
 
