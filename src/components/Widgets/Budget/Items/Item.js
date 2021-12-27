@@ -13,7 +13,7 @@ function WidgetsBudgetItem({title, value, onChange, id}) {
         id={id}
         name={title}
         placeholder={"0.00"}
-        value={value}
+        value={(+value).toFixed(2)}
         onChange={onChange}
       />
     </div>

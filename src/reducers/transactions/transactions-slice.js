@@ -14,7 +14,6 @@ export const loadTransactions = createAsyncThunk(
 export const postTransaction = createAsyncThunk(
   'transactions/postData',
   async (data) => {
-    console.log(`🚀 ~ file: transactions-slice.js ~ line 16 ~ data`, data);
     return await create(data);
   }
 )
