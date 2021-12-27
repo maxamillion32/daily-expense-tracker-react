@@ -11,6 +11,7 @@
   position: relative;
   display: flex;
   justify-content: space-between;
+  align-items: center;
   margin-bottom: 5px;
 }
 
@@ -36,8 +37,11 @@
 
 .Input {
   width: 60px;
+  height: 25px;
+  padding: 0 5px;
   text-align: right;
   border: none;
+  border-radius: 5px;
 }
 
 
