@@ -1,4 +1,5 @@
 .YearExpenses {
+  position: relative;
   /* margin-bottom: 1px; */
   padding: 0 20px 15px;
   text-align: center;
@@ -57,4 +58,51 @@
 .Active p {
   color: #ff6060;
   font-weight: 700;
+}
+
+.LeftBtn {
+}
+
+.LeftBtn::after {
+  content: '';
+  position: absolute;
+  left: 40px;
+  top: -45px;
+  width: 20px;
+  height: 3px;
+  transform: rotate(-45deg);
+  background-color: #646464;
+}
+
+.LeftBtn::before {
+  content: '';
+  position: absolute;
+  left: 40px;
+  top: -32px;
+  width: 20px;
+  height: 3px;
+  transform: rotate(45deg);
+  background-color: #646464;
+}
+
+.RightBtn::after {
+  content: '';
+  position: absolute;
+  right: 40px;
+  top: -45px;
+  width: 20px;
+  height: 3px;
+  transform: rotate(45deg);
+  background-color: #646464;
+}
+
+.RightBtn::before {
+  content: '';
+  position: absolute;
+  right: 40px;
+  top: -32px;
+  width: 20px;
+  height: 3px;
+  transform: rotate(-45deg);
+  background-color: #646464;
 }

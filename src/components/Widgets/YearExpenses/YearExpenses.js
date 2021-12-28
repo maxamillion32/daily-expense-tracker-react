@@ -36,6 +36,7 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
   return (
     <>
       <section className={classes.YearExpenses}>
+        <div className={classes.LeftBtn}></div>
         <h4>{currentYear}</h4>
         <div className={classes.Wrapper}>
           {MONTH_EXPENSES.map((month) => (
@@ -63,6 +64,7 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
             ))
           }
         </div>
+        <div className={classes.RightBtn}></div>
       </section>
     </>
   )
