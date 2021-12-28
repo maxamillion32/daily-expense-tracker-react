@@ -15,7 +15,6 @@ import {selectAllBudgetState, loadBudgets, selectUpdatedBudgetState} from '../..
 
 function Statistics() {
   const allTransactions = useSelector(selectAllTransactionsState);
-  // const year = "< 2021 >";
   const month = useSelector(currentMonth);
   const year = useSelector(currentYear);
   const budget = useSelector(selectAllBudgetState);

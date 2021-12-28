@@ -1,9 +1,10 @@
 import React from 'react';
 import classes from './MonthBalance.module.css';
-import {formatMonth} from '../../../utils/utils'
+import {formatMonth, formatYear} from '../../../utils/utils'
 
-function WidgetsMonthBalance({currentMonth, transactions, currentYear}) {
+function WidgetsMonthBalance({currentYear, currentMonth, transactions, }) {
   const filteredTransactions = transactions
+    .filter((transaction) => formatYear(transaction.date) === currentYear)
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
 
   const sumExpenses = filteredTransactions.map((transaction) => {

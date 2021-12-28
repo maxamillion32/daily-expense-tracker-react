@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Indicator.module.css';
 
-function WidgetsYearExpensesIndicator({month, getPercent, type}) {
+function WidgetsYearExpensesIndicator({year, month, getPercent, type}) {
   let cls = [];
 
   type === "expenses" ? cls.push(classes.Expenses) : cls.push(classes.Incomes);
@@ -10,7 +10,7 @@ function WidgetsYearExpensesIndicator({month, getPercent, type}) {
     <div
       className={cls.join(' ')}
       id={month}
-      style={{height: `${getPercent(month, type)}%`}}
+      style={{height: `${getPercent(year, month, type)}%`}}
     ></div>
   )
 }

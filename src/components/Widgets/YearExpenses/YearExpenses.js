@@ -2,7 +2,7 @@ import React from 'react';
 import {useDispatch} from 'react-redux';
 import {updateMonth} from '../../../reducers/transactions/transactions-slice';
 
-import {formatMonth} from '../../../utils/utils';
+import {formatMonth, formatYear} from '../../../utils/utils';
 import classes from './YearExpenses.module.css';
 import {MONTH_EXPENSES} from './constant';
 
@@ -13,8 +13,9 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
 
   const maxMonthExpense = 3000; // temporary value
 
-  const getPercent = (month, type) => {
+  const getPercent = (year, month, type) => {
     const incomes = transactions
+      .filter((transaction) => formatYear(transaction.date) === year)
       .filter((transaction) => formatMonth(transaction.date) === month)
       .map((transaction) => (type === 'expenses' ? transaction.expense : !transaction.expense)
       ? transaction = +transaction.sum
@@ -45,12 +46,14 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
               onClick={monthHandler}
             >
               <Indicator
+                year={currentYear}
                 month={month}
                 getPercent={getPercent}
                 type={"incomes"}
               />
 
               <Indicator
+                year={currentYear}
                 month={month}
                 getPercent={getPercent}
                 type={"expenses"}
