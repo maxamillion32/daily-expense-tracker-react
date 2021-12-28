@@ -1,22 +1,14 @@
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import classes from './Item.module.css';
 
-function WidgetsBudgetItem({title, value, onChange, id, onEditClick}) {
-  // function usePrevious(value) {
-  //   const ref = useRef();
-  //   useEffect(() => {
-  //     ref.current = value;
-  //   });
-  //   return ref.current;
-  // }
-  // const prevAmount = usePrevious(value);
+function WidgetsBudgetItem({title, value, onChange, id}) {
   const isHeader = title === "Expenses" || title === "Incomes"
   return (
     <div className={classes.Block}>
       <p className={isHeader ? classes.Title : classes.SubTitle}>{title}</p>
       {isHeader ? <p className={classes.Description}>Plan</p> : ''}
       <input
-        className={classes.Input}
+        className={isHeader ? classes.InputDisabled : classes.Input }
         type="number"
         step="0.01"
         id={id}
@@ -24,15 +16,8 @@ function WidgetsBudgetItem({title, value, onChange, id, onEditClick}) {
         placeholder={"0.00"}
         value={value}
         onChange={onChange}
+        // disabled={isHeader}
       />
-      {/* <button
-          className={classes.Button}
-          type="submit"
-          onClick={onEditClick}
-          // disabled={!prevAmount}
-        >
-          Edit
-        </button> */}
     </div>
   )
 }

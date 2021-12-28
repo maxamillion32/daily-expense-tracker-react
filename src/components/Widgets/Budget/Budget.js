@@ -1,24 +1,26 @@
-import React, { useState } from 'react';
+import React, {useEffect, useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+
+import {loadTransactions} from '../../../reducers/transactions/transactions-slice';
 import {selectAllCategoriesState} from '../../../reducers/categories/categories-slice';
+import {postBudget, loadBudgets, updateBudget} from '../../../reducers/budget/budget-slice';
+
 import classes from './Budget.module.css';
 import WidgetsBudgetItem from './Items/Item';
-import {
-  // selectBudgetState, updateBudget,
-  postBudget, loadBudgets,
-  updateBudget
-  // selectAllBudgetState
-} from '../../../reducers/budget/budget-slice';
-import {loadTransactions} from '../../../reducers/transactions/transactions-slice';
 
-function WidgetsBudget({currentMonth, budget, userId, updatedBudget, prevBudget}) {
-  // console.log(`🚀 ~ file: Budget.js ~ line 14 ~ WidgetsBudget ~ userId`, userId);
-
+function WidgetsBudget({currentMonth, budget, userId, updatedBudget}) {
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategoriesState);
 
-  const [inputValue, setInputValue] = useState('');
+  const usePrevious = (value) => {
+    const ref = useRef();
+    useEffect(() => {
+      ref.current = value;
+    });
+    return ref.current;
+  }
 
+  const prevBudget = JSON.stringify(usePrevious(budget)) === JSON.stringify(updatedBudget);
 
   if (!updatedBudget) {
     return (<p></p>)
@@ -27,16 +29,14 @@ function WidgetsBudget({currentMonth, budget, userId, updatedBudget, prevBudget}
   const onInputChange = ({target}) => {
     const type = target.id;
     const name = target.name;
-    const nameUpperCase = type[0].toUpperCase() + type.slice(1);
     const value = target.value;
     const month = currentMonth;
 
-    setInputValue({type, name, nameUpperCase, value, month, userId});
-    dispatch(updateBudget({type, name, nameUpperCase, value, month, userId, budget}));
+    dispatch(updateBudget({type, name, value, month, userId}));
   }
 
   const onEditClick = () => {
-    dispatch(postBudget(inputValue));
+    dispatch(postBudget({updatedBudget, userId}));
     dispatch(loadBudgets(userId));
     dispatch(loadTransactions());// ??? update edit button
   }
@@ -62,7 +62,6 @@ function WidgetsBudget({currentMonth, budget, userId, updatedBudget, prevBudget}
           value={updatedBudget[currentMonth]["expenses"]["Expenses"] || ''}
           onChange={onInputChange}
           onEditClick={onEditClick}
-          // prevAmount={usePrevious(value)}
         />
 
         {categories

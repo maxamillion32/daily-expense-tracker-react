@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import WidgetsMonthBalance from '../../components/Widgets/MonthBalance/MonthBalance';
 import WidgetsMonthExpenses from '../../components/Widgets/MonthExpenses/MonthExpenses';
@@ -30,24 +30,12 @@ function Statistics() {
     // eslint-disable-next-line
   }, [userId]);
 
-
-  const usePrevious = (value) => {
-    const ref = useRef();
-    useEffect(() => {
-      ref.current = value;
-    });
-    return ref.current;
-  }
-
-  const prevBudget = JSON.stringify(usePrevious(budget)) === JSON.stringify(updatedBudget);
-
-
   return (
     <section className={classes.Statistics}>
       <WidgetsMonthBalance currentYear={year} currentMonth={month} transactions={allTransactions} />
       <WidgetsYearExpenses currentMonth={month} transactions={allTransactions} />
       <WidgetsMonthExpenses currentMonth={month} transactions={allTransactions} budget={newBudget} userId={userId} />
-      <WidgetsBudget currentMonth={month} budget={newBudget} updatedBudget={newUpdatedBudget} prevBudget={prevBudget} userId={userId} />
+      <WidgetsBudget currentMonth={month} budget={newBudget} updatedBudget={newUpdatedBudget} userId={userId} />
     </section>
   )
 }

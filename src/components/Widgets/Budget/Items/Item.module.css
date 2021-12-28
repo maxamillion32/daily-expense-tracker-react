@@ -45,6 +45,18 @@
   border-radius: 5px;
 }
 
+.InputDisabled {
+  width: 79px;
+  height: 25px;
+  padding: 0 5px;
+  margin-left: auto;
+  text-align: right;
+  background-color: transparent;
+  border: 1px dashed #d4d4d4;
+  border-radius: 5px;
+  pointer-events: none;
+}
+
 .Button {
   width: 50px;
   height: 25px;

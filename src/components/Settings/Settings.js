@@ -17,9 +17,9 @@ function Settings() {
 
   const onChangeType = async ({target}) => {
     const id = target.id;
-    const value = target.value;
+    // const value = target.value;
     setInputType(target.checked);
-    const name = target.name;
+    // const name = target.name;
 
     // if (name === "transactionType") {
     // setInputType(!inputType);

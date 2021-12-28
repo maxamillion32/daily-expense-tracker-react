@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './Item.module.css';
 
 function SettingsItem({id, onChange, onClickSubmitButton, value, submitTitle, onClickButton, placeholder, onClickDeleteButton, transactionType, onChangeType, title}) {
-  const htmlFor = `${'checkbox'}-${Math.random()}`;
+  // const htmlFor = `${'checkbox'}-${Math.random()}`;
   return (
     <form
       className={classes.ItemWrapper}
