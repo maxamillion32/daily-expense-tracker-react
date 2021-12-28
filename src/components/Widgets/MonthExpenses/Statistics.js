@@ -69,8 +69,9 @@ export class Statistics {
   balanceOfCurrent() {
     const averageValue =  (this.averageSum() - getSum(this.monthTransactions, this.type)).toFixed(2);
 
-    return averageValue >= 0
+    return averageValue > 0
       ? `${averageValue}€ below ${this.budget[this.currentMonth][this.type][this.category] ? "budget" : "typical"}`
+      : averageValue === '0.00' ? "equal to budget"
       : `${Math.abs(averageValue)}€ above ${this.budget[this.currentMonth][this.type][this.category] ? "budget" : "typical"}`;
   }
 

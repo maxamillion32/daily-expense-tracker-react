@@ -19,7 +19,6 @@ function Statistics() {
   const month = useSelector(currentMonth);
   const budget = useSelector(selectAllBudgetState);
   const updatedBudget = useSelector(selectUpdatedBudgetState);
-  console.log(`🚀 ~ file: Statistics.js ~ line 22 ~ Statistics ~ updatedBudget`, updatedBudget);
   const dispatch = useDispatch();
   const userId = useSelector(selectUserId);
   const newBudget = budget && Object.keys(budget).length !== 0 && budget;
