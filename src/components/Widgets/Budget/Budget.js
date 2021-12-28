@@ -8,7 +8,7 @@ import {postBudget, loadBudgets, updateBudget} from '../../../reducers/budget/bu
 import classes from './Budget.module.css';
 import WidgetsBudgetItem from './Items/Item';
 
-function WidgetsBudget({currentMonth, budget, userId, updatedBudget}) {
+function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget}) {
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategoriesState);
 

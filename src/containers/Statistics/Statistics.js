@@ -6,7 +6,7 @@ import WidgetsYearExpenses from '../../components/Widgets/YearExpenses/YearExpen
 import WidgetsBudget from '../../components/Widgets/Budget/Budget';
 import {selectUserId} from '../../reducers/user/user-slice';
 import classes from './Statistics.module.css';
-import {currentMonth} from '../../reducers/transactions/transactions-slice';
+import {currentMonth, currentYear} from '../../reducers/transactions/transactions-slice';
 import {
   loadTransactions,
   selectAllTransactionsState
@@ -15,8 +15,9 @@ import {selectAllBudgetState, loadBudgets, selectUpdatedBudgetState} from '../..
 
 function Statistics() {
   const allTransactions = useSelector(selectAllTransactionsState);
-  const year = "< 2021 >";
+  // const year = "< 2021 >";
   const month = useSelector(currentMonth);
+  const year = useSelector(currentYear);
   const budget = useSelector(selectAllBudgetState);
   const updatedBudget = useSelector(selectUpdatedBudgetState);
   const dispatch = useDispatch();
@@ -33,9 +34,9 @@ function Statistics() {
   return (
     <section className={classes.Statistics}>
       <WidgetsMonthBalance currentYear={year} currentMonth={month} transactions={allTransactions} />
-      <WidgetsYearExpenses currentMonth={month} transactions={allTransactions} />
-      <WidgetsMonthExpenses currentMonth={month} transactions={allTransactions} budget={newBudget} userId={userId} />
-      <WidgetsBudget currentMonth={month} budget={newBudget} updatedBudget={newUpdatedBudget} userId={userId} />
+      <WidgetsYearExpenses currentYear={year} currentMonth={month} transactions={allTransactions} />
+      <WidgetsMonthExpenses currentYear={year} currentMonth={month} transactions={allTransactions} budget={newBudget} userId={userId} />
+      <WidgetsBudget currentYear={year} currentMonth={month} budget={newBudget} updatedBudget={newUpdatedBudget} userId={userId} />
     </section>
   )
 }

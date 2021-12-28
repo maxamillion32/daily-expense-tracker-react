@@ -27,7 +27,6 @@ function WidgetsMonthBalance({currentMonth, transactions, currentYear}) {
           <p className={classes.Balance}>-{sumExpenses} €</p>
         </li>
       </ul>
-      <h4>{currentYear}</h4>
     </section>
   )
 }

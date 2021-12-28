@@ -31,6 +31,14 @@ export function formatMonth (dateString) {
   return date.toLocaleString(`en-EN`, options);
 };
 
+export function formatYear (dateString) {
+  const date = new Date(dateString);
+  const options = {
+    year: `numeric`
+  };
+  return date.toLocaleString(`en-EN`, options);
+};
+
 export function formatMonthShort (dateString) {
   const date = new Date(dateString);
   const options = {

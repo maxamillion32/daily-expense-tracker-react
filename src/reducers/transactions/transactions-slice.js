@@ -2,7 +2,7 @@ import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
 import {getAll, create, deleteId} from '../../services/transaction.service';
 import {selectSearchTerm} from '../search/search-slice';
 import {selectUserId} from '../user/user-slice';
-import {formatMonth} from '../../utils/utils'
+import {formatMonth, formatYear} from '../../utils/utils'
 
 export const loadTransactions = createAsyncThunk(
   'transactions/loadData',
@@ -38,6 +38,7 @@ export const transactionsSlice = createSlice({
     isLoading: false,
     hasError: false,
     currentMonth: formatMonth(new Date()),
+    currentYear: formatYear(new Date()),
     isButtonClick: false,
     isButtonShow: false
   },
@@ -93,6 +94,12 @@ export const transactionsSlice = createSlice({
         currentMonth: action.payload,
       };
     },
+    updateYear: (state, action) => {
+      return {
+        ...state,
+        currentYear: action.payload,
+      };
+    },
     showButton: (state, action) => {
       return {
         ...state,
@@ -132,6 +139,7 @@ export const selectNewTransactionState = (state) => state.transactions.newTransa
 export const isLoading = (state) => state.transactions.isLoading;
 export const hasError = (state) => state.transactions.hasError;
 export const currentMonth = (state) => state.transactions.currentMonth;
+export const currentYear = (state) => state.transactions.currentYear;
 export const isButtonClick = (state) => state.transactions.isButtonClick;
 export const isButtonShow = (state) => state.transactions.isButtonShow;
 
@@ -162,6 +170,7 @@ export const {
   addTransaction,
   resetState,
   updateMonth,
+  updateYear,
   clickButton,
   showButton,
 } = transactionsSlice.actions;

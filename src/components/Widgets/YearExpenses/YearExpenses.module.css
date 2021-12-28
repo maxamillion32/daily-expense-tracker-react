@@ -1,6 +1,7 @@
 .YearExpenses {
   /* margin-bottom: 1px; */
-  padding: 20px 20px 15px;
+  padding: 0 20px 15px;
+  text-align: center;
   /* margin: 20px; */
   background-color: #f1f1f1;
   /* border-bottom: 1px dashed #d4d4d4; */

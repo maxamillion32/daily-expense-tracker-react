@@ -8,7 +8,7 @@ import {MONTH_EXPENSES} from './constant';
 
 import Indicator from './Indicator/Indicator';
 
-function WidgetsYearExpenses({currentMonth, transactions}) {
+function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
   const dispatch = useDispatch();
 
   const maxMonthExpense = 3000; // temporary value
@@ -35,6 +35,7 @@ function WidgetsYearExpenses({currentMonth, transactions}) {
   return (
     <>
       <section className={classes.YearExpenses}>
+        <h4>{currentYear}</h4>
         <div className={classes.Wrapper}>
           {MONTH_EXPENSES.map((month) => (
             <div

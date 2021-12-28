@@ -6,7 +6,7 @@ import {Statistics} from './Statistics';
 import {TRANSACTION_TYPE} from './const';
 // import {selectBudgetState} from '../../../reducers/budget/budget-slice';
 
-function WidgetsMonthExpenses({currentMonth, transactions, budget, userId}) {
+function WidgetsMonthExpenses({currentYear, currentMonth, transactions, budget, userId}) {
   // const budget = useSelector(selectBudgetState);
 
   if (!budget) {
