@@ -60,49 +60,56 @@
   font-weight: 700;
 }
 
+.LeftBtn, .RightBtn {
+  position: absolute;
+  top: -55px;
+
+  width: 40px;
+  height: 40px;
+  background-color: transparent;
+  border-color: transparent;
+  border-radius: 50%;
+
+  cursor: pointer;
+}
+
 .LeftBtn {
-}
-
-.LeftBtn::after {
-  content: '';
-  position: absolute;
   left: 40px;
-  top: -45px;
-  width: 20px;
-  height: 3px;
-  transform: rotate(-45deg);
-  background-color: #646464;
 }
 
-.LeftBtn::before {
-  content: '';
-  position: absolute;
-  left: 40px;
-  top: -32px;
-  width: 20px;
-  height: 3px;
-  transform: rotate(45deg);
-  background-color: #646464;
-}
-
-.RightBtn::after {
-  content: '';
-  position: absolute;
+.RightBtn {
   right: 40px;
-  top: -45px;
+}
+
+.LeftBtn::after, .LeftBtn::before,
+.RightBtn::after, .RightBtn::before {
+  content: '';
+  position: absolute;
   width: 20px;
   height: 3px;
-  transform: rotate(45deg);
   background-color: #646464;
 }
 
-.RightBtn::before {
-  content: '';
-  position: absolute;
-  right: 40px;
-  top: -32px;
-  width: 20px;
-  height: 3px;
+.LeftBtn::after, .LeftBtn::before {
+  left: 6px;
+}
+
+.RightBtn::after, .RightBtn::before {
+  right: 6px;
+}
+
+.LeftBtn::after, .RightBtn::after {
+  top: 10px;
+}
+
+.LeftBtn::before, .RightBtn::before {
+  top: 23px;
+}
+
+.LeftBtn::after, .RightBtn::before {
   transform: rotate(-45deg);
-  background-color: #646464;
+}
+
+.LeftBtn::before, .RightBtn::after {
+  transform: rotate(45deg);
 }
