@@ -1,6 +1,6 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
-import {updateMonth} from '../../../reducers/transactions/transactions-slice';
+import {updateMonth, updateYear} from '../../../reducers/transactions/transactions-slice';
 
 import {formatMonth, formatYear} from '../../../utils/utils';
 import classes from './YearExpenses.module.css';
@@ -32,11 +32,25 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
     dispatch(updateMonth(target.id));
   };
 
+  const handleClick = ({target}) => {
+    const id = target.id;
+    let year = +currentYear;
+
+    id === "prev" ? --year : ++year
+
+    dispatch(updateYear(String(year)));
+  };
+
 
   return (
     <>
       <section className={classes.YearExpenses}>
-        <button className={classes.LeftBtn}></button>
+        <button
+          id={'prev'}
+          className={classes.LeftBtn}
+          onClick={handleClick}
+        ></button>
+
         <h4>{currentYear}</h4>
         <div className={classes.Wrapper}>
           {MONTH_EXPENSES.map((month) => (
@@ -64,7 +78,12 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
             ))
           }
         </div>
-        <button className={classes.RightBtn}></button>
+
+        <button
+          id={'next'}
+          className={classes.RightBtn}
+          onClick={handleClick}
+        ></button>
       </section>
     </>
   )
