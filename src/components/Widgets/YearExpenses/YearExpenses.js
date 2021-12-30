@@ -11,18 +11,20 @@ import Indicator from './Indicator/Indicator';
 function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
   const dispatch = useDispatch();
 
-  const maxMonthExpense = 3000; // temporary value
+  const maxMonthExpense = Math.max(...transactions
+      .filter((transaction) => formatYear(transaction.date) === currentYear)
+      .map((transaction) =>  +transaction.sum));
 
   const getPercent = (year, month, type) => {
     const incomes = transactions
-      .filter((transaction) => formatYear(transaction.date) === year)
-      .filter((transaction) => formatMonth(transaction.date) === month)
-      .map((transaction) => (type === 'expenses' ? transaction.expense : !transaction.expense)
-      ? transaction = +transaction.sum
-      : transaction = null)
-      .reduce((acc, sum) => acc + sum, 0);
+    .filter((transaction) => formatYear(transaction.date) === year)
+    .filter((transaction) => formatMonth(transaction.date) === month)
+    .map((transaction) => (type === 'expenses' ? transaction.expense : !transaction.expense)
+    ? transaction = +transaction.sum
+    : transaction = null)
+    .reduce((acc, sum) => acc + sum, 0);
 
-    const percent = (incomes / maxMonthExpense * 100);
+    const percent = (incomes / maxMonthExpense * 100) - 40;
     let incomesPercent = percent >= 100 ? 100 : percent;
 
     return incomesPercent === 0 ? 1 : incomesPercent;

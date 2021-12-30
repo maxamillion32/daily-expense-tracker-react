@@ -75,7 +75,7 @@ export class Statistics {
 
     return averageValue > 0
       ? `${averageValue}€ below ${this.budget[this.currentYear][this.currentMonth][this.type][this.category] ? "budget" : "typical"}`
-      : isNaN(averageValue) ? "equal to budget"
+      : isNaN(averageValue) ? ""
       : averageValue === '0.00' ? "equal to budget"
       : `${Math.abs(averageValue)}€ above ${this.budget[this.currentYear][this.currentMonth][this.type][this.category] ? "budget" : "typical"}`;
   }
