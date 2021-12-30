@@ -61,7 +61,7 @@ export const budgetSlice = createSlice({
 
         current[year] = {...currentYear};
 
-        const overall = getOverall(current, type, month, year);
+        const overall = getOverall(current, type, month, year).toFixed(2);
         currentType[nameUpperCase] = overall;
         currentMonth[type] = currentType;
         currentYear[month] = {...current[year][month], ...currentMonth};
@@ -83,7 +83,7 @@ export const budgetSlice = createSlice({
         current[year] = {...budget[year], ...currentYear};
         current = {...budget, ...current}
 
-        const overall = getOverall(current, type, month, year);
+        const overall = getOverall(current, type, month, year).toFixed(2);
         currentType[nameUpperCase] = overall;
         currentMonth[type] = currentType;
         currentYear[month] ={...current[year][month], ...currentMonth};
@@ -105,7 +105,7 @@ export const budgetSlice = createSlice({
         currentYear[month] = {...budget[year][month], ...currentMonth};
         current[year] = {...budget[month], ...currentYear};
 
-        const overall = getOverall(current, type, month, year);
+        const overall = getOverall(current, type, month, year).toFixed(2);
         currentType[nameUpperCase] = overall;
         currentMonth[type] = {...budget[year][month][type], ...currentType};
         currentYear[month] = {...budget[year][month], ...currentMonth};
