@@ -24,7 +24,7 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
     : transaction = null)
     .reduce((acc, sum) => acc + sum, 0);
 
-    const percent = (incomes / maxMonthExpense * 100) - 40;
+    const percent = (incomes / maxMonthExpense * 100);
     let incomesPercent = percent >= 100 ? 100 : percent;
 
     return incomesPercent === 0 ? 1 : incomesPercent;
@@ -56,25 +56,27 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
         <h4>{currentYear}</h4>
         <div className={classes.Wrapper}>
           {MONTH_EXPENSES.map((month) => (
-            <div
-              className={`${classes.List} ${month === currentMonth ? classes.Active : ''}`}
-              key={month}
-              id={month}
-              onClick={monthHandler}
-            >
-              <Indicator
-                year={currentYear}
-                month={month}
-                getPercent={getPercent}
-                type={"incomes"}
-              />
+            <div className={classes.ListWrapper}>
+              <div
+                className={`${classes.List} ${month === currentMonth ? classes.Active : ''}`}
+                key={month}
+                id={month}
+                onClick={monthHandler}
+              >
+                <Indicator
+                  year={currentYear}
+                  month={month}
+                  getPercent={getPercent}
+                  type={"incomes"}
+                />
 
-              <Indicator
-                year={currentYear}
-                month={month}
-                getPercent={getPercent}
-                type={"expenses"}
-              />
+                <Indicator
+                  year={currentYear}
+                  month={month}
+                  getPercent={getPercent}
+                  type={"expenses"}
+                />
+              </div>
               <p id={month}>{month.slice(0, 3)}</p>
             </div>
             ))

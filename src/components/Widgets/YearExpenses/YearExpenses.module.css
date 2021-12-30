@@ -16,13 +16,23 @@
   height: 57px;
 }
 
-.List {
-  position: relative;
+.ListWrapper {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   height: 100%;
   width: 7%;
+}
+
+.ListWrapper p {
+  font-size: 12px;
+  text-align: center;
+}
+
+.List {
+  position: relative;
+  height: 100%;
+  width: 100%;
 }
 
 .List:hover {
@@ -43,11 +53,6 @@
   background-color: #d9d9d9;
 /* z-index: 1; */
   opacity: .9;
-}
-
-.List p {
-  font-size: 12px;
-  text-align: center;
 }
 
 .Active div {
