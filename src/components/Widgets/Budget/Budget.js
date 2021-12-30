@@ -12,6 +12,10 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategoriesState);
 
+
+    useEffect(() => {
+    }, [currentMonth, updatedBudget]);
+
   const usePrevious = (value) => {
     const ref = useRef();
     useEffect(() => {
@@ -22,17 +26,18 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
 
   const prevBudget = JSON.stringify(usePrevious(budget)) === JSON.stringify(updatedBudget);
 
-  if (!updatedBudget) {
-    return (<p></p>)
-  }
+  // if (!updatedBudget) {
+  //   return (<p></p>)
+  // }
 
   const onInputChange = ({target}) => {
     const type = target.id;
     const name = target.name;
     const value = target.value;
     const month = currentMonth;
+    const year = currentYear;
 
-    dispatch(updateBudget({type, name, value, month, userId}));
+    dispatch(updateBudget({type, name, value, year, month, userId, updatedBudget}));
   }
 
   const onEditClick = () => {
@@ -40,6 +45,8 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
     dispatch(loadBudgets(userId));
     dispatch(loadTransactions());// ??? update edit button
   }
+
+  const isBudget = updatedBudget && (updatedBudget[currentYear] || '') && (updatedBudget[currentYear][currentMonth] || '');
 
   return (
     <section className={classes.BudgetWrapper}>
@@ -59,22 +66,20 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
         <WidgetsBudgetItem
           title={"Expenses"}
           id={"expenses"}
-          value={updatedBudget[currentMonth]["expenses"]["Expenses"] || ''}
+          value={isBudget && (updatedBudget[currentYear][currentMonth]["expenses"]["Expenses"] || '')}
           onChange={onInputChange}
-          onEditClick={onEditClick}
         />
 
         {categories
           .filter((category) => !category.incomes)
-          .sort((a, b) => updatedBudget[currentMonth]["expenses"][b.title] - updatedBudget[currentMonth]["expenses"][a.title])
+          .sort((a, b) => isBudget && updatedBudget[currentYear][currentMonth]["expenses"][b.title] - updatedBudget[currentYear][currentMonth]["expenses"][a.title])
           .map((category) => (
             <WidgetsBudgetItem
               key={category.id}
               title={category.title}
               id={"expenses"}
-              value={updatedBudget[currentMonth]["expenses"][category.title] || ''}
+              value={isBudget && (updatedBudget[currentYear][currentMonth]["expenses"][category.title] || '')}
               onChange={onInputChange}
-              onEditClick={onEditClick}
             />
           ))
         }
@@ -84,22 +89,20 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
         <WidgetsBudgetItem
           title={"Incomes"}
           id={"incomes"}
-          value={updatedBudget[currentMonth]["incomes"]["Incomes"]  || ''}
+          value={isBudget && (updatedBudget[currentYear][currentMonth]["incomes"]["Incomes"]  || '')}
           onChange={onInputChange}
-          onClick={onEditClick}
         />
 
         {categories
           .filter((category) => category.incomes)
-          .sort((a, b) => updatedBudget[currentMonth]["incomes"][b.title] - updatedBudget[currentMonth]["incomes"][a.title])
+          .sort((a, b) => isBudget && updatedBudget[currentYear][currentMonth]["incomes"][b.title] - updatedBudget[currentYear][currentMonth]["incomes"][a.title])
           .map((category) => (
             <WidgetsBudgetItem
               key={category.id}
               title={category.title}
               id={"incomes"}
-              value={updatedBudget[currentMonth]["incomes"][category.title]  || ''}
+              value={isBudget && (updatedBudget[currentYear][currentMonth]["incomes"][category.title]  || '')}
               onChange={onInputChange}
-              onClick={onEditClick}
             />
           ))
         }

@@ -8,14 +8,16 @@ import {
 import {TRANSACTION_TYPE} from './const';
 
 export class Statistics {
-  constructor(transactions, type, budget, monthTransactions, currentMonth, userId) {
+  constructor(transactions, type, budget, monthTransactions, currentMonth, currentYear, userId) {
     this.transactions = transactions;
     this.type = type;
     this.budget = budget;
     this.monthTransactions = monthTransactions;
     this.currentMonth = currentMonth;
+    this.currentYear = currentYear;
     this.category = this.type[0].toUpperCase() + this.type.slice(1);
     this.userId = userId;
+    this.isBudget = this.budget && this.budget[currentYear] && this.budget[currentYear][currentMonth];
   }
 
   _getExcessPercent = (balance, sum) => {
@@ -55,13 +57,13 @@ export class Statistics {
   }
 
   averageSum() {
-    return !this.budget[this.currentMonth][this.type][this.category]
+    return !this.isBudget
     ? (getMonthAverageSum(getSum(this.transactions, this.type)))
-    : this.budget[this.currentMonth][this.type][this.category];
+    : this.budget[this.currentYear][this.currentMonth][this.type][this.category];
   }
 
   excessPercent() {
-    return this.budget[this.currentMonth][this.type][this.category]
+    return this.isBudget && this.budget[this.currentYear][this.currentMonth][this.type][this.category]
     ? this._getExcessBudgetPercent(getSum(this.monthTransactions, this.type), this.averageSum())
     : this._getExcessPercent(getSum(this.monthTransactions, this.type), getSum(this.transactions, this.type));
   }
@@ -69,14 +71,16 @@ export class Statistics {
   balanceOfCurrent() {
     const averageValue =  (this.averageSum() - getSum(this.monthTransactions, this.type)).toFixed(2);
 
+    if (!this.isBudget) return;
+
     return averageValue > 0
-      ? `${averageValue}€ below ${this.budget[this.currentMonth][this.type][this.category] ? "budget" : "typical"}`
+      ? `${averageValue}€ below ${this.budget[this.currentYear][this.currentMonth][this.type][this.category] ? "budget" : "typical"}`
       : averageValue === '0.00' ? "equal to budget"
-      : `${Math.abs(averageValue)}€ above ${this.budget[this.currentMonth][this.type][this.category] ? "budget" : "typical"}`;
+      : `${Math.abs(averageValue)}€ above ${this.budget[this.currentYear][this.currentMonth][this.type][this.category] ? "budget" : "typical"}`;
   }
 
   totalPercent() {
-    return this.budget[this.currentMonth][this.type][this.category]
+    return this.isBudget && this.budget[this.currentYear][this.currentMonth][this.type][this.category]
     ? (((getSum(this.monthTransactions, this.type) / this.averageSum()) * 100) >= 100
       ? 100
       : (getSum(this.monthTransactions, this.type) / this.averageSum()) * 100)
@@ -94,7 +98,7 @@ export class Statistics {
     const balancePerCategory = getBalance(category, type, this.transactions);
     const balance = getBalance(category, type, this.monthTransactions);
 
-    const budget = this.budget[this.currentMonth][this.type][category];
+    const budget = this.isBudget && this.budget[this.currentYear][this.currentMonth][this.type][category];
 
     const percent = budget
       ? balance / budget * 100
@@ -108,7 +112,7 @@ export class Statistics {
     const balancePerCategory = getBalance(category, type, this.transactions);
     const transactionsSumPerCategory = getBalance(category, type, this.monthTransactions)
 
-    const budget = this.budget[this.currentMonth][this.type][category];
+    const budget = this.isBudget && this.budget[this.currentYear][this.currentMonth][this.type][category];
 
     const averageValue = budget
     ? (budget - transactionsSumPerCategory).toFixed(2)
@@ -124,7 +128,7 @@ export class Statistics {
     const balancePerCategory = getBalance(category, type, this.transactions);
     const balance = getBalance(category, type, this.monthTransactions);
 
-    const budget = this.budget[this.currentMonth][this.type][category];
+    const budget = this.isBudget && this.budget[this.currentYear][this.currentMonth][this.type][category];
 
     const percent = budget
       ? balance / budget * 100

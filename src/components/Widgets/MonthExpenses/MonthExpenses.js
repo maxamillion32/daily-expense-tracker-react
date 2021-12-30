@@ -9,16 +9,16 @@ import {TRANSACTION_TYPE} from './const';
 function WidgetsMonthExpenses({currentYear, currentMonth, transactions, budget, userId}) {
   // const budget = useSelector(selectBudgetState);
 
-  if (!budget) {
-    return (<p></p>)
-  }
+  // if (!budget) {
+  //   return (<p></p>)
+  // }
 
   const monthTransactions = transactions
     .filter((transaction) => formatYear(transaction.date) === currentYear)
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
 
-  const expenses = new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget, monthTransactions, currentMonth, userId);
-  const incomes = new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget, monthTransactions, currentMonth, userId);
+  const expenses = new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget, monthTransactions, currentMonth, currentYear, userId);
+  const incomes = new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget, monthTransactions, currentMonth, currentYear, userId);
 
   return (
     <>

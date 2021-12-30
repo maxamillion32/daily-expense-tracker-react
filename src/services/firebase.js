@@ -26,7 +26,56 @@ export function singUp(email, password) {
     .then(data => {
       const id = data.user.uid;
       const docRef = doc(getFirestore(), "budgets", id);
-      const payload = {December: {expenses:{}, incomes:{}}};
+      const payload = {
+        January: {
+          expenses: {},
+          incomes: {}
+        },
+        February: {
+          expenses: {},
+          incomes: {}
+        },
+        March: {
+          expenses: {},
+          incomes: {}
+        },
+        April: {
+          expenses: {},
+          incomes: {}
+        },
+        May: {
+          expenses: {},
+          incomes: {}
+        },
+        June: {
+          expenses: {},
+          incomes: {}
+        },
+        July: {
+          expenses: {},
+          incomes: {}
+        },
+        August: {
+          expenses: {},
+          incomes: {}
+        },
+        September: {
+          expenses: {},
+          incomes: {}
+        },
+        October: {
+          expenses: {},
+          incomes: {}
+        },
+        November: {
+          expenses: {},
+          incomes: {}
+        },
+        December: {
+          expenses: {},
+          incomes: {}
+        },
+      };
 
       setDoc(docRef, payload, {merge:true});
     })

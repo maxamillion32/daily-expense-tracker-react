@@ -10,7 +10,7 @@ function WidgetsBudgetItem({title, value, onChange, id}) {
       <input
         className={isHeader ? classes.InputDisabled : classes.Input }
         type="number"
-        step="0.01"
+        // step="0.01"
         id={id}
         name={title}
         placeholder={"0.00"}
