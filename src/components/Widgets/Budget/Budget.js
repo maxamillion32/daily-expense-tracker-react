@@ -42,7 +42,7 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
     dispatch(loadTransactions());// ??? update edit button
   }
 
-  const isBudget = updatedBudget && (updatedBudget[currentYear] || '') && (updatedBudget[currentYear][currentMonth] || '');
+  const isBudget = (updatedBudget || '') && (updatedBudget[currentYear] || '') && (updatedBudget[currentYear][currentMonth] || '');
 
   return (
     <section className={classes.BudgetWrapper}>

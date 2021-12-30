@@ -16,7 +16,7 @@ function WidgetsMonthExpensesItem(
     }
   ) {
 
-  const daysAmount = new Date(new Date().getFullYear(), new Date().getMonth(), 0).getDate();
+  const daysAmount = new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0).getDate();
   const currentDay = new Date().getDate();
   const currentMonth = formatMonth(new Date());
   const currentDayStep = (currentDay / daysAmount * 100).toFixed(2);
