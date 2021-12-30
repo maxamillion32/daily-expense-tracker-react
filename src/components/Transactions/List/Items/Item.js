@@ -12,8 +12,12 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, ...res
   const onClickDeleteButton = ({target}) => {
     const id = target.id;
 
-    dispatch(deleteTransaction(id));
-    dispatch(loadTransactions());
+    const confirm = window.confirm("Are you sure?");
+
+    if (confirm) {
+      dispatch(deleteTransaction(id));
+      dispatch(loadTransactions());
+    }
   };
 
   const handleDeleteButtonToggle = () => {

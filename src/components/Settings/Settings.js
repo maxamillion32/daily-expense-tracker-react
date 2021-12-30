@@ -91,13 +91,21 @@ function Settings() {
   };
 
   function onClickDeleteCategoryButton({target}) {
-    dispatch(deleteCategory(target.id));
-    dispatch(loadCategories());
+    const confirm = window.confirm("Are you sure?");
+
+    if (confirm) {
+      dispatch(deleteCategory(target.id));
+      dispatch(loadCategories());
+    }
   };
 
   function onClickDeleteAccountButton({target}) {
-    dispatch(deleteAccount(target.id));
-    dispatch(loadAccounts());
+    const confirm = window.confirm("Are you sure?");
+
+    if (confirm) {
+      dispatch(deleteAccount(target.id));
+      dispatch(loadAccounts());
+    }
   };
 
   const onClickSubmitButton = (e) => {
