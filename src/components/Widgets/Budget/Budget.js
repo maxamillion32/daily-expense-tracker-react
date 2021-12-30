@@ -54,7 +54,7 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
             onClick={onEditClick}
             disabled={prevBudget}
           >
-            Edit
+            Update
           </button>
       </div>
 
