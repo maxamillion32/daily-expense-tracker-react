@@ -11,9 +11,27 @@ import Indicator from './Indicator/Indicator';
 function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
   const dispatch = useDispatch();
 
-  const maxMonthExpense = Math.max(...transactions
-      .filter((transaction) => formatYear(transaction.date) === currentYear)
-      .map((transaction) =>  +transaction.sum));
+  const getMaxAmountPerYear = (year, type) => {
+    const months = [...new Set(transactions
+      .filter((transaction) => formatYear(transaction.date) === year)
+      .map((transaction) => formatMonth(transaction.date)))];
+
+    const amount = Math.max(...months
+      .map((month) => transactions
+      .map((transaction) => formatMonth(transaction.date) === month
+        ? (type === 'expenses' ? transaction.expense : !transaction.expense)
+          ? transaction = +transaction.sum
+          : transaction = null
+        : null)
+      .reduce((acc, sum) => acc + sum, 0)))
+
+    return amount;
+  }
+
+  const maxMonthExpensePerYear = getMaxAmountPerYear(currentYear, 'expenses');
+  const maxMonthIncomePerYear = getMaxAmountPerYear(currentYear, 'income');
+
+  const maxMonthTransaction = Math.max(maxMonthExpensePerYear, maxMonthIncomePerYear)
 
   const getPercent = (year, month, type) => {
     const incomes = transactions
@@ -24,8 +42,8 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
     : transaction = null)
     .reduce((acc, sum) => acc + sum, 0);
 
-    const percent = (incomes / maxMonthExpense * 100);
-    let incomesPercent = percent >= 100 ? 100 : percent;
+    const percent = (incomes / maxMonthTransaction * 100);
+    let incomesPercent = percent >= 100 ? percent : percent;
 
     return incomesPercent === 0 ? 1 : incomesPercent;
   }
@@ -56,10 +74,9 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
         <h4>{currentYear}</h4>
         <div className={classes.Wrapper}>
           {MONTH_EXPENSES.map((month) => (
-            <div className={classes.ListWrapper}>
+            <div className={classes.ListWrapper} key={month}>
               <div
                 className={`${classes.List} ${month === currentMonth ? classes.Active : ''}`}
-                key={month}
                 id={month}
                 onClick={monthHandler}
               >
