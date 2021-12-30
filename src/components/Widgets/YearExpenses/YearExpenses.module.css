@@ -24,6 +24,10 @@
   width: 7%;
 }
 
+.ListWrapper:hover {
+  cursor: pointer;
+}
+
 .ListWrapper p {
   font-size: 12px;
   text-align: center;
@@ -33,10 +37,7 @@
   position: relative;
   height: 100%;
   width: 100%;
-}
-
-.List:hover {
-  cursor: pointer;
+  border-bottom: 1px solid black;
 }
 
 .Expenses {
@@ -57,12 +58,13 @@
 
 .Active div {
   box-sizing: border-box;
-  background-color: #ff6060;
-  opacity: .7;
+  /* background-color: #a1a1a1; */
+  /* opacity: .7; */
+  border-bottom: 3px solid black;
 }
 
-.Active p {
-  color: #ff6060;
+.Active ~ p {
+  /* color: #ff6060; */
   font-weight: 700;
 }
 

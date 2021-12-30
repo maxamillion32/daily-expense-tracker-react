@@ -45,7 +45,7 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
     const percent = (incomes / maxMonthTransaction * 100);
     let incomesPercent = percent >= 100 ? percent : percent;
 
-    return incomesPercent === 0 ? 1 : incomesPercent;
+    return incomesPercent;
   }
 
   const monthHandler = ({target}) => {
@@ -74,11 +74,14 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
         <h4>{currentYear}</h4>
         <div className={classes.Wrapper}>
           {MONTH_EXPENSES.map((month) => (
-            <div className={classes.ListWrapper} key={month}>
+            <div
+              className={classes.ListWrapper}
+              key={month}
+              onClick={monthHandler}
+            >
               <div
                 className={`${classes.List} ${month === currentMonth ? classes.Active : ''}`}
                 id={month}
-                onClick={monthHandler}
               >
                 <Indicator
                   year={currentYear}
