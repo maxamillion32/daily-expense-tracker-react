@@ -112,93 +112,11 @@ export const budgetSlice = createSlice({
         current[year] = {...budget[month], ...currentYear};
       }
 
-      // currentMonth = {...budget[month]};
-      // currentType = {...currentMonth[type]};
-      // currentType[nameUpperCase] = overall;
-      // currentMonth[type] = currentType;
-
-      // let currentYear = current[year];
-      // let currentMonth = {...currentYear[month]};
-      // let currentType = {...currentMonth[type]};
-      // currentType[nameUpperCase] = overall;
-      // currentMonth[type] = {...budget[year][month][type], ...currentType};
-      // currentYear[month] = {...budget[year][month], ...currentMonth};
-      // current[year] = {...budget[month], ...currentYear};
-      // console.log(`🚀 ~ file: budget-slice.js ~ line 108 ~ current`, current);
-
-
-      // budget[year][month][type] = {...{[name]: value}}
-
-
-      // let currentYear = budget[year];
-      // console.log(`🚀 ~ file: budget-slice.js ~ line 55 ~ currentYear`, currentYear);
-      // let currentMonth = currentYear[month];
-      // currentMonth = {[type]: {}};
-      // let currentType = currentMonth[type];
-      // currentType[name] = value;
-      // currentMonth[type] = currentType;
-      // currentYear[month] = currentMonth;
-
-      // budget[year] = {...budget[year], ...currentYear};
-      // console.log(`🚀 ~ file: budget-slice.js ~ line 63 ~ budget`, budget);
-
-
-      // let currentYear = {...budget[year]};
-      // let currentMonth = {...currentYear[month]};
-      // currentMonth = {[type]: {}};
-      // let currentType = {...currentMonth[type]};
-      // currentType[name] = value;
-      // currentMonth[type] = currentType;
-      // currentYear[month] = currentMonth;
-
-      // budget[year] = {...currentYear};
-
-      // const overall = getOverall(budget, type, month);
-
-      // currentMonth = {...budget[month]};
-      // currentType = {...currentMonth[type]};
-      // currentType[nameUpperCase] = overall;
-      // currentMonth[type] = currentType;
-
-      // budget[month] = currentMonth;
-
       return {
         ...state,
         budgetUpdated: {...current}
       };
     },
-
-    // {
-    //   const type = action.payload.type;
-    //   const name = action.payload.name;
-    //   const nameUpperCase = type[0].toUpperCase() + type.slice(1);
-    //   const value = action.payload.value;
-    //   const month = action.payload.month;
-    //   const year = action.payload.year;
-    //   // const budget =  {...state.budgetUpdated};
-    //   const budget =  {};
-
-    //   let currentMonth = {...budget[month]};
-    //   let currentType = {...currentMonth[type]};
-    //   currentType[name] = value;
-    //   currentMonth[type] = currentType;
-
-    //   budget[month] = currentMonth;
-
-    //   const overall = getOverall(budget, type, month);
-
-    //   currentMonth = {...budget[month]};
-    //   currentType = {...currentMonth[type]};
-    //   currentType[nameUpperCase] = overall;
-    //   currentMonth[type] = currentType;
-
-    //   budget[month] = currentMonth;
-
-    //   return {
-    //     ...state,
-    //     budgetUpdated: {...budget}
-    //   };
-    // },
   },
 
   extraReducers: {

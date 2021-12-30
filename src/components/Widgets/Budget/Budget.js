@@ -26,10 +26,6 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
 
   const prevBudget = JSON.stringify(usePrevious(budget)) === JSON.stringify(updatedBudget);
 
-  // if (!updatedBudget) {
-  //   return (<p></p>)
-  // }
-
   const onInputChange = ({target}) => {
     const type = target.id;
     const name = target.name;
