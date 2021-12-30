@@ -79,6 +79,11 @@
   cursor: pointer;
 }
 
+.LeftBtn:active, .RightBtn:active {
+  outline: none;
+  box-shadow: 1px 1px 10px rgb(0 0 0 / 30%);
+}
+
 .LeftBtn {
   left: 40px;
 }
