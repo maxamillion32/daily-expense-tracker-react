@@ -4,13 +4,13 @@ import {formatMonth, formatYear} from '../../../utils/utils'
 import {Statistics} from './Statistics';
 import {TRANSACTION_TYPE} from './const';
 
-function WidgetsMonthExpenses({currentYear, currentMonth, transactions, budget, userId}) {
+function WidgetsMonthExpenses({currentYear, currentMonth, transactions, budget, userId, allCategories}) {
   const monthTransactions = transactions
     .filter((transaction) => formatYear(transaction.date) === currentYear)
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
 
-  const expenses = new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget, monthTransactions, currentMonth, currentYear, userId);
-  const incomes = new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget, monthTransactions, currentMonth, currentYear, userId);
+  const expenses = new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget, monthTransactions, currentMonth, currentYear, userId, allCategories);
+  const incomes = new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget, monthTransactions, currentMonth, currentYear, userId, allCategories);
 
   return (
     <>

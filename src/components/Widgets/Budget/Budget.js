@@ -69,7 +69,7 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
 
         {categories
           .filter((category) => !category.incomes)
-          .sort((a, b) => isBudget && updatedBudget[currentYear][currentMonth]["expenses"][b.title] - updatedBudget[currentYear][currentMonth]["expenses"][a.title])
+          .sort((a, b) => isBudget && updatedBudget[currentYear][currentMonth]["expenses"][b.id] - updatedBudget[currentYear][currentMonth]["expenses"][a.id])
           .map((category) => (
             <WidgetsBudgetItem
               key={category.id}
@@ -93,7 +93,7 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
 
         {categories
           .filter((category) => category.incomes)
-          .sort((a, b) => isBudget && updatedBudget[currentYear][currentMonth]["incomes"][b.title] - updatedBudget[currentYear][currentMonth]["incomes"][a.title])
+          .sort((a, b) => isBudget && updatedBudget[currentYear][currentMonth]["incomes"][b.id] - updatedBudget[currentYear][currentMonth]["incomes"][a.id])
           .map((category) => (
             <WidgetsBudgetItem
               key={category.id}

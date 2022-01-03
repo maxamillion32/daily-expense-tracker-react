@@ -12,9 +12,11 @@ import {
   selectAllTransactionsState
 } from '../../reducers/transactions/transactions-slice';
 import {selectAllBudgetState, loadBudgets, selectUpdatedBudgetState} from '../../reducers/budget/budget-slice';
+import {selectAllCategoriesState} from '../../reducers/categories/categories-slice';
 
 function Statistics() {
   const allTransactions = useSelector(selectAllTransactionsState);
+  const allCategories = useSelector(selectAllCategoriesState);
   const month = useSelector(currentMonth);
   const year = useSelector(currentYear);
   const budget = useSelector(selectAllBudgetState);
@@ -34,7 +36,7 @@ function Statistics() {
     <section className={classes.Statistics}>
       <WidgetsMonthBalance currentYear={year} currentMonth={month} transactions={allTransactions} />
       <WidgetsYearExpenses currentYear={year} currentMonth={month} transactions={allTransactions} />
-      <WidgetsMonthExpenses currentYear={year} currentMonth={month} transactions={allTransactions} budget={newBudget} userId={userId} />
+      <WidgetsMonthExpenses currentYear={year} currentMonth={month} transactions={allTransactions} budget={newBudget} userId={userId} allCategories={allCategories} />
       <WidgetsBudget currentYear={year} currentMonth={month} budget={newBudget} updatedBudget={newUpdatedBudget} userId={userId} />
     </section>
   )
