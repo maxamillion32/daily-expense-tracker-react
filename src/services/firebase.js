@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import {setUserId} from "../reducers/user/user-slice";
 
 import {initializeApp} from "firebase/app";
-import {setDoc, doc, getFirestore} from "@firebase/firestore";
+import {setDoc, doc, getFirestore} from "firebase/firestore";
 import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'firebase/auth';
 
 // Firebase configuration
@@ -17,8 +17,9 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-// eslint-disable-next-line
+
 const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 const auth = getAuth();
 
 export function singUp(email, password) {
@@ -113,4 +114,4 @@ export function useAuth() {
   return currentUser;
 }
 
-export default getFirestore();
+export default db;
