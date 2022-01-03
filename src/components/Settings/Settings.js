@@ -4,12 +4,14 @@ import {selectAllCategoriesState, deleteCategory, postCategory, loadCategories, 
 import {selectAllAccountsState, updateAccount, deleteAccount, postAccount, loadAccounts} from '../../reducers/accounts/accounts-slice';
 import { selectUserId } from '../../reducers/user/user-slice';
 import SettingsBlock from './Blocks/Block';
+import {usePopup} from '../../hoc/Popup/PopupContext';
 
 function Settings() {
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategoriesState);
   const accounts = useSelector(selectAllAccountsState);
   const userId = useSelector(selectUserId);
+  const {toggle} = usePopup()
 
   const [inputCategory, setInputCategory] = useState('');
   const [inputType, setInputType] = useState(false);
@@ -143,6 +145,8 @@ function Settings() {
         placeholder={"Type the new name for the account"}
         transactionType={undefined}
       />
+
+      <button onClick={toggle}>popup</button>
     </>
   )
 }

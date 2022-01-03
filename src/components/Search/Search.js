@@ -1,5 +1,6 @@
 import {useSelector, useDispatch} from 'react-redux';
 import {setSearchTerm, selectSearchTerm, clearSearchTerm} from '../../reducers/search/search-slice';
+import CloseButton from '../UI/CloseButton/CloseButton';
 import classes from './Search.module.css';
 
 function Search() {
@@ -25,7 +26,7 @@ function Search() {
         onChange={onSearchTermChangeHandler}
       />
       {searchTerm.length > 0 && (
-        <span className={classes.SearchCloseBtn} onClick={onClearSearchTermHandler}/>
+        <CloseButton onClick={onClearSearchTermHandler}/>
       )}
     </section>
   );
