@@ -9,7 +9,9 @@ function Settings() {
     <section className={classes.Settings}>
       <PopupProvider>
         <SettingsScreen />
-        <Popup />
+        <Popup>
+          <h1>Example</h1>
+        </Popup>
       </PopupProvider>
     </section>
   )
