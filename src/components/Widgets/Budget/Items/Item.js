@@ -1,7 +1,7 @@
 import React from 'react';
 import classes from './Item.module.css';
 
-function WidgetsBudgetItem({title, value, onChange, id}) {
+function WidgetsBudgetItem({title, value, onChange, id, dataType}) {
   const isHeader = title === "Expenses" || title === "Incomes"
   return (
     <div className={classes.Block}>
@@ -17,6 +17,7 @@ function WidgetsBudgetItem({title, value, onChange, id}) {
         value={value}
         onChange={onChange}
         // disabled={isHeader}
+        data-type={dataType}
       />
     </div>
   )

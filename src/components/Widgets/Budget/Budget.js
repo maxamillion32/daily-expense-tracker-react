@@ -13,8 +13,8 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
   const categories = useSelector(selectAllCategoriesState);
 
 
-    useEffect(() => {
-    }, [currentMonth, updatedBudget]);
+  // useEffect(() => {
+  // }, [updatedBudget]);
 
   const usePrevious = (value) => {
     const ref = useRef();
@@ -27,13 +27,14 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
   const prevBudget = JSON.stringify(usePrevious(budget)) === JSON.stringify(updatedBudget);
 
   const onInputChange = ({target}) => {
-    const type = target.id;
+    const id = target.id;
+    const type = target.getAttribute('data-type');
     const name = target.name;
     const value = target.value;
     const month = currentMonth;
     const year = currentYear;
 
-    dispatch(updateBudget({type, name, value, year, month, userId, updatedBudget}));
+    dispatch(updateBudget({id, type, name, value, year, month, userId, updatedBudget, categories}));
   }
 
   const onEditClick = () => {
@@ -61,7 +62,7 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
       <div className={classes.Content}>
         <WidgetsBudgetItem
           title={"Expenses"}
-          id={"expenses"}
+          dataType={"expenses"}
           value={isBudget && (updatedBudget[currentYear][currentMonth]["expenses"]["Expenses"] || '')}
           onChange={onInputChange}
         />
@@ -73,8 +74,9 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
             <WidgetsBudgetItem
               key={category.id}
               title={category.title}
-              id={"expenses"}
-              value={isBudget && (updatedBudget[currentYear][currentMonth]["expenses"][category.title] || '')}
+              dataType={"expenses"}
+              id={category.id}
+              value={isBudget && (updatedBudget[currentYear][currentMonth]["expenses"][category.id] || '')}
               onChange={onInputChange}
             />
           ))
@@ -84,7 +86,7 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
       <div className={classes.Content}>
         <WidgetsBudgetItem
           title={"Incomes"}
-          id={"incomes"}
+          dataType={"incomes"}
           value={isBudget && (updatedBudget[currentYear][currentMonth]["incomes"]["Incomes"]  || '')}
           onChange={onInputChange}
         />
@@ -96,8 +98,9 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
             <WidgetsBudgetItem
               key={category.id}
               title={category.title}
-              id={"incomes"}
-              value={isBudget && (updatedBudget[currentYear][currentMonth]["incomes"][category.title]  || '')}
+              id={category.id}
+              dataType={"incomes"}
+              value={isBudget && (updatedBudget[currentYear][currentMonth]["incomes"][category.id]  || '')}
               onChange={onInputChange}
             />
           ))

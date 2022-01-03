@@ -5,10 +5,10 @@ const budgetRef = collection(db, "budgets");
 
 export const getAll = async (userId) => {
   const snapshot = await getDocs(budgetRef, userId);
-  const filter = snapshot.docs.filter((doc) => doc.id === userId);
-  const map = filter.map((doc) => (doc.data()));
-  const results = map.find((doc) => doc);
-  return results;
+  const results = snapshot.docs.filter((doc) => doc.id === userId)
+    .map((doc) => (doc.data()))
+    .find((doc) => doc);
+  return results
 }
 
 export const create = async (data) => {

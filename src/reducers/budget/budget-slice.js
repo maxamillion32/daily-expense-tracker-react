@@ -38,7 +38,7 @@ export const budgetSlice = createSlice({
   reducers: {
     updateBudget: (state, action) => {
       const type = action.payload.type;
-      const name = action.payload.name;
+      const name = action.payload.id;
       const nameUpperCase = type[0].toUpperCase() + type.slice(1);
       const value = +action.payload.value;
       const month = action.payload.month;
