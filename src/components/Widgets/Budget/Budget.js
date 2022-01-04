@@ -69,8 +69,8 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
         {categories
           .filter((category) => !category.incomes)
           .map((category) => isBudget && updatedBudget[currentYear][currentMonth]["expenses"][category.id]
-            ? {id : category.id, sum: updatedBudget[currentYear][currentMonth]["expenses"][category.id], title: category.title}
-            : {id : category.id, sum: 0, title: category.title})
+            ? {...category, sum: updatedBudget[currentYear][currentMonth]["expenses"][category.id]}
+            : {...category, sum: 0})
           .sort((a, b) => b.sum - a.sum)
           .map((category) => (
             <WidgetsBudgetItem
@@ -96,8 +96,8 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
         {categories
           .filter((category) => category.incomes)
           .map((category) => isBudget && updatedBudget[currentYear][currentMonth]["incomes"][category.id]
-            ? {id : category.id, sum: updatedBudget[currentYear][currentMonth]["incomes"][category.id], title: category.title}
-            : {id : category.id, sum: 0, title: category.title})
+            ? {...category, sum: updatedBudget[currentYear][currentMonth]["incomes"][category.id]}
+            : {...category, sum: 0})
           .sort((a, b) => b.sum - a.sum)
           .map((category) => (
             <WidgetsBudgetItem
