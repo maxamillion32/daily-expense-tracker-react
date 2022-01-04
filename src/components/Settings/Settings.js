@@ -19,15 +19,7 @@ function Settings() {
 
   const onChangeType = async ({target}) => {
     const id = target.id;
-    // const value = target.value;
     setInputType(target.checked);
-    // const name = target.name;
-
-    // if (name === "transactionType") {
-    // setInputType(!inputType);
-    // console.log(`🚀 ~ file: Settings.js ~ line 34 ~ onChangeType ~ inputType`, inputType);
-    //   // dispatch(updateCategory({incomes: inputType}));
-    // // }
 
     if (id) {
       dispatch(updateCategory({id, incomes: target.checked}));
@@ -35,17 +27,19 @@ function Settings() {
     }
   }
 
+  const isExists = (data, item) => {
+    return data.find((it) => it.title === item) ? true : false;
+  }
+
   const onChangeCategory = ({target}) => {
     const id = target.id;
     const title = target.value;
-    // const name = target.name;
     const incomes = inputType;
 
-    // if (name === "transactionType") {
-    //   setInputType(!title);
-    //   // title ? setInputType(false) : setInputType(!inputType);
-    //   // dispatch(updateCategory({incomes: inputType}));
-    // }
+    if (isExists(categories, title)) {
+      alert("This category already exists!");
+      return;
+    }
 
     if (id) {
       dispatch(updateCategory({id, title, userId, incomes}));
@@ -58,6 +52,11 @@ function Settings() {
   const onChangeAccount = ({target}) => {
     const id = target.id;
     const title = target.value;
+
+    if (isExists(accounts, title)) {
+      alert("This category already exists!");
+      return;
+    }
 
     if (id) {
       dispatch(updateAccount({id, title, userId}));
