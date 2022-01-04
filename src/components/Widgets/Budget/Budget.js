@@ -12,7 +12,6 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategoriesState);
 
-
   // useEffect(() => {
   // }, [updatedBudget]);
 
@@ -69,7 +68,10 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
 
         {categories
           .filter((category) => !category.incomes)
-          .sort((a, b) => isBudget && updatedBudget[currentYear][currentMonth]["expenses"][b.id] - updatedBudget[currentYear][currentMonth]["expenses"][a.id])
+          .map((category) => isBudget && updatedBudget[currentYear][currentMonth]["expenses"][category.id]
+            ? {id : category.id, sum: updatedBudget[currentYear][currentMonth]["expenses"][category.id], title: category.title}
+            : {id : category.id, sum: 0, title: category.title})
+          .sort((a, b) => b.sum - a.sum)
           .map((category) => (
             <WidgetsBudgetItem
               key={category.id}
@@ -93,7 +95,10 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
 
         {categories
           .filter((category) => category.incomes)
-          .sort((a, b) => isBudget && updatedBudget[currentYear][currentMonth]["incomes"][b.id] - updatedBudget[currentYear][currentMonth]["incomes"][a.id])
+          .map((category) => isBudget && updatedBudget[currentYear][currentMonth]["incomes"][category.id]
+            ? {id : category.id, sum: updatedBudget[currentYear][currentMonth]["incomes"][category.id], title: category.title}
+            : {id : category.id, sum: 0, title: category.title})
+          .sort((a, b) => b.sum - a.sum)
           .map((category) => (
             <WidgetsBudgetItem
               key={category.id}
