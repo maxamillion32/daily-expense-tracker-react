@@ -16,6 +16,12 @@
   animation: show 300ms ease-in alternate-reverse;
 }
 
+.CloseBtn {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+}
+
 @keyframes show {
   0% {
     transform: translateX(440px);

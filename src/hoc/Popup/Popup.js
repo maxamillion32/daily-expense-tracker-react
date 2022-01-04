@@ -24,7 +24,9 @@ function Popup({children}) {
       nodeRef={nodeRef}
     >
       <section className={classes.Container} ref={nodeRef}>
-        <CloseButton onClick={toggle}/>
+        <div className={classes.CloseBtn}>
+          <CloseButton onClick={toggle}/>
+        </div>
         {children}
       </section>
     </CSSTransition>

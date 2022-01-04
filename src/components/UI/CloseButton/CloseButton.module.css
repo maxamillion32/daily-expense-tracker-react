@@ -1,7 +1,7 @@
 .CloseBtn {
   position: absolute;
-  top: 4px;
-  right: 2px;
+  top: 0;
+  right: 0;
   box-sizing: border-box;
   width: 2em;
   height: 2em;

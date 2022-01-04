@@ -14,3 +14,9 @@
     border: 1px solid #a7a7a7;
     border-radius: 5px;
 }
+
+.CloseBtn {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+}

@@ -26,7 +26,9 @@ function Search() {
         onChange={onSearchTermChangeHandler}
       />
       {searchTerm.length > 0 && (
-        <CloseButton onClick={onClearSearchTermHandler}/>
+        <div className={classes.CloseBtn}>
+          <CloseButton onClick={onClearSearchTermHandler}/>
+        </div>
       )}
     </section>
   );
