@@ -44,6 +44,15 @@ export class Statistics {
     return expensesPercent === 0 ? 1 : expensesPercent;
   }
 
+  _categoryId(category, type) {
+    const isIncomes = type === "incomes" ? true : false
+
+    return this.allCategories
+      .filter((item) => item.incomes === isIncomes)
+      .filter((item) => item.title === category)
+      .map((item) => item.id).join();
+  }
+
   categories(type) {
     const uniqueCategory = [...new Set(this.monthTransactions
     .filter((transaction) => (type === TRANSACTION_TYPE.EXPENSES ? transaction.expense : !transaction.expense)
@@ -117,14 +126,7 @@ export class Statistics {
     const balancePerCategory = getBalance(category, type, this.transactions);
     const balance = getBalance(category, type, this.monthTransactions);
 
-    const isIncomes = type === "incomes" ? true : false
-
-    const categoryId = this.allCategories
-      .filter((item) => item.incomes === isIncomes)
-      .filter((item) => item.title === category)
-      .map((item) => item.id).join();
-
-    const budget = this.isBudget && this.budget[this.currentYear][this.currentMonth][this.type][categoryId];
+    const budget = this.isBudget && this.budget[this.currentYear][this.currentMonth][this.type][this._categoryId(category, type)];
 
     const percent = budget
       ? balance / budget * 100
@@ -138,14 +140,7 @@ export class Statistics {
     const balancePerCategory = getBalance(category, type, this.transactions);
     const transactionsSumPerCategory = getBalance(category, type, this.monthTransactions);
 
-    const isIncomes = type === "incomes" ? true : false
-
-    const categoryId = this.allCategories
-      .filter((item) => item.incomes === isIncomes)
-      .filter((item) => item.title === category)
-      .map((item) => item.id).join();
-
-    const budget = this.isBudget && this.budget[this.currentYear][this.currentMonth][this.type][categoryId];
+    const budget = this.isBudget && this.budget[this.currentYear][this.currentMonth][this.type][this._categoryId(category, type)];
 
     const averageValue = budget
     ? (budget - transactionsSumPerCategory).toFixed(2)
@@ -161,14 +156,7 @@ export class Statistics {
     const balancePerCategory = getBalance(category, type, this.transactions);
     const balance = getBalance(category, type, this.monthTransactions);
 
-    const isIncomes = type === "incomes" ? true : false
-
-    const categoryId = this.allCategories
-      .filter((item) => item.incomes === isIncomes)
-      .filter((item) => item.title === category)
-      .map((item) => item.id).join();
-
-    const budget = this.isBudget && this.budget[this.currentYear][this.currentMonth][this.type][categoryId];
+    const budget = this.isBudget && this.budget[this.currentYear][this.currentMonth][this.type][this._categoryId(category, type)];
 
     const percent = budget
       ? balance / budget * 100
