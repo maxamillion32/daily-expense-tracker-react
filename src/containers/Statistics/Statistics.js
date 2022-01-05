@@ -11,7 +11,7 @@ import {
   loadTransactions,
   selectAllTransactionsState
 } from '../../reducers/transactions/transactions-slice';
-import {selectAllBudgetState, loadBudgets, selectUpdatedBudgetState} from '../../reducers/budget/budget-slice';
+import {selectAllBudgetState, loadBudgets, selectUpdatedBudgetState, isLoading} from '../../reducers/budget/budget-slice';
 import {selectAllCategoriesState} from '../../reducers/categories/categories-slice';
 import Loader from '../../components/UI/Loader/Loader';
 
@@ -22,10 +22,11 @@ function Statistics() {
   const year = useSelector(currentYear);
   const budget = useSelector(selectAllBudgetState);
   const updatedBudget = useSelector(selectUpdatedBudgetState);
-  const dispatch = useDispatch();
   const userId = useSelector(selectUserId);
   const newBudget = budget && Object.keys(budget).length !== 0 && budget;
   const newUpdatedBudget = updatedBudget && Object.keys(updatedBudget).length !== 0 && updatedBudget;
+  const loading = useSelector(isLoading);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(loadBudgets(userId));
@@ -35,8 +36,8 @@ function Statistics() {
 
   return (
     <section className={classes.Statistics}>
-      {(!allTransactions.length || (!newBudget && !newUpdatedBudget)) && <Loader />}
-      {!!allTransactions.length && newBudget && newUpdatedBudget &&
+      {loading && userId && <Loader />}
+      {!loading && userId &&
         <>
           <WidgetsMonthBalance currentYear={year} currentMonth={month} transactions={allTransactions} />
           <WidgetsYearExpenses currentYear={year} currentMonth={month} transactions={allTransactions} />

@@ -24,11 +24,11 @@ function Layout(props) {
       <main className={classes.LayoutMain}>
         <Auth />
         {props.children}
-        <Menu
+        {userId && <Menu
           categories={allCategories}
           accounts={allAccounts}
           userId={userId}
-        />
+        />}
       </main>
     </div>
   )

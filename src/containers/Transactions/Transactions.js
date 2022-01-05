@@ -4,7 +4,7 @@ import {useSelector, useDispatch} from 'react-redux';
 import {
   loadTransactions,
   selectAllTransactionsState,
-  showButton,
+  showButton, isLoading
 } from '../../reducers/transactions/transactions-slice'
 import {selectUserId} from '../../reducers/user/user-slice';
 
@@ -12,9 +12,11 @@ import Search from '../../components/Search/Search';
 import Balance from '../../components/Balance/Balance';
 import TransactionsListContainer from '../../components/Transactions/List/ListContainer';
 import Loader from '../../components/UI/Loader/Loader';
+import Welcome from '../../components/Welcome/Welcome';
 
 function Transactions() {
   const allTransactions = useSelector(selectAllTransactionsState);
+  const loading = useSelector(isLoading);
   const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
 
@@ -29,13 +31,16 @@ function Transactions() {
 
   return (
     <>
-      {!allTransactions.length && userId && <Loader />}
-      {!!allTransactions.length &&
+      {loading && userId && <Loader />}
+      {!loading && userId &&
         <>
           <Balance transactions={allTransactions} />
           <Search />
           <TransactionsListContainer />
         </>
+      }
+      {!userId &&
+        <Welcome />
       }
     </>
   );

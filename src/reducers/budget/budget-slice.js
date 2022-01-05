@@ -34,6 +34,7 @@ export const budgetSlice = createSlice({
   initialState: {
     budget: {},
     budgetUpdated: {},
+    isLoading: false,
   },
   reducers: {
     updateBudget: (state, action) => {
@@ -121,18 +122,22 @@ export const budgetSlice = createSlice({
 
   extraReducers: {
     [loadBudgets.pending]: (state) => {
+      state.isLoading = true;
     },
     [loadBudgets.fulfilled]: (state, action) => {
       state.budget = action.payload;
       state.budgetUpdated = action.payload;
+      state.isLoading = false;
     },
     [loadBudgets.rejected]: (state) => {
+      state.isLoading = false;
     },
   },
 });
 
 export const selectAllBudgetState = (state) => state.budget.budget;
 export const selectUpdatedBudgetState = (state) => state.budget.budgetUpdated;
+export const isLoading = (state) => state.budget.isLoading;
 
 export const {updateBudget} = budgetSlice.actions;
 export default budgetSlice.reducer;

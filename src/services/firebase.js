@@ -3,7 +3,7 @@ import {useDispatch} from 'react-redux';
 import {setUserId} from "../reducers/user/user-slice";
 
 import {initializeApp} from "firebase/app";
-import {setDoc, doc, getFirestore} from "firebase/firestore";
+import {getFirestore} from "firebase/firestore";
 import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'firebase/auth';
 
 // Firebase configuration
@@ -24,65 +24,6 @@ const auth = getAuth();
 
 export function singUp(email, password) {
     createUserWithEmailAndPassword(auth, email, password)
-    .then(data => {
-      const id = data.user.uid;
-      const docRef = doc(getFirestore(), "budgets", id);
-      const payload = {
-        January: {
-          expenses: {},
-          incomes: {}
-        },
-        February: {
-          expenses: {},
-          incomes: {}
-        },
-        March: {
-          expenses: {},
-          incomes: {}
-        },
-        April: {
-          expenses: {},
-          incomes: {}
-        },
-        May: {
-          expenses: {},
-          incomes: {}
-        },
-        June: {
-          expenses: {},
-          incomes: {}
-        },
-        July: {
-          expenses: {},
-          incomes: {}
-        },
-        August: {
-          expenses: {},
-          incomes: {}
-        },
-        September: {
-          expenses: {},
-          incomes: {}
-        },
-        October: {
-          expenses: {},
-          incomes: {}
-        },
-        November: {
-          expenses: {},
-          incomes: {}
-        },
-        December: {
-          expenses: {},
-          incomes: {}
-        },
-      };
-
-      setDoc(docRef, payload, {merge:true});
-    })
-    .catch(err => {
-      alert(err);
-    })
 }
 
 export function login(email, password) {
