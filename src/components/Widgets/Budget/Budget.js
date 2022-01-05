@@ -7,7 +7,6 @@ import {postBudget, loadBudgets, updateBudget} from '../../../reducers/budget/bu
 
 import classes from './Budget.module.css';
 import WidgetsBudgetItem from './Items/Item';
-import Loader from '../../UI/Loader/Loader';
 
 function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget}) {
   const dispatch = useDispatch();

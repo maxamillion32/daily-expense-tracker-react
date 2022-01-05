@@ -13,6 +13,7 @@ import {
 } from '../../reducers/transactions/transactions-slice';
 import {selectAllBudgetState, loadBudgets, selectUpdatedBudgetState} from '../../reducers/budget/budget-slice';
 import {selectAllCategoriesState} from '../../reducers/categories/categories-slice';
+import Loader from '../../components/UI/Loader/Loader';
 
 function Statistics() {
   const allTransactions = useSelector(selectAllTransactionsState);
@@ -30,14 +31,19 @@ function Statistics() {
     dispatch(loadBudgets(userId));
     dispatch(loadTransactions());
     // eslint-disable-next-line
-  }, []);
+  }, [userId]);
 
   return (
     <section className={classes.Statistics}>
-      <WidgetsMonthBalance currentYear={year} currentMonth={month} transactions={allTransactions} />
-      <WidgetsYearExpenses currentYear={year} currentMonth={month} transactions={allTransactions} />
-      <WidgetsMonthExpenses currentYear={year} currentMonth={month} transactions={allTransactions} budget={newBudget} userId={userId} allCategories={allCategories} />
-      <WidgetsBudget currentYear={year} currentMonth={month} budget={newBudget} updatedBudget={newUpdatedBudget} userId={userId} />
+      {(!allTransactions.length || (!newBudget && !newUpdatedBudget)) && <Loader />}
+      {!!allTransactions.length && newBudget && newUpdatedBudget &&
+        <>
+          <WidgetsMonthBalance currentYear={year} currentMonth={month} transactions={allTransactions} />
+          <WidgetsYearExpenses currentYear={year} currentMonth={month} transactions={allTransactions} />
+          <WidgetsMonthExpenses currentYear={year} currentMonth={month} transactions={allTransactions} budget={newBudget} userId={userId} allCategories={allCategories} />
+          <WidgetsBudget currentYear={year} currentMonth={month} budget={newBudget} updatedBudget={newUpdatedBudget} userId={userId} />
+        </>
+      }
     </section>
   )
 }
