@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useRef} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {loadTransactions} from '../../../reducers/transactions/transactions-slice';
@@ -14,9 +14,9 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
 
   const usePrevious = (value) => {
     const ref = useRef();
-    useEffect(() => {
+    // useEffect(() => {
       ref.current = value;
-    });
+    // });
     return ref.current;
   }
 
@@ -40,10 +40,6 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
   }
 
   const isBudget = (updatedBudget || '') && (updatedBudget[currentYear] || '') && (updatedBudget[currentYear][currentMonth] || '');
-
-  // if (!budget || !updatedBudget) {
-  //   <Loader />
-  // }
 
   return (
     <section className={classes.BudgetWrapper}>
