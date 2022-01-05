@@ -3,6 +3,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;
+  align-items: center;
   padding: 15px 20px;
   background-color: #f1f1f1;
   border-bottom: 1px dashed #d4d4d4;
@@ -38,4 +39,9 @@
   font-size: 12px;
   border: 1px solid #d4d4d4;
   border-radius: 5px;
+  color: #000;
+}
+
+.Main a {
+  padding: 1px 10px;
 }

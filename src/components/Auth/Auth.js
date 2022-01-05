@@ -1,6 +1,7 @@
 import { useRef, useState } from 'react';
 import classes from './Auth.module.css';
 import { singUp, logout, login, useAuth } from '../../services/firebase';
+import {NavLink} from 'react-router-dom';
 
 function Auth() {
   const [loading, setLoading] = useState(false);
@@ -49,7 +50,7 @@ function Auth() {
 
       {!currentUser && <button className={classes.Button} disabled={loading || currentUser} onClick={handleSignup}>Sing Up</button>}
       {!currentUser && <button className={classes.Button} disabled={loading || currentUser} onClick={handleLogin}>Log In</button>}
-      {currentUser && <button className={classes.Button} disabled={loading || !currentUser} onClick={handleLogout}>Log Out</button>}
+      {currentUser && <NavLink to={'/'} className={classes.Button} disabled={loading || !currentUser} onClick={handleLogout}>Log Out</NavLink>}
 
     </section>
   );
