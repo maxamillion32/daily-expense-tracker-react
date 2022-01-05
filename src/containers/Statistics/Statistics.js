@@ -30,7 +30,7 @@ function Statistics() {
     dispatch(loadBudgets(userId));
     dispatch(loadTransactions());
     // eslint-disable-next-line
-  }, [userId]);
+  }, []);
 
   return (
     <section className={classes.Statistics}>

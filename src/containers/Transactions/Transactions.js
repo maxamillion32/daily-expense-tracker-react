@@ -6,13 +6,16 @@ import {
   selectAllTransactionsState,
   showButton,
 } from '../../reducers/transactions/transactions-slice'
+import {selectUserId} from '../../reducers/user/user-slice';
 
 import Search from '../../components/Search/Search';
 import Balance from '../../components/Balance/Balance';
 import TransactionsListContainer from '../../components/Transactions/List/ListContainer';
+import Loader from '../../components/UI/Loader/Loader';
 
 function Transactions() {
   const allTransactions = useSelector(selectAllTransactionsState);
+  const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,11 +29,14 @@ function Transactions() {
 
   return (
     <>
-      <Balance transactions={allTransactions} />
-      {
-        !!allTransactions.length && <Search />
+      {!allTransactions.length && userId && <Loader />}
+      {!!allTransactions.length &&
+        <>
+          <Balance transactions={allTransactions} />
+          <Search />
+          <TransactionsListContainer />
+        </>
       }
-      <TransactionsListContainer />
     </>
   );
 }
