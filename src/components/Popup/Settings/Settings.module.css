@@ -1,0 +1,59 @@
+.Welcome {
+  padding: 20px;
+  /* background-color: white;
+  text-align: center; */
+}
+
+.Button {
+  width: 70px;
+  height: 30px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  /* font-weight: 700; */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  background-color: #646464;
+  cursor: pointer;
+}
+
+.Button:disabled {
+  background: #ccc;
+  /* color: #000; */
+  cursor: not-allowed;
+}
+
+.Input {
+  box-sizing: border-box;
+  width: 70%;
+  height: 30px;
+  /* margin-bottom: 10px; */
+  margin-right: 10px;
+  padding: 0 15px;
+  text-align: left;
+  border: 1px solid #646464;
+  border-radius: 5px;
+  flex-grow: 1;
+}
+
+.Type {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-right: 10px;
+  /* margin-left: auto; */
+  /* flex-grow: 1; */
+}
+
+.Type input {
+  margin-right: 5px;
+}
+
+.Wrapper {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  /* flex-wrap: wrap; */
+  margin-bottom: 7px;
+}

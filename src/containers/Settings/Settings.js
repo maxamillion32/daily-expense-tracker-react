@@ -5,6 +5,7 @@ import classes from './Settings.module.css';
 import PopupProvider from '../../hoc/Popup/PopupContext';
 import Popup from '../../hoc/Popup/Popup';
 import {selectUserId} from '../../reducers/user/user-slice';
+import PopupSettings from '../../components/Popup/Settings/Settings';
 
 
 function Settings() {
@@ -14,7 +15,7 @@ function Settings() {
       {userId && <PopupProvider>
         <SettingsScreen />
         <Popup>
-          <h1>Example</h1>
+          <PopupSettings />
         </Popup>
       </PopupProvider>}
     </section>

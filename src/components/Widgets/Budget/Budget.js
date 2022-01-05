@@ -1,4 +1,4 @@
-import React, {useRef} from 'react';
+import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
 import {loadTransactions} from '../../../reducers/transactions/transactions-slice';
@@ -12,15 +12,15 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategoriesState);
 
-  const usePrevious = (value) => {
-    const ref = useRef();
-    // useEffect(() => {
-      ref.current = value;
-    // });
-    return ref.current;
-  }
+  // const usePrevious = (value) => {
+  //   const ref = useRef();
+  //   // useEffect(() => {
+  //     ref.current = value;
+  //   // });
+  //   return ref.current;
+  // }
 
-  const prevBudget = JSON.stringify(usePrevious(budget)) === JSON.stringify(updatedBudget);
+  const prevBudget = JSON.stringify(budget) === JSON.stringify(updatedBudget);
 
   const onInputChange = ({target}) => {
     const id = target.id;

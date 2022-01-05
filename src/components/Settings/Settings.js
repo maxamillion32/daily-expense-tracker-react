@@ -1,11 +1,19 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 import {selectAllTransactionsState} from '../../reducers/transactions/transactions-slice';
-import {selectAllCategoriesState, deleteCategory, postCategory, loadCategories, updateCategory} from '../../reducers/categories/categories-slice';
+import {selectAllCategoriesState, deleteCategory, postCategory, loadCategories, updateCategory, setPopupItem, setPopupPrevItem} from '../../reducers/categories/categories-slice';
 import {selectAllAccountsState, updateAccount, deleteAccount, postAccount, loadAccounts} from '../../reducers/accounts/accounts-slice';
 import { selectUserId } from '../../reducers/user/user-slice';
 import SettingsBlock from './Blocks/Block';
 import {usePopup} from '../../hoc/Popup/PopupContext';
+
+const isExists = (data, item) => {
+  return data.find((it) => it.title === item) ? true : false;
+}
+
+const isDelete = (data, type, id) => {
+  return data.find((it) => it[`${type}Id`] === id) ? true : false;
+}
 
 function Settings() {
   const dispatch = useDispatch();
@@ -19,6 +27,26 @@ function Settings() {
   const [inputType, setInputType] = useState(false);
   const [inputAccount, setInputAccount] = useState('');
 
+  const onClickItem = async ({target}) => {
+    const id = target.getAttribute('dataid');
+    const title = target.getAttribute('datavalue');
+    const type = target.getAttribute('datatype');
+
+    dispatch(setPopupItem({id, title, userId, incomes: !!+type.toString()}));
+    dispatch(setPopupPrevItem({id, title, userId, incomes: !!+type.toString()}));
+    toggle()
+  }
+
+  const onClickToggle = async () => {
+    const id = '';
+    const title = '';
+    const type = '';
+
+    dispatch(setPopupItem({id, title, userId, incomes: !!+type.toString()}));
+    dispatch(setPopupPrevItem({id, title, userId, incomes: !!+type.toString()}));
+    toggle()
+  }
+
   const onChangeType = async ({target}) => {
     const id = target.id;
     setInputType(target.checked);
@@ -27,14 +55,6 @@ function Settings() {
       dispatch(updateCategory({id, incomes: target.checked}));
       dispatch(loadCategories());
     }
-  }
-
-  const isExists = (data, item) => {
-    return data.find((it) => it.title === item) ? true : false;
-  }
-
-  const isDelete = (data, id) => {
-    return transactions.find((it) => it[`${data}Id`] === id) ? true : false;
   }
 
   const onChangeCategory = ({target}) => {
@@ -102,7 +122,7 @@ function Settings() {
     const confirm = window.confirm("Are you sure?");
 
     if (confirm) {
-      if (isDelete('category', id)) {
+      if (isDelete(transactions, 'category', id)) {
         alert("This category is already in use and cannot be deleted!");
         return;
       }
@@ -161,7 +181,20 @@ function Settings() {
         transactionType={undefined}
       />
 
-      <button onClick={toggle}>popup</button>
+      {categories.sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1).map((category) => (
+          <p
+            onClick={onClickItem}
+            dataid={category.id}
+            datavalue={category.title}
+            datatype={+category.incomes}
+            key={category.id}
+          >
+            {category.title}
+          </p>
+          ))
+        }
+
+      <button onClick={onClickToggle}>Create</button>
     </>
   )
 }

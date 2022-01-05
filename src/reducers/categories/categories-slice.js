@@ -39,12 +39,27 @@ export const categoriesSlice = createSlice({
     newCategory: {
       title: ``,
     },
+    popupItem: {},
+    popupPrevItem: {},
     isLoading: false,
     hasError: false,
     isPending: false,
     isFailedToCreate: false,
   },
-  reducers: {},
+  reducers: {
+    setPopupItem: (state, action) => {
+      return {
+        ...state,
+        popupItem: action.payload,
+      };
+    },
+    setPopupPrevItem: (state, action) => {
+      return {
+        ...state,
+        popupPrevItem: action.payload,
+      };
+    },
+  },
   extraReducers: {
     [loadCategories.pending]: (state) => {
       state.isLoading = true;
@@ -64,6 +79,8 @@ export const categoriesSlice = createSlice({
 
 export const allCategoriesState = (state) => state.categories.allCategories;
 export const selectNewCategoryState = (state) => state.categories.newCategory;
+export const selectPopupItemState = (state) => state.categories.popupItem;
+export const selectPopupPrevItemState = (state) => state.categories.popupPrevItem;
 export const isLoading = (state) => state.categories.isLoading;
 export const isPending = (state) => state.categories.isPending;
 
@@ -75,5 +92,5 @@ export const selectAllCategoriesState = (state) => {
           .filter((transaction) => transaction.userId === userId)
 };
 
-export const {addCategory, editCategory, createCategory} = categoriesSlice.actions;
+export const {setPopupItem, setPopupPrevItem} = categoriesSlice.actions;
 export default categoriesSlice.reducer;
