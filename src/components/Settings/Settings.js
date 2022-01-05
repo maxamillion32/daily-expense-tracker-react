@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
+import {selectAllTransactionsState} from '../../reducers/transactions/transactions-slice';
 import {selectAllCategoriesState, deleteCategory, postCategory, loadCategories, updateCategory} from '../../reducers/categories/categories-slice';
 import {selectAllAccountsState, updateAccount, deleteAccount, postAccount, loadAccounts} from '../../reducers/accounts/accounts-slice';
 import { selectUserId } from '../../reducers/user/user-slice';
@@ -8,6 +9,7 @@ import {usePopup} from '../../hoc/Popup/PopupContext';
 
 function Settings() {
   const dispatch = useDispatch();
+  const transactions = useSelector(selectAllTransactionsState);
   const categories = useSelector(selectAllCategoriesState);
   const accounts = useSelector(selectAllAccountsState);
   const userId = useSelector(selectUserId);
@@ -29,6 +31,10 @@ function Settings() {
 
   const isExists = (data, item) => {
     return data.find((it) => it.title === item) ? true : false;
+  }
+
+  const isDelete = (data, id) => {
+    return transactions.find((it) => it[`${data}Id`] === id) ? true : false;
   }
 
   const onChangeCategory = ({target}) => {
@@ -92,19 +98,29 @@ function Settings() {
   };
 
   function onClickDeleteCategoryButton({target}) {
+    const id = target.id;
     const confirm = window.confirm("Are you sure?");
 
     if (confirm) {
-      dispatch(deleteCategory(target.id));
+      if (isDelete('category', id)) {
+        alert("This category is already in use and cannot be deleted!");
+        return;
+      }
+      dispatch(deleteCategory(id));
       dispatch(loadCategories());
     }
   };
 
   function onClickDeleteAccountButton({target}) {
+    const id = target.id;
     const confirm = window.confirm("Are you sure?");
 
     if (confirm) {
-      dispatch(deleteAccount(target.id));
+      if (isDelete('account', id)) {
+        alert("This account is already in use and cannot be deleted!");
+        return;
+      }
+      dispatch(deleteAccount(id));
       dispatch(loadAccounts());
     }
   };
