@@ -24,7 +24,7 @@ function SettingsBlock({
           title={title}
         />
 
-        {items.map((category) => (
+        {items.sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1).map((category) => (
           <SettingsItem
             onClickSubmitButton={onClickSubmitButton}
             value={category.title}
