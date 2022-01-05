@@ -66,7 +66,7 @@ export const budgetSlice = createSlice({
         currentType[nameUpperCase] = overall;
         currentMonth[type] = currentType;
         currentYear[month] = {...current[year][month], ...currentMonth};
-        current[year] = {...budget[month], ...currentYear};
+        // current[year] = {...budget[month], ...currentYear};
       }
 
       if (budget && (!budget[year] || !budget[year][month])) {

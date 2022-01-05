@@ -23,7 +23,7 @@ const db = getFirestore(app);
 const auth = getAuth();
 
 export function singUp(email, password) {
-    createUserWithEmailAndPassword(auth, email, password)
+    createUserWithEmailAndPassword(auth, email, password);
 }
 
 export function login(email, password) {
