@@ -81,7 +81,7 @@ export const allCategoriesState = (state) => state.categories.allCategories;
 export const selectNewCategoryState = (state) => state.categories.newCategory;
 export const selectPopupItemState = (state) => state.categories.popupItem;
 export const selectPopupPrevItemState = (state) => state.categories.popupPrevItem;
-export const isLoading = (state) => state.categories.isLoading;
+export const isCategoriesLoading = (state) => state.categories.isLoading;
 export const isPending = (state) => state.categories.isPending;
 
 export const selectAllCategoriesState = (state) => {

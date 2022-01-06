@@ -66,7 +66,7 @@ export const accountsSlice = createSlice({
 
 export const allAccountsState = (state) => state.accounts.allAccounts;
 export const selectNewAccountsState = (state) => state.accounts.newAccount;
-export const isLoading = (state) => state.accounts.isLoading;
+export const isAccountsLoading = (state) => state.accounts.isLoading;
 export const isPending = (state) => state.accounts.isPending;
 
 export const selectAllAccountsState = (state) => {
