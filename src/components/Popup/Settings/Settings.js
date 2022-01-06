@@ -109,11 +109,11 @@ function PopupSettings() {
         disabled={!title}
       >Create</button>}
 
-      <button
+      {popupPrevState.id && <button
         className={classes.Button}
         onClick={onClickDeleteButton}
-        disabled={!popupPrevState.id}
-      >Delete</button>
+        // disabled={!popupPrevState.id}
+      >Delete</button>}
 
       <div className={classes.Wrapper}>
         <input
