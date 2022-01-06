@@ -1,0 +1,45 @@
+.Wrapper {
+  padding: 20px 20px 0;
+  background-color: #f1f1f1;
+}
+
+.Content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.Header {
+  font-weight: 700;
+}
+
+.Item {
+  margin-bottom: 7px;
+  padding: 5px 10px;
+  border: 1px dashed #d4d4d4;
+  border-radius: 5px
+}
+
+.Item:hover {
+  cursor: pointer;
+  background-color: #d4d4d4;
+}
+
+.Button {
+  width: 70px;
+  height: 30px;
+  font-size: 14px;
+  /* font-weight: 700; */
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  background-color: #646464;
+  cursor: pointer;
+}
+
+.Button:disabled {
+  background: #ccc;
+  /* color: #000; */
+  cursor: not-allowed;
+}
