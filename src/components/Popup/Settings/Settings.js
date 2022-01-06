@@ -5,7 +5,7 @@ import {selectAllTransactionsState} from '../../../reducers/transactions/transac
 import {selectUserId} from '../../../reducers/user/user-slice';
 import classes from './Settings.module.css';
 import {usePopup} from '../../../hoc/Popup/PopupContext';
-import { deleteAccount, postAccount, updateAccount, selectAllAccountsState } from '../../../reducers/accounts/accounts-slice';
+import { deleteAccount, postAccount, updateAccount, selectAllAccountsState, loadAccounts } from '../../../reducers/accounts/accounts-slice';
 import ScrollToTop from '../../../hoc/ScrollToTop/ScrollToTop';
 
 function PopupSettings() {
@@ -42,11 +42,12 @@ function PopupSettings() {
   const onClickEditButton = ({target}) => {
     if (header === "Categories") {
       dispatch(updateCategory(popupState));
+      dispatch(loadCategories());
     }
     if (header === "Accounts") {
       dispatch(updateAccount(popupState));
+      dispatch(loadAccounts());
     }
-    dispatch(loadCategories());
     toggle();
   };
 
@@ -60,6 +61,7 @@ function PopupSettings() {
           return;
         }
         dispatch(deleteCategory(id));
+        dispatch(loadCategories());
       }
 
       if (header === "Accounts") {
@@ -68,9 +70,9 @@ function PopupSettings() {
           return;
         }
         dispatch(deleteAccount(id));
+        dispatch(loadAccounts());
       }
 
-      dispatch(loadCategories());
       toggle();
     }
   };
@@ -82,6 +84,7 @@ function PopupSettings() {
         return;
       }
       dispatch(postCategory({title, userId, incomes}));
+      dispatch(loadCategories());
     }
     if (header === "Accounts") {
       if (isExists(accounts, title)) {
@@ -89,9 +92,9 @@ function PopupSettings() {
         return;
       }
       dispatch(postAccount({title, userId}));
+      dispatch(loadAccounts());
     }
 
-    dispatch(loadCategories());
     toggle();
   };
 
