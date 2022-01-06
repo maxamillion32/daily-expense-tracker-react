@@ -119,6 +119,7 @@ function PopupSettings() {
       >Delete</button>}
 
       <div className={classes.Wrapper}>
+        <p className={classes.Label}>{`Name of ${header === "Categories" ? "category" : "account"}`}</p>
         <input
           className={classes.Input}
           type="text"
@@ -127,6 +128,7 @@ function PopupSettings() {
           placeholder={`Type the new name for the ${header === "Categories" ? "category" : "account"}`}
         />
         {header !== "Accounts" && <div className={classes.Type}>
+          <p className={classes.Label}>Select "incomes" if the category is taken into income transactions</p>
           <input
             type="checkbox"
             checked={+incomes || false}
