@@ -7,6 +7,7 @@ import {
   showButton, isLoading
 } from '../../reducers/transactions/transactions-slice'
 import {selectUserId} from '../../reducers/user/user-slice';
+import classes from './Transactions.module.css';
 
 import Search from '../../components/Search/Search';
 import Balance from '../../components/Balance/Balance';
@@ -33,11 +34,11 @@ function Transactions() {
     <>
       {loading && userId && <Loader />}
       {!loading && userId &&
-        <>
+        <section className={classes.Transactions}>
           <Balance transactions={allTransactions} />
           <Search />
           <TransactionsListContainer />
-        </>
+        </section>
       }
       {!userId &&
         <Welcome />
