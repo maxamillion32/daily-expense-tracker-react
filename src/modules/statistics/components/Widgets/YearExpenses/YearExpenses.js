@@ -1,35 +1,35 @@
 import React from "react";
 import {useDispatch} from "react-redux";
+
 import {updateMonth, updateYear} from "../../../../../reducers/transactions/transactions-slice";
 
-import {formatMonth, formatYear} from "../../../../common/utils/utils";
 import classes from "./YearExpenses.module.css";
+import {formatMonth, formatYear} from "../../../../common/utils/utils";
+import Indicator from "./Indicator/Indicator";
 import {MONTH_EXPENSES} from "./constant";
 
-import Indicator from "./Indicator/Indicator";
+const getMaxAmountPerYear = (year, type, transactions) => {
+  const months = [...new Set(transactions
+    .filter((transaction) => formatYear(transaction.date) === year)
+    .map((transaction) => formatMonth(transaction.date)))];
+
+  const amount = Math.max(...months
+    .map((month) => transactions
+    .map((transaction) => formatMonth(transaction.date) === month
+      ? (type === "expenses" ? transaction.expense : !transaction.expense)
+        ? transaction = +transaction.sum
+        : transaction = null
+      : null)
+    .reduce((acc, sum) => acc + sum, 0)));
+
+  return amount;
+};
 
 function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
   const dispatch = useDispatch();
 
-  const getMaxAmountPerYear = (year, type) => {
-    const months = [...new Set(transactions
-      .filter((transaction) => formatYear(transaction.date) === year)
-      .map((transaction) => formatMonth(transaction.date)))];
-
-    const amount = Math.max(...months
-      .map((month) => transactions
-      .map((transaction) => formatMonth(transaction.date) === month
-        ? (type === "expenses" ? transaction.expense : !transaction.expense)
-          ? transaction = +transaction.sum
-          : transaction = null
-        : null)
-      .reduce((acc, sum) => acc + sum, 0)));
-
-    return amount;
-  };
-
-  const maxMonthExpensePerYear = getMaxAmountPerYear(currentYear, "expenses");
-  const maxMonthIncomePerYear = getMaxAmountPerYear(currentYear, "income");
+  const maxMonthExpensePerYear = getMaxAmountPerYear(currentYear, "expenses", transactions);
+  const maxMonthIncomePerYear = getMaxAmountPerYear(currentYear, "income", transactions);
 
   const maxMonthTransaction = Math.max(maxMonthExpensePerYear, maxMonthIncomePerYear);
 
@@ -78,6 +78,7 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
               className={classes.ListWrapper}
               key={month}
               onClick={monthHandler}
+              id={month}
             >
               <div
                 className={`${classes.List} ${month === currentMonth ? classes.Active : ""}`}

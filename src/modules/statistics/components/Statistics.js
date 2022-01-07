@@ -1,18 +1,28 @@
 import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import WidgetsMonthBalance from "./Widgets/MonthBalance/MonthBalance";
-import WidgetsMonthExpenses from "./Widgets/MonthExpenses/MonthExpenses";
-import WidgetsYearExpenses from "./Widgets/YearExpenses/YearExpenses";
-import WidgetsBudget from "./Widgets/Budget/Budget";
-import {selectUserId} from "../../../reducers/user/user-slice";
-import classes from "./Statistics.module.css";
-import {currentMonth, currentYear} from "../../../reducers/transactions/transactions-slice";
+
+import {
+  selectUserId
+} from "../../../reducers/user/user-slice";
+import {
+  currentMonth, currentYear
+} from "../../../reducers/transactions/transactions-slice";
 import {
   loadTransactions,
   selectAllTransactionsState
 } from "../../../reducers/transactions/transactions-slice";
-import {selectAllBudgetState, loadBudgets, selectUpdatedBudgetState, isLoading} from "../../../reducers/budget/budget-slice";
-import {selectAllCategoriesState} from "../../../reducers/categories/categories-slice";
+import {
+  selectAllBudgetState, loadBudgets, selectUpdatedBudgetState, isLoading
+} from "../../../reducers/budget/budget-slice";
+import {
+  selectAllCategoriesState
+} from "../../../reducers/categories/categories-slice";
+
+import classes from "./Statistics.module.css";
+import WidgetsMonthBalance from "./Widgets/MonthBalance/MonthBalance";
+import WidgetsMonthExpenses from "./Widgets/MonthExpenses/MonthExpenses";
+import WidgetsYearExpenses from "./Widgets/YearExpenses/YearExpenses";
+import WidgetsBudget from "./Widgets/Budget/Budget";
 import Loader from "../../../modules/common/components/Loader/Loader";
 
 function Statistics() {
@@ -28,6 +38,8 @@ function Statistics() {
   const loading = useSelector(isLoading);
   const dispatch = useDispatch();
 
+  const isLoader = loading && userId;
+
   useEffect(() => {
     dispatch(loadBudgets(userId));
     dispatch(loadTransactions());
@@ -36,15 +48,36 @@ function Statistics() {
 
   return (
     <section className={classes.Statistics}>
-      {loading && userId && <Loader />}
-      {!loading && userId &&
-        <>
-          <WidgetsMonthBalance currentYear={year} currentMonth={month} transactions={allTransactions} />
-          <WidgetsYearExpenses currentYear={year} currentMonth={month} transactions={allTransactions} />
-          <WidgetsMonthExpenses currentYear={year} currentMonth={month} transactions={allTransactions} budget={newBudget} userId={userId} allCategories={allCategories} />
-          <WidgetsBudget currentYear={year} currentMonth={month} budget={newBudget} updatedBudget={newUpdatedBudget} userId={userId} />
-        </>
-      }
+      {isLoader ? <Loader /> : null}
+      {!isLoader
+        ? <>
+            <WidgetsMonthBalance
+              currentYear={year}
+              currentMonth={month}
+              transactions={allTransactions}
+            />
+            <WidgetsYearExpenses
+              currentYear={year}
+              currentMonth={month}
+              transactions={allTransactions}
+            />
+            <WidgetsMonthExpenses
+              currentYear={year}
+              currentMonth={month}
+              transactions={allTransactions}
+              budget={newBudget}
+              userId={userId}
+              allCategories={allCategories}
+            />
+            <WidgetsBudget
+              currentYear={year}
+              currentMonth={month}
+              budget={newBudget}
+              updatedBudget={newUpdatedBudget}
+              userId={userId}
+            />
+          </>
+        : null}
     </section>
   );
 }
