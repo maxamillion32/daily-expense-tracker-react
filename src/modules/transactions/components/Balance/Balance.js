@@ -2,7 +2,6 @@ import React, {useState, useEffect} from "react";
 import classes from "./Balance.module.css";
 
 function Balance({transactions}) {
-
   const [balanceContainer, setBalanceContainer] = useState(classes.BalanceContainer);
   const [balance, setBalance] = useState(classes.Balance);
 

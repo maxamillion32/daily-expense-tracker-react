@@ -2,8 +2,9 @@ import React from "react";
 import {useSelector} from "react-redux";
 import {CSSTransition} from "react-transition-group";
 
-import {selectFilteredTransactions} from "../../../../../../reducers/transactions/transactions-slice";
 import classes from "../ListContainer.module.css";
+
+import {selectFilteredTransactions} from "../../../../../../reducers/transactions/transactions-slice";
 
 import TransactionItemsDateGroup from "./DateGroup";
 import TransactionsDateHeader from "./DateHeader";

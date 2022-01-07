@@ -2,8 +2,8 @@ import React from "react";
 import {useSelector} from "react-redux";
 
 import {selectFilteredTransactions} from "../../../../../reducers/transactions/transactions-slice";
-import {formatMonth} from "../../../../common/utils/utils";
 
+import {formatMonth} from "../../../../common/utils/utils";
 import TransactionsItemsMonthGroup from "./Items/MonthGroup";
 
 function TransactionsListContainer() {

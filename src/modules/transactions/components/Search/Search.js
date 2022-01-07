@@ -25,11 +25,11 @@ function Search() {
         value={searchTerm}
         onChange={onSearchTermChangeHandler}
       />
-      {searchTerm.length > 0 && (
-        <div className={classes.CloseBtn}>
-          <CloseButton onClick={onClearSearchTermHandler}/>
-        </div>
-      )}
+      {searchTerm.length > 0
+        ? <div className={classes.CloseBtn}>
+            <CloseButton onClick={onClearSearchTermHandler}/>
+          </div>
+        : null}
     </section>
   );
 }

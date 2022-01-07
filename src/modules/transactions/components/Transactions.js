@@ -1,13 +1,16 @@
 import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
+import classes from "./Transactions.module.css";
+
 import {
   loadTransactions,
   selectAllTransactionsState,
   showButton, isLoading
 } from "../../../reducers/transactions/transactions-slice";
-import {selectUserId} from "../../../reducers/user/user-slice";
-import classes from "./Transactions.module.css";
+import {
+  selectUserId
+} from "../../../reducers/user/user-slice";
 
 import Search from "../../transactions/components/Search/Search";
 import Balance from "../../transactions/components/Balance/Balance";
@@ -21,6 +24,8 @@ function Transactions() {
   const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
 
+  const isLoader = loading && userId;
+
   useEffect(() => {
     dispatch(showButton());
     dispatch(loadTransactions());
@@ -32,17 +37,17 @@ function Transactions() {
 
   return (
     <>
-      {loading && userId && <Loader />}
-      {!loading && userId &&
-        <section className={classes.Transactions}>
-          <Balance transactions={allTransactions} />
-          <Search />
-          <TransactionsListContainer />
-        </section>
-      }
-      {!userId &&
-        <Welcome />
-      }
+      {isLoader
+        ? <Loader />
+        : null}
+      {!isLoader
+        ? <section className={classes.Transactions}>
+            <Balance transactions={allTransactions} />
+            <Search />
+            <TransactionsListContainer />
+          </section>
+        : null}
+      {!userId ? <Welcome /> : null}
     </>
   );
 }

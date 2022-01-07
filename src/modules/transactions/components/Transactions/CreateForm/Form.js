@@ -1,6 +1,9 @@
 import React, {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import {CSSTransition} from "react-transition-group";
+
+import classes from "./Form.module.css";
+
 import {
   setUserInput,
   setCategory,
@@ -11,10 +14,11 @@ import {
   clickButton,
   loadTransactions
 } from "../../../../../reducers/transactions/transactions-slice";
-import classes from "./Form.module.css";
+
 import Input from "../../../../common/components/Input/Input";
 import Select from "../../../../common/components/Select/Select";
 import Button from "../../../../common/components/Button/Button";
+
 import {validateForm, updateFormControls, createFormControls} from "./utils";
 
 function TransactionCreateForm({categories, accounts, onClickAddBtn, userId}){

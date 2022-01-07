@@ -2,10 +2,12 @@ import React from "react";
 import {useSelector} from "react-redux";
 import {TransitionGroup} from "react-transition-group";
 
+import classes from "../ListContainer.module.css";
+
 import {selectFilteredTransactions} from "../../../../../../reducers/transactions/transactions-slice";
+
 import TransactionsItemsDateGroupWrapper from "./DateGroupWrapper";
 import {formatMonth} from "../../../../../common/utils/utils";
-import classes from "../ListContainer.module.css";
 
 function TransactionsItemsMonthGroup({month}) {
   const transactions = useSelector(selectFilteredTransactions);
