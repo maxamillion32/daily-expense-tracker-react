@@ -1,51 +1,56 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {updateCategory, loadCategories, selectPopupItemState, setPopupItem, deleteCategory, selectPopupPrevItemState, postCategory, selectAllCategoriesState} from "../../../../reducers/categories/categories-slice";
-import {selectAllTransactionsState} from "../../../../reducers/transactions/transactions-slice";
-import {selectUserId} from "../../../../reducers/user/user-slice";
-import classes from "./Settings.module.css";
-import {usePopup} from "../../../common/hoc/Popup/PopupContext";
-import {deleteAccount, postAccount, updateAccount, selectAllAccountsState, loadAccounts} from "../../../../reducers/accounts/accounts-slice";
-import ScrollToTop from "../../../common/hoc/ScrollToTop/ScrollToTop";
 
-function PopupSettings() {
+import classes from "./Settings.module.css";
+
+import {
+  updateCategory, loadCategories, deleteCategory, postCategory, selectAllCategoriesState
+} from "../../../../reducers/categories/categories-slice";
+import {
+  selectAllTransactionsState
+} from "../../../../reducers/transactions/transactions-slice";
+import {
+  deleteAccount, postAccount, updateAccount, selectAllAccountsState, loadAccounts
+} from "../../../../reducers/accounts/accounts-slice";
+
+import ScrollToTop from "../../../common/hoc/ScrollToTop/ScrollToTop";
+import {usePopup} from "../../../common/hoc/Popup/PopupContext";
+
+const isExists = (data, item) => {
+  return data.find((it) => it.title === item) ? true : false;
+};
+
+const isDelete = (data, type, id) => {
+  return data.find((it) => it[`${type}Id`] === id) ? true : false;
+};
+
+function PopupSettings({itemState, prevItem, setItem}) {
   const dispatch = useDispatch();
-  const popupState = useSelector(selectPopupItemState);
-  const popupPrevState = useSelector(selectPopupPrevItemState);
   const transactions = useSelector(selectAllTransactionsState);
   const categories = useSelector(selectAllCategoriesState);
   const accounts = useSelector(selectAllAccountsState);
-  const userId = useSelector(selectUserId);
   const {toggle} = usePopup();
-  const {id, title, incomes, header} = popupState;
+  const {id, title, userId, incomes, header} = itemState;
 
-  const prevState = JSON.stringify(popupState) === JSON.stringify(popupPrevState);
-
-  const isExists = (data, item) => {
-    return data.find((it) => it.title === item) ? true : false;
-  };
-
-  const isDelete = (data, type, id) => {
-    return data.find((it) => it[`${type}Id`] === id) ? true : false;
-  };
+  const prevState = JSON.stringify(itemState) === JSON.stringify(prevItem);
 
   const onChangeType = async ({target}) => {
-    dispatch(setPopupItem({id, title, userId, incomes: target.checked, header}));
+    setItem({id, title, userId, incomes: target.checked, header});
   };
 
   const onChangeItem = ({target}) => {
     const value = target.value;
     const type = incomes ? incomes : false;
-    dispatch(setPopupItem({id, title: value, userId, incomes: type, header}));
+    setItem({id, title: value, userId, incomes: type, header});
   };
 
   const onClickEditButton = () => {
     if (header === "Categories") {
-      dispatch(updateCategory(popupState));
+      dispatch(updateCategory(itemState));
       dispatch(loadCategories());
     }
     if (header === "Accounts") {
-      dispatch(updateAccount(popupState));
+      dispatch(updateAccount(itemState));
       dispatch(loadAccounts());
     }
     toggle();
@@ -101,22 +106,28 @@ function PopupSettings() {
   return (
     <section className={classes.Settings}>
       <ScrollToTop />
-      {popupPrevState.id && <button
-        className={classes.Button}
-        onClick={onClickEditButton}
-        disabled={prevState || !title}
-      >Update</button>}
-      {!popupPrevState.id && <button
-        className={classes.Button}
-        onClick={onClickCreateButton}
-        disabled={!title}
-      >Create</button>}
+      {prevItem.id
+        ? <button
+            className={classes.Button}
+            onClick={onClickEditButton}
+            disabled={prevState || !title}
+          >Update</button>
+        : null}
+      {!prevItem.id
+        ? <button
+            className={classes.Button}
+            onClick={onClickCreateButton}
+            disabled={!title}
+          >Create</button>
+        : null}
 
-      {popupPrevState.id && <button
-        className={classes.Button}
-        onClick={onClickDeleteButton}
-        // disabled={!popupPrevState.id}
-      >Delete</button>}
+      {prevItem.id
+        ? <button
+            className={classes.Button}
+            onClick={onClickDeleteButton}
+            // disabled={!popupPrevState.id}
+          >Delete</button>
+        : null}
 
       <div className={classes.Wrapper}>
         <p className={classes.Label}>{`Name of ${header === "Categories" ? "category" : "account"}`}</p>
@@ -127,17 +138,19 @@ function PopupSettings() {
           onChange={onChangeItem}
           placeholder={`Type the new name for the ${header === "Categories" ? "category" : "account"}`}
         />
-        {header !== "Accounts" && <div className={classes.Type}>
-          <p className={classes.Label}>Select `incomes` if the category is taken into income transactions</p>
-          <input
-            type="checkbox"
-            checked={+incomes || false}
-            onChange={onChangeType}
-          />
-          <label
-            // htmlFor={htmlFor}
-          >Incomes</label>
-        </div>}
+        {header !== "Accounts"
+          ? <div className={classes.Type}>
+              <p className={classes.Label}>Select `incomes` if the category is taken into income transactions</p>
+              <input
+                type="checkbox"
+                checked={+incomes || false}
+                onChange={onChangeType}
+              />
+              <label
+                // htmlFor={htmlFor}
+              >Incomes</label>
+            </div>
+          : null}
       </div>
     </section>
   );

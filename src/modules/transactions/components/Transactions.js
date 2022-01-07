@@ -13,7 +13,7 @@ import Search from "../../transactions/components/Search/Search";
 import Balance from "../../transactions/components/Balance/Balance";
 import TransactionsListContainer from "../../../modules/transactions/components/Transactions/List/ListContainer";
 import Loader from "../../common/components/Loader/Loader";
-import Welcome from "../../welcome-screen/components/Welcome";
+import Welcome from "../../welcome/components/Welcome";
 
 function Transactions() {
   const allTransactions = useSelector(selectAllTransactionsState);
