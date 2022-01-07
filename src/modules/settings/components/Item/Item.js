@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./Item.module.css";
 
-function SettingsBlock({
+function SettingsItem({
   items,
   header,
   onClickItem,
@@ -38,4 +38,4 @@ function SettingsBlock({
   );
 }
 
-export default SettingsBlock;
+export default SettingsItem;

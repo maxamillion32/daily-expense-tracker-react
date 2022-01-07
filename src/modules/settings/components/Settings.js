@@ -8,7 +8,7 @@ import {isCategoriesLoading, selectAllCategoriesState} from "../../../reducers/c
 import {isAccountsLoading, selectAllAccountsState} from "../../../reducers/accounts/accounts-slice";
 
 import Popup from "../../common/hoc/Popup/Popup";
-import PopupSettings from "./Popup/Settings";
+import PopupSettings from "./Popup/Popup";
 import Loader from "../../../modules/common/components/Loader/Loader";
 import SettingsItem from "./Item/Item";
 

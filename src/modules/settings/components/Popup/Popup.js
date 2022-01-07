@@ -1,7 +1,7 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
 
-import classes from "./Settings.module.css";
+import classes from "./Popup.module.css";
 
 import {
   updateCategory, loadCategories, deleteCategory, postCategory, selectAllCategoriesState
@@ -24,7 +24,7 @@ const isDelete = (data, type, id) => {
   return data.find((it) => it[`${type}Id`] === id) ? true : false;
 };
 
-function PopupSettings({itemState, prevItem, setItem}) {
+function Popup({itemState, prevItem, setItem}) {
   const dispatch = useDispatch();
   const transactions = useSelector(selectAllTransactionsState);
   const categories = useSelector(selectAllCategoriesState);
@@ -144,10 +144,11 @@ function PopupSettings({itemState, prevItem, setItem}) {
               <input
                 type="checkbox"
                 checked={+incomes || false}
+                id={id}
                 onChange={onChangeType}
               />
               <label
-                // htmlFor={htmlFor}
+                htmlFor={id}
               >Incomes</label>
             </div>
           : null}
@@ -156,4 +157,4 @@ function PopupSettings({itemState, prevItem, setItem}) {
   );
 }
 
-export default PopupSettings;
+export default Popup;
