@@ -5,7 +5,7 @@ import {
   getBalance,
   MOTH_COUNT
 } from "./utils";
-import {TRANSACTION_TYPE} from './const';
+import {TRANSACTION_TYPE} from "./const";
 
 export class Statistics {
   constructor(transactions, type, budget, monthTransactions, currentMonth, currentYear, userId, allCategories) {
@@ -21,14 +21,14 @@ export class Statistics {
     this.isBudget = this.budget && this.budget[currentYear] && this.budget[currentYear][currentMonth];
   }
 
-  _getExcessPercent = (balance, sum) => {
+  _getExcessPercent(balance, sum) {
     const percent = getTotalPercentPerMonth(balance, sum);
     const expensesPercent = percent > 100 ? percent - 100 : 0;
 
     return expensesPercent;
   }
 
-  _getExcessBudgetPercent = (balance, sum) => {
+  _getExcessBudgetPercent(balance, sum) {
     const percent = balance / sum * 100;
     const expensesPercent = percent > 100 ? percent - 100 : 0;
 
@@ -45,7 +45,7 @@ export class Statistics {
   }
 
   _categoryId(category, type) {
-    const isIncomes = type === "incomes" ? true : false
+    const isIncomes = type === "incomes" ? true : false;
 
     return this.allCategories
       .filter((item) => item.incomes === isIncomes)
@@ -63,7 +63,7 @@ export class Statistics {
     const sortCategory = uniqueCategory
       .map((category) => this.monthTransactions
       .map((transaction) => transaction.category.title === category
-        ? (type === 'expenses' ? transaction.expense : !transaction.expense)
+        ? (type === "expenses" ? transaction.expense : !transaction.expense)
           ? transaction = {[category]: +transaction.sum}
           : transaction = null
         : null)
@@ -71,10 +71,10 @@ export class Statistics {
         .reduce((acc, sum) => {
           return {
             [category]: acc[category] + sum[category]
-          }
+          };
         }))
         .sort((a, b) => Object.values(b) - Object.values(a))
-        .map((item) => Object.keys(item)).flat()
+        .map((item) => Object.keys(item)).flat();
 
     return sortCategory;
   }
@@ -103,7 +103,7 @@ export class Statistics {
     return averageValue > 0
       ? `${averageValue}€ below ${this.budget[this.currentYear][this.currentMonth][this.type][this.category] ? "budget" : "typical"}`
       : isNaN(averageValue) ? ""
-      : averageValue === '0.00' ? "equal to budget"
+      : averageValue === "0.00" ? "equal to budget"
       : `${Math.abs(averageValue)}€ above ${this.budget[this.currentYear][this.currentMonth][this.type][this.category] ? "budget" : "typical"}`;
   }
 
@@ -122,7 +122,7 @@ export class Statistics {
     return expensesPercent;
   }
 
-  excessCategoryPercent = (category, type) => {
+  excessCategoryPercent(category, type) {
     const balancePerCategory = getBalance(category, type, this.transactions);
     const balance = getBalance(category, type, this.monthTransactions);
 
@@ -136,7 +136,7 @@ export class Statistics {
     return expensesPercent;
   }
 
-  balanceCategoryOfCurrent = (category, type) => {
+  balanceCategoryOfCurrent(category, type) {
     const balancePerCategory = getBalance(category, type, this.transactions);
     const transactionsSumPerCategory = getBalance(category, type, this.monthTransactions);
 
@@ -148,11 +148,11 @@ export class Statistics {
 
     return averageValue > 0
       ? `${averageValue}€ below ${budget ? "budget" : "typical"}`
-      : averageValue === '0.00' ? "equal to budget"
-      : `${Math.abs(averageValue)}€ above ${budget ? "budget" : "typical"}`
+      : averageValue === "0.00" ? "equal to budget"
+      : `${Math.abs(averageValue)}€ above ${budget ? "budget" : "typical"}`;
   }
 
-  totalCategoryPercent = (category, type) => {
+  totalCategoryPercent(category, type) {
     const balancePerCategory = getBalance(category, type, this.transactions);
     const balance = getBalance(category, type, this.monthTransactions);
 

@@ -1,8 +1,8 @@
-import React from 'react';
-import WidgetsMonthExpensesItem from './Items/Item'
-import {formatMonth, formatYear} from '../../../utils/utils'
-import {Statistics} from './Statistics';
-import {TRANSACTION_TYPE} from './const';
+import React from "react";
+import WidgetsMonthExpensesItem from "./Items/Item";
+import {formatMonth, formatYear} from "../../../utils/utils";
+import {Statistics} from "./Statistics";
+import {TRANSACTION_TYPE} from "./const";
 
 function WidgetsMonthExpenses({currentYear, currentMonth, transactions, budget, userId, allCategories}) {
   const monthTransactions = transactions
@@ -54,7 +54,7 @@ function WidgetsMonthExpenses({currentYear, currentMonth, transactions, budget, 
         month={currentMonth}
       />
     </>
-  )
+  );
 }
 
 export default WidgetsMonthExpenses;

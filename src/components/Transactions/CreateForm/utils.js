@@ -4,8 +4,8 @@ function createControl(config, validation) {
     validation,
     valid: !validation,
     touched: false,
-    value: ''
-  }
+    value: ""
+  };
 }
 
 function validate(value, validation = null) {
@@ -16,7 +16,7 @@ function validate(value, validation = null) {
   let isValid = true;
 
   if (validation.required) {
-    isValid = value.trim() !== '' && isValid;
+    isValid = value.trim() !== "" && isValid;
   }
 
   return isValid;
@@ -27,12 +27,12 @@ export function validateForm(formControls) {
   let isFormValid = true;
 
   for (let control in formControls) {
-    if (formControls.hasOwnProperty(control)) {
-      isFormValid = formControls[control].valid && isFormValid
+    if (Object.prototype.hasOwnProperty.call(formControls, control)) {
+      isFormValid = formControls[control].valid && isFormValid;
     }
   }
 
-  return isFormValid
+  return isFormValid;
 }
 
 export function updateFormControls(name, value, state) {
@@ -51,16 +51,16 @@ export function updateFormControls(name, value, state) {
 export function createFormControls() {
   return {
     sum: createControl({
-      errorMessage: 'Please fill out this field'
+      errorMessage: "Please fill out this field"
     }, {required: true}),
     date: createControl({
-      errorMessage: 'Choose a date please',
+      errorMessage: "Choose a date please",
     }, {required: true}),
     category: createControl({
-      errorMessage: 'Choose a category please',
+      errorMessage: "Choose a category please",
     }, {required: true}),
     account: createControl({
-      errorMessage: 'Choose an account please',
+      errorMessage: "Choose an account please",
     }, {required: true}),
-  }
+  };
 }

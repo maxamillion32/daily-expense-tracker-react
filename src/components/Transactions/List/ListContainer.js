@@ -1,7 +1,7 @@
 import React from "react";
-import {useSelector} from 'react-redux';
+import {useSelector} from "react-redux";
 
-import {selectFilteredTransactions} from '../../../reducers/transactions/transactions-slice'
+import {selectFilteredTransactions} from "../../../reducers/transactions/transactions-slice";
 import {formatMonth} from "../../../utils/utils";
 
 import TransactionsItemsMonthGroup from "./Items/MonthGroup";

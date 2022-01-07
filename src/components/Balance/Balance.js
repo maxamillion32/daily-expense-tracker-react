@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import classes from './Balance.module.css';
+import React, {useState, useEffect} from "react";
+import classes from "./Balance.module.css";
 
 function Balance({transactions}) {
 
-  const [balanceContainer, setBalanceContainer] = useState(classes.BalanceContainer)
-  const [balance, setBalance] = useState(classes.Balance)
+  const [balanceContainer, setBalanceContainer] = useState(classes.BalanceContainer);
+  const [balance, setBalance] = useState(classes.Balance);
 
   const listenScrollEvent = () => {
     if (window.scrollY < 60) {
@@ -12,15 +12,15 @@ function Balance({transactions}) {
       setBalance(classes.Balance);
     } else if (window.scrollY > 60) {
       setBalanceContainer(classes.BalanceContainerScroll);
-      setBalance(classes.BalanceScroll)
+      setBalance(classes.BalanceScroll);
     }
-  }
+  };
 
   useEffect(() => {
-    window.addEventListener('scroll', listenScrollEvent);
+    window.addEventListener("scroll", listenScrollEvent);
 
     return () =>
-      window.removeEventListener('scroll', listenScrollEvent);
+      window.removeEventListener("scroll", listenScrollEvent);
   }, []);
 
   const sumExpenses = transactions.map((transaction) => {

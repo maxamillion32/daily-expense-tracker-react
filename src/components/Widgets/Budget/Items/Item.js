@@ -1,12 +1,12 @@
-import React from 'react';
-import classes from './Item.module.css';
+import React from "react";
+import classes from "./Item.module.css";
 
 function WidgetsBudgetItem({title, value, onChange, id, dataType}) {
-  const isHeader = title === "Expenses" || title === "Incomes"
+  const isHeader = title === "Expenses" || title === "Incomes";
   return (
     <div className={classes.Block}>
       <p className={isHeader ? classes.Title : classes.SubTitle}>{title}</p>
-      {isHeader ? <p className={classes.Description}>Plan</p> : ''}
+      {isHeader ? <p className={classes.Description}>Plan</p> : ""}
       <input
         className={isHeader ? classes.InputDisabled : classes.Input }
         type="number"
@@ -20,7 +20,7 @@ function WidgetsBudgetItem({title, value, onChange, id, dataType}) {
         data-type={dataType}
       />
     </div>
-  )
+  );
 }
 
 export default WidgetsBudgetItem;

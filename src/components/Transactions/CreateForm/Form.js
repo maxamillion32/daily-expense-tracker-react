@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from "react";
-import {useSelector, useDispatch} from 'react-redux';
-import {CSSTransition} from 'react-transition-group';
+import {useSelector, useDispatch} from "react-redux";
+import {CSSTransition} from "react-transition-group";
 import {
   setUserInput,
   setCategory,
@@ -10,15 +10,14 @@ import {
   resetState,
   clickButton,
   loadTransactions
-} from '../../../reducers/transactions/transactions-slice';
-import classes from './Form.module.css'
-import Input from '../../UI/Input/Input';
+} from "../../../reducers/transactions/transactions-slice";
+import classes from "./Form.module.css";
+import Input from "../../UI/Input/Input";
 import Select from "../../UI/Select/Select";
 import Button from "../../UI/Button/Button";
 import {validateForm, updateFormControls, createFormControls} from "./utils";
 
 function TransactionCreateForm({categories, accounts, onClickAddBtn, userId}){
-  // console.log(`🚀 ~ file: Form.js ~ line 21 ~ TransactionCreateForm ~ userId`, userId);
   const newTransactionState = useSelector(selectNewTransactionState);
   const {sum, date} = newTransactionState;
   const dispatch = useDispatch();
@@ -56,7 +55,7 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, userId}){
         return idItem;
       });
       return idItem;
-    }
+    };
 
     if (selector === "account") {
       const formControls = updateFormControls(selector, e.target.value, state.formControls);

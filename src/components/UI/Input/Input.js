@@ -1,23 +1,23 @@
-import React from 'react';
-import classes from './Input.module.css';
+import React from "react";
+import classes from "./Input.module.css";
 
 function isInvalid({valid, touched, shouldValidate}) {
-  return !valid && shouldValidate && touched
+  return !valid && shouldValidate && touched;
 }
 
 const Input = (props) => {
-  const inputType = props.type || 'text';
+  const inputType = props.type || "text";
   const cls = [classes.Input];
   const htmlFor = `${inputType}-${Math.random()}`;
 
-  inputType === "checkbox" ? cls.push(classes.InputTypeCheckbox) : cls.push(classes.InputType)
+  inputType === "checkbox" ? cls.push(classes.InputTypeCheckbox) : cls.push(classes.InputType);
 
   if (isInvalid(props)) {
-    cls.push(classes.invalid)
+    cls.push(classes.invalid);
   }
 
   return (
-    <div className={cls.join(' ')}>
+    <div className={cls.join(" ")}>
       <input
         type={inputType}
         name={props.name}
@@ -34,7 +34,7 @@ const Input = (props) => {
         : null
       }
     </div>
-  )
-}
+  );
+};
 
 export default Input;

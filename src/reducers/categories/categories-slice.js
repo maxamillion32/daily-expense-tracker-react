@@ -1,43 +1,43 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 
-import {getAll, create, deleteId, update} from '../../services/category.service';
-import {selectUserId} from '../user/user-slice';
+import {getAll, create, deleteId, update} from "../../services/category.service";
+import {selectUserId} from "../user/user-slice";
 
 export const loadCategories = createAsyncThunk(
-  'categories/loadData',
+  "categories/loadData",
   async () => {
     return await getAll();
   }
-)
+);
 
 export const postCategory = createAsyncThunk(
-  'categories/addData',
+  "categories/addData",
   async (newCategory) => {
     return await create(newCategory);
   }
-)
+);
 
 export const updateCategory = createAsyncThunk(
-  'categories/updateData',
+  "categories/updateData",
   async (data) => {
     const {id} = data;
     return await update(id, data);
   }
-)
+);
 
 export const deleteCategory = createAsyncThunk(
-  'categories/deleteData',
+  "categories/deleteData",
   async (categoryId) => {
     return await deleteId(categoryId);
   }
-)
+);
 
 export const categoriesSlice = createSlice({
   name: "categories",
   initialState: {
     allCategories: [],
     newCategory: {
-      title: ``,
+      title: "",
     },
     popupItem: {},
     popupPrevItem: {},
@@ -89,7 +89,7 @@ export const selectAllCategoriesState = (state) => {
   const userId = selectUserId(state);
 
   return allCategories
-          .filter((transaction) => transaction.userId === userId)
+          .filter((transaction) => transaction.userId === userId);
 };
 
 export const {setPopupItem, setPopupPrevItem} = categoriesSlice.actions;

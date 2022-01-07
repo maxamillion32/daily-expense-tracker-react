@@ -1,5 +1,5 @@
-import React from 'react';
-import classes from './Loader.module.css';
+import React from "react";
+import classes from "./Loader.module.css";
 
 const Loader = () => {
   return (
@@ -12,6 +12,6 @@ const Loader = () => {
       </div>
     </div>
   );
-}
+};
 
 export default Loader;

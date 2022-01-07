@@ -1,11 +1,11 @@
-import React from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {NavLink} from 'react-router-dom';
-import {CSSTransition} from 'react-transition-group';
+import React from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {NavLink} from "react-router-dom";
+import {CSSTransition} from "react-transition-group";
 
-import classes from './Menu.module.css';
-import Form from '../../Transactions/CreateForm/Form'
-import {resetState, isButtonShow, isButtonClick, clickButton} from '../../../reducers/transactions/transactions-slice';
+import classes from "./Menu.module.css";
+import Form from "../../Transactions/CreateForm/Form";
+import {resetState, isButtonShow, isButtonClick, clickButton} from "../../../reducers/transactions/transactions-slice";
 
 function Menu({categories, accounts, userId}) {
   const dispatch = useDispatch();
@@ -14,9 +14,9 @@ function Menu({categories, accounts, userId}) {
 
   const classesAddBtn = [
     classes.menuAddBtn,
-    'fa',
-    clickAddButton ? 'fa-times' : 'fa-plus',
-  ].join(' ');
+    "fa",
+    clickAddButton ? "fa-times" : "fa-plus",
+  ].join(" ");
 
   const onClickAddButton = () => {
     dispatch(clickButton());
@@ -26,7 +26,7 @@ function Menu({categories, accounts, userId}) {
     }
   };
 
-  const isActiveLink = ({isActive}) => (isActive ? `${classes.active}` : '');
+  const isActiveLink = ({isActive}) => (isActive ? `${classes.active}` : "");
   const nodeRef = React.useRef(null);
 
   return (
@@ -57,21 +57,21 @@ function Menu({categories, accounts, userId}) {
           </CSSTransition>}
 
           <NavLink
-              to={'/'}
+              to={"/"}
               className={isActiveLink}
           >
             Transactions
           </NavLink>
 
           <NavLink
-              to={'/statistics'}
+              to={"/statistics"}
               className={isActiveLink}
           >
             Statistics
           </NavLink>
 
           <NavLink
-              to={'/settings'}
+              to={"/settings"}
               className={isActiveLink}
           >
             Settings
@@ -79,7 +79,7 @@ function Menu({categories, accounts, userId}) {
         </div>
       </nav>
     </>
-  )
+  );
 }
 
 export default Menu;

@@ -1,4 +1,4 @@
 export const TRANSACTION_TYPE = {
-    EXPENSES: 'expenses',
-    INCOMES: 'incomes',
-  }
+    EXPENSES: "expenses",
+    INCOMES: "incomes",
+  };

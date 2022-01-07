@@ -1,10 +1,10 @@
 import {useEffect, useState} from "react";
-import {useDispatch} from 'react-redux';
+import {useDispatch} from "react-redux";
 import {setUserId} from "../reducers/user/user-slice";
 
 import {initializeApp} from "firebase/app";
 import {getFirestore} from "firebase/firestore";
-import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'firebase/auth';
+import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from "firebase/auth";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -46,7 +46,7 @@ export function useAuth() {
     } else {
       dispatch(setUserId(null));
     }
-      setCurrentUser(user)
+      setCurrentUser(user);
     });
     return unsub;
 // eslint-disable-next-line

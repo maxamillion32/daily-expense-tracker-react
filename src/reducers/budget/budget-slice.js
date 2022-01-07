@@ -1,10 +1,10 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import {getAll, update} from '../../services/budget.service';
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+import {getAll, update} from "../../services/budget.service";
 
 const getOverall = (budget, type, month, year) => {
     if (Object.keys(budget[year][month][type]).length === 0) {
       return;
-    };
+    }
     const upperCase = type[0].toUpperCase() + type.slice(1);
     const balanceTotal = budget[year][month][type][upperCase];
     const balanceBudget = Object.values(budget[year][month][type]).reduce((a, b) => +a + +b);
@@ -12,22 +12,22 @@ const getOverall = (budget, type, month, year) => {
     const overall = Math.abs((!balanceTotal ? 0 : balanceTotal) - balanceBudget);
 
     return overall;
-  }
+  };
 
 export const loadBudgets = createAsyncThunk(
-  'budgets/loadData',
+  "budgets/loadData",
   async (userId) => {
     return await getAll(userId);
   }
-)
+);
 
 export const postBudget = createAsyncThunk(
-  'budgets/addData',
+  "budgets/addData",
   async ({updatedBudget, userId}) => {
 
     return await update(userId, updatedBudget);
   }
-)
+);
 
 export const budgetSlice = createSlice({
   name: "budget",
@@ -49,7 +49,7 @@ export const budgetSlice = createSlice({
       let current = {};
 
       if (!budget) {
-        console.log('1');
+        console.log("1");
         current[year] = {[month]: {expenses: {}, incomes: {}}};
 
         let currentYear = {...current[year]};
@@ -70,7 +70,7 @@ export const budgetSlice = createSlice({
       }
 
       if (budget && (!budget[year] || !budget[year][month])) {
-        console.log('2');
+        console.log("2");
         current[year] = {[month]: {expenses: {}, incomes: {}}};
 
         let currentYear = {...current[year]};
@@ -82,19 +82,19 @@ export const budgetSlice = createSlice({
         currentYear[month] = {...current[year][month], ...currentMonth};
 
         current[year] = {...budget[year], ...currentYear};
-        current = {...budget, ...current}
+        current = {...budget, ...current};
 
         const overall = getOverall(current, type, month, year).toFixed(2);
         currentType[nameUpperCase] = overall;
         currentMonth[type] = currentType;
         currentYear[month] ={...current[year][month], ...currentMonth};
         current[year] = {...budget[year], ...currentYear};
-        current = {...budget, ...current}
+        current = {...budget, ...current};
       }
 
 
       if (budget && budget[year] && budget[year][month]) {
-        console.log('3');
+        console.log("3");
 
         current = {...JSON.parse(JSON.stringify(budget))};
         let currentYear = current[year];

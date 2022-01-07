@@ -8,23 +8,23 @@ export const getAll = async (userId) => {
   const results = snapshot.docs.filter((doc) => doc.id === userId)
     .map((doc) => (doc.data()))
     .find((doc) => doc);
-  return results
-}
+  return results;
+};
 
 export const create = async (data) => {
   const {sum, expense, date, categoryId, accountId} = data;
   const payload = {sum, expense, date, categoryId, accountId};
   await addDoc(budgetRef, payload);
-}
+};
 
 export const deleteId = async (id) => {
     const docRef = doc(budgetRef, id);
     await deleteDoc(docRef);
-}
+};
 
 export const update = async (id, budget) => {
   const docRef = doc(db, "budgets", id);
   const payload = {...budget};
 
   setDoc(docRef, payload, {merge:true});
-}
+};

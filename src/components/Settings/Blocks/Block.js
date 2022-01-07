@@ -1,5 +1,5 @@
-import React from 'react';
-import classes from './Block.module.css';
+import React from "react";
+import classes from "./Block.module.css";
 
 function SettingsBlock({
   items, header, onClickItem, onClickToggle
@@ -21,7 +21,7 @@ function SettingsBlock({
             onClick={onClickItem}
             dataid={category.id}
             datavalue={category.title}
-            datatype={+category.incomes ? +category.incomes : ''}
+            datatype={+category.incomes ? +category.incomes : ""}
             dataheader={header}
             key={category.id}
           >
@@ -30,7 +30,7 @@ function SettingsBlock({
           ))
         }
     </section>
-  )
+  );
 }
 
 export default SettingsBlock;

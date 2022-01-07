@@ -1,38 +1,38 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
-import {getAll, create, deleteId} from '../../services/transaction.service';
-import {selectSearchTerm} from '../search/search-slice';
-import {selectUserId} from '../user/user-slice';
-import {formatMonth, formatYear} from '../../utils/utils'
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+import {getAll, create, deleteId} from "../../services/transaction.service";
+import {selectSearchTerm} from "../search/search-slice";
+import {selectUserId} from "../user/user-slice";
+import {formatMonth, formatYear} from "../../utils/utils";
 
 export const loadTransactions = createAsyncThunk(
-  'transactions/loadData',
+  "transactions/loadData",
   async () => {
     return await getAll();
   }
-)
+);
 
 export const postTransaction = createAsyncThunk(
-  'transactions/postData',
+  "transactions/postData",
   async (data) => {
     return await create(data);
   }
-)
+);
 
 export const deleteTransaction = createAsyncThunk(
-  'transactions/deleteData',
+  "transactions/deleteData",
   async (transactionId) => {
     return await deleteId(transactionId);
   }
-)
+);
 
 export const transactionsSlice = createSlice({
   name: "transactions",
   initialState: {
     allTransactions: [],
     newTransaction: {
-      sum: '',
+      sum: "",
       date: new Date().toISOString().slice(0, -14),
-      // date: '',
+      // date: "",
       expense: true,
     },
     isLoading: false,
@@ -45,11 +45,11 @@ export const transactionsSlice = createSlice({
   reducers: {
     setUserInput: (state, action) => {
       let {name, value} = action.payload;
-      if (name === `expense`) {
+      if (name === "expense") {
         value = !state.newTransaction.expense;
       }
-      if (name === `sum`) {
-        value = +value === 0 ? '' : +value;
+      if (name === "sum") {
+        value = +value === 0 ? "" : +value;
       }
       return {
         ...state,
@@ -77,12 +77,12 @@ export const transactionsSlice = createSlice({
         }
       };
     },
-    resetState: (state, action) => {
+    resetState: (state) => {
       return {
         ...state,
         newTransaction: {
           // id: nanoid(MAX_ID_LENGTH),
-          sum: '',
+          sum: "",
           date: new Date().toISOString().slice(0, -14),
           expense: true,
         },
@@ -100,13 +100,13 @@ export const transactionsSlice = createSlice({
         currentYear: action.payload,
       };
     },
-    showButton: (state, action) => {
+    showButton: (state) => {
       return {
         ...state,
         isButtonShow: !state.isButtonShow,
       };
     },
-    clickButton: (state, action) => {
+    clickButton: (state) => {
       return {
         ...state,
         isButtonClick: !state.isButtonClick,
@@ -122,7 +122,7 @@ export const transactionsSlice = createSlice({
       state.allTransactions = action.payload;
       state.newTransaction = {
         ...state.newTransaction,
-      }
+      };
       state.isLoading = false;
       state.hasError = false;
       state.showDelete = false;
@@ -148,7 +148,7 @@ export const selectAllTransactionsState = (state) => {
   const userId = selectUserId(state);
 
   return allTransactions
-          .filter((transaction) => transaction.userId === userId)
+          .filter((transaction) => transaction.userId === userId);
 };
 
 export const selectFilteredTransactions = (state) => {
@@ -159,7 +159,7 @@ export const selectFilteredTransactions = (state) => {
   return allTransactions
           .filter((transaction) => transaction.userId === userId)
           .filter((transaction) => transaction.category.title.toLowerCase().includes(searchTerm.toLowerCase()))
-          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 };
 
 export const {

@@ -1,7 +1,7 @@
-import { useRef, useState } from 'react';
-import classes from './Auth.module.css';
-import { singUp, logout, login, useAuth } from '../../services/firebase';
-import {NavLink} from 'react-router-dom';
+import React, {useRef, useState} from "react";
+import classes from "./Auth.module.css";
+import {singUp, logout, login, useAuth} from "../../services/firebase";
+import {NavLink} from "react-router-dom";
 
 function Auth() {
   const [loading, setLoading] = useState(false);
@@ -18,7 +18,7 @@ function Auth() {
       alert("Email already in use!");
     }
     setLoading(false);
-  }
+  };
 
   const handleLogin = async () => {
     setLoading(true);
@@ -28,7 +28,7 @@ function Auth() {
       alert("Wrong email or password");
     }
     setLoading(false);
-  }
+  };
 
   const handleLogout = async () => {
     setLoading(true);
@@ -38,7 +38,7 @@ function Auth() {
       alert("Error!");
     }
     setLoading(false);
-  }
+  };
 
   return (
     <section className={classes.Main}>
@@ -50,7 +50,7 @@ function Auth() {
 
       {!currentUser && <button className={classes.Button} disabled={loading || currentUser} onClick={handleSignup}>Sing Up</button>}
       {!currentUser && <button className={classes.Button} disabled={loading || currentUser} onClick={handleLogin}>Log In</button>}
-      {currentUser && <NavLink to={'/'} className={classes.Button} disabled={loading || !currentUser} onClick={handleLogout}>Log Out</NavLink>}
+      {currentUser && <NavLink to={"/"} className={classes.Button} disabled={loading || !currentUser} onClick={handleLogout}>Log Out</NavLink>}
 
     </section>
   );

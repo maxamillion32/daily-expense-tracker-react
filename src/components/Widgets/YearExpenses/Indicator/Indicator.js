@@ -1,5 +1,5 @@
-import React from 'react';
-import classes from './Indicator.module.css';
+import React from "react";
+import classes from "./Indicator.module.css";
 
 function WidgetsYearExpensesIndicator({year, month, getPercent, type}) {
   let cls = [];
@@ -8,11 +8,11 @@ function WidgetsYearExpensesIndicator({year, month, getPercent, type}) {
 
   return (
     <div
-      className={cls.join(' ')}
+      className={cls.join(" ")}
       id={month}
       style={{height: `${getPercent(year, month, type)}%`}}
     ></div>
-  )
+  );
 }
 
 export default WidgetsYearExpensesIndicator;

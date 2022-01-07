@@ -1,8 +1,8 @@
-import React from 'react';
-import classes from './Popup.module.css';
-import {usePopup} from './PopupContext';
-import CloseButton from '../../components/UI/CloseButton/CloseButton';
-import {CSSTransition} from 'react-transition-group';
+import React from "react";
+import classes from "./Popup.module.css";
+import {usePopup} from "./PopupContext";
+import CloseButton from "../../components/UI/CloseButton/CloseButton";
+import {CSSTransition} from "react-transition-group";
 
 function Popup({children}) {
   const popup = usePopup();
@@ -30,7 +30,7 @@ function Popup({children}) {
         {children}
       </section>
     </CSSTransition>
-  )
+  );
 }
 
 export default Popup;

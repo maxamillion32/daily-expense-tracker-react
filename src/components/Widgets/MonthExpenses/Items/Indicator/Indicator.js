@@ -1,5 +1,5 @@
-import React from 'react';
-import classes from './Indicator.module.css';
+import React from "react";
+import classes from "./Indicator.module.css";
 
 function WidgetsMonthExpensesIndicator({
   excessPercent,
@@ -25,7 +25,7 @@ function WidgetsMonthExpensesIndicator({
         <div
           className={
               `${
-                type === 'incomes'
+                type === "incomes"
                   ? classes.IndicatorIncomes
                   : classes.IndicatorExpenses
               }`
@@ -35,7 +35,7 @@ function WidgetsMonthExpensesIndicator({
 
         {/* Contents */}
         <p className={
-            title === 'Incomes' || title === 'Expenses'
+            title === "Incomes" || title === "Expenses"
               ? classes.TotalTitle
               : classes.CategoryTitle
           }>
@@ -44,18 +44,18 @@ function WidgetsMonthExpensesIndicator({
         <div className={classes.TotalSumWrapper}>
           <p className={classes.TotalSumAverage}>{balanceOfCurrent}</p>
           <p className={
-              title === 'Incomes' || title === 'Expenses'
+              title === "Incomes" || title === "Expenses"
               ? classes.TotalSum
               : classes.Balance
             }>
-            {type === 'incomes' ? '+' : '-'}
+            {type === "incomes" ? "+" : "-"}
             {transactionsSum}€
           </p>
         </div>
 
       </div>
     </>
-  )
+  );
 }
 
 export default WidgetsMonthExpensesIndicator;

@@ -1,9 +1,9 @@
-import React from 'react';
-import {useState} from 'react';
-import {useDispatch} from 'react-redux';
-import {deleteTransaction, loadTransactions} from '../../../../reducers/transactions/transactions-slice';
-import {CSSTransition} from 'react-transition-group';
-import classes from '../ListContainer.module.css';
+import React from "react";
+import {useState} from "react";
+import {useDispatch} from "react-redux";
+import {deleteTransaction, loadTransactions} from "../../../../reducers/transactions/transactions-slice";
+import {CSSTransition} from "react-transition-group";
+import classes from "../ListContainer.module.css";
 
 function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, ...rest}) {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, ...res
   };
 
   const handleDeleteButtonToggle = () => {
-    setShowDeleteBtn(!showDeleteBtn)
+    setShowDeleteBtn(!showDeleteBtn);
   };
 
   const nodeRef = React.useRef(null);
@@ -47,7 +47,7 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, ...res
       >
         <div className={classes.TransactionsItemWrapper}>
           <p>{categoryTitle}</p>
-          <p>{expense ? `-` : `+`}{sum} €</p>
+          <p>{expense ? "-" : "+"}{sum} €</p>
         </div>
         <div className={classes.TransactionsItemWrapper}>
           <p className={classes.TransactionsItemAccount}>{accountTitle}</p>

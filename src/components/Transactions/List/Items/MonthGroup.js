@@ -1,9 +1,9 @@
-import React from 'react';
-import {useSelector} from 'react-redux';
-import {TransitionGroup} from 'react-transition-group';
+import React from "react";
+import {useSelector} from "react-redux";
+import {TransitionGroup} from "react-transition-group";
 
-import {selectFilteredTransactions} from '../../../../reducers/transactions/transactions-slice'
-import TransactionsItemsDateGroupWrapper from './DateGroupWrapper';
+import {selectFilteredTransactions} from "../../../../reducers/transactions/transactions-slice";
+import TransactionsItemsDateGroupWrapper from "./DateGroupWrapper";
 import {formatMonth} from "../../../../utils/utils";
 import classes from "../ListContainer.module.css";
 

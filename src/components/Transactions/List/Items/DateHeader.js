@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   formatDay,
   formatMonthYear,
@@ -28,7 +28,7 @@ function TransactionsDateHeader({date, transactions}) {
             <p>{formatMonthYear(date)}</p>
           </div>
         </div>
-        <p>{overallBalance < 0 ? '' : '+'}{overallBalance} €</p>
+        <p>{overallBalance < 0 ? "" : "+"}{overallBalance} €</p>
     </div>
   );
 }

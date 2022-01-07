@@ -1,12 +1,12 @@
-import React from 'react';
+import React from "react";
 import TransactionItem from "./Item";
-import {TransitionGroup} from 'react-transition-group';
+import {TransitionGroup} from "react-transition-group";
 
 function TransactionsItemsDateGroup({date, transactions}) {
   const transactionsDay = transactions.filter((transaction) => transaction.date === date);
 
   return (
-    <TransitionGroup component={'ul'}>
+    <TransitionGroup component={"ul"}>
       {transactionsDay.map((transaction) => (
         <TransactionItem
           categoryTitle={transaction.category.title}

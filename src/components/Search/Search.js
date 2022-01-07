@@ -1,7 +1,7 @@
-import {useSelector, useDispatch} from 'react-redux';
-import {setSearchTerm, selectSearchTerm, clearSearchTerm} from '../../reducers/search/search-slice';
-import CloseButton from '../UI/CloseButton/CloseButton';
-import classes from './Search.module.css';
+import React, {useSelector, useDispatch} from "react-redux";
+import {setSearchTerm, selectSearchTerm, clearSearchTerm} from "../../reducers/search/search-slice";
+import CloseButton from "../UI/CloseButton/CloseButton";
+import classes from "./Search.module.css";
 
 function Search() {
   const searchTerm = useSelector(selectSearchTerm);
@@ -32,6 +32,6 @@ function Search() {
       )}
     </section>
   );
-};
+}
 
 export default Search;

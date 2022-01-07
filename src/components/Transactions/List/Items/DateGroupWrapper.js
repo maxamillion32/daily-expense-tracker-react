@@ -1,12 +1,12 @@
-import React from 'react';
-import {useSelector} from 'react-redux';
-import {CSSTransition} from 'react-transition-group';
+import React from "react";
+import {useSelector} from "react-redux";
+import {CSSTransition} from "react-transition-group";
 
-import {selectFilteredTransactions} from '../../../../reducers/transactions/transactions-slice'
-import classes from '../ListContainer.module.css';
+import {selectFilteredTransactions} from "../../../../reducers/transactions/transactions-slice";
+import classes from "../ListContainer.module.css";
 
-import TransactionItemsDateGroup from './DateGroup';
-import TransactionsDateHeader from './DateHeader';
+import TransactionItemsDateGroup from "./DateGroup";
+import TransactionsDateHeader from "./DateHeader";
 
 function TransactionsItemsDateGroupWrapper({date, ...rest}) {
   const transactions = useSelector(selectFilteredTransactions);

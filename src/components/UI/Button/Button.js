@@ -1,11 +1,11 @@
-import React from 'react';
-import classes from './Button.module.css';
+import React from "react";
+import classes from "./Button.module.css";
 
 const Button = (props) => {
   const cls = [
     classes.Button,
     classes[props.type]
-  ].join(' ')
+  ].join(" ");
   return (
     <button
       onClick={props.onClick}
@@ -14,7 +14,7 @@ const Button = (props) => {
     >
       {props.children}
     </button>
-  )
-}
+  );
+};
 
 export default Button;

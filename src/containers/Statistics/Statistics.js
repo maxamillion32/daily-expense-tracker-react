@@ -1,19 +1,19 @@
-import React, {useEffect} from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import WidgetsMonthBalance from '../../components/Widgets/MonthBalance/MonthBalance';
-import WidgetsMonthExpenses from '../../components/Widgets/MonthExpenses/MonthExpenses';
-import WidgetsYearExpenses from '../../components/Widgets/YearExpenses/YearExpenses';
-import WidgetsBudget from '../../components/Widgets/Budget/Budget';
-import {selectUserId} from '../../reducers/user/user-slice';
-import classes from './Statistics.module.css';
-import {currentMonth, currentYear} from '../../reducers/transactions/transactions-slice';
+import React, {useEffect} from "react";
+import {useSelector, useDispatch} from "react-redux";
+import WidgetsMonthBalance from "../../components/Widgets/MonthBalance/MonthBalance";
+import WidgetsMonthExpenses from "../../components/Widgets/MonthExpenses/MonthExpenses";
+import WidgetsYearExpenses from "../../components/Widgets/YearExpenses/YearExpenses";
+import WidgetsBudget from "../../components/Widgets/Budget/Budget";
+import {selectUserId} from "../../reducers/user/user-slice";
+import classes from "./Statistics.module.css";
+import {currentMonth, currentYear} from "../../reducers/transactions/transactions-slice";
 import {
   loadTransactions,
   selectAllTransactionsState
-} from '../../reducers/transactions/transactions-slice';
-import {selectAllBudgetState, loadBudgets, selectUpdatedBudgetState, isLoading} from '../../reducers/budget/budget-slice';
-import {selectAllCategoriesState} from '../../reducers/categories/categories-slice';
-import Loader from '../../components/UI/Loader/Loader';
+} from "../../reducers/transactions/transactions-slice";
+import {selectAllBudgetState, loadBudgets, selectUpdatedBudgetState, isLoading} from "../../reducers/budget/budget-slice";
+import {selectAllCategoriesState} from "../../reducers/categories/categories-slice";
+import Loader from "../../components/UI/Loader/Loader";
 
 function Statistics() {
   const allTransactions = useSelector(selectAllTransactionsState);
@@ -46,7 +46,7 @@ function Statistics() {
         </>
       }
     </section>
-  )
+  );
 }
 
 export default Statistics;

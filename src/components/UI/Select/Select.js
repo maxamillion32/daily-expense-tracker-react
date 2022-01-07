@@ -1,8 +1,8 @@
-import React from 'react';
-import classes from './Select.module.css'
+import React from "react";
+import classes from "./Select.module.css";
 
 function isInvalid({valid, touched, shouldValidate}) {
-  return !valid && shouldValidate && touched
+  return !valid && shouldValidate && touched;
 }
 
 const Select = (props) => {
@@ -24,7 +24,7 @@ const Select = (props) => {
             >
               {option.title}
             </option>
-          )
+          );
         })}
         {
         isInvalid(props)
@@ -34,6 +34,6 @@ const Select = (props) => {
       </select>
     </div>
   );
-}
+};
 
 export default Select;

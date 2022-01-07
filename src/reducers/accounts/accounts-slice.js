@@ -1,42 +1,42 @@
-import {createSlice, createAsyncThunk} from '@reduxjs/toolkit';
+import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 
-import {getAll, create, update, deleteId} from '../../services/account.service';
-import {selectUserId} from '../user/user-slice';
+import {getAll, create, update, deleteId} from "../../services/account.service";
+import {selectUserId} from "../user/user-slice";
 
 export const loadAccounts = createAsyncThunk(
-  'accounts/loadData',
+  "accounts/loadData",
   async () => {
     return await getAll();
   }
-)
+);
 
 export const postAccount = createAsyncThunk(
-  'accounts/addData',
+  "accounts/addData",
   async (newAccount) => {
     return await create(newAccount);
   }
-)
+);
 
 export const updateAccount = createAsyncThunk(
-  'accounts/updateData',
+  "accounts/updateData",
   async ({id, title, userId}) => {
     return await update(id, title, userId);
   }
-)
+);
 
 export const deleteAccount = createAsyncThunk(
-  'accounts/deleteData',
+  "accounts/deleteData",
   async (accountId) => {
     return await deleteId(accountId);
   }
-)
+);
 
 export const accountsSlice = createSlice({
   name: "accounts",
   initialState: {
     allAccounts: [],
     newAccount: {
-      title: ``,
+      title: "",
       balance: 0,
       startBalance: 0,
       archive: false
@@ -74,7 +74,7 @@ export const selectAllAccountsState = (state) => {
   const userId = selectUserId(state);
 
   return allAccounts
-          .filter((transaction) => transaction.userId === userId)
+          .filter((transaction) => transaction.userId === userId);
 };
 
 export const {addAccount, editAccount, createAccount} = accountsSlice.actions;

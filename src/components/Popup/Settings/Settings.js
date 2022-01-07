@@ -1,12 +1,12 @@
-import React from 'react';
-import {useSelector, useDispatch} from 'react-redux';
-import {updateCategory, loadCategories, selectPopupItemState, setPopupItem, deleteCategory, selectPopupPrevItemState, postCategory, selectAllCategoriesState} from '../../../reducers/categories/categories-slice';
-import {selectAllTransactionsState} from '../../../reducers/transactions/transactions-slice';
-import {selectUserId} from '../../../reducers/user/user-slice';
-import classes from './Settings.module.css';
-import {usePopup} from '../../../hoc/Popup/PopupContext';
-import { deleteAccount, postAccount, updateAccount, selectAllAccountsState, loadAccounts } from '../../../reducers/accounts/accounts-slice';
-import ScrollToTop from '../../../hoc/ScrollToTop/ScrollToTop';
+import React from "react";
+import {useSelector, useDispatch} from "react-redux";
+import {updateCategory, loadCategories, selectPopupItemState, setPopupItem, deleteCategory, selectPopupPrevItemState, postCategory, selectAllCategoriesState} from "../../../reducers/categories/categories-slice";
+import {selectAllTransactionsState} from "../../../reducers/transactions/transactions-slice";
+import {selectUserId} from "../../../reducers/user/user-slice";
+import classes from "./Settings.module.css";
+import {usePopup} from "../../../hoc/Popup/PopupContext";
+import {deleteAccount, postAccount, updateAccount, selectAllAccountsState, loadAccounts} from "../../../reducers/accounts/accounts-slice";
+import ScrollToTop from "../../../hoc/ScrollToTop/ScrollToTop";
 
 function PopupSettings() {
   const dispatch = useDispatch();
@@ -16,30 +16,30 @@ function PopupSettings() {
   const categories = useSelector(selectAllCategoriesState);
   const accounts = useSelector(selectAllAccountsState);
   const userId = useSelector(selectUserId);
-  const {toggle} = usePopup()
+  const {toggle} = usePopup();
   const {id, title, incomes, header} = popupState;
 
   const prevState = JSON.stringify(popupState) === JSON.stringify(popupPrevState);
 
   const isExists = (data, item) => {
     return data.find((it) => it.title === item) ? true : false;
-  }
+  };
 
   const isDelete = (data, type, id) => {
     return data.find((it) => it[`${type}Id`] === id) ? true : false;
-  }
+  };
 
   const onChangeType = async ({target}) => {
     dispatch(setPopupItem({id, title, userId, incomes: target.checked, header}));
-  }
+  };
 
   const onChangeItem = ({target}) => {
     const value = target.value;
     const type = incomes ? incomes : false;
     dispatch(setPopupItem({id, title: value, userId, incomes: type, header}));
-  }
+  };
 
-  const onClickEditButton = ({target}) => {
+  const onClickEditButton = () => {
     if (header === "Categories") {
       dispatch(updateCategory(popupState));
       dispatch(loadCategories());
@@ -56,7 +56,7 @@ function PopupSettings() {
 
     if (confirm) {
       if (header === "Categories") {
-        if (isDelete(transactions, 'category', id)) {
+        if (isDelete(transactions, "category", id)) {
           alert("This category is already in use and cannot be deleted!");
           return;
         }
@@ -65,7 +65,7 @@ function PopupSettings() {
       }
 
       if (header === "Accounts") {
-        if (isDelete(transactions, 'account', id)) {
+        if (isDelete(transactions, "account", id)) {
           alert("This account is already in use and cannot be deleted!");
           return;
         }
@@ -75,7 +75,7 @@ function PopupSettings() {
 
       toggle();
     }
-  };
+  }
 
   const onClickCreateButton = () => {
     if (header === "Categories") {
@@ -128,7 +128,7 @@ function PopupSettings() {
           placeholder={`Type the new name for the ${header === "Categories" ? "category" : "account"}`}
         />
         {header !== "Accounts" && <div className={classes.Type}>
-          <p className={classes.Label}>Select "incomes" if the category is taken into income transactions</p>
+          <p className={classes.Label}>Select `incomes` if the category is taken into income transactions</p>
           <input
             type="checkbox"
             checked={+incomes || false}

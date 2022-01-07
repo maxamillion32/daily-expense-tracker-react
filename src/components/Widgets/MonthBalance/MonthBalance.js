@@ -1,8 +1,8 @@
-import React from 'react';
-import classes from './MonthBalance.module.css';
-import {formatMonth, formatYear} from '../../../utils/utils'
+import React from "react";
+import classes from "./MonthBalance.module.css";
+import {formatMonth, formatYear} from "../../../utils/utils";
 
-function WidgetsMonthBalance({currentYear, currentMonth, transactions, }) {
+function WidgetsMonthBalance({currentYear, currentMonth, transactions}) {
   const filteredTransactions = transactions
     .filter((transaction) => formatYear(transaction.date) === currentYear)
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
@@ -29,7 +29,7 @@ function WidgetsMonthBalance({currentYear, currentMonth, transactions, }) {
         </li>
       </ul>
     </section>
-  )
+  );
 }
 
 export default WidgetsMonthBalance;

@@ -1,10 +1,10 @@
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
-import {useSelector, useDispatch} from 'react-redux';
-import {clickButton, isButtonClick} from '../../reducers/transactions/transactions-slice'
+import {useEffect} from "react";
+import {useLocation} from "react-router-dom";
+import {useSelector, useDispatch} from "react-redux";
+import {clickButton, isButtonClick} from "../../reducers/transactions/transactions-slice";
 
 export default function ScrollToTop() {
-  const { pathname } = useLocation();
+  const {pathname} = useLocation();
   const dispatch = useDispatch();
   const clickAddButton = useSelector(isButtonClick);
 
