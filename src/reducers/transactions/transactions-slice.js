@@ -2,7 +2,7 @@ import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import {getAll, create, deleteId} from "../../services/transaction.service";
 import {selectSearchTerm} from "../search/search-slice";
 import {selectUserId} from "../user/user-slice";
-import {formatMonth, formatYear} from "../../utils/utils";
+import {formatMonth, formatYear} from "../../modules/common/utils/utils";
 
 export const loadTransactions = createAsyncThunk(
   "transactions/loadData",

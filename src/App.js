@@ -1,12 +1,12 @@
 import React from "react";
 import {Route, Routes, Navigate} from "react-router-dom";
-import Layout from "../src/hoc/Layout/Layout";
+import Layout from "./modules/common/hoc/Layout/Layout";
 import "./App.css";
-import ScrollToTop from "./hoc/ScrollToTop/ScrollToTop";
+import ScrollToTop from "./modules/common/hoc/ScrollToTop/ScrollToTop";
 
-import Transactions from "./containers/Transactions/Transactions";
-import Statistics from "./containers/Statistics/Statistics";
-import Settings from "./containers/Settings/Settings";
+import Transactions from "./modules/transactions/components/Transactions";
+import Statistics from "./modules/statistics/components/Statistics";
+import Settings from "./modules/settings/components/Settings";
 function App() {
   return (
     <Layout>
