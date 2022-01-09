@@ -35,7 +35,7 @@
   border: none;
   border-bottom: 1px solid #646464;
   outline: none;
-  /* border-radius: 5px; */
+  border-radius: 0;
   /* flex-grow: 1; */
 }
 
