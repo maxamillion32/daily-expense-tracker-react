@@ -73,3 +73,23 @@
   margin: 0;
   color: #727272;
 }
+
+.Type input:disabled + label {
+  color: #c5c5c5;
+}
+
+.WrapperText {
+  display: flex;
+  flex-direction: column;
+}
+
+.Text {
+  display: block;
+  margin-top: 10px;
+  font-size: 12px;
+  color: #000;
+}
+
+.Text:last-of-type {
+  margin-top: 0;
+}

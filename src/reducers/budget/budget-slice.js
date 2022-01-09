@@ -49,7 +49,6 @@ export const budgetSlice = createSlice({
       let current = {};
 
       if (!budget) {
-        console.log("1");
         current[year] = {[month]: {expenses: {}, incomes: {}}};
 
         let currentYear = {...current[year]};
@@ -70,7 +69,6 @@ export const budgetSlice = createSlice({
       }
 
       if (budget && (!budget[year] || !budget[year][month])) {
-        console.log("2");
         current[year] = {[month]: {expenses: {}, incomes: {}}};
 
         let currentYear = {...current[year]};
@@ -94,7 +92,6 @@ export const budgetSlice = createSlice({
 
 
       if (budget && budget[year] && budget[year][month]) {
-        console.log("3");
 
         current = {...JSON.parse(JSON.stringify(budget))};
         let currentYear = current[year];

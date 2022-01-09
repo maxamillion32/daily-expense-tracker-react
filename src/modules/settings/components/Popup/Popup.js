@@ -4,35 +4,54 @@ import {useSelector, useDispatch} from "react-redux";
 import classes from "./Popup.module.css";
 
 import {
-  updateCategory, loadCategories, deleteCategory, postCategory, selectAllCategoriesState
+  updateCategory, loadCategories, deleteCategory, postCategory
 } from "../../../../reducers/categories/categories-slice";
 import {
-  selectAllTransactionsState
+  currentMonth, currentYear
 } from "../../../../reducers/transactions/transactions-slice";
 import {
-  deleteAccount, postAccount, updateAccount, selectAllAccountsState, loadAccounts
+  deleteAccount, postAccount, updateAccount, loadAccounts
 } from "../../../../reducers/accounts/accounts-slice";
 
 import ScrollToTop from "../../../common/hoc/ScrollToTop/ScrollToTop";
 import {usePopup} from "../../../common/hoc/Popup/PopupContext";
+import {formatYear, formatMonth} from "../../../common/utils/utils";
 
-const isExists = (data, item) => {
-  return data.find((it) => it.title === item) ? true : false;
+const isExists = (data, type, item) => {
+  return data.find((it) => it[type].title === item) ? true : false;
 };
 
 const isDelete = (data, type, id) => {
   return data.find((it) => it[`${type}Id`] === id) ? true : false;
 };
 
-function Popup({itemState, prevItem, setItem}) {
+function Popup({itemState, prevItem, setItem, transactions}) {
   const dispatch = useDispatch();
-  const transactions = useSelector(selectAllTransactionsState);
-  const categories = useSelector(selectAllCategoriesState);
-  const accounts = useSelector(selectAllAccountsState);
+  const month = useSelector(currentMonth);
+  const year = useSelector(currentYear);
   const {toggle} = usePopup();
   const {id, title, userId, incomes, header} = itemState;
 
   const prevState = JSON.stringify(itemState) === JSON.stringify(prevItem);
+
+  // move to utils
+  const filteredTransactions = transactions
+    .filter((transaction) => formatYear(transaction.date) === year)
+    .filter((transaction) => formatMonth(transaction.date) === month);
+
+  const sumCurrentCategory = filteredTransactions
+    .filter((transaction) => transaction.category.title === title)
+    .map((transaction) => transaction.sum)
+    .reduce((a, b) => a + b, 0);
+
+  const totalSum = transactions
+    .filter((transaction) => transaction.category.title === title)
+    .map((transaction) => transaction.sum)
+    .reduce((a, b) => a + b, 0);
+
+  const categoryType = [...new Set(transactions
+    .filter((transaction) => transaction.category.title === title)
+    .map((transaction) => transaction.expense))].join();
 
   const onChangeType = async ({target}) => {
     setItem({id, title, userId, incomes: target.checked, header});
@@ -84,7 +103,7 @@ function Popup({itemState, prevItem, setItem}) {
 
   const onClickCreateButton = () => {
     if (header === "Categories") {
-      if (isExists(categories, title)) {
+      if (isExists(transactions, "category", title)) {
         alert("This category already exists!");
         return;
       }
@@ -92,7 +111,7 @@ function Popup({itemState, prevItem, setItem}) {
       dispatch(loadCategories());
     }
     if (header === "Accounts") {
-      if (isExists(accounts, title)) {
+      if (isExists(transactions, "account", title)) {
         alert("This account already exists!");
         return;
       }
@@ -140,16 +159,25 @@ function Popup({itemState, prevItem, setItem}) {
         />
         {header !== "Accounts"
           ? <div className={classes.Type}>
-              <p className={classes.Label}>Select `incomes` if the category is taken into income transactions</p>
+              {isExists(transactions, "category", title)
+                ? <p className={classes.Label}>This category is already used in transactions and this setting cannot be changed.</p>
+                : <p className={classes.Label}>Select <b>incomes</b> if the category is taken into income transactions</p>}
               <input
                 type="checkbox"
                 checked={+incomes || false}
                 id={id}
                 onChange={onChangeType}
+                disabled={isExists(transactions, "category", title)}
               />
               <label
                 htmlFor={id}
               >Incomes</label>
+            </div>
+          : null}
+        {isExists(transactions, "category", title)
+          ? <div className={classes.WrapperText}>
+              <p className={classes.Text}>{JSON.parse(categoryType) ? "Expenses" : "Incomes"} in this Month - <b>{sumCurrentCategory}€</b></p>
+              <p className={classes.Text}>{JSON.parse(categoryType) ? "Expenses" : "Incomes"} for all time - <b>{totalSum}€</b></p>
             </div>
           : null}
       </div>
