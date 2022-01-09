@@ -2,6 +2,13 @@
   "name": "money-tracker",
   "version": "0.1.0",
   "private": true,
+  "author": "Stanislaw Chirko",
+  "license": "ISC",
+  "homepage": "https://github.com/stanislaw-ch/expence-tracker-react-redux#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stanislaw-ch/expence-tracker-react-redux.git"
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.2",
     "@testing-library/jest-dom": "^5.11.4",

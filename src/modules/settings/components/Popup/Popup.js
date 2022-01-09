@@ -180,6 +180,21 @@ function Popup({itemState, prevItem, setItem, transactions}) {
               <p className={classes.Text}>{JSON.parse(categoryType) ? "Expenses" : "Incomes"} for all time - <b>{totalSum}€</b></p>
             </div>
           : null}
+
+        {/* {header == "Accounts"
+          ? <>
+            <p className={classes.Label}>Start balance</p>
+            <input
+              className={classes.Input}
+              type="number"
+              value={null}
+              onChange={() => ""}
+              placeholder="Type the start balance for account"
+            />
+              <p className={classes.Text}>Start balance - <b>1000€</b></p>
+              <p className={classes.Text}>Current balance - <b>2000€</b></p>
+            </>
+          : null} */}
       </div>
     </section>
   );
