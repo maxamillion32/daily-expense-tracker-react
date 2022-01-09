@@ -40,7 +40,7 @@ function Transactions() {
       {isLoader
         ? <Loader />
         : null}
-      {!isLoader
+      {!isLoader && userId
         ? <section className={classes.Transactions}>
             <Balance transactions={allTransactions} />
             <Search />
