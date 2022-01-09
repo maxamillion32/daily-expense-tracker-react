@@ -16,7 +16,7 @@ const Select = (props) => {
         onChange={props.onChange}
       >
         <option value="" hidden>{props.defaultOption}</option>
-        {props.options.map((option) => {
+        {props.options.sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1).map((option) => {
           return (
             <option
               value={option.title}
