@@ -4,7 +4,6 @@
   "private": true,
   "author": "Stanislaw Chirko",
   "license": "ISC",
-  "homepage": "https://github.com/stanislaw-ch/expence-tracker-react-redux#readme",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/stanislaw-ch/expence-tracker-react-redux.git"
