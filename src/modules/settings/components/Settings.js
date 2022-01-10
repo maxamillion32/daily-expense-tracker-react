@@ -108,6 +108,7 @@ function Settings() {
               header={"Categories"}
               onClickItem={onClickItem}
               onClickToggle={onClickToggle}
+              transactions={transactions}
             />
 
             <SettingsItem
@@ -115,6 +116,7 @@ function Settings() {
               header={"Accounts"}
               onClickItem={onClickItem}
               onClickToggle={onClickToggle}
+              transactions={transactions}
             />
           </>
         : null}

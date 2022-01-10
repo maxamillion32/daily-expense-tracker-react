@@ -22,15 +22,44 @@ function Balance({transactions}) {
       window.removeEventListener("scroll", listenScrollEvent);
   }, []);
 
-  const sumExpenses = transactions.map((transaction) => {
-      return transaction.expense ? transaction = +transaction.sum : transaction = null;
-    }).reduce((a, b) => a + b, 0);
+  // const sumExpenses = transactions.map((transaction) => {
+  //     return transaction.expense ? transaction = +transaction.sum : transaction = null;
+  //   }).reduce((a, b) => a + b, 0);
 
-  const sumIncomes = transactions.map((item) => {
-    return !item.expense ? item = +item.sum : item = null;
-  }).reduce((a, b) => a + b, 0);
+  // const sumIncomes = transactions.map((item) => {
+  //   return !item.expense ? item = +item.sum : item = null;
+  // }).reduce((a, b) => a + b, 0);
 
-  const currentBalance = Math.round((sumIncomes - sumExpenses) * 100) / 100;
+  // const currentBalance = (sumIncomes - sumExpenses).toFixed(2);
+
+  const getAccountStartBalance = (transactions) => {
+    const currentAccount = [...new Set(transactions
+    .map((transaction) => +transaction.account.startBalance))]
+    .reduce((a, b) => a + b, 0);
+
+    return currentAccount;
+  };
+
+  const getAccountTotalBalance = (startBalance, balance) => {
+    return (balance + +startBalance).toFixed(2);
+  };
+
+  const getCurrentAccountBalance = (transactions) => {
+    const incomes = transactions
+    .filter((transaction) => transaction.expense === false)
+    .map((transaction) => transaction.sum)
+    .reduce((a, b) => a + b, 0);
+
+    const expenses = transactions
+    .filter((transaction) => transaction.expense === true)
+    .map((transaction) => transaction.sum)
+    .reduce((a, b) => a + b, 0);
+
+    return incomes - expenses;
+  };
+
+  const startBalance = getAccountStartBalance(transactions);
+  const currentBalance = getAccountTotalBalance(startBalance, getCurrentAccountBalance(transactions));
 
   return (
     <section className={balance}>
