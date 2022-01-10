@@ -15,6 +15,13 @@ import SettingsItem from "./Item/Item";
 
 import {usePopup} from "../../common/hoc/Popup/PopupContext";
 
+const getAccountStartBalance = (accounts, title) => {
+  const currentAccount = accounts
+  .find((account) => account.title === title);
+
+  return currentAccount.startBalance;
+};
+
 function Settings() {
   const userId = useSelector(selectUserId);
   const transactions = useSelector(selectAllTransactionsState);
@@ -41,9 +48,19 @@ function Settings() {
     const type = target.getAttribute("datatype");
     const header = target.getAttribute("dataheader");
 
-    setItem({id, title, userId, incomes: !!+type.toString(), header});
-    setPrevItem({id, title, userId, incomes: !!+type.toString(), header});
-    toggle();
+    if (header === "Accounts") {
+      const startBalance = getAccountStartBalance(accounts, title);
+
+      setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance});
+      setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance});
+      toggle();
+    } else {
+      const startBalance = "";
+
+      setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance});
+      setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance});
+      toggle();
+    }
   };
 
   const onClickToggle = async ({target}) => {
@@ -51,9 +68,10 @@ function Settings() {
     const title = "";
     const type = "";
     const header = target.getAttribute("dataheader");
+    const startBalance = 0;
 
-    setItem({id, title, userId, incomes: !!+type.toString(), header});
-    setPrevItem({id, title, userId, incomes: !!+type.toString(), header});
+    setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance});
+    setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance});
     toggle();
   };
 
@@ -84,6 +102,7 @@ function Settings() {
           prevItem={prevItem}
           setItem={setItem}
           transactions={transactions}
+          accounts={accounts}
         />
       </Popup>
     </section>

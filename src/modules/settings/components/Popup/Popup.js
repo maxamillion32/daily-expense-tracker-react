@@ -25,33 +25,70 @@ const isDelete = (data, type, id) => {
   return data.find((it) => it[`${type}Id`] === id) ? true : false;
 };
 
+const isExpense = (transactions, title) => {
+  return [...new Set(transactions
+  .filter((transaction) => transaction.category.title === title)
+  .map((transaction) => transaction.expense))].join();
+};
+
+const getCategoryTotalSum = (transactions, title) => {
+  return transactions
+  .filter((transaction) => transaction.category.title === title)
+  .map((transaction) => transaction.sum)
+  .reduce((a, b) => a + b, 0);
+};
+
+const getCurrentCategorySum = (filteredTransactions, title) => {
+  return filteredTransactions
+  .filter((transaction) => transaction.category.title === title)
+  .map((transaction) => transaction.sum)
+  .reduce((a, b) => a + b, 0);
+};
+
+const getCurrentAccountBalance = (transactions, title) => {
+  const incomes = transactions
+  .filter((transaction) => transaction.expense === false)
+  .filter((transaction) => transaction.account.title === title)
+  .map((transaction) => transaction.sum)
+  .reduce((a, b) => a + b, 0);
+
+  const expenses = transactions
+  .filter((transaction) => transaction.expense === true)
+  .filter((transaction) => transaction.account.title === title)
+  .map((transaction) => transaction.sum)
+  .reduce((a, b) => a + b, 0);
+
+  return incomes - expenses;
+};
+
+// const getAccountStartBalance = (accounts, title) => {
+//   const currentAccount = accounts
+//   .find((account) => account.title === title);
+
+//   return +currentAccount.startBalance;
+// };
+
+const getAccountTotalBalance = (startBalance, balance) => {
+  return (balance + +startBalance).toFixed(2);
+};
+
+
 function Popup({itemState, prevItem, setItem, transactions}) {
   const dispatch = useDispatch();
+  // const accounts = useSelector(selectAllAccountsState);
   const month = useSelector(currentMonth);
   const year = useSelector(currentYear);
   const {toggle} = usePopup();
-  const {id, title, userId, incomes, header} = itemState;
+  const {id, title, userId, incomes, header, startBalance} = itemState;
 
   const prevState = JSON.stringify(itemState) === JSON.stringify(prevItem);
+
+  // const [balance, setBalance] = useState({startBalance: getAccountStartBalance(accounts, title)});
 
   // move to utils
   const filteredTransactions = transactions
     .filter((transaction) => formatYear(transaction.date) === year)
     .filter((transaction) => formatMonth(transaction.date) === month);
-
-  const sumCurrentCategory = filteredTransactions
-    .filter((transaction) => transaction.category.title === title)
-    .map((transaction) => transaction.sum)
-    .reduce((a, b) => a + b, 0);
-
-  const totalSum = transactions
-    .filter((transaction) => transaction.category.title === title)
-    .map((transaction) => transaction.sum)
-    .reduce((a, b) => a + b, 0);
-
-  const categoryType = [...new Set(transactions
-    .filter((transaction) => transaction.category.title === title)
-    .map((transaction) => transaction.expense))].join();
 
   const onChangeType = async ({target}) => {
     setItem({id, title, userId, incomes: target.checked, header});
@@ -60,7 +97,14 @@ function Popup({itemState, prevItem, setItem, transactions}) {
   const onChangeItem = ({target}) => {
     const value = target.value;
     const type = incomes ? incomes : false;
-    setItem({id, title: value, userId, incomes: type, header});
+    setItem({id, title: value, userId, incomes: type, header, startBalance});
+  };
+
+  const onChangeStartBalance = ({target}) => {
+    const value = target.value;
+    setItem({id, title, userId, incomes, header, startBalance: value});
+    dispatch(updateAccount({id, title, userId, incomes, header, startBalance: value}));
+    dispatch(loadAccounts());
   };
 
   const onClickEditButton = () => {
@@ -115,7 +159,7 @@ function Popup({itemState, prevItem, setItem, transactions}) {
         alert("This account already exists!");
         return;
       }
-      dispatch(postAccount({title, userId}));
+      dispatch(postAccount({title, userId, startBalance}));
       dispatch(loadAccounts());
     }
 
@@ -149,14 +193,17 @@ function Popup({itemState, prevItem, setItem, transactions}) {
         : null}
 
       <div className={classes.Wrapper}>
-        <p className={classes.Label}>{`Name of ${header === "Categories" ? "category" : "account"}`}</p>
-        <input
-          className={classes.Input}
-          type="text"
-          value={title}
-          onChange={onChangeItem}
-          placeholder={`Type the new name for the ${header === "Categories" ? "category" : "account"}`}
-        />
+
+        <div className={classes.Type}>
+          <p className={classes.Label}>{`Name of ${header === "Categories" ? "category" : "account"}`}</p>
+          <input
+            className={classes.Input}
+            type="text"
+            value={title}
+            onChange={onChangeItem}
+            placeholder={`Type the new name for the ${header === "Categories" ? "category" : "account"}`}
+          />
+        </div>
         {header !== "Accounts"
           ? <div className={classes.Type}>
               {isExists(transactions, "category", title)
@@ -176,25 +223,32 @@ function Popup({itemState, prevItem, setItem, transactions}) {
           : null}
         {isExists(transactions, "category", title)
           ? <div className={classes.WrapperText}>
-              <p className={classes.Text}>{JSON.parse(categoryType) ? "Expenses" : "Incomes"} in this Month - <b>{sumCurrentCategory}€</b></p>
-              <p className={classes.Text}>{JSON.parse(categoryType) ? "Expenses" : "Incomes"} for all time - <b>{totalSum}€</b></p>
+              <p className={classes.Text}>{JSON.parse(isExpense(transactions, title)) ? "Expenses" : "Incomes"} in this Month - <b>{getCurrentCategorySum(filteredTransactions, title)}€</b></p>
+              <p className={classes.Text}>{JSON.parse(isExpense(transactions, title)) ? "Expenses" : "Incomes"} for all time - <b>{getCategoryTotalSum(transactions, title)}€</b></p>
             </div>
           : null}
 
-        {/* {header == "Accounts"
+        {header == "Accounts"
           ? <>
-            <p className={classes.Label}>Start balance</p>
-            <input
-              className={classes.Input}
-              type="number"
-              value={null}
-              onChange={() => ""}
-              placeholder="Type the start balance for account"
-            />
-              <p className={classes.Text}>Start balance - <b>1000€</b></p>
-              <p className={classes.Text}>Current balance - <b>2000€</b></p>
+              <div className={classes.Type}>
+                <p className={classes.Label}>Start balance</p>
+                <input
+                  className={classes.Input}
+                  type="number"
+                  value={startBalance === 0 ? "" : startBalance}
+                  onChange={onChangeStartBalance}
+                  placeholder="0.00"
+                />
+              </div>
+              <div className={classes.Type}>
+                <p className={classes.Label}>Current balance</p>
+
+                <p className={classes.Text}><b>{prevItem.id
+                  ? getAccountTotalBalance(startBalance, getCurrentAccountBalance(transactions, title))
+                  : 0}€</b></p>
+              </div>
             </>
-          : null} */}
+          : null}
       </div>
     </section>
   );
