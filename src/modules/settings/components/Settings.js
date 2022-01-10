@@ -22,6 +22,26 @@ const getAccountStartBalance = (accounts, title) => {
   return currentAccount.startBalance;
 };
 
+const getAccountTotalBalance = (startBalance, balance) => {
+  return (balance + +startBalance).toFixed(2);
+};
+
+const getCurrentAccountBalance = (transactions, title) => {
+  const incomes = transactions
+  .filter((transaction) => transaction.expense === false)
+  .filter((transaction) => transaction.account.title === title)
+  .map((transaction) => transaction.sum)
+  .reduce((a, b) => a + b, 0);
+
+  const expenses = transactions
+  .filter((transaction) => transaction.expense === true)
+  .filter((transaction) => transaction.account.title === title)
+  .map((transaction) => transaction.sum)
+  .reduce((a, b) => a + b, 0);
+
+  return incomes - expenses;
+};
+
 function Settings() {
   const userId = useSelector(selectUserId);
   const transactions = useSelector(selectAllTransactionsState);
@@ -50,15 +70,17 @@ function Settings() {
 
     if (header === "Accounts") {
       const startBalance = getAccountStartBalance(accounts, title);
+      const balance = getAccountTotalBalance(startBalance, getCurrentAccountBalance(transactions, title));
 
-      setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance});
-      setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance});
+      setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance});
+      setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance});
       toggle();
     } else {
       const startBalance = "";
+      const balance = "";
 
-      setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance});
-      setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance});
+      setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance});
+      setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance});
       toggle();
     }
   };
@@ -69,9 +91,10 @@ function Settings() {
     const type = "";
     const header = target.getAttribute("dataheader");
     const startBalance = 0;
+    const balance = 0;
 
-    setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance});
-    setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance});
+    setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance});
+    setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance});
     toggle();
   };
 

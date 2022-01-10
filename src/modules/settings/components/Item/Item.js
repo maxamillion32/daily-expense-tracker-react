@@ -19,18 +19,19 @@ function SettingsItem({
           >Create</button>
         </div>
 
-          {items.sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1).map((category) => (
-            <p
+          {items.sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1).map((item) => (
+            <div
               className={classes.Item}
               onClick={onClickItem}
-              dataid={category.id}
-              datavalue={category.title}
-              datatype={+category.incomes ? +category.incomes : ""}
+              dataid={item.id}
+              datavalue={item.title}
+              datatype={+item.incomes ? +item.incomes : ""}
               dataheader={header}
-              key={category.id}
+              key={item.id}
             >
-              {category.title}
-            </p>
+              <p>{item.title}</p>
+              {header === "Accounts" && <p>balance: <b>{item.balance}€</b></p>}
+            </div>
             ))
           }
       </section>

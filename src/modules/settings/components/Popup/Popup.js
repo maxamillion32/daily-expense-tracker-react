@@ -45,21 +45,21 @@ const getCurrentCategorySum = (filteredTransactions, title) => {
   .reduce((a, b) => a + b, 0);
 };
 
-const getCurrentAccountBalance = (transactions, title) => {
-  const incomes = transactions
-  .filter((transaction) => transaction.expense === false)
-  .filter((transaction) => transaction.account.title === title)
-  .map((transaction) => transaction.sum)
-  .reduce((a, b) => a + b, 0);
+// const getCurrentAccountBalance = (transactions, title) => {
+//   const incomes = transactions
+//   .filter((transaction) => transaction.expense === false)
+//   .filter((transaction) => transaction.account.title === title)
+//   .map((transaction) => transaction.sum)
+//   .reduce((a, b) => a + b, 0);
 
-  const expenses = transactions
-  .filter((transaction) => transaction.expense === true)
-  .filter((transaction) => transaction.account.title === title)
-  .map((transaction) => transaction.sum)
-  .reduce((a, b) => a + b, 0);
+//   const expenses = transactions
+//   .filter((transaction) => transaction.expense === true)
+//   .filter((transaction) => transaction.account.title === title)
+//   .map((transaction) => transaction.sum)
+//   .reduce((a, b) => a + b, 0);
 
-  return incomes - expenses;
-};
+//   return incomes - expenses;
+// };
 
 // const getAccountStartBalance = (accounts, title) => {
 //   const currentAccount = accounts
@@ -68,9 +68,9 @@ const getCurrentAccountBalance = (transactions, title) => {
 //   return +currentAccount.startBalance;
 // };
 
-const getAccountTotalBalance = (startBalance, balance) => {
-  return (balance + +startBalance).toFixed(2);
-};
+// const getAccountTotalBalance = (startBalance, balance) => {
+//   return (balance + +startBalance).toFixed(2);
+// };
 
 
 function Popup({itemState, prevItem, setItem, transactions}) {
@@ -79,7 +79,7 @@ function Popup({itemState, prevItem, setItem, transactions}) {
   const month = useSelector(currentMonth);
   const year = useSelector(currentYear);
   const {toggle} = usePopup();
-  const {id, title, userId, incomes, header, startBalance} = itemState;
+  const {id, title, userId, incomes, header, startBalance, balance} = itemState;
 
   const prevState = JSON.stringify(itemState) === JSON.stringify(prevItem);
 
@@ -97,13 +97,13 @@ function Popup({itemState, prevItem, setItem, transactions}) {
   const onChangeItem = ({target}) => {
     const value = target.value;
     const type = incomes ? incomes : false;
-    setItem({id, title: value, userId, incomes: type, header, startBalance});
+    setItem({id, title: value, userId, incomes: type, header, startBalance, balance});
   };
 
   const onChangeStartBalance = ({target}) => {
     const value = target.value;
-    setItem({id, title, userId, incomes, header, startBalance: value});
-    dispatch(updateAccount({id, title, userId, incomes, header, startBalance: value}));
+    setItem({id, title, userId, incomes, header, startBalance: value, balance});
+    dispatch(updateAccount({id, title, userId, incomes, header, startBalance: value, balance}));
     dispatch(loadAccounts());
   };
 
@@ -159,7 +159,7 @@ function Popup({itemState, prevItem, setItem, transactions}) {
         alert("This account already exists!");
         return;
       }
-      dispatch(postAccount({title, userId, startBalance}));
+      dispatch(postAccount({title, userId, startBalance, balance}));
       dispatch(loadAccounts());
     }
 
@@ -243,9 +243,7 @@ function Popup({itemState, prevItem, setItem, transactions}) {
               <div className={classes.Type}>
                 <p className={classes.Label}>Current balance</p>
 
-                <p className={classes.Text}><b>{prevItem.id
-                  ? getAccountTotalBalance(startBalance, getCurrentAccountBalance(transactions, title))
-                  : 0}€</b></p>
+                <p className={classes.Text}><b>{prevItem.id ? balance : 0}€</b></p>
               </div>
             </>
           : null}
