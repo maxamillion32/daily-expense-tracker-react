@@ -14,33 +14,7 @@ import Loader from "../../common/components/Loader/Loader";
 import SettingsContainerItem from "./Item/Item";
 
 import {usePopup} from "../../common/hoc/Popup/PopupContext";
-
-const getAccountStartBalance = (accounts, title) => {
-  const currentAccount = accounts
-  .find((account) => account.title === title);
-
-  return currentAccount.startBalance;
-};
-
-const getAccountTotalBalance = (startBalance, balance) => {
-  return (balance + +startBalance).toFixed(2);
-};
-
-const getCurrentAccountBalance = (transactions, title) => {
-  const incomes = transactions
-  .filter((transaction) => transaction.expense === false)
-  .filter((transaction) => transaction.account.title === title)
-  .map((transaction) => transaction.sum)
-  .reduce((a, b) => a + b, 0);
-
-  const expenses = transactions
-  .filter((transaction) => transaction.expense === true)
-  .filter((transaction) => transaction.account.title === title)
-  .map((transaction) => transaction.sum)
-  .reduce((a, b) => a + b, 0);
-
-  return incomes - expenses;
-};
+import {getAccountStartBalance, getCurrentAccountBalance, getAccountTotalBalance} from "./utils";
 
 function SettingsContainer() {
   const userId = useSelector(selectUserId);
@@ -104,16 +78,16 @@ function SettingsContainer() {
       {userId
         ? <>
             <SettingsContainerItem
-              items={categories}
-              header={"Categories"}
+              items={accounts}
+              header={"Accounts"}
               onClickItem={onClickItem}
               onClickToggle={onClickToggle}
               transactions={transactions}
             />
 
             <SettingsContainerItem
-              items={accounts}
-              header={"Accounts"}
+              items={categories}
+              header={"Categories"}
               onClickItem={onClickItem}
               onClickToggle={onClickToggle}
               transactions={transactions}

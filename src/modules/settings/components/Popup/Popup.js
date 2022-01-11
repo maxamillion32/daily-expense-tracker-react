@@ -47,17 +47,12 @@ const getCurrentCategorySum = (filteredTransactions, title) => {
 
 function SettingsPopup({itemState, prevItem, setItem, transactions}) {
   const dispatch = useDispatch();
-  // const accounts = useSelector(selectAllAccountsState);
   const month = useSelector(currentMonth);
   const year = useSelector(currentYear);
   const {toggle} = usePopup();
   const {id, title, userId, incomes, header, startBalance, balance} = itemState;
 
   const prevState = JSON.stringify(itemState) === JSON.stringify(prevItem);
-
-  // const [balance, setBalance] = useState({startBalance: getAccountStartBalance(accounts, title)});
-
-  // move to utils
   const filteredTransactions = transactions
     .filter((transaction) => formatYear(transaction.date) === year)
     .filter((transaction) => formatMonth(transaction.date) === month);
