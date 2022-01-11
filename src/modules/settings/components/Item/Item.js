@@ -28,7 +28,7 @@ const getAccountTotalBalance = (startBalance, balance) => {
   return (balance + +startBalance).toFixed(2);
 };
 
-function SettingsItem({
+function SettingsContainerItem({
   items,
   header,
   onClickItem,
@@ -49,7 +49,7 @@ function SettingsItem({
 
           {items.sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1).map((item) => {
               const startBalance = getAccountStartBalance(items, item.title);
-              const currentBalance = getCurrentAccountBalance(items, item.title);
+              const currentBalance = getCurrentAccountBalance(transactions, item.title);
               const balance = getAccountTotalBalance(startBalance, currentBalance);
                 return (
                 <div
@@ -73,4 +73,4 @@ function SettingsItem({
   );
 }
 
-export default SettingsItem;
+export default SettingsContainerItem;

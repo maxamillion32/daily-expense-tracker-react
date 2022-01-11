@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
-import classes from "./Transactions.module.css";
+import classes from "./Container.module.css";
 
 import {
   loadTransactions,
@@ -12,13 +12,13 @@ import {
   selectUserId
 } from "../../../reducers/user/user-slice";
 
-import Search from "../../transactions/components/Search/Search";
-import Balance from "../../transactions/components/Balance/Balance";
-import TransactionsListContainer from "../../../modules/transactions/components/Transactions/List/ListContainer";
+import Search from "./Search/Search";
+import Balance from "./Balance/Balance";
+import TransactionsListContainer from "./List/Container";
 import Loader from "../../common/components/Loader/Loader";
 import Welcome from "../../welcome/components/Welcome";
 
-function Transactions() {
+function TransactionsContainer() {
   const loading = useSelector(isLoading);
   const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ function Transactions() {
         ? <Loader />
         : null}
       {!isLoader && userId
-        ? <section className={classes.Transactions}>
+        ? <section className={classes.Container}>
             <Balance />
             <Search />
             <TransactionsListContainer />
@@ -51,4 +51,4 @@ function Transactions() {
   );
 }
 
-export default Transactions;
+export default TransactionsContainer;

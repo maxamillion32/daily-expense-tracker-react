@@ -45,35 +45,7 @@ const getCurrentCategorySum = (filteredTransactions, title) => {
   .reduce((a, b) => a + b, 0).toFixed(2);
 };
 
-// const getCurrentAccountBalance = (transactions, title) => {
-//   const incomes = transactions
-//   .filter((transaction) => transaction.expense === false)
-//   .filter((transaction) => transaction.account.title === title)
-//   .map((transaction) => transaction.sum)
-//   .reduce((a, b) => a + b, 0);
-
-//   const expenses = transactions
-//   .filter((transaction) => transaction.expense === true)
-//   .filter((transaction) => transaction.account.title === title)
-//   .map((transaction) => transaction.sum)
-//   .reduce((a, b) => a + b, 0);
-
-//   return incomes - expenses;
-// };
-
-// const getAccountStartBalance = (accounts, title) => {
-//   const currentAccount = accounts
-//   .find((account) => account.title === title);
-
-//   return +currentAccount.startBalance;
-// };
-
-// const getAccountTotalBalance = (startBalance, balance) => {
-//   return (balance + +startBalance).toFixed(2);
-// };
-
-
-function Popup({itemState, prevItem, setItem, transactions}) {
+function SettingsPopup({itemState, prevItem, setItem, transactions}) {
   const dispatch = useDispatch();
   // const accounts = useSelector(selectAllAccountsState);
   const month = useSelector(currentMonth);
@@ -255,4 +227,4 @@ function Popup({itemState, prevItem, setItem, transactions}) {
   );
 }
 
-export default Popup;
+export default SettingsPopup;

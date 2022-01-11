@@ -13,11 +13,11 @@ import {
   resetState,
   clickButton,
   loadTransactions
-} from "../../../../../reducers/transactions/transactions-slice";
+} from "../../../../reducers/transactions/transactions-slice";
 
-import Input from "../../../../common/components/Input/Input";
-import Select from "../../../../common/components/Select/Select";
-import Button from "../../../../common/components/Button/Button";
+import Input from "../../../common/components/Input/Input";
+import Select from "../../../common/components/Select/Select";
+import Button from "../../../common/components/Button/Button";
 
 import {validateForm, updateFormControls, createFormControls} from "./utils";
 

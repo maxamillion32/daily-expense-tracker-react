@@ -2,9 +2,9 @@ import React, {useState} from "react";
 import {useDispatch} from "react-redux";
 import {CSSTransition} from "react-transition-group";
 
-import classes from "../ListContainer.module.css";
+import classes from "../Container.module.css";
 
-import {deleteTransaction, loadTransactions} from "../../../../../../reducers/transactions/transactions-slice";
+import {deleteTransaction, loadTransactions} from "../../../../../reducers/transactions/transactions-slice";
 
 function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, ...rest}) {
   const dispatch = useDispatch();

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
-import classes from "./Settings.module.css";
+import classes from "./Container.module.css";
 
 import {selectUserId} from "../../../reducers/user/user-slice";
 import {isCategoriesLoading, selectAllCategoriesState} from "../../../reducers/categories/categories-slice";
@@ -9,9 +9,9 @@ import {isAccountsLoading, selectAllAccountsState} from "../../../reducers/accou
 import {selectAllTransactionsState, loadTransactions} from "../../../reducers/transactions/transactions-slice";
 
 import Popup from "../../common/hoc/Popup/Popup";
-import PopupSettings from "./Popup/Popup";
-import Loader from "../../../modules/common/components/Loader/Loader";
-import SettingsItem from "./Item/Item";
+import SettingsPopup from "./Popup/Popup";
+import Loader from "../../common/components/Loader/Loader";
+import SettingsContainerItem from "./Item/Item";
 
 import {usePopup} from "../../common/hoc/Popup/PopupContext";
 
@@ -42,7 +42,7 @@ const getCurrentAccountBalance = (transactions, title) => {
   return incomes - expenses;
 };
 
-function Settings() {
+function SettingsContainer() {
   const userId = useSelector(selectUserId);
   const transactions = useSelector(selectAllTransactionsState);
   const categories = useSelector(selectAllCategoriesState);
@@ -99,11 +99,11 @@ function Settings() {
   };
 
   return (
-    <section className={classes.Settings}>
+    <section className={classes.Container}>
       {isLoader ? <Loader /> : null}
       {userId
         ? <>
-            <SettingsItem
+            <SettingsContainerItem
               items={categories}
               header={"Categories"}
               onClickItem={onClickItem}
@@ -111,7 +111,7 @@ function Settings() {
               transactions={transactions}
             />
 
-            <SettingsItem
+            <SettingsContainerItem
               items={accounts}
               header={"Accounts"}
               onClickItem={onClickItem}
@@ -122,7 +122,7 @@ function Settings() {
         : null}
 
       <Popup>
-        <PopupSettings
+        <SettingsPopup
           itemState={item}
           prevItem={prevItem}
           setItem={setItem}
@@ -134,4 +134,4 @@ function Settings() {
   );
 }
 
-export default Settings;
+export default SettingsContainer;

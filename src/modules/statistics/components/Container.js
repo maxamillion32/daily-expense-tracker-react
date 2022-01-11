@@ -18,14 +18,14 @@ import {
   selectAllCategoriesState
 } from "../../../reducers/categories/categories-slice";
 
-import classes from "./Statistics.module.css";
+import classes from "./Container.module.css";
 import WidgetsMonthBalance from "./Widgets/MonthBalance/MonthBalance";
 import WidgetsMonthExpenses from "./Widgets/MonthExpenses/MonthExpenses";
 import WidgetsYearExpenses from "./Widgets/YearExpenses/YearExpenses";
 import WidgetsBudget from "./Widgets/Budget/Budget";
-import Loader from "../../../modules/common/components/Loader/Loader";
+import Loader from "../../common/components/Loader/Loader";
 
-function Statistics() {
+function StatisticsContainer() {
   const allTransactions = useSelector(selectAllTransactionsState);
   const allCategories = useSelector(selectAllCategoriesState);
   const month = useSelector(currentMonth);
@@ -47,7 +47,7 @@ function Statistics() {
   }, [userId]);
 
   return (
-    <section className={classes.Statistics}>
+    <section className={classes.Container}>
       {isLoader ? <Loader /> : null}
       {!isLoader
         ? <>
@@ -82,4 +82,4 @@ function Statistics() {
   );
 }
 
-export default Statistics;
+export default StatisticsContainer;

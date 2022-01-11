@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import {CSSTransition} from "react-transition-group";
 
 import classes from "./Menu.module.css";
-import Form from "../../transactions/components/Transactions/CreateForm/Form";
+import Form from "../../transactions/components/CreateForm/Form";
 import {resetState, isButtonShow, isButtonClick, clickButton} from "../../../reducers/transactions/transactions-slice";
 
 function Menu({categories, accounts, userId}) {

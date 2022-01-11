@@ -4,9 +4,9 @@ import Layout from "./modules/common/hoc/Layout/Layout";
 import "./App.css";
 import ScrollToTop from "./modules/common/hoc/ScrollToTop/ScrollToTop";
 
-import Transactions from "./modules/transactions/components/Transactions";
-import Statistics from "./modules/statistics/components/Statistics";
-import Settings from "./modules/settings/components/Settings";
+import TransactionsContainer from "./modules/transactions/components/Container";
+import StatisticsContainer from "./modules/statistics/components/Container";
+import SettingsContainer from "./modules/settings/components/Container";
 import PopupProvider from "./modules/common/hoc/Popup/PopupContext";
 
 function App() {
@@ -15,9 +15,9 @@ function App() {
       <ScrollToTop />
       <PopupProvider>
         <Routes>
-          <Route path="/" element={<Transactions />} />
-          <Route path="/statistics" element={<Statistics />} />
-          <Route path="/settings" element={<Settings />} />
+          <Route path="/" element={<TransactionsContainer />} />
+          <Route path="/statistics" element={<StatisticsContainer />} />
+          <Route path="/settings" element={<SettingsContainer />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </PopupProvider>

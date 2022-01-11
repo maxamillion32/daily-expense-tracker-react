@@ -1,12 +1,12 @@
 import React from "react";
 
-import classes from "../ListContainer.module.css";
+import classes from "../Container.module.css";
 
 import {
   formatDay,
   formatMonthYear,
   formatWeekday
-} from "../../../../../common/utils/utils";
+} from "../../../../common/utils/utils";
 
 function TransactionsDateHeader({date, transactions}) {
   const transactionsDay = transactions
