@@ -19,10 +19,10 @@ import {
 } from "../../../reducers/categories/categories-slice";
 
 import classes from "./Container.module.css";
-import WidgetsMonthBalance from "./Widgets/MonthBalance/MonthBalance";
-import WidgetsMonthExpenses from "./Widgets/MonthExpenses/MonthExpenses";
-import WidgetsYearExpenses from "./Widgets/YearExpenses/YearExpenses";
-import WidgetsBudget from "./Widgets/Budget/Budget";
+import MonthBalance from "./MonthBalance/MonthBalance";
+import MonthExpenses from "./MonthExpenses/MonthExpenses";
+import YearExpenses from "./YearExpenses/YearExpenses";
+import Budget from "./Budget/Budget";
 import Loader from "../../common/components/Loader/Loader";
 
 function StatisticsContainer() {
@@ -51,17 +51,17 @@ function StatisticsContainer() {
       {isLoader ? <Loader /> : null}
       {!isLoader
         ? <>
-            <WidgetsMonthBalance
+            <MonthBalance
               currentYear={year}
               currentMonth={month}
               transactions={allTransactions}
             />
-            <WidgetsYearExpenses
+            <YearExpenses
               currentYear={year}
               currentMonth={month}
               transactions={allTransactions}
             />
-            <WidgetsMonthExpenses
+            <MonthExpenses
               currentYear={year}
               currentMonth={month}
               transactions={allTransactions}
@@ -69,7 +69,7 @@ function StatisticsContainer() {
               userId={userId}
               allCategories={allCategories}
             />
-            <WidgetsBudget
+            <Budget
               currentYear={year}
               currentMonth={month}
               budget={newBudget}

@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./MonthBalance.module.css";
-import {formatMonth, formatYear} from "../../../../common/utils/utils";
+import {formatMonth, formatYear} from "../../../common/utils/utils";
 
 function WidgetsMonthBalance({currentYear, currentMonth, transactions}) {
   // move to utils

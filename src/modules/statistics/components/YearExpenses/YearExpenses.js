@@ -1,10 +1,10 @@
 import React from "react";
 import {useDispatch} from "react-redux";
 
-import {updateMonth, updateYear} from "../../../../../reducers/transactions/transactions-slice";
+import {updateMonth, updateYear} from "../../../../reducers/transactions/transactions-slice";
 
 import classes from "./YearExpenses.module.css";
-import {formatMonth, formatYear} from "../../../../common/utils/utils";
+import {formatMonth, formatYear} from "../../../common/utils/utils";
 import Indicator from "./Indicator/Indicator";
 import {MONTH_EXPENSES} from "./constant";
 

@@ -1,9 +1,9 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
 
-import {loadTransactions} from "../../../../../reducers/transactions/transactions-slice";
-import {selectAllCategoriesState} from "../../../../../reducers/categories/categories-slice";
-import {postBudget, loadBudgets, updateBudget} from "../../../../../reducers/budget/budget-slice";
+import {loadTransactions} from "../../../../reducers/transactions/transactions-slice";
+import {selectAllCategoriesState} from "../../../../reducers/categories/categories-slice";
+import {postBudget, loadBudgets, updateBudget} from "../../../../reducers/budget/budget-slice";
 
 import classes from "./Budget.module.css";
 import WidgetsBudgetItem from "./Items/Item";
