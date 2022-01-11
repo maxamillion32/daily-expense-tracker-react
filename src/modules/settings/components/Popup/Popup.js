@@ -7,7 +7,7 @@ import {
   updateCategory, loadCategories, deleteCategory, postCategory
 } from "../../../../reducers/categories/categories-slice";
 import {
-  currentMonth, currentYear
+  currentMonth, currentYear, loadTransactions
 } from "../../../../reducers/transactions/transactions-slice";
 import {
   deleteAccount, postAccount, updateAccount, loadAccounts
@@ -35,14 +35,14 @@ const getCategoryTotalSum = (transactions, title) => {
   return transactions
   .filter((transaction) => transaction.category.title === title)
   .map((transaction) => transaction.sum)
-  .reduce((a, b) => a + b, 0);
+  .reduce((a, b) => a + b, 0).toFixed(2);
 };
 
 const getCurrentCategorySum = (filteredTransactions, title) => {
   return filteredTransactions
   .filter((transaction) => transaction.category.title === title)
   .map((transaction) => transaction.sum)
-  .reduce((a, b) => a + b, 0);
+  .reduce((a, b) => a + b, 0).toFixed(2);
 };
 
 // const getCurrentAccountBalance = (transactions, title) => {
@@ -111,10 +111,12 @@ function Popup({itemState, prevItem, setItem, transactions}) {
     if (header === "Categories") {
       dispatch(updateCategory(itemState));
       dispatch(loadCategories());
+      dispatch(loadTransactions());
     }
     if (header === "Accounts") {
       dispatch(updateAccount(itemState));
       dispatch(loadAccounts());
+      dispatch(loadTransactions());
     }
     toggle();
   };
@@ -206,7 +208,7 @@ function Popup({itemState, prevItem, setItem, transactions}) {
         </div>
         {header !== "Accounts"
           ? <div className={classes.Type}>
-              {isExists(transactions, "category", title)
+              {isExists(transactions, "category", prevItem.title)
                 ? <p className={classes.Label}>This category is already used in transactions and this setting cannot be changed.</p>
                 : <p className={classes.Label}>Select <b>incomes</b> if the category is taken into income transactions</p>}
               <input
@@ -214,17 +216,17 @@ function Popup({itemState, prevItem, setItem, transactions}) {
                 checked={+incomes || false}
                 id={id}
                 onChange={onChangeType}
-                disabled={isExists(transactions, "category", title)}
+                disabled={isExists(transactions, "category", prevItem.title)}
               />
               <label
                 htmlFor={id}
               >Incomes</label>
             </div>
           : null}
-        {isExists(transactions, "category", title)
+        {isExists(transactions, "category", prevItem.title)
           ? <div className={classes.WrapperText}>
-              <p className={classes.Text}>{JSON.parse(isExpense(transactions, title)) ? "Expenses" : "Incomes"} in this Month - <b>{getCurrentCategorySum(filteredTransactions, title)}€</b></p>
-              <p className={classes.Text}>{JSON.parse(isExpense(transactions, title)) ? "Expenses" : "Incomes"} for all time - <b>{getCategoryTotalSum(transactions, title)}€</b></p>
+              <p className={classes.Text}>{JSON.parse(isExpense(transactions, prevItem.title)) ? "Expenses" : "Incomes"} in this Month - <b>{getCurrentCategorySum(filteredTransactions, prevItem.title)}€</b></p>
+              <p className={classes.Text}>{JSON.parse(isExpense(transactions, prevItem.title)) ? "Expenses" : "Incomes"} for all time - <b>{getCategoryTotalSum(transactions, prevItem.title)}€</b></p>
             </div>
           : null}
 
@@ -238,6 +240,7 @@ function Popup({itemState, prevItem, setItem, transactions}) {
                   value={startBalance === 0 ? "" : startBalance}
                   onChange={onChangeStartBalance}
                   placeholder="0.00"
+                  disabled={startBalance}
                 />
               </div>
               <div className={classes.Type}>

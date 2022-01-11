@@ -5,7 +5,7 @@ import classes from "./Transactions.module.css";
 
 import {
   loadTransactions,
-  selectAllTransactionsState,
+  // selectAllTransactionsState,
   showButton, isLoading
 } from "../../../reducers/transactions/transactions-slice";
 import {
@@ -19,7 +19,6 @@ import Loader from "../../common/components/Loader/Loader";
 import Welcome from "../../welcome/components/Welcome";
 
 function Transactions() {
-  const allTransactions = useSelector(selectAllTransactionsState);
   const loading = useSelector(isLoading);
   const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
@@ -42,7 +41,7 @@ function Transactions() {
         : null}
       {!isLoader && userId
         ? <section className={classes.Transactions}>
-            <Balance transactions={allTransactions} />
+            <Balance />
             <Search />
             <TransactionsListContainer />
           </section>

@@ -162,6 +162,38 @@ export const selectFilteredTransactions = (state) => {
           .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 };
 
+export const selectCurrentBalance = (state) => {
+  const allTransactions = selectAllTransactionsState(state);
+
+  const getStartBalance = (allTransactions) => {
+    return [...new Set(allTransactions
+    .map((transaction) => +transaction.account.startBalance))]
+    .reduce((a, b) => a + b, 0);
+  };
+
+  const getCurrentBalance = (allTransactions) => {
+    const incomes = allTransactions
+    .filter((transaction) => transaction.expense === false)
+    .map((transaction) => transaction.sum)
+    .reduce((a, b) => a + b, 0);
+
+    const expenses = allTransactions
+    .filter((transaction) => transaction.expense === true)
+    .map((transaction) => transaction.sum)
+    .reduce((a, b) => a + b, 0);
+
+    return incomes - expenses;
+  };
+
+  const getTotalBalance = (startBalance, balance) => {
+    return (balance + +startBalance).toFixed(2);
+  };
+
+  const startBalance = getStartBalance(allTransactions);
+  const currentBalance = getCurrentBalance(allTransactions);
+  return getTotalBalance(startBalance, currentBalance);
+};
+
 export const {
   setUserInput,
   setCategory,

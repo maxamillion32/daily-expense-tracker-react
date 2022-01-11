@@ -39,6 +39,12 @@
   /* flex-grow: 1; */
 }
 
+.Input:disabled {
+  background-color: #fff;
+  border-bottom: none;
+
+}
+
 .Type {
   position: relative;
   display: flex;

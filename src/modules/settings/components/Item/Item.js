@@ -8,10 +8,6 @@ const getAccountStartBalance = (accounts, title) => {
   return currentAccount.startBalance;
 };
 
-const getAccountTotalBalance = (startBalance, balance) => {
-  return (balance + +startBalance).toFixed(2);
-};
-
 const getCurrentAccountBalance = (transactions, title) => {
   const incomes = transactions
   .filter((transaction) => transaction.expense === false)
@@ -26,6 +22,10 @@ const getCurrentAccountBalance = (transactions, title) => {
   .reduce((a, b) => a + b, 0);
 
   return incomes - expenses;
+};
+
+const getAccountTotalBalance = (startBalance, balance) => {
+  return (balance + +startBalance).toFixed(2);
 };
 
 function SettingsItem({
@@ -49,7 +49,8 @@ function SettingsItem({
 
           {items.sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1).map((item) => {
               const startBalance = getAccountStartBalance(items, item.title);
-              const balance = getAccountTotalBalance(startBalance, getCurrentAccountBalance(transactions, item.title));
+              const currentBalance = getCurrentAccountBalance(items, item.title);
+              const balance = getAccountTotalBalance(startBalance, currentBalance);
                 return (
                 <div
                   className={classes.Item}
