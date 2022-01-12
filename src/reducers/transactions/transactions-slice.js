@@ -165,12 +165,6 @@ export const selectFilteredTransactions = (state) => {
 export const selectCurrentBalance = (state) => {
   const allTransactions = selectAllTransactionsState(state);
 
-  const getStartBalance = (allTransactions) => {
-    return [...new Set(allTransactions
-    .map((transaction) => +transaction.account.startBalance))]
-    .reduce((a, b) => a + b, 0);
-  };
-
   const getCurrentBalance = (allTransactions) => {
     const incomes = allTransactions
     .filter((transaction) => transaction.expense === false)
@@ -189,9 +183,7 @@ export const selectCurrentBalance = (state) => {
     return (balance + +startBalance).toFixed(2);
   };
 
-  const startBalance = getStartBalance(allTransactions);
-  const currentBalance = getCurrentBalance(allTransactions);
-  return getTotalBalance(startBalance, currentBalance);
+  return getCurrentBalance(allTransactions);
 };
 
 export const {

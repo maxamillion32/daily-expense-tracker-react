@@ -207,7 +207,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
                   value={startBalance === 0 ? "" : startBalance}
                   onChange={onChangeStartBalance}
                   placeholder="0.00"
-                  disabled={startBalance}
+                  disabled={prevItem.startBalance}
                 />
               </div>
               <div className={classes.Type}>

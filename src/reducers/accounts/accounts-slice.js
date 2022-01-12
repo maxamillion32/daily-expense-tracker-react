@@ -77,5 +77,18 @@ export const selectAllAccountsState = (state) => {
           .filter((transaction) => transaction.userId === userId);
 };
 
+
+export const selectAccountBalance = (state) => {
+  const allCategories = selectAllAccountsState(state);
+
+  const getStartBalance = (allCategories) => {
+    return [...new Set(allCategories
+    .map((account) => +account.startBalance))]
+    .reduce((a, b) => a + b, 0);
+  };
+
+  return getStartBalance(allCategories);
+};
+
 export const {addAccount, editAccount, createAccount} = accountsSlice.actions;
 export default accountsSlice.reducer;
