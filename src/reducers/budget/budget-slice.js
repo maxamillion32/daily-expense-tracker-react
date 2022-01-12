@@ -34,7 +34,7 @@ export const budgetSlice = createSlice({
   initialState: {
     budget: {},
     budgetUpdated: {},
-    isLoading: false,
+    isLoading: true,
   },
   reducers: {
     updateBudget: (state, action) => {
