@@ -36,11 +36,11 @@ function SettingsContainer() {
   const [item, setItem] = useState({});
   const [prevItem, setPrevItem] = useState({});
 
-  const onClickItem = async ({target}) => {
-    const id = target.getAttribute("dataid");
-    const title = target.getAttribute("datavalue");
-    const type = target.getAttribute("datatype");
-    const header = target.getAttribute("dataheader");
+  const onClickItem = async ({currentTarget}) => {
+    const id = currentTarget.getAttribute("dataid");
+    const title = currentTarget.getAttribute("datavalue");
+    const type = currentTarget.getAttribute("datatype");
+    const header = currentTarget.getAttribute("dataheader");
 
     if (header === "Accounts") {
       const startBalance = getAccountStartBalance(accounts, title);
