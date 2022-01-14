@@ -94,7 +94,7 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn, userId}){
     dispatch(postTransaction({...newTransactionState, userId}));
     dispatch(resetState());
     dispatch(clickButton());
-    dispatch(loadTransactions());
+    dispatch(loadTransactions(userId));
 
     let formControls = createFormControls();
     formControls = updateFormControls("date", date, formControls);

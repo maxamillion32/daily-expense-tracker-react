@@ -77,13 +77,13 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
   const onClickEditButton = () => {
     if (header === "Categories") {
       dispatch(updateCategory(itemState));
-      dispatch(loadCategories());
-      dispatch(loadTransactions());
+      dispatch(loadCategories(userId));
+      dispatch(loadTransactions(userId));
     }
     if (header === "Accounts") {
       dispatch(updateAccount(itemState));
-      dispatch(loadAccounts());
-      dispatch(loadTransactions());
+      dispatch(loadAccounts(userId));
+      dispatch(loadTransactions(userId));
     }
     toggle();
   };
@@ -98,7 +98,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
           return;
         }
         dispatch(deleteCategory(id));
-        dispatch(loadCategories());
+        dispatch(loadCategories(userId));
       }
 
       if (header === "Accounts") {
@@ -107,7 +107,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
           return;
         }
         dispatch(deleteAccount(id));
-        dispatch(loadAccounts());
+        dispatch(loadAccounts(userId));
       }
 
       toggle();
@@ -121,7 +121,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
         return;
       }
       dispatch(postCategory({title, userId, incomes}));
-      dispatch(loadCategories());
+      dispatch(loadCategories(userId));
     }
     if (header === "Accounts") {
       if (isExists(transactions, "account", title)) {
@@ -129,7 +129,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
         return;
       }
       dispatch(postAccount({title, userId, startBalance, balance}));
-      dispatch(loadAccounts());
+      dispatch(loadAccounts(userId));
     }
 
     toggle();

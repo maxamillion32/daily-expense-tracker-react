@@ -1,13 +1,15 @@
 import React, {useState} from "react";
-import {useDispatch} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import {CSSTransition} from "react-transition-group";
 
 import classes from "../Container.module.css";
 
 import {deleteTransaction, loadTransactions} from "../../../../../reducers/transactions/transactions-slice";
+import {selectUserId} from "../../../../../reducers/user/user-slice";
 
 function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, ...rest}) {
   const dispatch = useDispatch();
+  const userId = useSelector(selectUserId);
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
 
   const onClickDeleteButton = ({target}) => {
@@ -17,7 +19,7 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, ...res
 
     if (confirm) {
       dispatch(deleteTransaction(id));
-      dispatch(loadTransactions());
+      dispatch(loadTransactions(userId));
     }
   };
 

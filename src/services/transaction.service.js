@@ -1,14 +1,17 @@
-import {addDoc, collection, updateDoc, doc, deleteDoc, getDocs} from "@firebase/firestore";
+import {addDoc, collection, updateDoc, doc, deleteDoc, getDocs, query, where} from "@firebase/firestore";
 import db from "./firebase";
 
 const transactionsRef = collection(db, "transactions");
 const categoriesRef = collection(db, "categories");
 const accountsRef = collection(db, "accounts");
 
-export const getAll = async () => {
-  const snapshotTransactions = await getDocs(transactionsRef);
-  const snapshotCategories = await getDocs(categoriesRef);
-  const snapshotAccounts = await getDocs(accountsRef);
+export const getAll = async (userId) => {
+  const transactionsQuery = query(transactionsRef, where("userId", "==", userId));
+  const categoriesQuery = query(categoriesRef, where("userId", "==", userId));
+  const accountsQuery = query(accountsRef, where("userId", "==", userId));
+  const snapshotTransactions = await getDocs(transactionsQuery);
+  const snapshotCategories = await getDocs(categoriesQuery);
+  const snapshotAccounts = await getDocs(accountsQuery);
 
   let transactions = {};
   const categories = snapshotCategories.docs.map((doc) => ({...doc.data(), id: doc.id}));

@@ -1,13 +1,12 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 import {getAll, create, deleteId} from "../../services/transaction.service";
 import {selectSearchTerm} from "../search/search-slice";
-import {selectUserId} from "../user/user-slice";
 import {formatMonth, formatYear} from "../../modules/common/utils/utils";
 
 export const loadTransactions = createAsyncThunk(
   "transactions/loadData",
-  async () => {
-    return await getAll();
+  async (userId) => {
+    return await getAll(userId);
   }
 );
 
@@ -134,7 +133,7 @@ export const transactionsSlice = createSlice({
   },
 });
 
-const allTransactionsState = (state) => state.transactions.allTransactions;
+export const selectAllTransactionsState = (state) => state.transactions.allTransactions;
 export const selectNewTransactionState = (state) => state.transactions.newTransaction;
 export const isLoading = (state) => state.transactions.isLoading;
 export const hasError = (state) => state.transactions.hasError;
@@ -143,21 +142,11 @@ export const currentYear = (state) => state.transactions.currentYear;
 export const isButtonClick = (state) => state.transactions.isButtonClick;
 export const isButtonShow = (state) => state.transactions.isButtonShow;
 
-export const selectAllTransactionsState = (state) => {
-  const allTransactions = allTransactionsState(state);
-  const userId = selectUserId(state);
-
-  return allTransactions
-          .filter((transaction) => transaction.userId === userId);
-};
-
 export const selectFilteredTransactions = (state) => {
   const allTransactions = selectAllTransactionsState(state);
   const searchTerm = selectSearchTerm(state);
-  const userId = selectUserId(state);
 
   return allTransactions
-          .filter((transaction) => transaction.userId === userId)
           .filter((transaction) => transaction.category.title.toLowerCase().includes(searchTerm.toLowerCase()))
           .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 };
@@ -177,10 +166,6 @@ export const selectCurrentBalance = (state) => {
     .reduce((a, b) => a + b, 0);
 
     return incomes - expenses;
-  };
-
-  const getTotalBalance = (startBalance, balance) => {
-    return (balance + +startBalance).toFixed(2);
   };
 
   return getCurrentBalance(allTransactions);

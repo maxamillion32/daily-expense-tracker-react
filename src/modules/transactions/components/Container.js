@@ -27,12 +27,12 @@ function TransactionsContainer() {
 
   useEffect(() => {
     dispatch(showButton());
-    dispatch(loadTransactions());
+    dispatch(loadTransactions(userId));
     return () => {
       dispatch(showButton());
     };
     // eslint-disable-next-line
-  }, []);
+  }, [userId]);
 
   return (
     <>

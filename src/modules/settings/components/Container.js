@@ -17,8 +17,10 @@ import {getAccountStartBalance, getCurrentAccountBalance, getAccountTotalBalance
 function SettingsContainer() {
   const userId = useSelector(selectUserId);
   const transactions = useSelector(selectAllTransactionsState);
-  const categories = useSelector(selectAllCategoriesState);
-  const accounts = useSelector(selectAllAccountsState);
+  const getCategories = useSelector(selectAllCategoriesState);
+  const getAccounts = useSelector(selectAllAccountsState);
+  const categories = [...getCategories];
+  const accounts = [...getAccounts];
   const loadingCategories = useSelector(isCategoriesLoading);
   const loadingAccounts = useSelector(isAccountsLoading);
   const {toggle} = usePopup();
@@ -27,7 +29,7 @@ function SettingsContainer() {
   const isLoader = (loadingCategories || loadingAccounts) && userId;
 
   useEffect(() => {
-    dispatch(loadTransactions());
+    dispatch(loadTransactions(userId));
     // eslint-disable-next-line
   }, []);
 

@@ -8,16 +8,18 @@ import Menu from "../../../navigation/components/Menu";
 import Auth from "../../../auth/components/Auth";
 
 function Layout(props) {
-  const allCategories = useSelector(selectAllCategoriesState);
-  const allAccounts = useSelector(selectAllAccountsState);
+  const getCategories = useSelector(selectAllCategoriesState);
+  const getAccounts = useSelector(selectAllAccountsState);
+  const categories = [...getCategories];
+  const accounts = [...getAccounts];
   const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
 
 
   useEffect(() => {
-    dispatch(loadCategories());
-    dispatch(loadAccounts());
-  }, [dispatch]);
+    dispatch(loadCategories(userId));
+    dispatch(loadAccounts(userId));
+  }, [userId]);
 
   return (
     <div className={classes.LayoutContainer}>
@@ -25,8 +27,8 @@ function Layout(props) {
         <Auth />
         {props.children}
         {userId && <Menu
-          categories={allCategories}
-          accounts={allAccounts}
+          categories={categories}
+          accounts={accounts}
           userId={userId}
         />}
       </main>

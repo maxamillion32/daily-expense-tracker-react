@@ -1,10 +1,11 @@
-import {addDoc, collection, updateDoc, doc, deleteDoc, getDocs} from "@firebase/firestore";
+import {addDoc, collection, updateDoc, doc, deleteDoc, getDocs, query, where} from "@firebase/firestore";
 import db from "./firebase";
 
 const accountsRef = collection(db, "accounts");
 
-export const getAll = async () => {
-  const snapshot = await getDocs(accountsRef);
+export const getAll = async (userId) => {
+  const q = query(accountsRef, where("userId", "==", userId));
+  const snapshot = await getDocs(q);
   const results = snapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
   return results;
 };
