@@ -8,10 +8,8 @@ import {isCategoriesLoading, selectAllCategoriesState} from "../../../reducers/c
 import {isAccountsLoading, selectAllAccountsState} from "../../../reducers/accounts/accounts-slice";
 import {selectAllTransactionsState, loadTransactions} from "../../../reducers/transactions/transactions-slice";
 
-import Popup from "../../common/hoc/Popup/Popup";
-import SettingsPopup from "./Popup/Popup";
 import Loader from "../../common/components/Loader/Loader";
-import SettingsContainerItem from "./Item/Item";
+import SettingsList from "./List/List";
 
 import {usePopup} from "../../common/hoc/Popup/PopupContext";
 import {getAccountStartBalance, getCurrentAccountBalance, getAccountTotalBalance} from "./utils";
@@ -77,33 +75,29 @@ function SettingsContainer() {
       {isLoader ? <Loader /> : null}
       {userId
         ? <>
-            <SettingsContainerItem
+            <SettingsList
               items={accounts}
               header={"Accounts"}
               onClickItem={onClickItem}
               onClickToggle={onClickToggle}
               transactions={transactions}
+              itemState={item}
+              prevItem={prevItem}
+              setItem={setItem}
             />
 
-            <SettingsContainerItem
+            <SettingsList
               items={categories}
               header={"Categories"}
               onClickItem={onClickItem}
               onClickToggle={onClickToggle}
               transactions={transactions}
+              itemState={item}
+              prevItem={prevItem}
+              setItem={setItem}
             />
           </>
         : null}
-
-      <Popup>
-        <SettingsPopup
-          itemState={item}
-          prevItem={prevItem}
-          setItem={setItem}
-          transactions={transactions}
-          accounts={accounts}
-        />
-      </Popup>
     </section>
   );
 }

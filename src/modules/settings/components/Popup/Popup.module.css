@@ -95,9 +95,10 @@
 
 .Text {
   display: block;
-  margin-top: 10px;
+  /* margin-top: 10px; */
   font-size: 14px;
   color: #000;
+  line-height: 30px;
 }
 
 .Text:last-of-type {

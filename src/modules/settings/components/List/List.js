@@ -1,13 +1,20 @@
 import React from "react";
-import classes from "./Item.module.css";
+import classes from "./List.module.css";
 import {getAccountStartBalance, getCurrentAccountBalance, getAccountTotalBalance} from "../utils";
 
-function SettingsContainerItem({
+import Popup from "../../../common/hoc/Popup/Popup";
+import SettingsPopup from "../Popup/Popup";
+import SettingsListItem from "./Item/Item";
+
+function SettingsList({
   items,
   header,
   onClickItem,
   onClickToggle,
-  transactions
+  transactions,
+  itemState,
+  setItem,
+  prevItem
 }) {
   return (
     <>
@@ -26,25 +33,31 @@ function SettingsContainerItem({
               const currentBalance = getCurrentAccountBalance(transactions, item.title);
               const balance = getAccountTotalBalance(startBalance, currentBalance);
                 return (
-                <div
-                  className={classes.Item}
-                  onClick={onClickItem}
-                  dataid={item.id}
-                  datavalue={item.title}
-                  datatype={+item.incomes ? +item.incomes : ""}
-                  dataheader={header}
-                  key={item.id}
-                >
-                  <p>{item.title}</p>
-                  {header === "Accounts" && <p>balance: <b>{balance}€</b></p>}
-                </div>
+                  <SettingsListItem
+                    onClickItem={onClickItem}
+                    id={item.id}
+                    title={item.title}
+                    incomes={+item.incomes ? +item.incomes : ""}
+                    header={header}
+                    balance={balance}
+                    key={item.id}
+                  />
                 );
               }
             )
           }
       </section>
+
+      <Popup>
+        <SettingsPopup
+          itemState={itemState}
+          prevItem={prevItem}
+          setItem={setItem}
+          transactions={transactions}
+        />
+      </Popup>
     </>
   );
 }
 
-export default SettingsContainerItem;
+export default SettingsList;
