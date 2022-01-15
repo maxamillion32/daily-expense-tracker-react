@@ -8,6 +8,7 @@ import TransactionsItemsMonthGroup from "./Items/MonthGroup";
 
 function TransactionsListContainer() {
   const transactions = useSelector(selectFilteredTransactions);
+  console.log("🚀 ~ file: Container.js ~ line 11 ~ TransactionsListContainer ~ transactions", transactions);
   const months = [...new Set(transactions
     .map(date => formatMonth(date.date)))];
 
