@@ -3,6 +3,7 @@ import {useSelector, useDispatch} from "react-redux";
 import classes from "./Layout.module.css";
 import {selectAllCategoriesState, loadCategories} from "../../../../reducers/categories/categories-slice";
 import {selectAllAccountsState, loadAccounts} from "../../../../reducers/accounts/accounts-slice";
+import {loadTransactions} from "../../../../reducers/transactions/transactions-slice";
 import {selectUserId} from "../../../../reducers/user/user-slice";
 import Menu from "../../../navigation/components/Menu";
 import Auth from "../../../auth/components/Auth";
@@ -19,6 +20,7 @@ function Layout(props) {
   useEffect(() => {
     dispatch(loadCategories(userId));
     dispatch(loadAccounts(userId));
+    dispatch(loadTransactions(userId));
   }, [userId]);
 
   return (
