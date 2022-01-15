@@ -34,7 +34,7 @@ function Balance() {
       <div className={`${balanceContainer}`}>
         <div>
           <p>Your balance:</p>
-          <p className={classes.BalanceAmount}>{currentBalance} €</p>
+          <p className={classes.BalanceAmount}>{currentBalance.toFixed(2)} €</p>
         </div>
       </div>
     </section>
