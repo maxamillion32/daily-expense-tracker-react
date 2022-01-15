@@ -5,7 +5,7 @@ import classes from "./Container.module.css";
 
 import {
   loadTransactions,
-  // selectAllTransactionsState,
+  selectFilteredTransactions,
   showButton, isLoading
 } from "../../../reducers/transactions/transactions-slice";
 import {
@@ -21,6 +21,8 @@ import Welcome from "../../welcome/components/Welcome";
 function TransactionsContainer() {
   const loading = useSelector(isLoading);
   const userId = useSelector(selectUserId);
+  console.log("🚀 ~ file: Container.js ~ line 24 ~ TransactionsContainer ~ userId", userId);
+  const transactions = useSelector(selectFilteredTransactions);
   const dispatch = useDispatch();
 
   const isLoader = loading && userId;
@@ -43,7 +45,7 @@ function TransactionsContainer() {
         ? <section className={classes.Container}>
             <Balance />
             <Search />
-            <TransactionsListContainer />
+            <TransactionsListContainer transactions={transactions} />
           </section>
         : null}
       {!userId ? <Welcome /> : null}
