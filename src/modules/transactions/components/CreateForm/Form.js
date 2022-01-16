@@ -14,6 +14,7 @@ import {
   clickButton,
   loadTransactions
 } from "../../../../reducers/transactions/transactions-slice";
+import {selectUserId} from "../../../../reducers/user/user-slice";
 
 import Input from "../../../common/components/Input/Input";
 import Select from "../../../common/components/Select/Select";
@@ -21,7 +22,8 @@ import Button from "../../../common/components/Button/Button";
 
 import {validateForm, updateFormControls, createFormControls} from "./utils";
 
-function TransactionCreateForm({categories, accounts, onClickAddBtn, userId}){
+function TransactionCreateForm({categories, accounts, onClickAddBtn}){
+  const userId = useSelector(selectUserId);
   const newTransactionState = useSelector(selectNewTransactionState);
   const {sum, date} = newTransactionState;
   const dispatch = useDispatch();

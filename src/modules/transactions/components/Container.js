@@ -32,7 +32,7 @@ function TransactionsContainer() {
       dispatch(showButton());
     };
     // eslint-disable-next-line
-  }, [userId]);
+  }, [dispatch, userId]);
 
   return (
     <>
