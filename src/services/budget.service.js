@@ -4,10 +4,13 @@ import db from "./firebase";
 const budgetRef = collection(db, "budgets");
 
 export const getAll = async (userId) => {
-  const snapshot = await getDocs(budgetRef, userId);
-  const results = snapshot.docs.filter((doc) => doc.id === userId)
-    .map((doc) => (doc.data()))
-    .find((doc) => doc);
+  let results = [];
+  if (userId) {
+    const snapshot = await getDocs(budgetRef, userId);
+    results = snapshot.docs.filter((doc) => doc.id === userId)
+      .map((doc) => (doc.data()))
+      .find((doc) => doc);
+  }
   return results;
 };
 

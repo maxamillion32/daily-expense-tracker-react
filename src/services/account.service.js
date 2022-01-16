@@ -4,9 +4,12 @@ import db from "./firebase";
 const accountsRef = collection(db, "accounts");
 
 export const getAll = async (userId) => {
-  const q = query(accountsRef, where("userId", "==", userId));
-  const snapshot = await getDocs(q);
-  const results = snapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
+  let results = [];
+  if (userId) {
+    const q = query(accountsRef, where("userId", "==", userId));
+    const snapshot = await getDocs(q);
+    results = snapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
+  }
   return results;
 };
 
