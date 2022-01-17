@@ -4,6 +4,7 @@ import {setUserId} from "../reducers/user/user-slice";
 
 import {initializeApp} from "firebase/app";
 import {getFirestore} from "firebase/firestore";
+import {setDoc, doc} from "firebase/firestore";
 import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from "firebase/auth";
 
 // Firebase configuration
@@ -23,7 +24,12 @@ const db = getFirestore(app);
 const auth = getAuth();
 
 export function singUp(email, password) {
-    createUserWithEmailAndPassword(auth, email, password);
+  createUserWithEmailAndPassword(auth, email, password)
+  .then(async(userCredential) => {
+      const userId = userCredential.user.uid;
+      const usersRef = doc(db, "users", userId);
+      await setDoc(usersRef, {userId});
+    });
 }
 
 export function login(email, password) {
@@ -42,12 +48,13 @@ export function useAuth() {
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       if (user) {
-      dispatch(setUserId(user.uid));
-    } else {
-      dispatch(setUserId(null));
-    }
-      setCurrentUser(user);
-    });
+        const userId = user.uid;
+        dispatch(setUserId(userId));
+      } else {
+        dispatch(setUserId(null));
+      }
+        setCurrentUser(user);
+      });
     return unsub;
 // eslint-disable-next-line
   }, [])
