@@ -9,9 +9,9 @@ import {resetState, isButtonShow, isButtonClick, clickButton} from "../../../red
 import {selectAllCategoriesState} from "../../../reducers/categories/categories-slice";
 import {selectAllAccountsState} from "../../../reducers/accounts/accounts-slice";
 
-import transactions from "../../../static/img/transactions.png";
-import statistics from "../../../static/img/statistics.png";
-import settings from "../../../static/img/settings.png";
+import transactions from "../../../assets/img/transactions.png";
+import statistics from "../../../assets/img/statistics.png";
+import settings from "../../../assets/img/settings.png";
 
 function Menu() {
   const getCategories = useSelector(selectAllCategoriesState);

@@ -40,7 +40,7 @@
   content: "";
   position: absolute;
   bottom: 0;
-  left: calc(100% / 2 - 15px);
+  left: 0;
   width: 30px;
   height: 4px;
   background-color: #000;
