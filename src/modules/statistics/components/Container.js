@@ -42,8 +42,7 @@ function StatisticsContainer() {
 
   useEffect(() => {
     dispatch(loadBudgets(userId));
-    // dispatch(loadTransactions(userId));
-    // eslint-disable-next-line
+    dispatch(loadTransactions(userId));
   }, [userId]);
 
   return (
