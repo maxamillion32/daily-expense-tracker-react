@@ -9,6 +9,10 @@ import {resetState, isButtonShow, isButtonClick, clickButton} from "../../../red
 import {selectAllCategoriesState} from "../../../reducers/categories/categories-slice";
 import {selectAllAccountsState} from "../../../reducers/accounts/accounts-slice";
 
+import transactions from "../../../static/img/transactions.png";
+import statistics from "../../../static/img/statistics.png";
+import settings from "../../../static/img/settings.png";
+
 function Menu() {
   const getCategories = useSelector(selectAllCategoriesState);
   const getAccounts = useSelector(selectAllAccountsState);
@@ -66,7 +70,7 @@ function Menu() {
               className={isActiveLink}
           >
             {/* Transactions */}
-            <img src="/img/transactions.png" width="30"/>
+            <img src={transactions} width="30"/>
           </NavLink>
 
           <NavLink
@@ -74,7 +78,7 @@ function Menu() {
               className={isActiveLink}
           >
             {/* Statistics */}
-            <img src="/img/statistics.png"  width="30"/>
+            <img src={statistics}  width="30"/>
           </NavLink>
 
           <NavLink
@@ -82,7 +86,7 @@ function Menu() {
               className={isActiveLink}
           >
             {/* Settings */}
-            <img src="/img/settings.png" width="30"/>
+            <img src={settings} width="30"/>
           </NavLink>
         </div>
       </nav>
