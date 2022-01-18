@@ -55,7 +55,8 @@
 }
 
 .Left {
-  left: -107px;
+  left: -112px;
+  text-align: right;
 }
 
 .DayIndicator::before {
