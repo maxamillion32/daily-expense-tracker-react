@@ -65,21 +65,25 @@ function Menu() {
               to={"/"}
               className={isActiveLink}
           >
-            Transactions
+            {/* Transactions */}
+            <img src="https://img.icons8.com/pastel-glyph/64/000000/transaction-list--v1.png" width="30"/>
           </NavLink>
 
           <NavLink
               to={"/statistics"}
               className={isActiveLink}
           >
-            Statistics
+            {/* Statistics */}
+            {/* <img src="https://img.icons8.com/cotton/64/000000/statistics--v1.png" width="30"/>ß */}
+            <img src="https://img.icons8.com/ios/80/000000/statistics.png"  width="30"/>
           </NavLink>
 
           <NavLink
               to={"/settings"}
               className={isActiveLink}
           >
-            Settings
+            {/* Settings */}
+            <img src="https://img.icons8.com/ios/50/000000/settings.png" width="30"/>
           </NavLink>
         </div>
       </nav>
