@@ -66,7 +66,7 @@ function Menu() {
               className={isActiveLink}
           >
             {/* Transactions */}
-            <img src="img/transactions.png" width="30"/>
+            <img src="/img/transactions.png" width="30"/>
           </NavLink>
 
           <NavLink
@@ -74,7 +74,7 @@ function Menu() {
               className={isActiveLink}
           >
             {/* Statistics */}
-            <img src="img/statistics.png"  width="30"/>
+            <img src="/img/statistics.png"  width="30"/>
           </NavLink>
 
           <NavLink
@@ -82,7 +82,7 @@ function Menu() {
               className={isActiveLink}
           >
             {/* Settings */}
-            <img src="img/settings.png" width="30"/>
+            <img src="/img/settings.png" width="30"/>
           </NavLink>
         </div>
       </nav>
