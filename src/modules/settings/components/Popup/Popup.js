@@ -78,12 +78,12 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
     if (header === "Categories") {
       dispatch(updateCategory(itemState));
       dispatch(loadCategories(userId));
-      dispatch(loadTransactions(userId));
+      // dispatch(loadTransactions(userId));
     }
     if (header === "Accounts") {
       dispatch(updateAccount(itemState));
       dispatch(loadAccounts(userId));
-      dispatch(loadTransactions(userId));
+      // dispatch(loadTransactions(userId));
     }
     toggle();
   };

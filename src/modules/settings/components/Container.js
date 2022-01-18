@@ -24,14 +24,14 @@ function SettingsContainer() {
   const loadingCategories = useSelector(isCategoriesLoading);
   const loadingAccounts = useSelector(isAccountsLoading);
   const {toggle} = usePopup();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
   const isLoader = (loadingCategories || loadingAccounts) && userId;
 
-  useEffect(() => {
-    dispatch(loadTransactions(userId));
+  // useEffect(() => {
+    // dispatch(loadTransactions(userId));
     // eslint-disable-next-line
-  }, []);
+  // }, []);
 
   const [item, setItem] = useState({});
   const [prevItem, setPrevItem] = useState({});
