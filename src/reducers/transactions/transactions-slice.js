@@ -102,7 +102,7 @@ export const transactionsSlice = createSlice({
     showButton: (state, action) => {
       return {
         ...state,
-        isButtonShow: action.payload,
+        isButtonShow: action.payload === "" ? !state.isButtonShow : action.payload,
       };
     },
     clickButton: (state) => {

@@ -77,26 +77,18 @@ function TransactionsContainer() {
       yDown = null;
   }
 
-  function handleTouchEnd() {
-      //reset values
-      xDown = null;
-      yDown = null;
-  }
-
   useEffect(() => {
     dispatch(showButton(true));
     dispatch(loadTransactions(userId));
 
-    window.addEventListener("wheel", (event) => handleNavigation(event));
-    document.addEventListener("touchstart", handleTouchStart, false);
-    document.addEventListener("touchmove", handleTouchMove, false);
-    document.addEventListener("touchend", handleTouchEnd, false);
+    document.addEventListener("wheel", handleNavigation, false);
+    window.addEventListener("touchstart", handleTouchStart, false);
+    window.addEventListener("touchmove", handleTouchMove, false);
     return () => {
       dispatch(showButton(false));
-      window.removeEventListener("wheel", (event) => handleNavigation(event));
-      document.addEventListener("touchstart", handleTouchStart, false);
-      document.addEventListener("touchmove", handleTouchMove, false);
-      document.addEventListener("touchend", handleTouchEnd, false);
+      document.removeEventListener("wheel", handleNavigation, false);
+      window.removeEventListener("touchstart", handleTouchStart, false);
+      window.removeEventListener("touchmove", handleTouchMove, false);
     };
   }, [userId]);
 
