@@ -132,3 +132,19 @@
 .LeftBtn::before, .RightBtn::after {
   transform: rotate(45deg);
 }
+
+@media (max-width: 310px) {
+  .ListWrapper p {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 330px) {
+  .LeftBtn {
+    left: 20px;
+  }
+
+  .RightBtn {
+    right: 20px;
+  }
+}

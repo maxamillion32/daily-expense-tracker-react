@@ -80,3 +80,9 @@
   left: 10px;
   font-size: 13px;
 }
+
+@media (max-width: 350px) {
+  .TotalSumAverage {
+    display: none;
+  }
+}
