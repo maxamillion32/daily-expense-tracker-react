@@ -1,13 +1,14 @@
-import React, {useSelector, useDispatch} from "react-redux";
+import React from "react";
+import {useSelector, useDispatch} from "react-redux";
 import {setSearchTerm, selectSearchTerm, clearSearchTerm} from "../../../../reducers/search/search-slice";
-import {selectAllCategoriesState} from "../../../../reducers/categories/categories-slice";
+import {selectFilteredTransactions} from "../../../../reducers/transactions/transactions-slice";
 import CloseButton from "../../../common/components/CloseButton/CloseButton";
 import classes from "./Search.module.css";
 
 function Search() {
   const searchTerm = useSelector(selectSearchTerm);
-  const getCategories = useSelector(selectAllCategoriesState);
-  const categories = [...getCategories];
+  const getTransactions = useSelector(selectFilteredTransactions);
+  const transactions = [...getTransactions];
   const dispatch = useDispatch();
 
   const onSearchTermChangeHandler = (e) => {
@@ -18,6 +19,12 @@ function Search() {
   const onClearSearchTermHandler = () => {
     dispatch(clearSearchTerm());
   };
+
+  function filterItems(items) {
+    if (!searchTerm.trim()) return [];
+    return [...new Set(items.filter((item) => item.category.title.toLowerCase().includes(searchTerm.toLowerCase()))
+      .map((transaction) => transaction.category.title))];
+  }
 
   return (
     <section className={classes.Search}>
@@ -31,8 +38,8 @@ function Search() {
         autoComplete="off"
       />
       <datalist id="categories">
-        {categories.map((category) =>
-          <option key={category.id} value={category.title} />
+        {filterItems(transactions).map((category) =>
+          <option key={category} value={category} />
         )}
       </datalist>
       {searchTerm.length > 0
