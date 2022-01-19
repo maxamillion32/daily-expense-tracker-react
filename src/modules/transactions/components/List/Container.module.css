@@ -114,3 +114,8 @@
 .exitDone {
   opacity: 0;
 }
+
+.Message {
+  padding: 0 20px;
+  text-align: center;
+}

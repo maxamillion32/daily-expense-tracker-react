@@ -22,6 +22,8 @@ function Menu() {
   const clickAddButton = useSelector(isButtonClick);
   const showAddButton = useSelector(isButtonShow);
 
+  const isEmpty = categories.length === 0 || accounts.length === 0;
+
   const classesAddBtn = [
     classes.menuAddBtn,
     "fa",
@@ -49,21 +51,24 @@ function Menu() {
 
       <nav className={classes.menu}>
         <div className={classes.wrapper}>
-          {showAddButton && <CSSTransition
-              in={clickAddButton}
-              timeout={300}
-              classNames={{
-                enterActive: `${classes.addBtnEnterActive}`,
-                enterDone: `${classes.addBtnEnterDone}`,
-              }}
-              nodeRef={nodeRef}
-            >
-            <i
-              className={classesAddBtn}
-              onClick={onClickAddButton}
-              ref={nodeRef}
-            />
-          </CSSTransition>}
+          {showAddButton
+            ? <CSSTransition
+                  in={clickAddButton}
+                  timeout={300}
+                  classNames={{
+                    enterActive: `${classes.addBtnEnterActive}`,
+                    enterDone: `${classes.addBtnEnterDone}`,
+                  }}
+                  nodeRef={nodeRef}
+                >
+                <button
+                  className={classesAddBtn}
+                  onClick={onClickAddButton}
+                  ref={nodeRef}
+                  disabled={isEmpty}
+                />
+              </CSSTransition>
+            : null}
 
           <NavLink
               to={"/"}
