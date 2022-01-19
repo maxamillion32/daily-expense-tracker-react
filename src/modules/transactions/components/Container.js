@@ -1,4 +1,4 @@
-import React, {useEffect, useCallback, useState} from "react";
+import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import classes from "./Container.module.css";
@@ -35,16 +35,61 @@ function TransactionsContainer() {
       }
   };
 
+  let xDown = null;
+  let yDown = null;
+
+  function getTouches(evt) {
+    return evt.touches || evt.originalEvent.touches;
+  }
+
+  function handleTouchStart(evt) {
+      const firstTouch = getTouches(evt)[0];
+      xDown = firstTouch.clientX;
+      yDown = firstTouch.clientY;
+  }
+
+  function handleTouchMove(evt) {
+      if ( ! xDown || ! yDown ) {
+          return;
+      }
+
+      const xUp = evt.touches[0].clientX;
+      const yUp = evt.touches[0].clientY;
+
+      const xDiff = xDown - xUp;
+      const yDiff = yDown - yUp;
+
+      if (Math.abs(xDiff) > Math.abs(yDiff)) {
+          if ( xDiff > 0 ) {
+               //left swipe
+          } else {
+              //right swipe
+          }
+      } else {
+          if ( yDiff > 0 ) {
+            dispatch(showButton(false)); //up swipe
+          } else {
+            dispatch(showButton(true)); //down swipe
+          }
+      }
+      //reset values
+      xDown = null;
+      yDown = null;
+  }
+
   useEffect(() => {
     dispatch(showButton(true));
     dispatch(loadTransactions(userId));
 
     window.addEventListener("wheel", (event) => handleNavigation(event));
+    document.addEventListener("touchstart", handleTouchStart, false);
+    document.addEventListener("touchmove", handleTouchMove, false);
     return () => {
       dispatch(showButton(false));
       window.removeEventListener("wheel", (event) => handleNavigation(event));
+      document.addEventListener("touchstart", handleTouchStart, false);
+      document.addEventListener("touchmove", handleTouchMove, false);
     };
-    // eslint-disable-next-line
   }, [userId]);
 
   return (
