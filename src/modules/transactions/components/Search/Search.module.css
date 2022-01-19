@@ -13,6 +13,15 @@
     padding: 0 15px;
     border: 1px solid #a7a7a7;
     border-radius: 5px;
+    outline-color: #000;
+}
+
+.Search input::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+
+.Search datalist {
+  display: none;
 }
 
 .CloseBtn {

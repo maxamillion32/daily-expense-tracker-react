@@ -17,6 +17,7 @@
   padding: 0 15px;
   border: none;
   border-radius: 5px;
+  outline-color: #000;
 }
 
 .InputTypeCheckbox input {
