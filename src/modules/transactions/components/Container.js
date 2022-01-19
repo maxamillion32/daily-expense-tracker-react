@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useCallback, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import classes from "./Container.module.css";
@@ -27,14 +27,25 @@ function TransactionsContainer() {
   const isLoader = loading && userId;
   const isTransactions = transactions.length !== 0;
 
+  const handleNavigation = (event) => {
+      if (event.deltaY > 0) {
+          dispatch(showButton(false));
+      } else if (event.deltaY < 0) {
+          dispatch(showButton(true));
+      }
+  };
+
   useEffect(() => {
-    dispatch(showButton());
+    dispatch(showButton(true));
     dispatch(loadTransactions(userId));
+
+    window.addEventListener("wheel", (event) => handleNavigation(event));
     return () => {
-      dispatch(showButton());
+      dispatch(showButton(false));
+      window.removeEventListener("wheel", (event) => handleNavigation(event));
     };
     // eslint-disable-next-line
-  }, [dispatch, userId]);
+  }, [userId]);
 
   return (
     <>

@@ -99,10 +99,10 @@ export const transactionsSlice = createSlice({
         currentYear: action.payload,
       };
     },
-    showButton: (state) => {
+    showButton: (state, action) => {
       return {
         ...state,
-        isButtonShow: !state.isButtonShow,
+        isButtonShow: action.payload,
       };
     },
     clickButton: (state) => {
