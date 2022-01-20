@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import {CSSTransition} from "react-transition-group";
 
 import classes from "./Menu.module.css";
-import Form from "../../transactions/components/CreateForm/Form";
+import CreateForm from "../../transactions/components/CreateForm/Form";
 import {resetState, isButtonShow, isButtonClick, clickButton} from "../../../reducers/transactions/transactions-slice";
 import {selectAllCategoriesState} from "../../../reducers/categories/categories-slice";
 import {selectAllAccountsState} from "../../../reducers/accounts/accounts-slice";
@@ -43,11 +43,11 @@ function Menu() {
 
   return (
     <>
-      <Form
+      {clickAddButton ? <CreateForm
         categories={categories}
         accounts={accounts}
         onClickAddBtn={clickAddButton}
-      />
+      /> : null}
 
       <nav className={classes.menu}>
         <div className={classes.wrapper}>

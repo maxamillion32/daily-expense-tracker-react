@@ -15,7 +15,7 @@
 }
 
 .dialog {
-  max-height: 307px;
+  /* max-height: 307px; */
   padding: 30px 30px 20px;
   box-sizing: border-box;
   background-color: #f1f1f1;

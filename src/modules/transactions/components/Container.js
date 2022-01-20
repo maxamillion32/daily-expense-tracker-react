@@ -6,7 +6,7 @@ import classes from "./Container.module.css";
 import {
   loadTransactions,
   selectAllTransactionsState,
-  showButton, isLoading
+  showButton, isLoading, isButtonClick
 } from "../../../reducers/transactions/transactions-slice";
 import {
   selectUserId
@@ -22,6 +22,7 @@ function TransactionsContainer() {
   const loading = useSelector(isLoading);
   const userId = useSelector(selectUserId);
   const transactions = useSelector(selectAllTransactionsState);
+  const clickAddButton = useSelector(isButtonClick);
   const dispatch = useDispatch();
 
   const isLoader = loading && userId;
@@ -82,15 +83,21 @@ function TransactionsContainer() {
     dispatch(loadTransactions(userId));
 
     document.addEventListener("wheel", handleNavigation, false);
-    window.addEventListener("touchstart", handleTouchStart, false);
-    window.addEventListener("touchmove", handleTouchMove, false);
+    document.addEventListener("touchstart", handleTouchStart, false);
+    document.addEventListener("touchmove", handleTouchMove, false);
+
+    if (clickAddButton) {
+      document.removeEventListener("wheel", handleNavigation, false);
+      document.removeEventListener("touchstart", handleTouchStart, false);
+      document.removeEventListener("touchmove", handleTouchMove, false);
+    }
     return () => {
       dispatch(showButton(false));
       document.removeEventListener("wheel", handleNavigation, false);
-      window.removeEventListener("touchstart", handleTouchStart, false);
-      window.removeEventListener("touchmove", handleTouchMove, false);
+      document.removeEventListener("touchstart", handleTouchStart, false);
+      document.removeEventListener("touchmove", handleTouchMove, false);
     };
-  }, [userId]);
+  }, [userId, clickAddButton]);
 
   return (
     <>
