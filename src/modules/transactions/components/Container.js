@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import classes from "./Container.module.css";
@@ -21,23 +21,24 @@ import Chart from "./Chart/Chart";
 import {MONTH_EXPENSES} from "../../statistics/components/YearExpenses/constant";
 import {formatMonth, formatYear} from "../../common/utils/utils";
 
-const getExpenses = (year, transactions) => {
+const getExpenses = (year, transactions, toggle) => {
   return MONTH_EXPENSES.map(item => {
     const month = item ? {name: item.toString().substr(0, 3)} : null;
+    const prevYear = (+year-1).toString();
 
     return {
       ...month,
       current: transactions
         .filter((transaction) => formatYear(transaction.date) === year)
         .filter(transaction => formatMonth(transaction.date) === item)
-        .map((transaction) => transaction.expense
+        .map((transaction) => (toggle ? transaction.expense : !transaction.expense)
         ? transaction = +transaction.sum
         : transaction = null)
         .reduce((acc, sum) => acc + sum, 0).toFixed(2),
       previous: transactions
-        .filter((transaction) => formatYear(transaction.date) === (+year-1).toString())
+        .filter((transaction) => formatYear(transaction.date) === prevYear)
         .filter(transaction => formatMonth(transaction.date) === item)
-        .map((transaction) => transaction.expense
+        .map((transaction) => (toggle ? transaction.expense : !transaction.expense)
         ? transaction = +transaction.sum
         : transaction = null)
         .reduce((acc, sum) => acc + sum, 0).toFixed(2)
@@ -52,10 +53,17 @@ function TransactionsContainer() {
   const year = useSelector(currentYear);
   const dispatch = useDispatch();
 
+  const [toggle, setToggle] = useState(true);
+
+  const header = toggle ? "Expenses" : "Incomes";
   const isLoader = loading && userId;
   const isTransactions = transactions.length !== 0;
 
-  const data = getExpenses(year, transactions);
+  const data = getExpenses(year, transactions, toggle);
+
+  const handleClick = () => {
+    setToggle(prev => !prev);
+  };
 
   useEffect(() => {
     dispatch(showButton(true));
@@ -72,7 +80,7 @@ function TransactionsContainer() {
         : null}
       {!isLoader && userId
         ? <section className={classes.Container}>
-            <Chart data={data} />
+            <Chart data={data} onClick={handleClick} header={header} />
             <Balance />
             {isTransactions ? <Search /> : null}
             <TransactionsListContainer />

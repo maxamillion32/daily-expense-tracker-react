@@ -2,16 +2,16 @@ import React from "react";
 import classes from "./Chart.module.css";
 import {AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer} from "recharts";
 
-function Chart({data}) {
+function Chart({data, onClick, header}) {
   return (
     <div className={classes.Chart}>
         <button
           id={"prev"}
           className={classes.LeftBtn}
-          // onClick={handleClick}
+          onClick={onClick}
         ></button>
 
-        <h3>Expenses</h3>
+        <h3>{header}</h3>
 
       <ResponsiveContainer width="100%" height={120}>
         <AreaChart data={data} margin={{top: 15, right: 20, left: 20}}>
@@ -36,7 +36,7 @@ function Chart({data}) {
         <button
           id={"next"}
           className={classes.RightBtn}
-          // onClick={handleClick}
+          onClick={onClick}
         ></button>
     </div>
   );
