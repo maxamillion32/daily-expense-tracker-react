@@ -46,3 +46,20 @@ export function formatMonthShort (dateString) {
   };
   return date.toLocaleString("en-EN", options);
 }
+
+export const getMaxAmountPerYear = (year, type, transactions) => {
+  const months = [...new Set(transactions
+    .filter((transaction) => formatYear(transaction.date) === year)
+    .map((transaction) => formatMonth(transaction.date)))];
+
+  const amount = Math.max(...months
+    .map((month) => transactions
+    .map((transaction) => formatMonth(transaction.date) === month
+      ? (type === "expenses" ? transaction.expense : !transaction.expense)
+        ? transaction = +transaction.sum
+        : transaction = null
+      : null)
+    .reduce((acc, sum) => acc + sum, 0)));
+
+  return amount;
+};

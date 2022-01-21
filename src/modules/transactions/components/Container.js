@@ -20,6 +20,7 @@ import Welcome from "../../welcome/components/Welcome";
 import Chart from "./Chart/Chart";
 import {MONTH_EXPENSES} from "../../statistics/components/YearExpenses/constant";
 import {formatMonth, formatYear} from "../../common/utils/utils";
+import {getMaxAmountPerYear} from "../../common/utils/utils";
 
 const getExpenses = (year, transactions, toggle) => {
   return MONTH_EXPENSES.map(item => {
@@ -55,11 +56,16 @@ function TransactionsContainer() {
 
   const [toggle, setToggle] = useState(true);
 
-  const header = toggle ? "Expenses" : "Incomes";
   const isLoader = loading && userId;
   const isTransactions = transactions.length !== 0;
 
   const data = getExpenses(year, transactions, toggle);
+
+  const maxMonthExpensePerYear = getMaxAmountPerYear(year, "expenses", transactions);
+  const maxMonthIncomePerYear = getMaxAmountPerYear(year, "income", transactions);
+
+  const header = toggle ? "Expenses" : "Incomes";
+  const yRange = toggle ? maxMonthExpensePerYear : maxMonthIncomePerYear;
 
   const handleClick = () => {
     setToggle(prev => !prev);
@@ -80,7 +86,7 @@ function TransactionsContainer() {
         : null}
       {!isLoader && userId
         ? <section className={classes.Container}>
-            <Chart data={data} onClick={handleClick} header={header} />
+            <Chart data={data} onClick={handleClick} header={header} yRange={yRange} />
             <Balance />
             {isTransactions ? <Search /> : null}
             <TransactionsListContainer />

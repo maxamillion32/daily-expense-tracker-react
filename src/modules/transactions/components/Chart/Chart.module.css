@@ -1,5 +1,6 @@
 .Chart {
   position: relative;
+  height: 120px;
   font-size: 12px;
   background-color: #f1f1f1;
 }
