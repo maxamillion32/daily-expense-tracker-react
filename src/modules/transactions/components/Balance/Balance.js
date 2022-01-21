@@ -3,10 +3,8 @@ import {useSelector} from "react-redux";
 import classes from "./Balance.module.css";
 import {selectCurrentBalance} from "../../../../reducers/transactions/transactions-slice";
 import {selectAccountBalance} from "../../../../reducers/accounts/accounts-slice";
-import Chart from "./Chart/Chart";
 
 function Balance() {
-  console.log("object");
   const transactionBalance = useSelector(selectCurrentBalance);
   const accountBalance = useSelector(selectAccountBalance);
 
@@ -32,17 +30,14 @@ function Balance() {
   }, []);
 
   return (
-    <>
-      <Chart />
-      <section className={balance}>
-        <div className={`${balanceContainer}`}>
-          <div>
-            <p>Your balance:</p>
-            <p className={classes.BalanceAmount}>{currentBalance.toFixed(2)} €</p>
-          </div>
+    <section className={balance}>
+      <div className={`${balanceContainer}`}>
+        <div>
+          <p>Your balance:</p>
+          <p className={classes.BalanceAmount}>{currentBalance.toFixed(2)} €</p>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 
