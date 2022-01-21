@@ -17,7 +17,7 @@ import Balance from "./Balance/Balance";
 import TransactionsListContainer from "./List/Container";
 import Loader from "../../common/components/Loader/Loader";
 import Welcome from "../../welcome/components/Welcome";
-import Chart from "./Balance/Chart/Chart";
+import Chart from "./Chart/Chart";
 import {MONTH_EXPENSES} from "../../statistics/components/YearExpenses/constant";
 import {formatMonth, formatYear} from "../../common/utils/utils";
 
