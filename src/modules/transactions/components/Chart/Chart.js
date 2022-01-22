@@ -1,17 +1,14 @@
 import React from "react";
 import classes from "./Chart.module.css";
 import {AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer} from "recharts";
+import ArrowButton from "../../../common/components/ArrowButton/ArrowButton";
 
 function Chart({data, onClick, header, yRange}) {
   return (
     <div className={classes.Chart}>
-        <button
-          id={"prev"}
-          className={classes.LeftBtn}
-          onClick={onClick}
-        ></button>
+      <ArrowButton direction={"left"} onClick={onClick} style={{top: 20}} />
 
-        <h3>{header}</h3>
+      <h3>{header}</h3>
 
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={data} margin={{top: 15, right: 20, left: 20}}>
@@ -47,11 +44,8 @@ function Chart({data, onClick, header, yRange}) {
           />
         </AreaChart>
       </ResponsiveContainer>
-        <button
-          id={"next"}
-          className={classes.RightBtn}
-          onClick={onClick}
-        ></button>
+
+      <ArrowButton direction={"right"} onClick={onClick} style={{top: 20}} />
     </div>
   );
 }

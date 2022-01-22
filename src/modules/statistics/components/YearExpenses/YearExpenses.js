@@ -8,6 +8,7 @@ import {formatMonth, formatYear} from "../../../common/utils/utils";
 import Indicator from "./Indicator/Indicator";
 import {MONTH_EXPENSES} from "./constant";
 import {getMaxAmountPerYear} from "../../../common/utils/utils";
+import ArrowButton from "../../../common/components/ArrowButton/ArrowButton";
 
 function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
     const id = target.id;
     let year = +currentYear;
 
-    id === "prev" ? --year : ++year;
+    id === "left" ? --year : ++year;
 
     dispatch(updateYear(String(year)));
   };
@@ -49,11 +50,7 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
   return (
     <>
       <section className={classes.YearExpenses}>
-        <button
-          id={"prev"}
-          className={classes.LeftBtn}
-          onClick={handleClick}
-        ></button>
+        <ArrowButton direction={"left"} onClick={handleClick} style={{top: -55}} />
 
         <h4>{currentYear}</h4>
         <div className={classes.Wrapper}>
@@ -88,11 +85,7 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
           }
         </div>
 
-        <button
-          id={"next"}
-          className={classes.RightBtn}
-          onClick={handleClick}
-        ></button>
+        <ArrowButton direction={"right"} onClick={handleClick} style={{top: -55}} />
       </section>
     </>
   );
