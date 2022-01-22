@@ -17,5 +17,10 @@ export const getBalance = (category, type, transactions) => {
 
 export const MOTH_COUNT = 12;
 
-export const getMonthAverageSum = (sum) => (sum / MOTH_COUNT).toFixed(2);
-export const getTotalPercentPerMonth = (balance, sum) => (balance / getMonthAverageSum(sum) * 100).toFixed(2);
+export const getMonthCount = (transactions) => {
+  return [...new Set(transactions
+        .map(transaction => new Date(transaction.date).getMonth()))].length;
+};
+
+export const getMonthAverageSum = (sum, transactions) => (sum / getMonthCount(transactions)).toFixed(2);
+export const getTotalPercentPerMonth = (balance, sum, transactions) => (balance / getMonthAverageSum(sum, transactions) * 100).toFixed(2);
