@@ -3,8 +3,7 @@ import {
   getSum,
   getTotalPercentPerMonth,
   getBalance,
-  MOTH_COUNT,
-  getMonthCount
+  getMonthCountPerCategory
 } from "./utils";
 import {TRANSACTION_TYPE} from "./const";
 
@@ -136,7 +135,7 @@ export class Statistics {
 
     const percent = budget
       ? balance / budget * 100
-      : getTotalPercentPerMonth(balance, balancePerCategory, this.transactions);
+      : getTotalPercentPerMonth(balance, balancePerCategory, this.transactions, category);
     const expensesPercent = percent > 100 ? percent - 100 : 0;
 
     return expensesPercent;
@@ -145,7 +144,7 @@ export class Statistics {
   balanceCategoryOfCurrent(category, type) {
     const balancePerCategory = getBalance(category, type, this.transactions);
     const transactionsSumPerCategory = getBalance(category, type, this.monthTransactions);
-    const monthCount = getMonthCount(this.transactions);
+    const monthCount = getMonthCountPerCategory(this.transactions, category);
 
     const budget = this.isBudget && this.budget[this.currentYear][this.currentMonth][this.type][this._categoryId(category, type)];
 
@@ -167,10 +166,10 @@ export class Statistics {
 
     const percent = budget
       ? balance / budget * 100
-      : getTotalPercentPerMonth(balance, balancePerCategory, this.transactions);
+      : getTotalPercentPerMonth(balance, balancePerCategory, this.transactions, category);
     let expensesPercent = percent >= 100
-      ? 100
-      : percent;
+    ? 100
+    : percent;
 
     return expensesPercent === 0 ? 0 : expensesPercent;
   }
