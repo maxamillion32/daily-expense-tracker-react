@@ -15,19 +15,17 @@ export const getBalance = (category, type, transactions) => {
     return balance.toFixed(2);
 };
 
-const currentMonth = 1;
-
 export const getMonthCountPerCategory = (transactions, category) => {
   const monthCount = [...new Set(transactions
     .filter((transaction) => transaction.category.title === category)
-    .map(transaction => new Date(transaction.date).getMonth()))].length - currentMonth;
+    .map(transaction => new Date(transaction.date).toISOString().slice(0, -17)))].length;
 
-  return monthCount === 0 ? 1 : monthCount;
+  return monthCount;
 };
 
 export const getMonthCount = (transactions) => {
   return [...new Set(transactions
-    .map(transaction => new Date(transaction.date).getMonth()))].length;
+    .map(transaction => new Date(transaction.date).toISOString().slice(0, -17)))].length;
 };
 
 export const getMonthAverageSum = (sum, transactions, category) => {

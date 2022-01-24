@@ -103,13 +103,17 @@ export class Statistics {
   balanceOfCurrent() {
     const averageValue =  (this.averageSum() - getSum(this.monthTransactions, this.type)).toFixed(2);
 
-    if (!this.isBudget) return;
+    if (!this.isBudget) {
+      return averageValue > 0
+      ? `${averageValue}€ below typical`
+      : `${Math.abs(averageValue)}€ above typical`;
+    }
 
     return averageValue > 0
-      ? `${averageValue}€ below ${this.budget[this.currentYear][this.currentMonth][this.type][this.category] ? "budget" : "typical"}`
-      : isNaN(averageValue) ? ""
+      ? `${averageValue}€ below budget`
+      : isNaN(averageValue) ? "equal to budget"
       : averageValue === "0.00" ? "equal to budget"
-      : `${Math.abs(averageValue)}€ above ${this.budget[this.currentYear][this.currentMonth][this.type][this.category] ? "budget" : "typical"}`;
+      : `${Math.abs(averageValue)}€ above budget`;
   }
 
   totalPercent() {

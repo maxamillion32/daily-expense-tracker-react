@@ -14,12 +14,12 @@ function Chart({data, onClick, header, yRange}) {
         <AreaChart data={data} margin={{top: 15, right: 20, left: 20}}>
           <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#000000" stopOpacity={0.1}/>
-              <stop offset="95%" stopColor="#000000" stopOpacity={0.1}/>
+              <stop offset="5%" stopColor="#000000" stopOpacity={0}/>
+              <stop offset="95%" stopColor="#000000" stopOpacity={0}/>
             </linearGradient>
             <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#a7a7a7" stopOpacity={0}/>
-              <stop offset="95%" stopColor="#a7a7a7" stopOpacity={0}/>
+              <stop offset="5%" stopColor="#a7a7a7" stopOpacity={0.1}/>
+              <stop offset="95%" stopColor="#a7a7a7" stopOpacity={0.1}/>
             </linearGradient>
           </defs>
           <CartesianGrid stroke="#a7a7a7" strokeDasharray="1 4" horizontal={false}/>
