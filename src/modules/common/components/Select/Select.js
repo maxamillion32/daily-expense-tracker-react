@@ -5,7 +5,7 @@ function isInvalid({valid, touched, shouldValidate}) {
   return !valid && shouldValidate && touched;
 }
 
-const Select = (props) => {
+const Select = ({defaultOption, options, onChange, errorMessage, valid, touched, shouldValidate}) => {
   // const value = props.options.length !== 0 && props.options[2].title;
   const cls = [classes.Select];
 
@@ -13,10 +13,10 @@ const Select = (props) => {
     <div className={cls}>
       <select
         // value={value}
-        onChange={props.onChange}
+        onChange={onChange}
       >
-        <option value="" hidden>{props.defaultOption}</option>
-        {props.options.sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1).map((option) => {
+        <option value="" hidden>{defaultOption}</option>
+        {options.sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1).map((option) => {
           return (
             <option
               value={option.title}
@@ -27,8 +27,8 @@ const Select = (props) => {
           );
         })}
         {
-        isInvalid(props)
-        ? <span>{props.errorMessage || "Enter correct value"}</span>
+        isInvalid({valid, touched, shouldValidate})
+        ? <span>{errorMessage || "Enter correct value"}</span>
         : null
       }
       </select>

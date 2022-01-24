@@ -40,6 +40,7 @@ function SettingsContainer() {
     const title = currentTarget.getAttribute("datavalue");
     const type = currentTarget.getAttribute("datatype");
     const header = currentTarget.getAttribute("dataheader");
+    const icon = currentTarget.getAttribute("dataicon");
 
     if (header === "Accounts") {
       const startBalance = getAccountStartBalance(accounts, title);
@@ -52,8 +53,8 @@ function SettingsContainer() {
       const startBalance = "";
       const balance = "";
 
-      setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance});
-      setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance});
+      setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance, icon});
+      setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance, icon});
       toggle();
     }
   };
@@ -65,9 +66,10 @@ function SettingsContainer() {
     const header = target.getAttribute("dataheader");
     const startBalance = 0;
     const balance = 0;
+    const icon = null;
 
-    setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance});
-    setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance});
+    setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance, icon});
+    setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance, icon});
     toggle();
   };
 

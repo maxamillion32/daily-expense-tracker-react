@@ -7,7 +7,7 @@ import classes from "../Container.module.css";
 import {deleteTransaction, loadTransactions} from "../../../../../reducers/transactions/transactions-slice";
 import {selectUserId} from "../../../../../reducers/user/user-slice";
 
-function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, ...rest}) {
+function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, ...rest}) {
   const dispatch = useDispatch();
   const userId = useSelector(selectUserId);
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
@@ -48,6 +48,7 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, ...res
         onMouseOut={handleDeleteButtonToggle}
         ref={nodeRef}
       >
+        <i className={`${classes.TransactionsIcon} fas ${icon ? icon : classes.Empty}`}></i>
         <div className={classes.TransactionsItemWrapper}>
           <p>{categoryTitle}</p>
           <p>{expense ? "-" : "+"}{sum} €</p>

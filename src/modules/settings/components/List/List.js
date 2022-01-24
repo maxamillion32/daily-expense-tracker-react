@@ -40,6 +40,7 @@ function SettingsList({
                     incomes={+item.incomes ? +item.incomes : ""}
                     header={header}
                     balance={balance}
+                    icon={item.icon}
                     key={item.id}
                   />
                 );

@@ -50,7 +50,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
   const month = useSelector(currentMonth);
   const year = useSelector(currentYear);
   const {toggle} = usePopup();
-  const {id, title, userId, incomes, header, startBalance, balance} = itemState;
+  const {id, title, userId, incomes, header, startBalance, balance, icon} = itemState;
 
   const prevState = JSON.stringify(itemState) === JSON.stringify(prevItem);
   const filteredTransactions = transactions
@@ -64,7 +64,12 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
   const onChangeItem = ({target}) => {
     const value = target.value;
     const type = incomes ? incomes : false;
-    setItem({id, title: value, userId, incomes: type, header, startBalance, balance});
+    setItem({id, title: value, userId, incomes: type, header, startBalance, balance, icon});
+  };
+
+  const onChangeIcon = ({target}) => {
+    const value = target.value;
+    setItem({id, title, userId, incomes, header, startBalance, balance, icon: value});
   };
 
   const onChangeStartBalance = ({target}) => {
@@ -76,12 +81,12 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
 
   const onClickEditButton = () => {
     if (header === "Categories") {
-      dispatch(updateCategory(itemState));
+      dispatch(updateCategory({id, title, userId, incomes, icon}));
       dispatch(loadCategories(userId));
       // dispatch(loadTransactions(userId));
     }
     if (header === "Accounts") {
-      dispatch(updateAccount(itemState));
+      dispatch(updateAccount({id, title, userId, startBalance, balance}));
       dispatch(loadAccounts(userId));
       // dispatch(loadTransactions(userId));
     }
@@ -120,7 +125,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
         alert("This category already exists!");
         return;
       }
-      dispatch(postCategory({title, userId, incomes}));
+      dispatch(postCategory({title, userId, incomes, icon}));
       dispatch(loadCategories(userId));
     }
     if (header === "Accounts") {
@@ -134,6 +139,48 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
 
     toggle();
   };
+
+  const options = [
+    {
+      icon: "fa-shopping-cart",
+    },
+    {
+      icon: "fa-id-card",
+    },
+    {
+      icon: "fa-coffee",
+    },
+    {
+      icon: "fa-bath",
+    },
+    {
+      icon: "fa-subway",
+    },
+    {
+      icon: "fa-home",
+    },
+    {
+      icon: "fa-shopping-bag",
+    },
+    {
+      icon: "fa-briefcase",
+    },
+    {
+      icon: "fa-hand-holding-usd",
+    },
+    {
+      icon: "fa-cut",
+    },
+    {
+      icon: "fa-gifts",
+    },
+    {
+      icon: "fa-utensils",
+    },
+    {
+      icon: "fa-asterisk",
+    }
+  ];
 
   return (
     <section className={classes.Settings}>
@@ -174,21 +221,47 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
           />
         </div>
         {header !== "Accounts"
-          ? <div className={classes.Type}>
-              {isExists(transactions, "category", prevItem.title)
-                ? <p className={classes.Label}>This category is already used in transactions and this setting cannot be changed.</p>
-                : <p className={classes.Label}>Select <b>incomes</b> if the category is taken into income transactions</p>}
-              <input
-                type="checkbox"
-                checked={+incomes || false}
-                id={id}
-                onChange={onChangeType}
-                disabled={isExists(transactions, "category", prevItem.title)}
-              />
-              <label
-                htmlFor={id}
-              >Incomes</label>
-            </div>
+          ? <>
+              <div className={classes.Type}>
+                {isExists(transactions, "category", prevItem.title)
+                  ? <p className={classes.Label}>This category is already used in transactions and this setting cannot be changed.</p>
+                  : <p className={classes.Label}>Select <b>incomes</b> if the category is taken into income transactions</p>}
+                <input
+                  type="checkbox"
+                  checked={+incomes || false}
+                  id={id}
+                  onChange={onChangeType}
+                  disabled={isExists(transactions, "category", prevItem.title)}
+                />
+                <label
+                  htmlFor={id}
+                >Incomes</label>
+              </div>
+
+              <div className={classes.Type}>
+                <form>
+                  <p className={classes.Text}>This category is already used in transactions and this setting cannot be changed.</p>
+                  {options.map((option) => {
+                    const isChecked = icon === option.icon;
+                    return (
+                      <label
+                        key={option.icon}
+                      >
+                        <input
+                          id={option.icon}
+                          type="radio"
+                          name="icon"
+                          value={option.icon}
+                          onChange={onChangeIcon}
+                          checked={isChecked}
+                        />
+                        <i className={`${classes.TransactionsIcon} fas ${option.icon}`} aria-hidden="true"></i>
+                      </label>
+                    );
+                  })}
+                </form>
+              </div>
+            </>
           : null}
         {isExists(transactions, "category", prevItem.title)
           ? <div className={classes.WrapperText}>
