@@ -7,7 +7,7 @@ import {
   updateCategory, loadCategories, deleteCategory, postCategory
 } from "../../../../reducers/categories/categories-slice";
 import {
-  currentMonth, currentYear, loadTransactions
+  currentMonth, currentYear
 } from "../../../../reducers/transactions/transactions-slice";
 import {
   deleteAccount, postAccount, updateAccount, loadAccounts
@@ -16,6 +16,7 @@ import {
 import ScrollToTop from "../../../common/hoc/ScrollToTop/ScrollToTop";
 import {usePopup} from "../../../common/hoc/Popup/PopupContext";
 import {formatYear, formatMonth} from "../../../common/utils/utils";
+import PopupIconList from "./IconList/IconList";
 
 const isExists = (data, type, item) => {
   return data.find((it) => it[type].title === item) ? true : false;
@@ -140,22 +141,6 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
     toggle();
   };
 
-  const options = [
-    {icon: "fa-shopping-cart"},
-    {icon: "fa-id-card"},
-    {icon: "fa-coffee"},
-    {icon: "fa-bath"},
-    {icon: "fa-subway"},
-    {icon: "fa-home"},
-    {icon: "fa-shopping-bag"},
-    {icon: "fa-briefcase"},
-    {icon: "fa-hand-holding-usd"},
-    {icon: "fa-cut"},
-    {icon: "fa-gifts"},
-    {icon: "fa-utensils"},
-    {icon: "fa-asterisk"}
-  ];
-
   return (
     <section className={classes.Settings}>
       <ScrollToTop />
@@ -213,27 +198,11 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
               </div>
 
               <div className={classes.Type}>
-                <form >
-                  <p className={classes.Text}>Choose an icon for the category</p>
-                    <div className={classes.IconContainer}>
-                      {options.map((option) => {
-                        const isChecked = icon === option.icon;
-                        return (
-                            <label key={option.icon} className={classes.IconWrapper}>
-                              <input
-                                id={option.icon}
-                                type="radio"
-                                name="icon"
-                                value={option.icon}
-                                onChange={onChangeIcon}
-                                checked={isChecked}
-                              />
-                              <i className={`${classes.TransactionsIcon} fas ${option.icon}`} aria-hidden="true"></i>
-                            </label>
-                        );
-                      })}
-                    </div>
-                </form>
+                <p className={classes.Text}>Choose an icon for the category</p>
+                <PopupIconList
+                  onChange={onChangeIcon}
+                  icon={icon}
+                  />
               </div>
             </>
           : null}

@@ -1,0 +1,44 @@
+.IconContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.IconWrapper {
+  display: flex;
+  justify-content: center;
+  width: 40px;
+  margin-top: 10px;
+  /* margin-right: 10px; */
+}
+
+.IconWrapper input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+  white-space: nowrap;
+  -webkit-clip-path: inset(100%);
+          clip-path: inset(100%);
+  clip: rect(0 0 0 0);
+  overflow: hidden;
+}
+
+.IconWrapper input:checked + i {
+  color: #000;
+}
+
+.IconWrapper input:focus + i {
+  outline: 1px solid #646464;
+}
+
+.TransactionsIcon {
+  padding: 5px;
+  font-size: 22px;
+  color: #d5d5d5;
+}
+
+.TransactionsIcon:hover {
+  cursor: pointer;
+}
