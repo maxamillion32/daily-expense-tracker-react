@@ -43,24 +43,28 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, 
       nodeRef={nodeRef}
     >
       <li
-        className={classes.TransactionsItem}
+        className={classes.TransactionsList}
         onMouseOver={handleDeleteButtonToggle}
         onMouseOut={handleDeleteButtonToggle}
         ref={nodeRef}
       >
-        <i className={`${classes.TransactionsIcon} fas ${icon ? icon : classes.Empty}`}></i>
-        <div className={classes.TransactionsItemWrapper}>
-          <p>{categoryTitle}</p>
-          <p>{expense ? "-" : "+"}{sum} €</p>
+        <div className={classes.IconWrapper}>
+          <i className={`${classes.TransactionsIcon} fas ${icon ? icon : classes.Empty}`}></i>
         </div>
-        <div className={classes.TransactionsItemWrapper}>
-          <p className={classes.TransactionsItemAccount}>{accountTitle}</p>
-          <p
-            className={`${classes.TransactionsItemEdit} ${showDeleteBtn ? "" : classes.TransactionsHidden}`}
-            id={id}
-            onClick={onClickDeleteButton}
-            >
-          delete</p>
+        <div className={classes.GroupWrapper}>
+          <div className={classes.TransactionsContentWrapper}>
+            <p>{categoryTitle}</p>
+            <p>{expense ? "-" : "+"}{sum} €</p>
+          </div>
+          <div className={classes.TransactionsContentWrapper}>
+            <p className={classes.TransactionsItemAccount}>{accountTitle}</p>
+            <p
+              className={`${classes.TransactionsItemEdit} ${showDeleteBtn ? "" : classes.TransactionsHidden}`}
+              id={id}
+              onClick={onClickDeleteButton}
+              >
+            delete</p>
+          </div>
         </div>
       </li>
     </CSSTransition>

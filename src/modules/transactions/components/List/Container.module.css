@@ -38,25 +38,35 @@
   color: #727272;
 }
 
-.TransactionsItem {
+.GroupWrapper{
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   height: 50px;
-  padding: 10px 20px;
-  padding-left: 70px;
+  width: 100%;
+  padding: 10px 20px 0 0;
+  /* padding-left: 70px; */
 }
 
-.TransactionsItem::before {
-  content: '';
-  position: absolute;
-  left: 20px;
-  display: block;
-  width: 35px;
-  height: 35px;
-  /* background-color: #f1f1f1; */
-  border-radius: 20%;
+.TransactionsList {
+  display: flex;
+}
+
+.TransactionsList:hover {
+  background-color: #f1f1f1;
+}
+
+.IconWrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+}
+
+.TransactionsIcon {
+  font-size: 25px;
+  color: #2e2e2e;
 }
 
 .TransactionsItemAccount {
@@ -74,17 +84,13 @@
   cursor: pointer;
 }
 
-.TransactionsItem:hover {
-  background-color: #f1f1f1;
-}
-
 .TransactionsItemOnClick {
   background-color: #f1f1f1;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
 }
 
-.TransactionsItemWrapper {
+.TransactionsContentWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -118,13 +124,6 @@
 .Message {
   padding: 0 20px;
   text-align: center;
-}
-
-.TransactionsIcon {
-  position: absolute;
-  left: 25px;
-  font-size: 25px;
-  color: #d4d4d4;
 }
 
 .Empty {
