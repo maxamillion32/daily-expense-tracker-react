@@ -15,7 +15,24 @@ function PopupIconList({onChange, icon}) {
     {icon: "fa-cut"},
     {icon: "fa-gifts"},
     {icon: "fa-utensils"},
-    {icon: "fa-asterisk"}
+    {icon: "fa-asterisk"},
+    {icon: "fa-baby-carriage"},
+    {icon: "fa-basketball-ball"},
+    {icon: "fa-beer"},
+    {icon: "fa-cat"},
+    {icon: "fa-envelope"},
+    {icon: "fa-faucet"},
+    {icon: "fa-film"},
+    {icon: "fa-gas-pump"},
+    {icon: "fa-graduation-cap"},
+    {icon: "fa-hamburger"},
+    {icon: "fa-hotel"},
+    {icon: "fa-plane"},
+    {icon: "fa-socks"},
+    {icon: "fa-theater-masks"},
+    {icon: "fa-tv"},
+    {icon: "fa-umbrella-beach"},
+    {icon: "fa-wrench"},
   ];
 
   return (
