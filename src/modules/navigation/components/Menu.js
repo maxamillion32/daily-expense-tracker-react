@@ -73,21 +73,21 @@ function Menu() {
             : null}
 
           <NavLink
-            to={"expence-tracker-react-redux/build/"}
+            to={"/"}
             className={isActiveLink}
           >
             <img src={transactions} width="30"/>
           </NavLink>
 
           <NavLink
-            to={"expence-tracker-react-redux/build/statistics"}
+            to={"/statistics"}
             className={isActiveLink}
           >
             <img src={statistics}  width="30"/>
           </NavLink>
 
           <NavLink
-            to={"expence-tracker-react-redux/build/settings"}
+            to={"/settings"}
             className={isActiveLink}
           >
             <img src={settings} width="30"/>

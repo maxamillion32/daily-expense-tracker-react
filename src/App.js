@@ -15,10 +15,10 @@ function App() {
       <ScrollToTop />
       <PopupProvider>
         <Routes>
-          <Route path="expence-tracker-react-redux/build/" element={<TransactionsContainer />} />
-          <Route path="expence-tracker-react-redux/build/statistics" element={<StatisticsContainer />} />
-          <Route path="expence-tracker-react-redux/build/settings" element={<SettingsContainer />} />
-          <Route path="*" element={<Navigate to="expence-tracker-react-redux/build/" />} />
+          <Route path="/" element={<TransactionsContainer />} />
+          <Route path="/statistics" element={<StatisticsContainer />} />
+          <Route path="/settings" element={<SettingsContainer />} />
+          <Route path="*" element={<Navigate to="/" />} />
         </Routes>
       </PopupProvider>
     </Layout>

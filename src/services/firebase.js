@@ -23,8 +23,8 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
 
-export function singUp(email, password) {
-  createUserWithEmailAndPassword(auth, email, password)
+export async function singUp(email, password) {
+  await createUserWithEmailAndPassword(auth, email, password)
   .then(async(userCredential) => {
       const userId = userCredential.user.uid;
       const usersRef = doc(db, "users", userId);
