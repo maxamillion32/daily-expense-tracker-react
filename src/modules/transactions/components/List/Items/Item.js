@@ -49,7 +49,7 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, 
         ref={nodeRef}
       >
         <div className={classes.IconWrapper}>
-          <i className={`${classes.TransactionsIcon} fas ${icon ? icon : classes.Empty}`}></i>
+          <i className={`${classes.TransactionsIcon} fas ${icon ? icon : ""}`}></i>
         </div>
         <div className={classes.GroupWrapper}>
           <div className={classes.TransactionsContentWrapper}>

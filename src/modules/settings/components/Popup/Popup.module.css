@@ -104,3 +104,33 @@
 .Text:last-of-type {
   margin-top: 0;
 }
+
+.IconContainer {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.IconWrapper {
+  display: flex;
+  justify-content: center;
+  width: 40px;
+  margin-top: 10px;
+  /* margin-right: 10px; */
+}
+
+.IconWrapper input {
+  display: none;
+}
+
+.IconWrapper input:checked + i {
+  color: #000;
+}
+
+.TransactionsIcon {
+  font-size: 22px;
+  color: #b9b9b9;
+}
+
+.TransactionsIcon:hover {
+  cursor: pointer;
+}

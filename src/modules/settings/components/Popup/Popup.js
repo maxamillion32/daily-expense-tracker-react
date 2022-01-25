@@ -141,45 +141,19 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
   };
 
   const options = [
-    {
-      icon: "fa-shopping-cart",
-    },
-    {
-      icon: "fa-id-card",
-    },
-    {
-      icon: "fa-coffee",
-    },
-    {
-      icon: "fa-bath",
-    },
-    {
-      icon: "fa-subway",
-    },
-    {
-      icon: "fa-home",
-    },
-    {
-      icon: "fa-shopping-bag",
-    },
-    {
-      icon: "fa-briefcase",
-    },
-    {
-      icon: "fa-hand-holding-usd",
-    },
-    {
-      icon: "fa-cut",
-    },
-    {
-      icon: "fa-gifts",
-    },
-    {
-      icon: "fa-utensils",
-    },
-    {
-      icon: "fa-asterisk",
-    }
+    {icon: "fa-shopping-cart"},
+    {icon: "fa-id-card"},
+    {icon: "fa-coffee"},
+    {icon: "fa-bath"},
+    {icon: "fa-subway"},
+    {icon: "fa-home"},
+    {icon: "fa-shopping-bag"},
+    {icon: "fa-briefcase"},
+    {icon: "fa-hand-holding-usd"},
+    {icon: "fa-cut"},
+    {icon: "fa-gifts"},
+    {icon: "fa-utensils"},
+    {icon: "fa-asterisk"}
   ];
 
   return (
@@ -239,26 +213,26 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
               </div>
 
               <div className={classes.Type}>
-                <form>
-                  <p className={classes.Text}>This category is already used in transactions and this setting cannot be changed.</p>
-                  {options.map((option) => {
-                    const isChecked = icon === option.icon;
-                    return (
-                      <label
-                        key={option.icon}
-                      >
-                        <input
-                          id={option.icon}
-                          type="radio"
-                          name="icon"
-                          value={option.icon}
-                          onChange={onChangeIcon}
-                          checked={isChecked}
-                        />
-                        <i className={`${classes.TransactionsIcon} fas ${option.icon}`} aria-hidden="true"></i>
-                      </label>
-                    );
-                  })}
+                <form >
+                  <p className={classes.Text}>Choose an icon for the category</p>
+                    <div className={classes.IconContainer}>
+                      {options.map((option) => {
+                        const isChecked = icon === option.icon;
+                        return (
+                            <label key={option.icon} className={classes.IconWrapper}>
+                              <input
+                                id={option.icon}
+                                type="radio"
+                                name="icon"
+                                value={option.icon}
+                                onChange={onChangeIcon}
+                                checked={isChecked}
+                              />
+                              <i className={`${classes.TransactionsIcon} fas ${option.icon}`} aria-hidden="true"></i>
+                            </label>
+                        );
+                      })}
+                    </div>
                 </form>
               </div>
             </>

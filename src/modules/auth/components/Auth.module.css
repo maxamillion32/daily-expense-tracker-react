@@ -43,6 +43,10 @@
   color: #000;
 }
 
+.Button:hover {
+  cursor: pointer;
+}
+
 .Main a {
   padding: 1px 10px;
 }
