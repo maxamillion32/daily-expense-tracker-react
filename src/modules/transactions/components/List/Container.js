@@ -99,6 +99,11 @@ function TransactionsListContainer() {
             in the settings to be able to add transactions
           </p>
         : null}
+      {!isEmpty && transactions.length === 0
+        ? <p className={classes.Message}>
+            Create your first transaction!
+          </p>
+        : null}
       {months.map((month) =>
         <TransactionsItemsMonthGroup month={month} key={month} />
       )}
