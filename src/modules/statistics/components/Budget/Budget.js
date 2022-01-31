@@ -12,14 +12,6 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
   const dispatch = useDispatch();
   const categories = useSelector(selectAllCategoriesState);
 
-  // const usePrevious = (value) => {
-  //   const ref = useRef();
-  //   // useEffect(() => {
-  //     ref.current = value;
-  //   // });
-  //   return ref.current;
-  // }
-
   const prevBudget = JSON.stringify(budget) === JSON.stringify(updatedBudget);
 
   const onInputChange = ({target}) => {
@@ -36,7 +28,7 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
   const onEditClick = () => {
     dispatch(postBudget({updatedBudget, userId}));
     dispatch(loadBudgets(userId));
-    dispatch(loadTransactions(userId));// ??? update edit button
+    dispatch(loadTransactions(userId));
   };
 
   const isBudget = (updatedBudget || "") && (updatedBudget[currentYear] || "") && (updatedBudget[currentYear][currentMonth] || "");

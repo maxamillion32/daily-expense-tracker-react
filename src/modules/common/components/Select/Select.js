@@ -5,7 +5,7 @@ function isInvalid({valid, touched, shouldValidate}) {
   return !valid && shouldValidate && touched;
 }
 
-const Select = ({defaultOption, options, onChange, errorMessage, valid, touched, shouldValidate}) => {
+function Select ({defaultOption, options, onChange, errorMessage, valid, touched, shouldValidate}) {
   // const value = props.options.length !== 0 && props.options[2].title;
   const cls = [classes.Select];
 
@@ -34,6 +34,6 @@ const Select = ({defaultOption, options, onChange, errorMessage, valid, touched,
       </select>
     </div>
   );
-};
+}
 
 export default Select;

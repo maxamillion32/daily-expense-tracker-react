@@ -38,22 +38,22 @@
 
 .LeftBtn::after,
 .LeftBtn::before {
-  left: 6px;
+  left: 9px;
 }
 
 .RightBtn::after,
 .RightBtn::before {
-  right: 6px;
+  right: 9px;
 }
 
 .LeftBtn::after,
 .RightBtn::after {
-  top: 11px;
+  top: 12px;
 }
 
 .LeftBtn::before,
 .RightBtn::before {
-  top: 21px;
+  top: 22px;
 }
 
 .LeftBtn::after,

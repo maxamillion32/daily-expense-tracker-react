@@ -81,18 +81,24 @@ function TransactionsContainer() {
 
   return (
     <>
-      {isLoader
-        ? <Loader />
-        : null}
-      {!isLoader && userId
+      {userId
         ? <section className={classes.Container}>
-            <Chart data={data} onClick={handleClick} header={header} yRange={yRange} />
-            <Balance />
-            {isTransactions ? <Search /> : null}
-            <TransactionsListContainer />
+            {isLoader
+              ? <Loader />
+              : <>
+                  <Chart data={data} onClick={handleClick} header={header} yRange={yRange} />
+                  <Balance />
+                </>
+              }
+            {isTransactions
+              ? <>
+                  <Search />
+                  <TransactionsListContainer />
+                </>
+              : null}
           </section>
-        : null}
-      {!userId ? <Welcome /> : null}
+        : <Welcome />
+      }
     </>
   );
 }

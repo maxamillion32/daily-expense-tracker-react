@@ -1,7 +1,7 @@
 import React from "react";
 import classes from "./Loader.module.css";
 
-const Loader = () => {
+function Loader () {
   return (
     <div className={classes.center}>
       <div className={classes.Loader}>
@@ -12,6 +12,6 @@ const Loader = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Loader;

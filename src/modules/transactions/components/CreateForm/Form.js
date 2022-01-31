@@ -48,7 +48,7 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn}){
       isFormValid: validateForm(formControls)
     });
 
-    dispatch(setUserInput({name: name, value: value}));
+    dispatch(setUserInput({name, value}));
   };
 
   const onChangeSelectHandler = (selector) => (e) => {

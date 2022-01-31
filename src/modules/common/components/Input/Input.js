@@ -5,14 +5,14 @@ function isInvalid({valid, touched, shouldValidate}) {
   return !valid && shouldValidate && touched;
 }
 
-const Input = (props) => {
-  const inputType = props.type || "text";
+function Input ({name, type, placeholder, onChange, label, errorMessage, value, valid, touched, shouldValidate}) {
+  const inputType = type || "text";
   const cls = [classes.Input];
   const htmlFor = `${inputType}-${Math.random()}`;
 
   inputType === "checkbox" ? cls.push(classes.InputTypeCheckbox) : cls.push(classes.InputType);
 
-  if (isInvalid(props)) {
+  if (isInvalid({valid, touched, shouldValidate})) {
     cls.push(classes.invalid);
   }
 
@@ -20,21 +20,21 @@ const Input = (props) => {
     <div className={cls.join(" ")}>
       <input
         type={inputType}
-        name={props.name}
-        placeholder={props.placeholder}
+        name={name}
+        placeholder={placeholder}
         id={htmlFor}
-        value={props.value}
-        onChange={props.onChange}
+        value={value}
+        onChange={onChange}
       />
-      <label htmlFor={htmlFor}>{props.label}</label>
+      <label htmlFor={htmlFor}>{label}</label>
 
       {
-        isInvalid(props)
-        ? <span>{props.errorMessage || "Enter correct value"}</span>
+        isInvalid({valid, touched, shouldValidate})
+        ? <span>{errorMessage || "Enter correct value"}</span>
         : null
       }
     </div>
   );
-};
+}
 
 export default Input;
