@@ -90,12 +90,8 @@ function TransactionsContainer() {
                   <Balance />
                 </>
               }
-            {isTransactions
-              ? <>
-                  <Search />
-                  <TransactionsListContainer />
-                </>
-              : null}
+            {isTransactions ? <Search /> : null}
+            <TransactionsListContainer />
           </section>
         : <Welcome />
       }
