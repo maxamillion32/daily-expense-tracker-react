@@ -6,7 +6,7 @@ import ArrowButton from "../../../common/components/ArrowButton/ArrowButton";
 function Chart({data, onClick, header, yRange}) {
   return (
     <div className={classes.Chart}>
-      <ArrowButton direction={"left"} onClick={onClick} style={{top: 20}} />
+      <ArrowButton direction={"left"} onClick={onClick} style={{top: 13}} />
 
       <h3>{header}</h3>
 
@@ -45,7 +45,7 @@ function Chart({data, onClick, header, yRange}) {
         </AreaChart>
       </ResponsiveContainer>
 
-      <ArrowButton direction={"right"} onClick={onClick} style={{top: 20}} />
+      <ArrowButton direction={"right"} onClick={onClick} style={{top: 13}} />
     </div>
   );
 }

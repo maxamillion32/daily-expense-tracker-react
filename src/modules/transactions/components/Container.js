@@ -54,6 +54,8 @@ function TransactionsContainer() {
   const year = useSelector(currentYear);
   const dispatch = useDispatch();
 
+  const chartOffset = 400;
+
   const [toggle, setToggle] = useState(true);
 
   const isLoader = loading && userId;
@@ -65,7 +67,7 @@ function TransactionsContainer() {
   const maxMonthIncomePerYear = getMaxAmountPerYear(year, "income", transactions);
 
   const header = toggle ? "Expenses" : "Incomes";
-  const yRange = toggle ? maxMonthExpensePerYear : maxMonthIncomePerYear;
+  const yRange = toggle ? maxMonthExpensePerYear + chartOffset : maxMonthIncomePerYear + chartOffset;
 
   const handleClick = () => {
     setToggle(prev => !prev);
