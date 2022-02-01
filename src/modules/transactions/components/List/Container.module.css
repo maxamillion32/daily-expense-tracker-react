@@ -2,6 +2,13 @@
 
 } */
 
+.TransactionsYear {
+  padding: 10px;
+  font-weight: 700;
+  text-align: center;
+  /* border-bottom: 1px dashed #d4d4d4; */
+}
+
 .TransactionsMonth {
   padding-left: 20px;
   font-weight: 700;

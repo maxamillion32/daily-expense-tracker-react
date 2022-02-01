@@ -5,8 +5,8 @@ import {selectFilteredTransactions, isButtonClick, showButton} from "../../../..
 import {selectAllCategoriesState} from "../../../../reducers/categories/categories-slice";
 import {selectAllAccountsState} from "../../../../reducers/accounts/accounts-slice";
 
-import {formatMonth} from "../../../common/utils/utils";
-import TransactionsItemsMonthGroup from "./Items/MonthGroup";
+import {formatYear} from "../../../common/utils/utils";
+import TransactionsItemsYearGroup from "./Items/YearGroup";
 import classes from "./Container.module.css";
 
 function TransactionsListContainer({isLoading}) {
@@ -20,8 +20,8 @@ function TransactionsListContainer({isLoading}) {
   const isEmpty = categories.length === 0 || accounts.length === 0;
 
   const transactions = useSelector(selectFilteredTransactions);
-  const months = [...new Set(transactions
-    .map(date => formatMonth(date.date)))];
+  const years = [...new Set(transactions
+    .map(date => formatYear(date.date)))];
 
   const handleNavigation = (event) => {
       if (event.deltaY > 0) {
@@ -104,8 +104,8 @@ function TransactionsListContainer({isLoading}) {
             Create your first transaction!
           </p>
         : null}
-      {months.map((month) =>
-        <TransactionsItemsMonthGroup month={month} key={month} />
+      {years.map((year) =>
+        <TransactionsItemsYearGroup year={year} key={year} />
       )}
     </section>
   );
