@@ -4,12 +4,13 @@ import {TransitionGroup} from "react-transition-group";
 
 import classes from "../Container.module.css";
 
-import {selectFilteredTransactions} from "../../../../../reducers/transactions/transactions-slice";
+import {selectFilteredTransactions, currentYear} from "../../../../../reducers/transactions/transactions-slice";
 
 import TransactionsItemsMonthGroup from "./MonthGroup";
 import {formatYear, formatMonth} from "../../../../common/utils/utils";
 
 function TransactionsItemsYearGroup({year}) {
+  const getCurrentYear = useSelector(currentYear);
   const transactions = useSelector(selectFilteredTransactions);
   const yearTransactions = transactions
     .filter((transaction) => formatYear(transaction.date) === year);
@@ -17,9 +18,11 @@ function TransactionsItemsYearGroup({year}) {
   const months = [...new Set(yearTransactions
     .map(date => formatMonth(date.date)))];
 
+  const isCurrentYear = getCurrentYear === year;
+
   return (
     <ul className="transactions__list">
-      <p className={classes.TransactionsYear} ref={nodeRef}>{year}</p>
+      {!isCurrentYear && <p className={classes.TransactionsYear} ref={nodeRef}>{year}</p>}
       <TransitionGroup>
         {months.map((month) =>
         <TransactionsItemsMonthGroup transactions={yearTransactions} month={month} key={month} />

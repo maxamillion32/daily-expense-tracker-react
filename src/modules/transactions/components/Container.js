@@ -51,7 +51,7 @@ function TransactionsContainer() {
   const loading = useSelector(isLoading);
   const userId = useSelector(selectUserId);
   const transactions = useSelector(selectAllTransactionsState);
-  const year = useSelector(currentYear);
+  const getCurrentYear = useSelector(currentYear);
   const dispatch = useDispatch();
 
   const [toggle, setToggle] = useState(true);
@@ -59,10 +59,10 @@ function TransactionsContainer() {
   const isLoader = loading && userId;
   const isTransactions = transactions.length !== 0;
 
-  const data = getExpenses(year, transactions, toggle);
+  const chartData = getExpenses(getCurrentYear, transactions, toggle);
 
-  const maxMonthExpensePerYear = getMaxAmountPerYear(year, "expenses", transactions);
-  const maxMonthIncomePerYear = getMaxAmountPerYear(year, "income", transactions);
+  const maxMonthExpensePerYear = getMaxAmountPerYear(getCurrentYear, "expenses", transactions);
+  const maxMonthIncomePerYear = getMaxAmountPerYear(getCurrentYear, "income", transactions);
 
   const header = toggle ? "Expenses" : "Incomes";
   const yRange = toggle ? maxMonthExpensePerYear * 2 : maxMonthIncomePerYear * 2;
@@ -86,7 +86,7 @@ function TransactionsContainer() {
             {isLoader
               ? <Loader />
               : <>
-                  <Chart data={data} onClick={handleClick} header={header} yRange={yRange} />
+                  <Chart data={chartData} onClick={handleClick} header={header} yRange={yRange} />
                   <Balance />
                 </>
               }
