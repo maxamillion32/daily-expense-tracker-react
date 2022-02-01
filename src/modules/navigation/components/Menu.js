@@ -4,7 +4,6 @@ import {NavLink} from "react-router-dom";
 import {CSSTransition} from "react-transition-group";
 
 import classes from "./Menu.module.css";
-import CreateForm from "../../transactions/components/CreateForm/Form";
 import {resetState, isButtonShow, isButtonClick, clickButton} from "../../../reducers/transactions/transactions-slice";
 import {selectAllCategoriesState} from "../../../reducers/categories/categories-slice";
 import {selectAllAccountsState} from "../../../reducers/accounts/accounts-slice";
@@ -12,7 +11,8 @@ import {selectAllAccountsState} from "../../../reducers/accounts/accounts-slice"
 import transactions from "../../../assets/img/transactions.png";
 import statistics from "../../../assets/img/statistics.png";
 import settings from "../../../assets/img/settings.png";
-import AddButton from "./AddButton/AddButton";
+import AddButton from "../../common/components/AddButton/AddButton";
+import CreateForm from "../../common/components/CreateForm/Form";
 
 function Menu() {
   const getCategories = useSelector(selectAllCategoriesState);

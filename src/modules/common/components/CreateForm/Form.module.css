@@ -1,0 +1,60 @@
+.form {
+  position: absolute;
+  left: 0;
+  bottom: 72px;
+  z-index: 100;
+  max-width: 440px;
+  width: 100%;
+  margin-top: auto;
+}
+
+.form input,
+.form select {
+  margin: 5px 0;
+}
+
+.dialogWrapper {
+  overflow: hidden;
+}
+
+.dialog {
+  /* max-height: 307px; */
+  padding: 30px 30px 20px;
+  box-sizing: border-box;
+  background-color: #f1f1f1;
+}
+
+.dialogTypeWrapper {
+  display: flex;
+  justify-content: flex-end;
+  padding: 5px 0;
+}
+
+.dialogType {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+.dialogType label {
+  cursor: pointer;
+}
+
+.addFormEnterActive {
+  animation: showForm 300ms ease-out forwards;
+}
+
+.addFormExitActive {
+  animation: showForm 500ms ease-in alternate-reverse;
+}
+
+@keyframes showForm {
+  0% {
+    transform: translateY(307px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
