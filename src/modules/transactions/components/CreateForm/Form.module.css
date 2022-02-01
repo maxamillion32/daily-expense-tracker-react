@@ -1,5 +1,6 @@
 .form {
   position: absolute;
+  left: 0;
   bottom: 72px;
   z-index: 100;
   max-width: 440px;

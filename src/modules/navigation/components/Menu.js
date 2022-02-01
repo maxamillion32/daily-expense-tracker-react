@@ -43,59 +43,55 @@ function Menu() {
   const nodeRef = React.useRef(null);
 
   return (
-    <>
+    <nav className={classes.menu}>
       <CreateForm
         categories={categories}
         accounts={accounts}
         onClickAddBtn={clickAddButton}
       />
-
-      <nav className={classes.menu}>
-        <div className={classes.wrapper}>
-
-          {showAddButton
-            ? <CSSTransition
-                in={clickAddButton}
-                timeout={300}
-                classNames={{
-                  enterActive: `${classes.addBtnEnterActive}`,
-                  enterDone: `${classes.addBtnEnterDone}`,
-                }}
+      <div className={classes.wrapper}>
+        {showAddButton
+          ? <CSSTransition
+              in={clickAddButton}
+              timeout={300}
+              classNames={{
+                enterActive: `${classes.addBtnEnterActive}`,
+                enterDone: `${classes.addBtnEnterDone}`,
+              }}
+              nodeRef={nodeRef}
+            >
+              <AddButton
+                cssClass={classesAddBtn}
+                onClick={onClickAddButton}
                 nodeRef={nodeRef}
-              >
-                <AddButton
-                  cssClass={classesAddBtn}
-                  onClick={onClickAddButton}
-                  nodeRef={nodeRef}
-                  isEmpty={isEmpty}
-                />
-              </CSSTransition>
-            : null}
+                isEmpty={isEmpty}
+              />
+            </CSSTransition>
+          : null}
 
-          <NavLink
-            to={"/"}
-            className={isActiveLink}
-          >
-            <img src={transactions} width="30"/>
-          </NavLink>
+        <NavLink
+          to={"/"}
+          className={isActiveLink}
+        >
+          <img src={transactions} width="30"/>
+        </NavLink>
 
-          <NavLink
-            to={"/statistics"}
-            className={isActiveLink}
-          >
-            <img src={statistics}  width="30"/>
-          </NavLink>
+        <NavLink
+          to={"/statistics"}
+          className={isActiveLink}
+        >
+          <img src={statistics}  width="30"/>
+        </NavLink>
 
-          <NavLink
-            to={"/settings"}
-            className={isActiveLink}
-          >
-            <img src={settings} width="30"/>
-          </NavLink>
+        <NavLink
+          to={"/settings"}
+          className={isActiveLink}
+        >
+          <img src={settings} width="30"/>
+        </NavLink>
 
-        </div>
-      </nav>
-    </>
+      </div>
+    </nav>
   );
 }
 
