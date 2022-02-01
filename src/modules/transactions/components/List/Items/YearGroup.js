@@ -1,6 +1,5 @@
 import React from "react";
 import {useSelector} from "react-redux";
-import {TransitionGroup} from "react-transition-group";
 
 import classes from "../Container.module.css";
 
@@ -23,11 +22,9 @@ function TransactionsItemsYearGroup({year}) {
   return (
     <ul className="transactions__list">
       {!isCurrentYear && <p className={classes.TransactionsYear} ref={nodeRef}>{year}</p>}
-      <TransitionGroup>
-        {months.map((month) =>
+      {months.map((month) =>
         <TransactionsItemsMonthGroup transactions={yearTransactions} month={month} key={month} />
-        )}
-      </TransitionGroup>
+      )}
     </ul>
   );
 }

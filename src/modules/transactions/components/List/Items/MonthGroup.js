@@ -21,6 +21,7 @@ function TransactionsItemsMonthGroup({transactions, month}) {
             <TransactionsItemsDateGroupWrapper
               date={transactionDate}
               key={transactionDate}
+              transactions={transactions}
             />
           )
         )}

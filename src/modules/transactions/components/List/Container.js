@@ -105,7 +105,7 @@ function TransactionsListContainer({isLoading}) {
           </p>
         : null}
       {years.map((year) =>
-        <TransactionsItemsYearGroup year={year} key={year} />
+        <TransactionsItemsYearGroup transactions={transactions} year={year} key={year} />
       )}
     </section>
   );
