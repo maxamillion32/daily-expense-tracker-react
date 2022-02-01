@@ -9,7 +9,7 @@ import {formatMonth} from "../../../common/utils/utils";
 import TransactionsItemsMonthGroup from "./Items/MonthGroup";
 import classes from "./Container.module.css";
 
-function TransactionsListContainer() {
+function TransactionsListContainer({isLoading}) {
   const getCategories = useSelector(selectAllCategoriesState);
   const getAccounts = useSelector(selectAllAccountsState);
   const clickAddButton = useSelector(isButtonClick);
@@ -92,14 +92,14 @@ function TransactionsListContainer() {
 
   return (
     <section className="transactions">
-      {isEmpty
+      {!isLoading && isEmpty
         ? <p className={classes.Message}>
             Create categories and accounts
             <br/>
             in the settings to be able to add transactions
           </p>
         : null}
-      {!isEmpty && transactions.length === 0
+      {!isLoading && !isEmpty && transactions.length === 0
         ? <p className={classes.Message}>
             Create your first transaction!
           </p>

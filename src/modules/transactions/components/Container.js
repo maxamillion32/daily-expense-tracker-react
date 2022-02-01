@@ -91,7 +91,7 @@ function TransactionsContainer() {
                 </>
               }
             {isTransactions ? <Search /> : null}
-            <TransactionsListContainer />
+            <TransactionsListContainer isLoading={isLoader} />
           </section>
         : <Welcome />
       }
