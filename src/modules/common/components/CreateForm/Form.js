@@ -124,6 +124,13 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn}){
             nodeRef={nodeRef}
           > */}
             <div className={classes.dialog} ref={nodeRef}>
+              <Button
+                type="submit"
+                onClick={addTransactionHandler}
+                disabled={!state.isFormValid}
+              >
+                Create
+              </Button>
               <Input
                 type="number"
                 name="sum"
@@ -177,14 +184,6 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn}){
                   onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
                 />
               </div>
-
-              <Button
-                type="submit"
-                onClick={addTransactionHandler}
-                disabled={!state.isFormValid}
-              >
-                Create
-              </Button>
             </div>
           {/* </CSSTransition> */}
         </form>
