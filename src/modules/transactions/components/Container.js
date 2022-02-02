@@ -6,11 +6,14 @@ import classes from "./Container.module.css";
 import {
   loadTransactions,
   selectAllTransactionsState,
-  showButton, isLoading, currentYear
+  showButton, isLoading, currentYear,
+  isButtonClick, clickButton
 } from "../../../reducers/transactions/transactions-slice";
 import {
   selectUserId
 } from "../../../reducers/user/user-slice";
+import {selectAllCategoriesState} from "../../../reducers/categories/categories-slice";
+import {selectAllAccountsState} from "../../../reducers/accounts/accounts-slice";
 
 import Search from "./Search/Search";
 import Balance from "./Balance/Balance";
@@ -21,6 +24,8 @@ import Chart from "./Chart/Chart";
 import {MONTH_EXPENSES} from "../../statistics/components/YearExpenses/constant";
 import {formatMonth, formatYear} from "../../common/utils/utils";
 import {getMaxAmountPerYear} from "../../common/utils/utils";
+import Popup from "../../common/hoc/Popup/Popup";
+import TransactionCreateForm from "../../common/components/CreateForm/Form";
 
 const getExpenses = (year, transactions, toggle) => {
   return MONTH_EXPENSES.map(item => {
@@ -52,6 +57,11 @@ function TransactionsContainer() {
   const userId = useSelector(selectUserId);
   const transactions = useSelector(selectAllTransactionsState);
   const getCurrentYear = useSelector(currentYear);
+  const clickAddButton = useSelector(isButtonClick);
+  const getCategories = useSelector(selectAllCategoriesState);
+  const getAccounts = useSelector(selectAllAccountsState);
+  const categories = [...getCategories];
+  const accounts = [...getAccounts];
   const dispatch = useDispatch();
 
   const [toggle, setToggle] = useState(true);
@@ -71,6 +81,13 @@ function TransactionsContainer() {
     setToggle(prev => !prev);
   };
 
+  // const [togglePopup, setTogglePopup] = useState(clickAddButton);
+
+  const toggleClick = () => {
+      // setTogglePopup(!togglePopup);
+      dispatch(clickButton());
+  };
+
   useEffect(() => {
     dispatch(showButton(true));
     dispatch(loadTransactions(userId));
@@ -83,6 +100,17 @@ function TransactionsContainer() {
     <>
       {userId
         ? <section className={classes.Container}>
+            <Popup
+              style={{maxHeight: "calc(100vh - 132px)"}}
+              toggle={clickAddButton}
+              setToggle={toggleClick}
+            >
+              <TransactionCreateForm
+                categories={categories}
+                accounts={accounts}
+                onClickAddBtn={clickAddButton}
+              />
+            </Popup>
             {isLoader
               ? <Loader />
               : <>

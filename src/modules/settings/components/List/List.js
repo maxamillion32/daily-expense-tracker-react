@@ -14,7 +14,9 @@ function SettingsList({
   transactions,
   itemState,
   setItem,
-  prevItem
+  prevItem,
+  toggle,
+  setToggle
 }) {
   return (
     <>
@@ -49,7 +51,10 @@ function SettingsList({
           }
       </section>
 
-      <Popup>
+      <Popup
+        toggle={toggle}
+        setToggle={setToggle}
+      >
         <SettingsPopup
           itemState={itemState}
           prevItem={prevItem}

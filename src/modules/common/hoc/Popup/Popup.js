@@ -1,12 +1,12 @@
 import React from "react";
 import classes from "./Popup.module.css";
-import {usePopup} from "./PopupContext";
+// import {usePopup} from "./PopupContext";
 import CloseButton from "../../components/CloseButton/CloseButton";
 import {CSSTransition} from "react-transition-group";
 
-function Popup({children}) {
-  const popup = usePopup();
-  const {toggle} = usePopup();
+function Popup({children, toggle, setToggle, style}) {
+  // const popup = usePopup();
+  // const {toggle} = usePopup();
 
   const nodeRef = React.useRef(null);
 
@@ -14,18 +14,19 @@ function Popup({children}) {
 
   return (
     <CSSTransition
-      in={popup.visible}
+      in={toggle}
       timeout={300}
       classNames={{
+        enterDone: `${classes.EnterDone}`,
         enterActive: `${classes.EnterActive}`,
         exitActive: `${classes.ExitActive}`,
       }}
       unmountOnExit
       nodeRef={nodeRef}
     >
-      <section className={classes.Container} ref={nodeRef}>
+      <section className={classes.Container} ref={nodeRef} style={style}>
         <div className={classes.CloseBtn}>
-          <CloseButton onClick={toggle}/>
+          <CloseButton onClick={setToggle}/>
         </div>
         {children}
       </section>

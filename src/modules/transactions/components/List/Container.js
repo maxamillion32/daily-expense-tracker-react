@@ -9,7 +9,7 @@ import {formatYear} from "../../../common/utils/utils";
 import TransactionsItemsYearGroup from "./Items/YearGroup";
 import classes from "./Container.module.css";
 
-function TransactionsListContainer({isLoading}) {
+function TransactionsListContainer({isLoading, style}) {
   const getCategories = useSelector(selectAllCategoriesState);
   const getAccounts = useSelector(selectAllAccountsState);
   const clickAddButton = useSelector(isButtonClick);

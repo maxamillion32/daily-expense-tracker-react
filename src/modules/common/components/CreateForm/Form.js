@@ -113,7 +113,7 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn}){
     <section className={classes.form} >
       <div className={classes.dialogWrapper}>
         <form onSubmit={onClickSubmitButton}>
-          <CSSTransition
+          {/* <CSSTransition
             in={onClickAddBtn}
             timeout={300}
             classNames={{
@@ -122,7 +122,7 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn}){
             }}
             unmountOnExit
             nodeRef={nodeRef}
-          >
+          > */}
             <div className={classes.dialog} ref={nodeRef}>
               <Input
                 type="number"
@@ -186,7 +186,7 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn}){
                 Create
               </Button>
             </div>
-          </CSSTransition>
+          {/* </CSSTransition> */}
         </form>
       </div>
     </section>

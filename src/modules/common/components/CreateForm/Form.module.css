@@ -1,11 +1,11 @@
 .form {
-  position: absolute;
-  left: 0;
-  bottom: 72px;
+  /* position: absolute; */
+  /* left: 0;
+  bottom: 72px; */
   z-index: 100;
   max-width: 440px;
   width: 100%;
-  margin-top: auto;
+  margin-top: 35px;
 }
 
 .form input,
@@ -19,9 +19,9 @@
 
 .dialog {
   /* max-height: 307px; */
-  padding: 30px 30px 20px;
+  /* padding: 30px 30px 20px; */
   box-sizing: border-box;
-  background-color: #f1f1f1;
+  /* background-color: #f1f1f1; */
 }
 
 .dialogTypeWrapper {

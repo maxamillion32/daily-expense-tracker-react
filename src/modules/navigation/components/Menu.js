@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 import {CSSTransition} from "react-transition-group";
@@ -13,6 +13,7 @@ import statistics from "../../../assets/img/statistics.png";
 import settings from "../../../assets/img/settings.png";
 import AddButton from "../../common/components/AddButton/AddButton";
 import CreateForm from "../../common/components/CreateForm/Form";
+import Popup from "../../common/hoc/Popup/Popup";
 
 function Menu() {
   const getCategories = useSelector(selectAllCategoriesState);
@@ -30,6 +31,15 @@ function Menu() {
     "fa",
     clickAddButton ? "fa-times" : "fa-plus",
   ].join(" ");
+  const isActiveLink = ({isActive}) => (isActive ? `${classes.active}` : "");
+
+  const nodeRef = React.useRef(null);
+
+  // const [toggle, setToggle] = useState(false);
+
+  // const toggleClick = () => {
+  //     setToggle(!toggle);
+  // };
 
   const onClickAddButton = () => {
     dispatch(clickButton());
@@ -39,34 +49,24 @@ function Menu() {
     }
   };
 
-  const isActiveLink = ({isActive}) => (isActive ? `${classes.active}` : "");
-  const nodeRef = React.useRef(null);
-
   return (
+    <>
     <nav className={classes.menu}>
-      <CreateForm
+      {/* <CreateForm
         categories={categories}
         accounts={accounts}
         onClickAddBtn={clickAddButton}
-      />
+      /> */}
+
       <div className={classes.wrapper}>
         {showAddButton
-          ? <CSSTransition
-              in={clickAddButton}
-              timeout={300}
-              classNames={{
-                enterActive: `${classes.addBtnEnterActive}`,
-                enterDone: `${classes.addBtnEnterDone}`,
-              }}
+          ?
+            <AddButton
+              cssClass={classesAddBtn}
+              onClick={onClickAddButton}
               nodeRef={nodeRef}
-            >
-              <AddButton
-                cssClass={classesAddBtn}
-                onClick={onClickAddButton}
-                nodeRef={nodeRef}
-                isEmpty={isEmpty}
-              />
-            </CSSTransition>
+              isEmpty={isEmpty}
+            />
           : null}
 
         <NavLink
@@ -92,6 +92,7 @@ function Menu() {
 
       </div>
     </nav>
+    </>
   );
 }
 

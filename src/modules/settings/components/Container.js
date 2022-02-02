@@ -11,7 +11,7 @@ import {selectAllTransactionsState, loadTransactions} from "../../../reducers/tr
 import Loader from "../../common/components/Loader/Loader";
 import SettingsList from "./List/List";
 
-import {usePopup} from "../../common/hoc/Popup/PopupContext";
+// import {usePopup} from "../../common/hoc/Popup/PopupContext";
 import {getAccountStartBalance, getCurrentAccountBalance, getAccountTotalBalance} from "./utils";
 
 function SettingsContainer() {
@@ -23,7 +23,7 @@ function SettingsContainer() {
   const accounts = [...getAccounts];
   const loadingCategories = useSelector(isCategoriesLoading);
   const loadingAccounts = useSelector(isAccountsLoading);
-  const {toggle} = usePopup();
+  // const {toggle} = usePopup();
   const dispatch = useDispatch();
 
   const isLoader = (loadingCategories || loadingAccounts) && userId;
@@ -34,6 +34,7 @@ function SettingsContainer() {
 
   const [item, setItem] = useState({});
   const [prevItem, setPrevItem] = useState({});
+  const [toggle, setToggle] = useState(false);
 
   const onClickItem = async ({currentTarget}) => {
     const id = currentTarget.getAttribute("dataid");
@@ -48,14 +49,16 @@ function SettingsContainer() {
 
       setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance});
       setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance});
-      toggle();
+      // toggle();
+      setToggle(!toggle);
     } else {
       const startBalance = "";
       const balance = "";
 
       setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance, icon});
       setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance, icon});
-      toggle();
+      // toggle();
+      setToggle(!toggle);
     }
   };
 
@@ -70,7 +73,12 @@ function SettingsContainer() {
 
     setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance, icon});
     setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance, icon});
-    toggle();
+    // toggle();
+    setToggle(!toggle);
+  };
+
+  const toggleClick = () => {
+      setToggle(!toggle);
   };
 
   return (
@@ -87,6 +95,8 @@ function SettingsContainer() {
               itemState={item}
               prevItem={prevItem}
               setItem={setItem}
+              toggle={toggle}
+              setToggle={toggleClick}
             />
 
             <SettingsList
@@ -98,6 +108,8 @@ function SettingsContainer() {
               itemState={item}
               prevItem={prevItem}
               setItem={setItem}
+              toggle={toggle}
+              setToggle={toggleClick}
             />
           </>
         : null}
