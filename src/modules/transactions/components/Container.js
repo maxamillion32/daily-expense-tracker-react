@@ -86,6 +86,7 @@ function TransactionsContainer() {
   const toggleClick = () => {
       // setTogglePopup(!togglePopup);
       dispatch(clickButton());
+      dispatch(showButton(true));
   };
 
   useEffect(() => {

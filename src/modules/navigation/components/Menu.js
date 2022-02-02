@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 import {CSSTransition} from "react-transition-group";
 
 import classes from "./Menu.module.css";
-import {resetState, isButtonShow, isButtonClick, clickButton} from "../../../reducers/transactions/transactions-slice";
+import {resetState, isButtonShow, isButtonClick, clickButton, showButton} from "../../../reducers/transactions/transactions-slice";
 import {selectAllCategoriesState} from "../../../reducers/categories/categories-slice";
 import {selectAllAccountsState} from "../../../reducers/accounts/accounts-slice";
 
@@ -43,6 +43,7 @@ function Menu() {
 
   const onClickAddButton = () => {
     dispatch(clickButton());
+    dispatch(showButton());
 
     if (clickAddButton) {
       dispatch(resetState());
