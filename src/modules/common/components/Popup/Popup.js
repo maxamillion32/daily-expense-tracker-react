@@ -10,8 +10,10 @@ function Popup({children, showPopup, setShowPopup}) {
   useEffect(() => {
     if (showPopup) {
       document.body.style.overflow = "hidden";
+      document.querySelector("html").style.overflow = "hidden";
     } else {
       document.body.style.overflow = "unset";
+      document.querySelector("html").style.overflow = "unset";
     }
   }, [showPopup]);
 
