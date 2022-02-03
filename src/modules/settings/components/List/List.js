@@ -2,7 +2,7 @@ import React from "react";
 import classes from "./List.module.css";
 import {getAccountStartBalance, getCurrentAccountBalance, getAccountTotalBalance} from "../utils";
 
-import Popup from "../../../common/hoc/Popup/Popup";
+import Popup from "../../../common/components/Popup/Popup";
 import SettingsPopup from "../Popup/Popup";
 import SettingsListItem from "./Item/Item";
 
@@ -15,8 +15,8 @@ function SettingsList({
   itemState,
   setItem,
   prevItem,
-  toggle,
-  setToggle
+  showPopup,
+  setShowPopup
 }) {
   return (
     <>
@@ -52,14 +52,15 @@ function SettingsList({
       </section>
 
       <Popup
-        toggle={toggle}
-        setToggle={setToggle}
+        showPopup={showPopup}
+        setShowPopup={setShowPopup}
       >
         <SettingsPopup
           itemState={itemState}
           prevItem={prevItem}
           setItem={setItem}
           transactions={transactions}
+          setShowPopup={setShowPopup}
         />
       </Popup>
     </>

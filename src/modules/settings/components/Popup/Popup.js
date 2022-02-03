@@ -14,7 +14,6 @@ import {
 } from "../../../../reducers/accounts/accounts-slice";
 
 import ScrollToTop from "../../../common/hoc/ScrollToTop/ScrollToTop";
-import {usePopup} from "../../../common/hoc/Popup/PopupContext";
 import {formatYear, formatMonth} from "../../../common/utils/utils";
 import PopupIconList from "./IconList/IconList";
 
@@ -46,11 +45,10 @@ const getCurrentCategorySum = (filteredTransactions, title) => {
   .reduce((a, b) => a + b, 0).toFixed(2);
 };
 
-function SettingsPopup({itemState, prevItem, setItem, transactions}) {
+function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup}) {
   const dispatch = useDispatch();
   const month = useSelector(currentMonth);
   const year = useSelector(currentYear);
-  const {toggle} = usePopup();
   const {id, title, userId, incomes, header, startBalance, balance, icon} = itemState;
 
   const prevState = JSON.stringify(itemState) === JSON.stringify(prevItem);
@@ -91,7 +89,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
       dispatch(loadAccounts(userId));
       // dispatch(loadTransactions(userId));
     }
-    toggle();
+    setShowPopup();
   };
 
   function onClickDeleteButton() {
@@ -116,7 +114,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
         dispatch(loadAccounts(userId));
       }
 
-      toggle();
+      setShowPopup();
     }
   }
 
@@ -138,7 +136,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions}) {
       dispatch(loadAccounts(userId));
     }
 
-    toggle();
+    setShowPopup();
   };
 
   return (

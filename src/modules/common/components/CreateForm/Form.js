@@ -11,7 +11,7 @@ import {
   selectNewTransactionState,
   postTransaction,
   resetState,
-  clickButton,
+  setIsAddButtonClick,
   loadTransactions
 } from "../../../../reducers/transactions/transactions-slice";
 import {selectUserId} from "../../../../reducers/user/user-slice";
@@ -95,7 +95,7 @@ function TransactionCreateForm({categories, accounts, onClickAddBtn}){
   const addTransactionHandler = () => {
     dispatch(postTransaction({...newTransactionState, userId}));
     dispatch(resetState());
-    dispatch(clickButton());
+    dispatch(setIsAddButtonClick());
     dispatch(loadTransactions(userId));
 
     let formControls = createFormControls();

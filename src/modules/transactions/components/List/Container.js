@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
-import {selectFilteredTransactions, isButtonClick, showButton} from "../../../../reducers/transactions/transactions-slice";
+import {selectFilteredTransactions, isAddButtonClick, setIsButtonShow} from "../../../../reducers/transactions/transactions-slice";
 import {selectAllCategoriesState} from "../../../../reducers/categories/categories-slice";
 import {selectAllAccountsState} from "../../../../reducers/accounts/accounts-slice";
 
@@ -12,7 +12,7 @@ import classes from "./Container.module.css";
 function TransactionsListContainer({isLoading, style}) {
   const getCategories = useSelector(selectAllCategoriesState);
   const getAccounts = useSelector(selectAllAccountsState);
-  const clickAddButton = useSelector(isButtonClick);
+  const getIsAddButtonClick = useSelector(isAddButtonClick);
   const categories = [...getCategories];
   const accounts = [...getAccounts];
   const dispatch = useDispatch();
@@ -25,9 +25,9 @@ function TransactionsListContainer({isLoading, style}) {
 
   const handleNavigation = (event) => {
       if (event.deltaY > 0) {
-          dispatch(showButton(false));
+          dispatch(setIsButtonShow(false));
       } else if (event.deltaY < 0) {
-          dispatch(showButton(true));
+          dispatch(setIsButtonShow(true));
       }
   };
 
@@ -63,9 +63,9 @@ function TransactionsListContainer({isLoading, style}) {
           }
       } else {
           if ( yDiff > 0 ) {
-            dispatch(showButton(false)); //up swipe
+            dispatch(setIsButtonShow(false)); //up swipe
           } else {
-            dispatch(showButton(true)); //down swipe
+            dispatch(setIsButtonShow(true)); //down swipe
           }
       }
       //reset values
@@ -78,7 +78,7 @@ function TransactionsListContainer({isLoading, style}) {
     document.addEventListener("touchstart", handleTouchStart, false);
     document.addEventListener("touchmove", handleTouchMove, false);
 
-    if (clickAddButton) {
+    if (getIsAddButtonClick) {
       document.removeEventListener("wheel", handleNavigation, false);
       document.removeEventListener("touchstart", handleTouchStart, false);
       document.removeEventListener("touchmove", handleTouchMove, false);
@@ -88,7 +88,7 @@ function TransactionsListContainer({isLoading, style}) {
       document.removeEventListener("touchstart", handleTouchStart, false);
       document.removeEventListener("touchmove", handleTouchMove, false);
     };
-  }, [clickAddButton]);
+  }, [getIsAddButtonClick]);
 
   return (
     <section className="transactions">
