@@ -1,6 +1,6 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {CSSTransition} from "react-transition-group";
+// import {CSSTransition} from "react-transition-group";
 
 import classes from "./Form.module.css";
 
@@ -22,7 +22,7 @@ import Button from "../../../common/components/Button/Button";
 
 import {validateForm, updateFormControls, createFormControls} from "./utils";
 
-function TransactionCreateForm({categories, accounts, onClickAddBtn}){
+function TransactionCreateForm({categories, accounts}){
   const userId = useSelector(selectUserId);
   const newTransactionState = useSelector(selectNewTransactionState);
   const {sum, date} = newTransactionState;

@@ -25,6 +25,8 @@ function Input ({name, type, placeholder, onChange, label, errorMessage, value, 
         id={htmlFor}
         value={value}
         onChange={onChange}
+        autoFocus={name === "sum" ? true : false}
+        autoComplete="off"
       />
       <label htmlFor={htmlFor}>{label}</label>
 
