@@ -1,16 +1,19 @@
-import React from "react";
+import React, {useEffect} from "react";
 import classes from "./Popup.module.css";
 // import {usePopup} from "./PopupContext";
 import CloseButton from "../../components/CloseButton/CloseButton";
 import {CSSTransition} from "react-transition-group";
 
-function Popup({children, toggle, setToggle, style}) {
-  // const popup = usePopup();
-  // const {toggle} = usePopup();
-
+function Popup({children, toggle, setToggle}) {
   const nodeRef = React.useRef(null);
 
-  // // if (!popup.visible) return null;
+  useEffect(() => {
+    if (toggle) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+  }, [toggle]);
 
   return (
     <CSSTransition
@@ -24,7 +27,7 @@ function Popup({children, toggle, setToggle, style}) {
       unmountOnExit
       nodeRef={nodeRef}
     >
-      <section className={classes.Container} ref={nodeRef} style={style}>
+      <section className={classes.Container} ref={nodeRef}>
         <div className={classes.CloseBtn}>
           <CloseButton onClick={setToggle}/>
         </div>

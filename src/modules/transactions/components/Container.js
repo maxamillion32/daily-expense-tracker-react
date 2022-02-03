@@ -102,7 +102,6 @@ function TransactionsContainer() {
       {userId
         ? <section className={classes.Container}>
             <Popup
-              style={{maxHeight: "calc(100vh - 132px)"}}
               toggle={clickAddButton}
               setToggle={toggleClick}
             >

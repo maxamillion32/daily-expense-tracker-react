@@ -11,6 +11,8 @@
 
 .EnterDone {
   position: fixed;
+  /* top: 0; */
+  /* height: 100vh; */
 }
 
 .EnterActive {
@@ -29,10 +31,10 @@
 
 @keyframes show {
   0% {
-    transform: translateX(440px);
+    transform: translateY(100vh);
   }
 
   100% {
-    transform: translateX(0);
+    transform: translateY(0);
   }
 }
