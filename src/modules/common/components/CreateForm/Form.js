@@ -12,7 +12,8 @@ import {
   postTransaction,
   resetState,
   setIsAddButtonClick,
-  loadTransactions
+  loadTransactions,
+  setIsButtonShow
 } from "../../../../reducers/transactions/transactions-slice";
 import {selectUserId} from "../../../../reducers/user/user-slice";
 
@@ -97,6 +98,7 @@ function TransactionCreateForm({categories, accounts}){
     dispatch(resetState());
     dispatch(setIsAddButtonClick());
     dispatch(loadTransactions(userId));
+    dispatch(setIsButtonShow(true));
 
     let formControls = createFormControls();
     formControls = updateFormControls("date", date, formControls);
