@@ -1,9 +1,6 @@
 import React from "react";
 import classes from "./List.module.css";
 import {getAccountStartBalance, getCurrentAccountBalance, getAccountTotalBalance} from "../utils";
-
-import Popup from "../../../common/components/Popup/Popup";
-import SettingsPopup from "../Popup/Popup";
 import SettingsListItem from "./Item/Item";
 
 function SettingsList({
@@ -12,11 +9,6 @@ function SettingsList({
   onClickItem,
   onClickToggle,
   transactions,
-  itemState,
-  setItem,
-  prevItem,
-  showPopup,
-  setShowPopup
 }) {
   return (
     <>
@@ -50,19 +42,6 @@ function SettingsList({
             )
           }
       </section>
-
-      <Popup
-        showPopup={showPopup}
-        setShowPopup={setShowPopup}
-      >
-        <SettingsPopup
-          itemState={itemState}
-          prevItem={prevItem}
-          setItem={setItem}
-          transactions={transactions}
-          setShowPopup={setShowPopup}
-        />
-      </Popup>
     </>
   );
 }

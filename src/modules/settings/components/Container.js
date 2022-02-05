@@ -13,6 +13,9 @@ import SettingsList from "./List/List";
 
 import {getAccountStartBalance, getCurrentAccountBalance, getAccountTotalBalance} from "./utils";
 
+import Popup from "../../common/components/Popup/Popup";
+import SettingsPopup from "./Popup/Popup";
+
 function SettingsContainer() {
   const userId = useSelector(selectUserId);
   const transactions = useSelector(selectAllTransactionsState);
@@ -33,6 +36,7 @@ function SettingsContainer() {
   const [item, setItem] = useState({});
   const [prevItem, setPrevItem] = useState({});
   const [showPopup, setShowPopup] = useState(false);
+  console.log("🚀 ~ file: Container.js ~ line 36 ~ SettingsContainer ~ showPopup", showPopup);
 
   const onClickItem = async ({currentTarget}) => {
     const id = currentTarget.getAttribute("dataid");
@@ -108,6 +112,19 @@ function SettingsContainer() {
             />
           </>
         : null}
+
+      <Popup
+        showPopup={showPopup}
+        setShowPopup={onPopupCloseButtonClick}
+      >
+        <SettingsPopup
+          itemState={item}
+          prevItem={prevItem}
+          setItem={setItem}
+          transactions={transactions}
+          setShowPopup={onPopupCloseButtonClick}
+        />
+      </Popup>
     </section>
   );
 }
