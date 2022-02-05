@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import classes from "./Popup.module.css";
-// import {usePopup} from "./PopupContext";
 import CloseButton from "../CloseButton/CloseButton";
 import {CSSTransition} from "react-transition-group";
 
@@ -20,7 +19,7 @@ function Popup({children, showPopup, setShowPopup}) {
   return (
     <CSSTransition
       in={showPopup}
-      timeout={300}
+      timeout={250}
       classNames={{
         enterDone: `${classes.EnterDone}`,
         enterActive: `${classes.EnterActive}`,

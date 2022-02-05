@@ -36,7 +36,6 @@ function SettingsContainer() {
   const [item, setItem] = useState({});
   const [prevItem, setPrevItem] = useState({});
   const [showPopup, setShowPopup] = useState(false);
-  console.log("🚀 ~ file: Container.js ~ line 36 ~ SettingsContainer ~ showPopup", showPopup);
 
   const onClickItem = async ({currentTarget}) => {
     const id = currentTarget.getAttribute("dataid");
