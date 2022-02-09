@@ -3,6 +3,7 @@
   height: 120px;
   font-size: 12px;
   background-color: #f1f1f1;
+  border-top: 1px dashed #d4d4d4;
 }
 
 .Chart h3{
