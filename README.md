@@ -1,4 +1,5 @@
-# A simple web app for tracking expenses and budgets
+# Expenses tracker
+A simple web app for tracking expenses and budgets
 
 ## Table of contents
 - Overview
