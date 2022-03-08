@@ -11,11 +11,11 @@
 # ![Screenshot 2022-01-18 at 13 49 32](https://user-images.githubusercontent.com/57729597/149940466-65c10c8a-ee72-4721-87e7-04abb513a00e.png)
 
 ## Technologies
-The stack used for this project was
+The stack used for this project was:
 - React.js
 - Redux
 - Firebase
 - Github
 
 ## Contribute
-In order to contribute, I would recommend you to fork the project, create a new branch with the feature/bug to add/solve and make a pull request to the original repo
+In order to contribute, I would recommend you to fork the project, create a new branch with the feature/bug to add/solve and make a pull request to the original repo.
