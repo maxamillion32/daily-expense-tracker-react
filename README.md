@@ -18,7 +18,7 @@ The stack used for this project was:
 - React.js
 - Redux
 - Firebase
-- Github
+- Git
 
 ## Contribute
 In order to contribute, I would recommend you to fork the project, create a new branch with the feature/bug to add/solve and make a pull request to the original repo.
