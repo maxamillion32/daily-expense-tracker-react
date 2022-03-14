@@ -1,5 +1,5 @@
-# Expenses tracker
-A web app for tracking expenses and budgets.
+# Income & Expense Tracker
+A web app for tracking expenses, incomes and budgets.
 
 Website: https://expense-tracker-4e13a.web.app/
 
