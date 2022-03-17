@@ -1,27 +1,18 @@
 import React, {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
-import {selectFilteredTransactions, isAddButtonClick, setIsButtonShow} from "../../../../reducers/transactions/transactions-slice";
-import {selectAllCategoriesState} from "../../../../reducers/categories/categories-slice";
-import {selectAllAccountsState} from "../../../../reducers/accounts/accounts-slice";
+import {isAddButtonClick, setIsButtonShow} from "../../../../reducers/transactions/transactions-slice";
 
 import {formatYear} from "../../../common/utils/utils";
 import TransactionsItemsYearGroup from "./Items/YearGroup";
 import classes from "./Container.module.css";
 
-function TransactionsListContainer({isLoading, style}) {
-  const getCategories = useSelector(selectAllCategoriesState);
-  const getAccounts = useSelector(selectAllAccountsState);
+function TransactionsListContainer({isLoading, transactions, filteredTransactions, categories, accounts}) {
   const getIsAddButtonClick = useSelector(isAddButtonClick);
-  const categories = [...getCategories];
-  const accounts = [...getAccounts];
   const dispatch = useDispatch();
 
   const isEmpty = categories.length === 0 || accounts.length === 0;
-
-  const transactions = useSelector(selectFilteredTransactions);
-  const years = [...new Set(transactions
-    .map(date => formatYear(date.date)))];
+  const years = [...new Set(transactions.map(date => formatYear(date.date)))];
 
   const handleNavigation = (event) => {
       if (event.deltaY > 0) {
@@ -105,7 +96,7 @@ function TransactionsListContainer({isLoading, style}) {
           </p>
         : null}
       {years.map((year) =>
-        <TransactionsItemsYearGroup transactions={transactions} year={year} key={year} />
+        <TransactionsItemsYearGroup filteredTransactions={filteredTransactions} year={year} key={year} />
       )}
     </section>
   );

@@ -3,15 +3,14 @@ import {useSelector} from "react-redux";
 
 import classes from "../Container.module.css";
 
-import {selectFilteredTransactions, currentYear} from "../../../../../reducers/transactions/transactions-slice";
+import {currentYear} from "../../../../../reducers/transactions/transactions-slice";
 
 import TransactionsItemsMonthGroup from "./MonthGroup";
 import {formatYear, formatMonth} from "../../../../common/utils/utils";
 
-function TransactionsItemsYearGroup({year}) {
+function TransactionsItemsYearGroup({year, filteredTransactions}) {
   const getCurrentYear = useSelector(currentYear);
-  const transactions = useSelector(selectFilteredTransactions);
-  const yearTransactions = transactions
+  const yearTransactions = filteredTransactions
     .filter((transaction) => formatYear(transaction.date) === year);
   const nodeRef = React.useRef(null);
   const months = [...new Set(yearTransactions

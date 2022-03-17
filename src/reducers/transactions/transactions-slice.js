@@ -28,12 +28,6 @@ export const transactionsSlice = createSlice({
   name: "transactions",
   initialState: {
     allTransactions: [],
-    newTransaction: {
-      sum: "",
-      date: new Date().toISOString().slice(0, -14),
-      // date: "",
-      expense: true,
-    },
     isLoading: false,
     hasError: false,
     currentMonth: formatMonth(new Date()),
@@ -42,51 +36,6 @@ export const transactionsSlice = createSlice({
     isButtonShow: false
   },
   reducers: {
-    setUserInput: (state, action) => {
-      let {name, value} = action.payload;
-      if (name === "expense") {
-        value = !state.newTransaction.expense;
-      }
-      if (name === "sum") {
-        value = +value === 0 ? "" : +value;
-      }
-      return {
-        ...state,
-        newTransaction: {
-          ...state.newTransaction,
-          [name]: value
-        }
-      };
-    },
-    setCategory: (state, action) => {
-      return {
-        ...state,
-        newTransaction: {
-          ...state.newTransaction,
-          categoryId: action.payload,
-        }
-      };
-    },
-    setAccount: (state, action) => {
-      return {
-        ...state,
-        newTransaction: {
-          ...state.newTransaction,
-          accountId: action.payload,
-        }
-      };
-    },
-    resetState: (state) => {
-      return {
-        ...state,
-        newTransaction: {
-          // id: nanoid(MAX_ID_LENGTH),
-          sum: "",
-          date: new Date().toISOString().slice(0, -14),
-          expense: true,
-        },
-      };
-    },
     updateMonth: (state, action) => {
       return {
         ...state,
@@ -134,7 +83,6 @@ export const transactionsSlice = createSlice({
 });
 
 export const selectAllTransactionsState = (state) => state.transactions.allTransactions;
-export const selectNewTransactionState = (state) => state.transactions.newTransaction;
 export const isLoading = (state) => state.transactions.isLoading;
 export const hasError = (state) => state.transactions.hasError;
 export const currentMonth = (state) => state.transactions.currentMonth;
@@ -172,12 +120,8 @@ export const selectCurrentBalance = (state) => {
 };
 
 export const {
-  setUserInput,
-  setCategory,
-  setAccount,
   setTransactionId,
   addTransaction,
-  resetState,
   updateMonth,
   updateYear,
   setIsAddButtonClick,

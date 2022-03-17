@@ -1,16 +1,10 @@
 import React from "react";
-import {useSelector} from "react-redux";
 import {CSSTransition} from "react-transition-group";
-
 import classes from "../Container.module.css";
-
-import {selectFilteredTransactions} from "../../../../../reducers/transactions/transactions-slice";
-
 import TransactionItemsDateGroup from "./DateGroup";
 import TransactionsDateHeader from "./DateHeader";
 
-function TransactionsItemsDateGroupWrapper({date, ...rest}) {
-  const transactions = useSelector(selectFilteredTransactions);
+function TransactionsItemsDateGroupWrapper({date, transactions, ...rest}) {
   const nodeRef = React.useRef(null);
 
   return (

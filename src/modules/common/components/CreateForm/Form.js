@@ -1,16 +1,9 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
-// import {CSSTransition} from "react-transition-group";
-
 import classes from "./Form.module.css";
 
 import {
-  setUserInput,
-  setCategory,
-  setAccount,
-  selectNewTransactionState,
   postTransaction,
-  resetState,
   setIsAddButtonClick,
   loadTransactions,
   setIsButtonShow
@@ -25,34 +18,42 @@ import {validateForm, updateFormControls, createFormControls} from "./utils";
 
 function TransactionCreateForm({categories, accounts}){
   const userId = useSelector(selectUserId);
-  const newTransactionState = useSelector(selectNewTransactionState);
-  const {sum, date} = newTransactionState;
   const dispatch = useDispatch();
 
-  const [state, setState] = useState({
+  const date = new Date().toISOString().slice(0, -14);
+
+  const initialState = {
     isFormValid: false,
-    formControls: createFormControls()
-  });
-
-  useEffect(() => {
-    const formControls = updateFormControls("date", date, state.formControls);
-
-    setState({...state, formControls});
-    // eslint-disable-next-line
-  }, [])
-
-  const onChangeUserInput = (value, name) => {
-    const formControls = updateFormControls(name, value, state.formControls);
-
-    setState({
-      formControls,
-      isFormValid: validateForm(formControls)
-    });
-
-    dispatch(setUserInput({name, value}));
+    formControls: updateFormControls("date", date, createFormControls()),
+    newTransaction: {
+      sum: "",
+      date: date,
+      expense: true,
+    }
   };
 
-  const onChangeSelectHandler = (selector) => (e) => {
+  const [state, setState] = useState(initialState);
+  const {sum} = state.newTransaction;
+
+//TODO: move to utils
+  const setUserInput = (name, value) => {
+    if (name === "expense") {
+      value = !state.newTransaction.expense;
+    }
+    if (name === "sum") {
+      value = +value === 0 ? "" : +value;
+    }
+    return {
+      ...state.newTransaction,
+      [name]: value
+    };
+  };
+
+//TODO: move to utils
+  const setUserSelect = (selector, value) => {
+    let name = "";
+    let id = "";
+
     const getId = (data, target) => {
       let idItem;
       data.map((item) => {
@@ -65,28 +66,40 @@ function TransactionCreateForm({categories, accounts}){
     };
 
     if (selector === "account") {
-      const formControls = updateFormControls(selector, e.target.value, state.formControls);
-
-      setState({
-        formControls,
-        isFormValid: validateForm(formControls)
-      });
-
-      const accountId = getId(accounts, e.target.value);
-      dispatch(setAccount(accountId));
+      name = "accountId";
+      id = getId(accounts, value);
     }
 
     if (selector === "category") {
-      const formControls = updateFormControls(selector, e.target.value, state.formControls);
-
-      setState({
-        formControls,
-        isFormValid: validateForm(formControls)
-      });
-
-      const categoryId = getId(categories, e.target.value);
-      dispatch(setCategory(categoryId));
+      name = "categoryId";
+      id = getId(categories, value);
     }
+
+    return {
+      ...state.newTransaction,
+      [name]: id,
+    };
+  };
+
+  const onChangeUserInput = (value, name) => {
+    const formControls = updateFormControls(name, value, state.formControls);
+
+    setState({
+      formControls,
+      isFormValid: validateForm(formControls),
+      newTransaction: setUserInput(name, value)
+    });
+  };
+
+  const onChangeSelectHandler = (selector) => (e) => {
+    const value = e.target.value;
+    const formControls = updateFormControls(selector, value, state.formControls);
+
+    setState({
+      formControls,
+      isFormValid: validateForm(formControls),
+      newTransaction: setUserSelect(selector, value)
+    });
   };
 
   const onClickSubmitButton = (e) => {
@@ -94,19 +107,12 @@ function TransactionCreateForm({categories, accounts}){
   };
 
   const addTransactionHandler = () => {
-    dispatch(postTransaction({...newTransactionState, userId}));
-    dispatch(resetState());
+    dispatch(postTransaction({...state.newTransaction, userId}));
     dispatch(setIsAddButtonClick());
     dispatch(loadTransactions(userId));
     dispatch(setIsButtonShow(true));
 
-    let formControls = createFormControls();
-    formControls = updateFormControls("date", date, formControls);
-
-    setState({
-      formControls: formControls,
-      isFormValid: false
-    });
+    setState(initialState);
   };
 
   const nodeRef = React.useRef(null);
@@ -115,79 +121,68 @@ function TransactionCreateForm({categories, accounts}){
     <section className={classes.form} >
       <div className={classes.dialogWrapper}>
         <form onSubmit={onClickSubmitButton}>
-          {/* <CSSTransition
-            in={onClickAddBtn}
-            timeout={300}
-            classNames={{
-              enterActive: `${classes.addFormEnterActive}`,
-              exitActive: `${classes.addFormExitActive}`,
-            }}
-            unmountOnExit
-            nodeRef={nodeRef}
-          > */}
-            <div className={classes.dialog} ref={nodeRef}>
-              <Button
-                type="submit"
-                onClick={addTransactionHandler}
-                disabled={!state.isFormValid}
-              >
-                Create
-              </Button>
+          <div className={classes.dialog} ref={nodeRef}>
+            <Button
+              type="submit"
+              onClick={addTransactionHandler}
+              disabled={!state.isFormValid}
+            >
+              Create
+            </Button>
+            <Input
+              type="number"
+              name="sum"
+              placeholder="0.00"
+              value={sum}
+              valid={state.formControls.sum.valid}
+              shouldValidate={!!state.formControls.sum.validation}
+              touched={state.formControls.sum.touched}
+              errorMessage={state.formControls.sum.errorMessage}
+              onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
+            />
+
+            <Select
+              options={categories}
+              defaultOption="Choose a category"
+              onChange={onChangeSelectHandler("category")}
+
+              valid={state.formControls.category.valid}
+              shouldValidate={!!state.formControls.category.validation}
+              touched={state.formControls.category.touched}
+              errorMessage={state.formControls.category.errorMessage}
+            />
+
+            <Select
+              options={accounts}
+              defaultOption="Choose an account"
+              onChange={onChangeSelectHandler("account")}
+
+              valid={state.formControls.account.valid}
+              shouldValidate={!!state.formControls.account.validation}
+              touched={state.formControls.account.touched}
+              errorMessage={state.formControls.account.errorMessage}
+            />
+
+            <Input
+              type="date"
+              name="date"
+              value={date}
+              valid={state.formControls.date.valid}
+              shouldValidate={!!state.formControls.date.validation}
+              touched={state.formControls.date.touched}
+              errorMessage={state.formControls.date.errorMessage}
+              onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
+            />
+
+            <div className={classes.dialogType}>
               <Input
-                type="number"
-                name="sum"
-                placeholder="0.00"
-                value={sum}
-                valid={state.formControls.sum.valid}
-                shouldValidate={!!state.formControls.sum.validation}
-                touched={state.formControls.sum.touched}
-                errorMessage={state.formControls.sum.errorMessage}
+                label={"Income"}
+                type="checkbox"
+                name="expense"
                 onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
               />
-
-              <Select
-                options={categories}
-                defaultOption="Choose a category"
-                onChange={onChangeSelectHandler("category")}
-
-                valid={state.formControls.category.valid}
-                shouldValidate={!!state.formControls.category.validation}
-                touched={state.formControls.category.touched}
-                errorMessage={state.formControls.category.errorMessage}
-              />
-
-              <Select
-                options={accounts}
-                defaultOption="Choose an account"
-                onChange={onChangeSelectHandler("account")}
-
-                valid={state.formControls.account.valid}
-                shouldValidate={!!state.formControls.account.validation}
-                touched={state.formControls.account.touched}
-                errorMessage={state.formControls.account.errorMessage}
-              />
-
-              <Input
-                type="date"
-                name="date"
-                value={date}
-                valid={state.formControls.date.valid}
-                shouldValidate={!!state.formControls.date.validation}
-                touched={state.formControls.date.touched}
-                errorMessage={state.formControls.date.errorMessage}
-                onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
-              />
-
-              <div className={classes.dialogType}>
-                <Input
-                  label={"Income"}
-                  type="checkbox"
-                  name="expense"
-                  onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
-                />
-              </div>
             </div>
-          {/* </CSSTransition> */}
+          </div>
         </form>
       </div>
     </section>
