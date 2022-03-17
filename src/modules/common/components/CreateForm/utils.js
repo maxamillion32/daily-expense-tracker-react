@@ -64,3 +64,13 @@ export function createFormControls() {
     }, {required: true}),
   };
 }
+
+// interface isInvalidProps {
+//   valid: boolean,
+//   touched: boolean,
+//   shouldValidate: boolean,
+// }
+
+export function isInvalid({valid, touched, shouldValidate}) {
+  return !valid && shouldValidate && touched;
+}
