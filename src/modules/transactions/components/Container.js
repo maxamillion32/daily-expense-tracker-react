@@ -1,15 +1,19 @@
-import React, {useEffect, useState, useContext} from "react";
+import React, {useEffect, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import classes from "./Container.module.css";
-
 import {
-  setIsButtonShow, isLoading, currentYear,
-  isAddButtonClick, setIsAddButtonClick
+  setIsButtonShow,
+  isLoading,
+  currentYear,
+  selectFilteredTransactions,
+  isAddButtonClick,
+  setIsAddButtonClick,
+  selectAllTransactionsState
 } from "../../../reducers/transactions/transactions-slice";
-import {
-  selectUserId
-} from "../../../reducers/user/user-slice";
+import {selectAllCategoriesState} from "../../../reducers/categories/categories-slice";
+import {selectAllAccountsState} from "../../../reducers/accounts/accounts-slice";
+import {selectUserId} from "../../../reducers/user/user-slice";
 
 import Search from "./Search/Search";
 import Balance from "./Balance/Balance";
@@ -17,13 +21,12 @@ import TransactionsListContainer from "./List/Container";
 import Loader from "../../common/components/Loader/Loader";
 import Welcome from "../../welcome/components/Welcome";
 import Chart from "./Chart/Chart";
-import {MONTH_EXPENSES} from "../../statistics/components/YearExpenses/constant";
-import {formatMonth, formatYear} from "../../common/utils/utils";
-import {getMaxAmountPerYear} from "../../common/utils/utils";
 import Popup from "../../common/components/Popup/Popup";
 import TransactionCreateForm from "../../common/components/CreateForm/Form";
 
-import {AppContext} from "../../../Context";
+import {getMaxAmountPerYear} from "../../common/utils/utils";
+import {formatMonth, formatYear} from "../../common/utils/utils";
+import {MONTH_EXPENSES} from "../../statistics/components/YearExpenses/constant";
 
 const getExpenses = (year, transactions, toggle) => {
   return MONTH_EXPENSES.map(item => {
@@ -51,11 +54,18 @@ const getExpenses = (year, transactions, toggle) => {
 };
 
 function TransactionsContainer() {
-  const {transactions, filteredTransactions, categories, accounts} = useContext(AppContext);
   const loading = useSelector(isLoading);
   const userId = useSelector(selectUserId);
   const getCurrentYear = useSelector(currentYear);
   const getIsAddButtonClick = useSelector(isAddButtonClick);
+  const getTransactions = useSelector(selectAllTransactionsState);
+  const getFilteredTransactions = useSelector(selectFilteredTransactions);
+  const getCategories = useSelector(selectAllCategoriesState);
+  const getAccounts = useSelector(selectAllAccountsState);
+  const transactions = [...getTransactions];
+  const filteredTransactions = [...getFilteredTransactions];
+  const categories = [...getCategories];
+  const accounts = [...getAccounts];
   const dispatch = useDispatch();
 
   const [toggle, setToggle] = useState(true);

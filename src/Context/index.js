@@ -26,7 +26,13 @@ export const AppContextProvider = ({children}) => {
   const categories = [...getCategories];
   const accounts = [...getAccounts];
 
-  const state = {transactions, filteredTransactions, categories, accounts};
+  const state = {
+    transactions,
+    filteredTransactions,
+    categories,
+    accounts,
+    userId
+  };
 
   return (
     <AppContext.Provider value={state}>

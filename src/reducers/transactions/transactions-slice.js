@@ -68,9 +68,6 @@ export const transactionsSlice = createSlice({
     },
     [loadTransactions.fulfilled]: (state, action) => {
       state.allTransactions = action.payload;
-      state.newTransaction = {
-        ...state.newTransaction,
-      };
       state.isLoading = false;
       state.hasError = false;
       state.showDelete = false;
