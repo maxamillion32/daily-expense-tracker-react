@@ -42,7 +42,7 @@ export function useAuth() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
+    onAuthStateChanged(auth, (user) => {
       if (user) {
         const userId = user.uid;
         dispatch(setUserId(userId));
@@ -50,8 +50,7 @@ export function useAuth() {
         dispatch(setUserId(null));
       }
         setCurrentUser(user);
-      });
-    return unsub;
+    });
   }, []);
 
   return currentUser;

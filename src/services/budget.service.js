@@ -1,5 +1,5 @@
 import {addDoc, collection, setDoc, doc, deleteDoc, getDocs} from "@firebase/firestore";
-import db from "./firebase";
+import db from "./firebase.service";
 
 const budgetRef = collection(db, "budgets");
 

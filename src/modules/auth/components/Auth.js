@@ -1,6 +1,6 @@
 import React, {useRef, useState} from "react";
 import classes from "./Auth.module.css";
-import {singUp, logout, login, useAuth} from "../../../services/firebase";
+import {singUp, logout, login, useAuth} from "../../../services/firebase.service";
 import {NavLink} from "react-router-dom";
 
 function Auth() {

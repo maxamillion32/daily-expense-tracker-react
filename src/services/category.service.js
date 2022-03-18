@@ -1,5 +1,5 @@
 import {addDoc, collection, setDoc, doc, deleteDoc, getDocs, query, where} from "@firebase/firestore";
-import db from "./firebase";
+import db from "./firebase.service";
 
 const categoriesRef = collection(db, "categories");
 
