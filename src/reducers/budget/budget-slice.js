@@ -49,37 +49,25 @@ export const budgetSlice = createSlice({
 
       let current = {};
 
+      current[year] = {[month]: {expenses: {}, incomes: {}}};
+      let currentYear = {...current[year]};
+      let currentMonth = {...currentYear[month]};
+      currentMonth = {[type]: {}};
+      let currentType = {...currentMonth[type]};
+      currentType[name] = value;
+      currentMonth[type] = currentType;
+      currentYear[month] = {...current[year][month], ...currentMonth};
+
       if (!budget) {
-        current[year] = {[month]: {expenses: {}, incomes: {}}};
-
-        let currentYear = {...current[year]};
-        let currentMonth = {...currentYear[month]};
-        currentMonth = {[type]: {}};
-        let currentType = {...currentMonth[type]};
-        currentType[name] = value;
-        currentMonth[type] = currentType;
-        currentYear[month] = {...current[year][month], ...currentMonth};
-
         current[year] = {...currentYear};
 
         const overall = getOverall(current, type, month, year).toFixed(2);
         currentType[nameUpperCase] = overall;
         currentMonth[type] = currentType;
-        currentYear[month] = {...current[year][month], ...currentMonth};
-        // current[year] = {...budget[month], ...currentYear};
+        currentYear[month] = {...currentMonth};
       }
 
       if (budget && (!budget[year] || !budget[year][month])) {
-        current[year] = {[month]: {expenses: {}, incomes: {}}};
-
-        let currentYear = {...current[year]};
-        let currentMonth = {...currentYear[month]};
-        currentMonth = {[type]: {}};
-        let currentType = {...currentMonth[type]};
-        currentType[name] = value;
-        currentMonth[type] = currentType;
-        currentYear[month] = {...current[year][month], ...currentMonth};
-
         current[year] = {...budget[year], ...currentYear};
         current = {...budget, ...current};
 
@@ -93,7 +81,6 @@ export const budgetSlice = createSlice({
 
 
       if (budget && budget[year] && budget[year][month]) {
-
         current = {...JSON.parse(JSON.stringify(budget))};
         let currentYear = current[year];
         let currentMonth = {...currentYear[month]};
