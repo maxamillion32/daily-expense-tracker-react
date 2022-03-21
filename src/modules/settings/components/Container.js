@@ -11,8 +11,6 @@ import {selectAllTransactionsState, loadTransactions} from "../../../reducers/tr
 import Loader from "../../common/components/Loader/Loader";
 import SettingsList from "./List/List";
 
-import {getAccountStartBalance, getCurrentAccountBalance, getAccountTotalBalance} from "./utils";
-
 import Popup from "../../common/components/Popup/Popup";
 import SettingsPopup from "./Popup/Popup";
 
@@ -33,47 +31,18 @@ function SettingsContainer() {
     dispatch(loadTransactions(userId));
   }, [userId]);
 
-  const [item, setItem] = useState({});
-  const [prevItem, setPrevItem] = useState({});
+  const initialItemState = {
+    id: "",
+    title: "",
+    type: "",
+    startBalance: 0,
+    balance: 0,
+    icon: null,
+  };
+
+  const [item, setItem] = useState(initialItemState);
+  const [prevItem, setPrevItem] = useState(initialItemState);
   const [showPopup, setShowPopup] = useState(false);
-
-  const onClickItem = async ({currentTarget}) => {
-    const id = currentTarget.getAttribute("dataid");
-    const title = currentTarget.getAttribute("datavalue");
-    const type = currentTarget.getAttribute("datatype");
-    const header = currentTarget.getAttribute("dataheader");
-    const icon = currentTarget.getAttribute("dataicon");
-
-    if (header === "Accounts") {
-      const startBalance = getAccountStartBalance(accounts, title);
-      const balance = getAccountTotalBalance(startBalance, getCurrentAccountBalance(transactions, title));
-
-      setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance});
-      setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance});
-      setShowPopup(!showPopup);
-    } else {
-      const startBalance = "";
-      const balance = "";
-
-      setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance, icon});
-      setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance, icon});
-      setShowPopup(!showPopup);
-    }
-  };
-
-  const onClickToggle = async ({target}) => {
-    const id = "";
-    const title = "";
-    const type = "";
-    const header = target.getAttribute("dataheader");
-    const startBalance = 0;
-    const balance = 0;
-    const icon = null;
-
-    setItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance, icon});
-    setPrevItem({id, title, userId, incomes: !!+type.toString(), header, startBalance, balance, icon});
-    setShowPopup(!showPopup);
-  };
 
   const onPopupCloseButtonClick = () => {
       setShowPopup(!showPopup);
@@ -87,27 +56,26 @@ function SettingsContainer() {
             <SettingsList
               items={accounts}
               header={"Accounts"}
-              onClickItem={onClickItem}
-              onClickToggle={onClickToggle}
+              accounts={accounts}
               transactions={transactions}
-              itemState={item}
-              prevItem={prevItem}
               setItem={setItem}
+              setPrevItem={setPrevItem}
               showPopup={showPopup}
               setShowPopup={onPopupCloseButtonClick}
+              userId={userId}
+              state={initialItemState}
             />
 
             <SettingsList
               items={categories}
               header={"Categories"}
-              onClickItem={onClickItem}
-              onClickToggle={onClickToggle}
               transactions={transactions}
-              itemState={item}
-              prevItem={prevItem}
               setItem={setItem}
+              setPrevItem={setPrevItem}
               showPopup={showPopup}
               setShowPopup={onPopupCloseButtonClick}
+              userId={userId}
+              state={initialItemState}
             />
           </>
         : null}

@@ -6,10 +6,22 @@ import SettingsListItem from "./Item/Item";
 function SettingsList({
   items,
   header,
+  accounts,
   onClickItem,
-  onClickToggle,
   transactions,
+  setItem,
+  setPrevItem,
+  showPopup,
+  setShowPopup,
+  userId,
+  state
 }) {
+  const onClickCreateButton = async () => {
+    setItem({...state, header, userId});
+    setPrevItem({...state, header, userId});
+    setShowPopup(!showPopup);
+  };
+
   return (
     <>
       <section className={classes.Wrapper}>
@@ -17,8 +29,7 @@ function SettingsList({
           <p className={classes.Header}>{header}</p>
           <button
             className={classes.Button}
-            onClick={onClickToggle}
-            dataheader={header}
+            onClick={onClickCreateButton}
           >Create</button>
         </div>
 
@@ -26,20 +37,25 @@ function SettingsList({
               const startBalance = getAccountStartBalance(items, item.title);
               const currentBalance = getCurrentAccountBalance(transactions, item.title);
               const balance = getAccountTotalBalance(startBalance, currentBalance);
-                return (
-                  <SettingsListItem
-                    onClickItem={onClickItem}
-                    id={item.id}
-                    title={item.title}
-                    incomes={+item.incomes ? +item.incomes : ""}
-                    header={header}
-                    balance={balance}
-                    icon={item.icon}
-                    key={item.id}
-                  />
-                );
-              }
-            )
+              return (
+                <SettingsListItem
+                  onClickItem={onClickItem}
+                  id={item.id}
+                  title={item.title}
+                  incomes={+item.incomes ? +item.incomes : ""}
+                  header={header}
+                  balance={balance}
+                  icon={item.icon}
+                  userId={item.userId}
+                  setItem={setItem}
+                  setPrevItem={setPrevItem}
+                  accounts={accounts}
+                  showPopup={showPopup}
+                  setShowPopup={setShowPopup}
+                  key={item.id}
+                />
+              );
+            })
           }
       </section>
     </>
