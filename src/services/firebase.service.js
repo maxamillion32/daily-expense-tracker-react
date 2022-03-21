@@ -7,13 +7,20 @@ import {getFirestore} from "firebase/firestore";
 import {setDoc, doc} from "firebase/firestore";
 import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from "firebase/auth";
 
+const API_KEY = process.env.REACT_APP_API_KEY;
+const APP_ID = process.env.REACT_APP_ID;
+const MESSAGING_SENDER_ID = process.env.REACT_APP_MESSAGING_SENDER_ID;
+const AUTH_DOMAIN = process.env.REACT_APP_AUTH_DOMAIN;
+const PROJECT_ID = process.env.REACT_APP_PROJECT_ID;
+const STORAGE_BUCKET = process.env.REACT_APP_STORAGE_BUCKET;
+
 const firebaseConfig = {
-  apiKey: "AIzaSyA-jcEb53c4muML3hfX3HA7WYvqCSwBNNY",
-  authDomain: "expense-tracker-4e13a.firebaseapp.com",
-  projectId: "expense-tracker-4e13a",
-  storageBucket: "expense-tracker-4e13a.appspot.com",
-  messagingSenderId: "65016479636",
-  appId: "1:65016479636:web:8b455fad8e8c1b1c791981"
+  apiKey: API_KEY,
+  authDomain: AUTH_DOMAIN,
+  projectId: PROJECT_ID,
+  storageBucket: STORAGE_BUCKET,
+  messagingSenderId: MESSAGING_SENDER_ID,
+  appId: APP_ID
 };
 
 const app = initializeApp(firebaseConfig);
