@@ -61,7 +61,7 @@ function SettingsContainer() {
               setItem={setItem}
               setPrevItem={setPrevItem}
               showPopup={showPopup}
-              setShowPopup={onPopupCloseButtonClick}
+              setShowPopup={setShowPopup}
               userId={userId}
               state={initialItemState}
             />
@@ -73,7 +73,7 @@ function SettingsContainer() {
               setItem={setItem}
               setPrevItem={setPrevItem}
               showPopup={showPopup}
-              setShowPopup={onPopupCloseButtonClick}
+              setShowPopup={setShowPopup}
               userId={userId}
               state={initialItemState}
             />
@@ -89,7 +89,7 @@ function SettingsContainer() {
           prevItem={prevItem}
           setItem={setItem}
           transactions={transactions}
-          setShowPopup={onPopupCloseButtonClick}
+          setShowPopup={setShowPopup}
         />
       </Popup>
     </section>
