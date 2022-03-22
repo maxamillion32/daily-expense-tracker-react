@@ -1,12 +1,12 @@
-import React, {useState, useEffect} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import React, {useState} from "react";
+import {useSelector} from "react-redux";
 
 import classes from "./Container.module.css";
 
 import {selectUserId} from "../../../reducers/user/user-slice";
 import {isCategoriesLoading, selectAllCategoriesState} from "../../../reducers/categories/categories-slice";
 import {isAccountsLoading, selectAllAccountsState} from "../../../reducers/accounts/accounts-slice";
-import {selectAllTransactionsState, loadTransactions} from "../../../reducers/transactions/transactions-slice";
+import {selectAllTransactionsState} from "../../../reducers/transactions/transactions-slice";
 
 import Loader from "../../common/components/Loader/Loader";
 import SettingsList from "./List/List";
@@ -19,17 +19,12 @@ function SettingsContainer() {
   const transactions = useSelector(selectAllTransactionsState);
   const getCategories = useSelector(selectAllCategoriesState);
   const getAccounts = useSelector(selectAllAccountsState);
-  const categories = [...getCategories];
-  const accounts = [...getAccounts];
   const loadingCategories = useSelector(isCategoriesLoading);
   const loadingAccounts = useSelector(isAccountsLoading);
-  const dispatch = useDispatch();
+  const categories = [...getCategories];
+  const accounts = [...getAccounts];
 
   const isLoader = (loadingCategories || loadingAccounts) && userId;
-
-  useEffect(() => {
-    dispatch(loadTransactions(userId));
-  }, [userId]);
 
   const initialItemState = {
     id: "",

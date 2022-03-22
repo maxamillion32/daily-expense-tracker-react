@@ -12,6 +12,7 @@ import SettingsContainer from "./modules/settings/components/Container";
 import {loadTransactions} from "./reducers/transactions/transactions-slice";
 import {loadCategories} from "./reducers/categories/categories-slice";
 import {loadAccounts} from "./reducers/accounts/accounts-slice";
+import {loadBudgets} from "./reducers/budget/budget-slice";
 import {selectUserId} from "./reducers/user/user-slice";
 
 function App() {
@@ -22,6 +23,7 @@ function App() {
     dispatch(loadTransactions(userId));
     dispatch(loadCategories(userId));
     dispatch(loadAccounts(userId));
+    dispatch(loadBudgets(userId));
   }, [userId]);
 
   return (
