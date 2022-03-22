@@ -20,22 +20,21 @@ function TransactionCreateForm({categories, accounts}){
   const userId = useSelector(selectUserId);
   const dispatch = useDispatch();
 
-  const date = new Date().toISOString().slice(0, -14);
+  const initialDate = new Date().toISOString().slice(0, -14);
 
   const initialState = {
     isFormValid: false,
-    formControls: updateFormControls("date", date, createFormControls()),
+    formControls: updateFormControls("date", initialDate, createFormControls()),
     newTransaction: {
       sum: "",
-      date: date,
+      date: initialDate,
       expense: true,
     }
   };
 
   const [state, setState] = useState(initialState);
-  const {sum} = state.newTransaction;
+  const {sum, date} = state.newTransaction;
 
-//TODO: move to utils
   const setUserInput = (name, value) => {
     if (name === "expense") {
       value = !state.newTransaction.expense;
@@ -49,7 +48,6 @@ function TransactionCreateForm({categories, accounts}){
     };
   };
 
-//TODO: move to utils
   const setUserSelect = (selector, value) => {
     let name = "";
     let id = "";
