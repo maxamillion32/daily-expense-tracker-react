@@ -103,6 +103,12 @@ export const budgetSlice = createSlice({
         budgetUpdated: {...current}
       };
     },
+    setIsLoading: (state) => {
+      return {
+        ...state,
+        isLoading: !state.isLoading,
+      };
+    },
   },
 
   extraReducers: {
@@ -124,5 +130,5 @@ export const selectAllBudgetState = (state) => state.budget.budget;
 export const selectUpdatedBudgetState = (state) => state.budget.budgetUpdated;
 export const isLoading = (state) => state.budget.isLoading;
 
-export const {updateBudget} = budgetSlice.actions;
+export const {updateBudget, setIsLoading} = budgetSlice.actions;
 export default budgetSlice.reducer;

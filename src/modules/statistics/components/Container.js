@@ -1,5 +1,5 @@
-import React from "react";
-import {useSelector} from "react-redux";
+import React, {useEffect} from "react";
+import {useSelector, useDispatch} from "react-redux";
 
 import {
   selectUserId
@@ -11,7 +11,7 @@ import {
   selectAllTransactionsState
 } from "../../../reducers/transactions/transactions-slice";
 import {
-  selectAllBudgetState, selectUpdatedBudgetState, isLoading
+  selectAllBudgetState, selectUpdatedBudgetState, isLoading, setIsLoading
 } from "../../../reducers/budget/budget-slice";
 import {
   selectAllCategoriesState
@@ -33,10 +33,15 @@ function StatisticsContainer() {
   const updatedBudget = useSelector(selectUpdatedBudgetState);
   const userId = useSelector(selectUserId);
   const loading = useSelector(isLoading);
+  const dispatch = useDispatch();
 
   const newBudget = budget && Object.keys(budget).length !== 0 && budget;
   const newUpdatedBudget = updatedBudget && Object.keys(updatedBudget).length !== 0 && updatedBudget;
   const isLoader = loading && userId;
+
+  useEffect(() => {
+    dispatch(setIsLoading());
+  }, [month, year]);
 
   return (
     <section className={classes.Container}>
