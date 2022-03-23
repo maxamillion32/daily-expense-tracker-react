@@ -5,11 +5,10 @@ import {updateMonth, updateYear} from "../../../../reducers/transactions/transac
 import {setIsLoading} from "../../../../reducers/budget/budget-slice";
 
 import classes from "./YearExpenses.module.css";
-import {formatMonth, formatYear} from "../../../common/utils/utils";
 import Indicator from "./Indicator/Indicator";
-import {MONTH_EXPENSES} from "./constant";
-import {getMaxAmountPerYear} from "../../../common/utils/utils";
 import ArrowButton from "../../../common/components/ArrowButton/ArrowButton";
+import {getMaxAmountPerYear, formatMonth, formatYear} from "../../../common/utils/utils";
+import {MONTH_EXPENSES} from "./constant";
 
 function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
   const dispatch = useDispatch();
@@ -36,7 +35,7 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
 
   const monthHandler = ({target}) => {
     dispatch(updateMonth(target.id));
-    dispatch(setIsLoading());
+    dispatch(setIsLoading(true));
   };
 
   const handleClick = ({target}) => {
@@ -46,7 +45,7 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
     id === "left" ? --year : ++year;
 
     dispatch(updateYear(String(year)));
-    dispatch(setIsLoading());
+    dispatch(setIsLoading(true));
   };
 
 

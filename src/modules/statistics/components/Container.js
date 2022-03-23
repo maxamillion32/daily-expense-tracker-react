@@ -33,6 +33,7 @@ function StatisticsContainer() {
   const updatedBudget = useSelector(selectUpdatedBudgetState);
   const userId = useSelector(selectUserId);
   const loading = useSelector(isLoading);
+  console.log("🚀 ~ file: Container.js ~ line 36 ~ StatisticsContainer ~ loading", loading);
   const dispatch = useDispatch();
 
   const newBudget = budget && Object.keys(budget).length !== 0 && budget;
@@ -40,7 +41,7 @@ function StatisticsContainer() {
   const isLoader = loading && userId;
 
   useEffect(() => {
-    dispatch(setIsLoading());
+    dispatch(setIsLoading(false));
   }, [month, year]);
 
   return (

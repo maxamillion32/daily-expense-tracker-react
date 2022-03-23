@@ -34,7 +34,7 @@ export const budgetSlice = createSlice({
   initialState: {
     budget: {},
     budgetUpdated: {},
-    isLoading: true,
+    isLoading: false,
   },
   reducers: {
     //TODO: need refactoring
@@ -103,10 +103,10 @@ export const budgetSlice = createSlice({
         budgetUpdated: {...current}
       };
     },
-    setIsLoading: (state) => {
+    setIsLoading: (state, action) => {
       return {
         ...state,
-        isLoading: !state.isLoading,
+        isLoading: action.payload,
       };
     },
   },
