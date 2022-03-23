@@ -1,12 +1,61 @@
-import React from "react";
+import React, {useState} from "react";
+import {useSelector} from "react-redux";
 import classes from "./Chart.module.css";
 import {AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer} from "recharts";
 import ArrowButton from "../../../common/components/ArrowButton/ArrowButton";
+import {getMaxAmountPerYear, formatMonth, formatYear} from "../../../common/utils/utils";
+import {MONTH_EXPENSES} from "../../../statistics/components/YearExpenses/constant";
 
-function Chart({data, onClick, header, yRange}) {
+import {selectAllTransactionsState, currentYear} from "../../../../reducers/transactions/transactions-slice";
+
+//TODO: move to utils
+const getExpenses = (year, transactions, toggle) => {
+  return MONTH_EXPENSES.map(item => {
+    const month = item ? {name: item.toString().substr(0, 3)} : null;
+    const prevYear = (+year-1).toString();
+
+    return {
+      ...month,
+      current: transactions
+        .filter((transaction) => formatYear(transaction.date) === year)
+        .filter(transaction => formatMonth(transaction.date) === item)
+        .map((transaction) => (toggle ? transaction.expense : !transaction.expense)
+        ? transaction = +transaction.sum
+        : transaction = null)
+        .reduce((acc, sum) => acc + sum, 0).toFixed(2),
+      previous: transactions
+        .filter((transaction) => formatYear(transaction.date) === prevYear)
+        .filter(transaction => formatMonth(transaction.date) === item)
+        .map((transaction) => (toggle ? transaction.expense : !transaction.expense)
+        ? transaction = +transaction.sum
+        : transaction = null)
+        .reduce((acc, sum) => acc + sum, 0).toFixed(2)
+    };
+  });
+};
+
+function Chart() {
+  const getTransactions = useSelector(selectAllTransactionsState);
+  const getCurrentYear = useSelector(currentYear);
+  const transactions = [...getTransactions];
+
+  const [toggle, setToggle] = useState(true);
+
+  const data = getExpenses(getCurrentYear, transactions, toggle);
+
+  const maxMonthExpensePerYear = getMaxAmountPerYear(getCurrentYear, "expenses", transactions);
+  const maxMonthIncomePerYear = getMaxAmountPerYear(getCurrentYear, "income", transactions);
+
+  const header = toggle ? "Expenses" : "Incomes";
+  const yRange = toggle ? maxMonthExpensePerYear * 2 : maxMonthIncomePerYear * 2;
+
+  const handleClick = () => {
+    setToggle(prev => !prev);
+  };
+
   return (
     <div className={classes.Chart}>
-      <ArrowButton direction={"left"} onClick={onClick} style={{top: 13}} />
+      <ArrowButton direction={"left"} onClick={handleClick} style={{top: 13}} />
 
       <h3>{header}</h3>
 
@@ -45,7 +94,7 @@ function Chart({data, onClick, header, yRange}) {
         </AreaChart>
       </ResponsiveContainer>
 
-      <ArrowButton direction={"right"} onClick={onClick} style={{top: 13}} />
+      <ArrowButton direction={"right"} onClick={handleClick} style={{top: 13}} />
     </div>
   );
 }

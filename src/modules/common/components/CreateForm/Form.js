@@ -8,6 +8,8 @@ import {
   loadTransactions,
   setIsButtonShow
 } from "../../../../reducers/transactions/transactions-slice";
+import {selectAllCategoriesState} from "../../../../reducers/categories/categories-slice";
+import {selectAllAccountsState} from "../../../../reducers/accounts/accounts-slice";
 import {selectUserId} from "../../../../reducers/user/user-slice";
 
 import Input from "../../../common/components/Input/Input";
@@ -16,8 +18,12 @@ import Button from "../../../common/components/Button/Button";
 
 import {validateForm, updateFormControls, createFormControls} from "./utils";
 
-function TransactionCreateForm({categories, accounts}){
+function TransactionCreateForm(){
   const userId = useSelector(selectUserId);
+  const getCategories = useSelector(selectAllCategoriesState);
+  const getAccounts = useSelector(selectAllAccountsState);
+  const categories = [...getCategories];
+  const accounts = [...getAccounts];
   const dispatch = useDispatch();
 
   const initialDate = new Date().toISOString().slice(0, -14);

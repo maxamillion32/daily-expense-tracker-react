@@ -13,7 +13,7 @@ import {
   deleteAccount, postAccount, updateAccount, loadAccounts
 } from "../../../../reducers/accounts/accounts-slice";
 
-import ScrollToTop from "../../../common/hoc/ScrollToTop/ScrollToTop";
+import ScrollToTop from "../../../common/hooks/ScrollToTop/ScrollToTop";
 import {formatYear, formatMonth} from "../../../common/utils/utils";
 import PopupIconList from "./IconList/IconList";
 
@@ -143,6 +143,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
     <section className={classes.Settings}>
       <ScrollToTop />
       {prevItem.id
+      //TODO: make button component
         ? <button
             className={classes.Button}
             onClick={onClickEditButton}

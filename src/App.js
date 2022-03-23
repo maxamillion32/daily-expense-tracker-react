@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {Route, Routes, Navigate} from "react-router-dom";
 import Layout from "./modules/common/hoc/Layout/Layout";
 import "./App.css";
-import ScrollToTop from "./modules/common/hoc/ScrollToTop/ScrollToTop";
+import ScrollToTop from "./modules/common/hooks/ScrollToTop/ScrollToTop";
 
 import TransactionsContainer from "./modules/transactions/components/Container";
 import StatisticsContainer from "./modules/statistics/components/Container";
