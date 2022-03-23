@@ -58,13 +58,13 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
         <div className={classes.Wrapper}>
           {MONTH_EXPENSES.map((month) => (
             <div
-              className={classes.ListWrapper}
+              className={`${classes.ListWrapper} ${month === currentMonth ? classes.Active : ""}`}
               key={month}
               onClick={monthHandler}
               id={month}
             >
               <div
-                className={`${classes.List} ${month === currentMonth ? classes.Active : ""}`}
+                className={classes.List}
                 id={month}
               >
                 <Indicator

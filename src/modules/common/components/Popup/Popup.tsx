@@ -1,8 +1,6 @@
 import React, {useEffect} from "react";
-import {useSelector} from "react-redux";
 import classes from "./Popup.module.css";
 import CloseButton from "../CloseButton/CloseButton";
-import {isAddButtonClick} from "../../../../reducers/transactions/transactions-slice";
 import {CSSTransition} from "react-transition-group";
 
 interface PopupProps {
@@ -11,9 +9,8 @@ interface PopupProps {
   setShowPopup: () => void,
 }
 
-function Popup({children, setShowPopup}: PopupProps) {
+function Popup({children, showPopup, setShowPopup}: PopupProps) {
   const nodeRef = React.useRef(null);
-  const showPopup = useSelector(isAddButtonClick);
 
   useEffect(() => {
     const htmlTag = document.querySelector("html");

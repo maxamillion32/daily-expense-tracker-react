@@ -6,6 +6,7 @@ import {
   setIsButtonShow,
   isLoading,
   setIsAddButtonClick,
+  isAddButtonClick,
   selectAllTransactionsState
 } from "../../../reducers/transactions/transactions-slice";
 import {selectUserId} from "../../../reducers/user/user-slice";
@@ -25,6 +26,7 @@ function TransactionsContainer() {
   const transactions = [...getTransactions];
   const userId = useSelector(selectUserId);
   const loading = useSelector(isLoading);
+  const showPopup = useSelector(isAddButtonClick);
   const dispatch = useDispatch();
 
   const isLoader = loading && userId;
@@ -46,7 +48,9 @@ function TransactionsContainer() {
     <>
       {userId
         ? <section className={classes.Container}>
-            <Popup setShowPopup={handlePopupClose}>
+            <Popup
+              showPopup={showPopup}
+              setShowPopup={handlePopupClose}>
               <TransactionCreateForm />
             </Popup>
 
