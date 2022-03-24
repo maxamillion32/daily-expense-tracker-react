@@ -144,11 +144,18 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
       <ScrollToTop />
       {prevItem.id
       //TODO: make button component
-        ? <button
-            className={classes.Button}
-            onClick={onClickEditButton}
-            disabled={prevState || !title}
-          >Update</button>
+        ? <>
+            <button
+              className={classes.Button}
+              onClick={onClickEditButton}
+              disabled={prevState || !title}
+            >Update</button>
+            <button
+              className={classes.Button}
+              onClick={onClickDeleteButton}
+              // disabled={!popupPrevState.id}
+            >Delete</button>
+          </>
         : null}
       {!prevItem.id
         ? <button
@@ -156,14 +163,6 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
             onClick={onClickCreateButton}
             disabled={!title}
           >Create</button>
-        : null}
-
-      {prevItem.id
-        ? <button
-            className={classes.Button}
-            onClick={onClickDeleteButton}
-            // disabled={!popupPrevState.id}
-          >Delete</button>
         : null}
 
       <div className={classes.Wrapper}>

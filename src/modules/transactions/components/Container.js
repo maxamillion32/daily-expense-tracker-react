@@ -7,7 +7,8 @@ import {
   isLoading,
   setIsAddButtonClick,
   isAddButtonClick,
-  selectAllTransactionsState
+  selectAllTransactionsState,
+  setIsEditing
 } from "../../../reducers/transactions/transactions-slice";
 import {selectUserId} from "../../../reducers/user/user-slice";
 
@@ -35,6 +36,7 @@ function TransactionsContainer() {
   const handlePopupClose = () => {
       dispatch(setIsAddButtonClick());
       dispatch(setIsButtonShow(true));
+      dispatch(setIsEditing(false));
   };
 
   useEffect(() => {

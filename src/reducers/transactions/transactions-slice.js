@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {getAll, create, deleteId} from "../../services/transaction.service";
+import {getAll, create, update, deleteId} from "../../services/transaction.service";
 import {selectSearchTerm} from "../search/search-slice";
 import {formatMonth, formatYear} from "../../modules/common/utils/utils";
 
@@ -17,6 +17,13 @@ export const postTransaction = createAsyncThunk(
   }
 );
 
+export const updateTransaction = createAsyncThunk(
+  "transactions/updateData",
+  async (data) => {
+    return await update(data);
+  }
+);
+
 export const deleteTransaction = createAsyncThunk(
   "transactions/deleteData",
   async (transactionId) => {
@@ -28,6 +35,15 @@ export const transactionsSlice = createSlice({
   name: "transactions",
   initialState: {
     allTransactions: [],
+    updatingTransaction: {
+      id: "",
+      sum: "",
+      date: "",
+      expense: "",
+      categoryTitle: "",
+      accountTitle: "",
+    },
+    isEditing: false,
     isLoading: false,
     hasError: false,
     currentMonth: formatMonth(new Date()),
@@ -36,6 +52,12 @@ export const transactionsSlice = createSlice({
     isButtonShow: false
   },
   reducers: {
+    updatingTransaction: (state, action) => {
+      return {
+        ...state,
+        updatingTransaction: action.payload,
+      };
+    },
     updateMonth: (state, action) => {
       return {
         ...state,
@@ -60,6 +82,12 @@ export const transactionsSlice = createSlice({
         isAddButtonClick: !state.isAddButtonClick,
       };
     },
+    setIsEditing: (state, action) => {
+      return {
+        ...state,
+        isEditing: action.payload,
+      };
+    },
   },
   extraReducers: {
     [loadTransactions.pending]: (state) => {
@@ -76,11 +104,26 @@ export const transactionsSlice = createSlice({
       state.isLoading = false;
       state.hasError = true;
     },
+    [updateTransaction.pending]: (state) => {
+      state.isLoading = true;
+      state.hasError = false;
+    },
+    [updateTransaction.fulfilled]: (state) => {
+      state.isLoading = false;
+      state.hasError = false;
+      state.showDelete = false;
+    },
+    [updateTransaction.rejected]: (state) => {
+      state.isLoading = false;
+      state.hasError = true;
+    },
   },
 });
 
 export const selectAllTransactionsState = (state) => state.transactions.allTransactions;
+export const selectUpdateTransactionState = (state) => state.transactions.updatingTransaction;
 export const isLoading = (state) => state.transactions.isLoading;
+export const isEditing = (state) => state.transactions.isEditing;
 export const hasError = (state) => state.transactions.hasError;
 export const currentMonth = (state) => state.transactions.currentMonth;
 export const currentYear = (state) => state.transactions.currentYear;
@@ -121,7 +164,9 @@ export const {
   addTransaction,
   updateMonth,
   updateYear,
+  updatingTransaction,
   setIsAddButtonClick,
   setIsButtonShow,
+  setIsEditing
 } = transactionsSlice.actions;
 export default transactionsSlice.reducer;

@@ -4,9 +4,15 @@ import classes from "./Form.module.css";
 
 import {
   postTransaction,
+  updateTransaction,
   setIsAddButtonClick,
   loadTransactions,
-  setIsButtonShow
+  setIsButtonShow,
+  selectUpdateTransactionState,
+  isLoading,
+  isEditing,
+  setIsEditing,
+  deleteTransaction
 } from "../../../../reducers/transactions/transactions-slice";
 import {selectAllCategoriesState} from "../../../../reducers/categories/categories-slice";
 import {selectAllAccountsState} from "../../../../reducers/accounts/accounts-slice";
@@ -24,22 +30,47 @@ function TransactionCreateForm(){
   const getAccounts = useSelector(selectAllAccountsState);
   const categories = [...getCategories];
   const accounts = [...getAccounts];
+  const getUpdateTransaction = useSelector(selectUpdateTransactionState);
+  const getIsLoading = useSelector(isLoading);
+  const getIsEditing = useSelector(isEditing);
   const dispatch = useDispatch();
 
   const initialDate = new Date().toISOString().slice(0, -14);
+  let newTransaction = {};
 
-  const initialState = {
-    isFormValid: false,
-    formControls: updateFormControls("date", initialDate, createFormControls()),
-    newTransaction: {
-      sum: "",
-      date: initialDate,
-      expense: true,
-    }
-  };
+  if (getIsEditing) {
+      newTransaction = {
+        id: getUpdateTransaction.id,
+        sum: getUpdateTransaction.sum,
+        date: getUpdateTransaction.date,
+        expense: getUpdateTransaction.expense,
+        category: getUpdateTransaction.category,
+        account: getUpdateTransaction.account,
+        categoryId: getUpdateTransaction.categoryId,
+        accountId: getUpdateTransaction.accountId,
+      };
+  } else {
+      newTransaction = {
+        id:"",
+        sum: "",
+        date: initialDate,
+        expense: true,
+        category: undefined,
+        account: undefined,
+      };
+  }
+
+  let initialState = {
+      isFormValid: false,
+      formControls: updateFormControls("date", initialDate, createFormControls()),
+      newTransaction
+    };
 
   const [state, setState] = useState(initialState);
-  const {sum, date} = state.newTransaction;
+
+  const isEqual = JSON.stringify(state.newTransaction) === JSON.stringify(getUpdateTransaction);
+
+  let {id, sum, date, expense, category, account} = state.newTransaction;
 
   const setUserInput = (name, value) => {
     if (name === "expense") {
@@ -57,6 +88,9 @@ function TransactionCreateForm(){
   const setUserSelect = (selector, value) => {
     let name = "";
     let id = "";
+    let category = "";
+    let account = "";
+    let userSelect = {};
 
     const getId = (data, target) => {
       let idItem;
@@ -72,16 +106,26 @@ function TransactionCreateForm(){
     if (selector === "account") {
       name = "accountId";
       id = getId(accounts, value);
+      account = value;
+      userSelect = {
+        [name]: id,
+        account,
+      };
     }
 
     if (selector === "category") {
       name = "categoryId";
       id = getId(categories, value);
+      category = value;
+      userSelect = {
+        [name]: id,
+        category,
+      };
     }
 
     return {
       ...state.newTransaction,
-      [name]: id,
+      ...userSelect
     };
   };
 
@@ -106,15 +150,39 @@ function TransactionCreateForm(){
     });
   };
 
+  const updateTransactionHandler = () => {
+    dispatch(updateTransaction({...state.newTransaction}));
+
+    if (!getIsLoading) {
+      dispatch(loadTransactions(userId));
+      dispatch(setIsAddButtonClick());
+      dispatch(setIsButtonShow(true));
+      dispatch(setIsEditing(false));
+    }
+  };
+
+  const deleteTransactionHandler = () => {
+    const confirm = window.confirm("Are you sure?");
+
+    if (confirm) {
+      dispatch(deleteTransaction(id));
+      dispatch(loadTransactions(userId));
+      dispatch(setIsAddButtonClick());
+      dispatch(setIsButtonShow(true));
+      dispatch(setIsEditing(false));
+    }
+  };
+
   const onClickSubmitButton = (e) => {
     e.preventDefault();
   };
 
   const addTransactionHandler = () => {
     dispatch(postTransaction({...state.newTransaction, userId}));
-    dispatch(setIsAddButtonClick());
     dispatch(loadTransactions(userId));
+    dispatch(setIsAddButtonClick());
     dispatch(setIsButtonShow(true));
+    dispatch(setIsEditing(false));
 
     setState(initialState);
   };
@@ -126,13 +194,36 @@ function TransactionCreateForm(){
       <div className={classes.dialogWrapper}>
         <form onSubmit={onClickSubmitButton}>
           <div className={classes.dialog} ref={nodeRef}>
-            <Button
-              type="submit"
-              onClick={addTransactionHandler}
-              disabled={!state.isFormValid}
-            >
-              Create
-            </Button>
+
+            {getIsEditing
+              ? <>
+                  <Button
+                    type="submit"
+                    onClick={updateTransactionHandler}
+                    disabled={isEqual}
+                  >
+                    Update
+                  </Button>
+
+                  <Button
+                    type="submit"
+                    onClick={deleteTransactionHandler}
+                    disabled={!isEqual}
+                  >
+                    Delete
+                  </Button>
+                </>
+              : null}
+            {!getIsEditing
+              ? <Button
+                  type="submit"
+                  onClick={addTransactionHandler}
+                  disabled={!state.isFormValid}
+                >
+                  Create
+                </Button>
+              : null}
+
             <Input
               type="number"
               name="sum"
@@ -150,6 +241,8 @@ function TransactionCreateForm(){
               defaultOption="Choose a category"
               onChange={onChangeSelectHandler("category")}
 
+              value={category}
+
               valid={state.formControls.category.valid}
               shouldValidate={!!state.formControls.category.validation}
               touched={state.formControls.category.touched}
@@ -160,6 +253,8 @@ function TransactionCreateForm(){
               options={accounts}
               defaultOption="Choose an account"
               onChange={onChangeSelectHandler("account")}
+
+              value={account}
 
               valid={state.formControls.account.valid}
               shouldValidate={!!state.formControls.account.validation}
@@ -183,6 +278,7 @@ function TransactionCreateForm(){
                 label={"Income"}
                 type="checkbox"
                 name="expense"
+                checked={!expense}
                 onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
               />
             </div>

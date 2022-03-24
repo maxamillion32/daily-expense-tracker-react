@@ -1,30 +1,24 @@
 import React, {useState} from "react";
-import {useSelector, useDispatch} from "react-redux";
+import {useDispatch} from "react-redux";
 import {CSSTransition} from "react-transition-group";
 
 import classes from "../Container.module.css";
 
-import {deleteTransaction, loadTransactions} from "../../../../../reducers/transactions/transactions-slice";
-import {selectUserId} from "../../../../../reducers/user/user-slice";
+import {setIsAddButtonClick, setIsButtonShow, updatingTransaction, setIsEditing} from "../../../../../reducers/transactions/transactions-slice";
 
-function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, ...rest}) {
+function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, date, accountId, categoryId, ...rest}) {
   const dispatch = useDispatch();
-  const userId = useSelector(selectUserId);
   const [showDeleteBtn, setShowDeleteBtn] = useState(false);
-
-  const onClickDeleteButton = ({target}) => {
-    const id = target.id;
-
-    const confirm = window.confirm("Are you sure?");
-
-    if (confirm) {
-      dispatch(deleteTransaction(id));
-      dispatch(loadTransactions(userId));
-    }
-  };
 
   const handleDeleteButtonToggle = () => {
     setShowDeleteBtn(!showDeleteBtn);
+  };
+
+  const onItemClick = () => {
+    dispatch(setIsAddButtonClick());
+    dispatch(setIsButtonShow());
+    dispatch(setIsEditing(true));
+    dispatch(updatingTransaction({id, sum, date, expense, category: categoryTitle, account: accountTitle, categoryId, accountId}));
   };
 
   const nodeRef = React.useRef(null);
@@ -47,6 +41,7 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, 
         onMouseOver={handleDeleteButtonToggle}
         onMouseOut={handleDeleteButtonToggle}
         ref={nodeRef}
+        onClick={onItemClick}
       >
         <div className={classes.IconWrapper}>
           <i className={`${classes.TransactionsIcon} fas ${icon ? icon : ""}`}></i>
@@ -58,12 +53,6 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, 
           </div>
           <div className={classes.TransactionsContentWrapper}>
             <p className={classes.TransactionsItemAccount}>{accountTitle}</p>
-            <p
-              className={`${classes.TransactionsItemEdit} ${showDeleteBtn ? "" : classes.TransactionsHidden}`}
-              id={id}
-              onClick={onClickDeleteButton}
-              >
-            delete</p>
           </div>
         </div>
       </li>

@@ -14,14 +14,13 @@ interface SelectProps {
   shouldValidate: boolean,
 }
 
-function Select ({defaultOption, options, onChange, errorMessage, valid, touched, shouldValidate}: SelectProps) {
-  // const value = props.options.length !== 0 && props.options[2].title;
+function Select ({defaultOption, options, onChange, errorMessage, valid, touched, shouldValidate, value}: SelectProps) {
   const cls = [classes.Select];
 
   return (
     <div className={cls.join(" ")}>
       <select
-        // value={value}
+        value={value ? value : ""}
         onChange={onChange}
       >
         <option value="" hidden>{defaultOption}</option>

@@ -16,6 +16,9 @@ function TransactionsItemsDateGroup({date, transactions}) {
           id={transaction.id}
           key={transaction.id}
           icon={transaction.category.icon}
+          date={date}
+          accountId={transaction.accountId}
+          categoryId={transaction.categoryId}
         />
       ))}
     </TransitionGroup>
