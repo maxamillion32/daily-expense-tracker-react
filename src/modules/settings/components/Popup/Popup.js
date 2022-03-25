@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import classes from "./Popup.module.css";
@@ -57,38 +57,43 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
     .filter((transaction) => formatYear(transaction.date) === year)
     .filter((transaction) => formatMonth(transaction.date) === month);
 
+  const [accountState, setAccountState] = useState({balance, startBalance});
+
   const onChangeType = async ({target}) => {
-    setItem({id, title, userId, incomes: target.checked, header});
+    setItem({...itemState, incomes: target.checked});
   };
 
   const onChangeItem = ({target}) => {
     const value = target.value;
     const type = incomes ? incomes : false;
-    setItem({id, title: value, userId, incomes: type, header, startBalance, balance, icon});
+    setItem({...itemState, title: value, incomes: type});
   };
 
   const onChangeIcon = ({target}) => {
     const value = target.value;
-    setItem({id, title, userId, incomes, header, startBalance, balance, icon: value});
+    setItem({...itemState, icon: value});
   };
 
   const onChangeStartBalance = ({target}) => {
     const value = target.value;
-    setItem({id, title, userId, incomes, header, startBalance: value, balance});
-    dispatch(updateAccount({id, title, userId, incomes, header, startBalance: value, balance}));
-    dispatch(loadAccounts());
+    setAccountState({...accountState, startBalance: value});
+    setItem({...itemState, startBalance: value});
   };
+
+  // const onChangeBalance = ({target}) => {
+  //   const value = target.value;
+  //   setAccountState({...accountState, balance: value});
+  //   setItem({...itemState, balance: value});
+  // };
 
   const onClickEditButton = () => {
     if (header === "Categories") {
       dispatch(updateCategory({id, title, userId, incomes, icon}));
       dispatch(loadCategories(userId));
-      // dispatch(loadTransactions(userId));
     }
     if (header === "Accounts") {
       dispatch(updateAccount({id, title, userId, startBalance, balance}));
       dispatch(loadAccounts(userId));
-      // dispatch(loadTransactions(userId));
     }
     setShowPopup();
   };
@@ -227,7 +232,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
                 <input
                   className={classes.Input}
                   type="number"
-                  value={startBalance === 0 ? "" : startBalance}
+                  value={accountState.startBalance === 0 ? "" : accountState.startBalance}
                   onChange={onChangeStartBalance}
                   placeholder="0.00"
                   disabled={prevItem.startBalance}
@@ -236,7 +241,15 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
               <div className={classes.Type}>
                 <p className={classes.Label}>Current balance</p>
 
-                <p className={classes.Text}><b>{prevItem.id ? balance : 0}€</b></p>
+                <p className={classes.Text}><b>{prevItem.id ? accountState.balance : 0}€</b></p>
+                {/* <input
+                  className={classes.Input}
+                  type="number"
+                  value={accountState.balance === 0 ? "" : accountState.balance}
+                  onChange={onChangeBalance}
+                  placeholder="0.00"
+                  // disabled={prevItem.startBalance}
+                /> */}
               </div>
             </>
           : null}
