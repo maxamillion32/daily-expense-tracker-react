@@ -4,26 +4,6 @@
   text-align: center; */
 }
 
-.Button {
-  width: 70px;
-  height: 30px;
-  margin-right: 10px;
-  margin-bottom: 20px;
-  font-size: 14px;
-  /* font-weight: 700; */
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  background-color: #646464;
-  cursor: pointer;
-}
-
-.Button:disabled {
-  background: #ccc;
-  /* color: #000; */
-  cursor: not-allowed;
-}
-
 .Input {
   box-sizing: border-box;
   width: 100%;

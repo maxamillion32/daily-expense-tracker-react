@@ -14,8 +14,9 @@ import {
 } from "../../../../reducers/accounts/accounts-slice";
 
 import ScrollToTop from "../../../common/hooks/ScrollToTop/ScrollToTop";
-import {formatYear, formatMonth} from "../../../common/utils/utils";
 import PopupIconList from "./IconList/IconList";
+import Button from "../../../common/components/Button/Button";
+import {formatYear, formatMonth} from "../../../common/utils/utils";
 
 const isExists = (data, type, item) => {
   return data.find((it) => it[type].title === item) ? true : false;
@@ -142,27 +143,35 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
   return (
     <section className={classes.Settings}>
       <ScrollToTop />
+
       {prevItem.id
-      //TODO: make button component
         ? <>
-            <button
-              className={classes.Button}
+            <Button
+              type="submit"
               onClick={onClickEditButton}
               disabled={prevState || !title}
-            >Update</button>
-            <button
-              className={classes.Button}
+            >
+              Update
+            </Button>
+
+            <Button
+              type="submit"
               onClick={onClickDeleteButton}
-              // disabled={!popupPrevState.id}
-            >Delete</button>
+              disabled={!prevState}
+            >
+              Delete
+            </Button>
           </>
         : null}
+
       {!prevItem.id
-        ? <button
-            className={classes.Button}
+        ? <Button
+            type="submit"
             onClick={onClickCreateButton}
             disabled={!title}
-          >Create</button>
+          >
+            Create
+          </Button>
         : null}
 
       <div className={classes.Wrapper}>
