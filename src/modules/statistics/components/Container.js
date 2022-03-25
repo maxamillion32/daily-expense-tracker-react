@@ -8,13 +8,13 @@ import {
   currentMonth, currentYear
 } from "../../../reducers/transactions/transactions-slice";
 import {
-  selectAllTransactionsState
+  selectFilteredTransactions
 } from "../../../reducers/transactions/transactions-slice";
 import {
   selectAllBudgetState, selectUpdatedBudgetState, isLoading, setIsLoading
 } from "../../../reducers/budget/budget-slice";
 import {
-  selectAllCategoriesState
+  selectFilteredCategories
 } from "../../../reducers/categories/categories-slice";
 
 import classes from "./Container.module.css";
@@ -25,8 +25,8 @@ import Budget from "./Budget/Budget";
 import Loader from "../../common/components/Loader/Loader";
 
 function StatisticsContainer() {
-  const allTransactions = useSelector(selectAllTransactionsState);
-  const allCategories = useSelector(selectAllCategoriesState);
+  const filteredTransactions = useSelector(selectFilteredTransactions);
+  const allCategories = useSelector(selectFilteredCategories);
   const month = useSelector(currentMonth);
   const year = useSelector(currentYear);
   const budget = useSelector(selectAllBudgetState);
@@ -51,17 +51,17 @@ function StatisticsContainer() {
             <MonthBalance
               currentYear={year}
               currentMonth={month}
-              transactions={allTransactions}
+              transactions={filteredTransactions}
             />
             <YearExpenses
               currentYear={year}
               currentMonth={month}
-              transactions={allTransactions}
+              transactions={filteredTransactions}
             />
             <MonthExpenses
               currentYear={year}
               currentMonth={month}
-              transactions={allTransactions}
+              transactions={filteredTransactions}
               budget={newBudget}
               userId={userId}
               allCategories={allCategories}

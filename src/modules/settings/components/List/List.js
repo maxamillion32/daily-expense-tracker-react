@@ -33,7 +33,9 @@ function SettingsList({
           >Create</button>
         </div>
 
-          {items.sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1).map((item) => {
+          {items
+            .filter((item) => item.hidden !== true)
+            .map((item) => {
               const startBalance = getAccountStartBalance(items, item.title);
               const currentBalance = getCurrentAccountBalance(transactions, item.title);
               const balance = getAccountTotalBalance(startBalance, currentBalance);

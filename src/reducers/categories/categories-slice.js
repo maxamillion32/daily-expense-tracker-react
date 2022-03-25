@@ -63,10 +63,17 @@ export const categoriesSlice = createSlice({
   },
 });
 
-export const selectAllCategoriesState = (state) => state.categories.allCategories;
+export const selectAllCategories = (state) => state.categories.allCategories;
 export const selectNewCategoryState = (state) => state.categories.newCategory;
 export const isCategoriesLoading = (state) => state.categories.isLoading;
 export const isPending = (state) => state.categories.isPending;
 
-// export const {setPopupItem, setPopupPrevItem} = categoriesSlice.actions;
+export const selectFilteredCategories = (state) => {
+  const allCategories = selectAllCategories(state);
+
+  return allCategories
+          .filter((category) => category.hidden !== true)
+          .sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1);
+};
+
 export default categoriesSlice.reducer;

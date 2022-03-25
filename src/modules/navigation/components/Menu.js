@@ -4,7 +4,7 @@ import {NavLink} from "react-router-dom";
 
 import classes from "./Menu.module.css";
 import {isButtonShow, isAddButtonClick, setIsAddButtonClick, setIsButtonShow} from "../../../reducers/transactions/transactions-slice";
-import {selectAllCategoriesState} from "../../../reducers/categories/categories-slice";
+import {selectFilteredCategories} from "../../../reducers/categories/categories-slice";
 import {selectAllAccountsState} from "../../../reducers/accounts/accounts-slice";
 
 import transactions from "../../../assets/img/transactions.png";
@@ -15,7 +15,7 @@ import AddButton from "../../common/components/AddButton/AddButton";
 function Menu() {
   const getIsAddButtonClick = useSelector(isAddButtonClick);
   const showAddButton = useSelector(isButtonShow);
-  const getCategories = useSelector(selectAllCategoriesState);
+  const getCategories = useSelector(selectFilteredCategories);
   const getAccounts = useSelector(selectAllAccountsState);
   const categories = [...getCategories];
   const accounts = [...getAccounts];

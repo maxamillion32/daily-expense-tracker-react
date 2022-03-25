@@ -13,7 +13,7 @@ import {
   setIsEditing,
   deleteTransaction
 } from "../../../../reducers/transactions/transactions-slice";
-import {selectAllCategoriesState} from "../../../../reducers/categories/categories-slice";
+import {selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
 import {selectAllAccountsState} from "../../../../reducers/accounts/accounts-slice";
 import {selectUserId} from "../../../../reducers/user/user-slice";
 
@@ -25,7 +25,7 @@ import {validateForm, updateFormControls, createFormControls} from "./utils";
 
 function TransactionCreateForm(){
   const userId = useSelector(selectUserId);
-  const getCategories = useSelector(selectAllCategoriesState);
+  const getCategories = useSelector(selectFilteredCategories);
   const getAccounts = useSelector(selectAllAccountsState);
   const categories = [...getCategories];
   const accounts = [...getAccounts];
@@ -42,6 +42,7 @@ function TransactionCreateForm(){
         sum: getUpdatingTransaction.sum,
         date: getUpdatingTransaction.date,
         expense: getUpdatingTransaction.expense,
+        showInBalance: getUpdatingTransaction.showInBalance,
         category: getUpdatingTransaction.category,
         account: getUpdatingTransaction.account,
         categoryId: getUpdatingTransaction.categoryId,
@@ -53,6 +54,7 @@ function TransactionCreateForm(){
         sum: "",
         date: initialDate,
         expense: true,
+        showInBalance: true
       };
   }
 

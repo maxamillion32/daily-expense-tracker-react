@@ -42,6 +42,7 @@ export const transactionsSlice = createSlice({
       expense: "",
       categoryTitle: "",
       accountTitle: "",
+      showInBalance: ""
     },
     isEditing: false,
     isLoading: false,
@@ -135,6 +136,7 @@ export const selectFilteredTransactions = (state) => {
   const searchTerm = selectSearchTerm(state);
 
   return allTransactions
+          .filter((transaction) => transaction.showInBalance !== false)
           .filter((transaction) => transaction.category.title.toLowerCase().includes(searchTerm.toLowerCase()))
           .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 };

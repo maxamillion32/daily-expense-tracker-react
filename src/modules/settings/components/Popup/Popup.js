@@ -7,7 +7,7 @@ import {
   updateCategory, loadCategories, deleteCategory, postCategory
 } from "../../../../reducers/categories/categories-slice";
 import {
-  currentMonth, currentYear
+  currentMonth, currentYear, postTransaction, loadTransactions
 } from "../../../../reducers/transactions/transactions-slice";
 import {
   deleteAccount, postAccount, updateAccount, loadAccounts
@@ -27,9 +27,11 @@ const isDelete = (data, type, id) => {
 };
 
 const isExpense = (transactions, title) => {
-  return [...new Set(transactions
+  const result = JSON.parse([...new Set(transactions
   .filter((transaction) => transaction.category.title === title)
-  .map((transaction) => transaction.expense))].join();
+  .map((transaction) => transaction.expense))]);
+
+  return result;
 };
 
 const getCategoryTotalSum = (transactions, title) => {
@@ -50,19 +52,23 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
   const dispatch = useDispatch();
   const month = useSelector(currentMonth);
   const year = useSelector(currentYear);
-  const {id, title, userId, incomes, header, startBalance, balance, icon} = itemState;
+  const {id, title, userId, incomes, header, startBalance, balance, icon, hidden} = itemState;
 
   const prevState = JSON.stringify(itemState) === JSON.stringify(prevItem);
   const filteredTransactions = transactions
     .filter((transaction) => formatYear(transaction.date) === year)
     .filter((transaction) => formatMonth(transaction.date) === month);
 
-  const [accountState, setAccountState] = useState({balance, startBalance});
+  const [accountState, setAccountState] = useState({balance, startBalance, showInBalance: true});
   const isBalanceChange = Number(accountState.balance) !== Number(balance);
-  const balanceDifference = accountState.balance - balance;
+  const balanceDifference = (accountState.balance - balance).toFixed(2);
 
   const onChangeType = async ({target}) => {
     setItem({...itemState, incomes: target.checked});
+  };
+
+  const onClickBalanceCheck = async ({target}) => {
+    setAccountState({...accountState, showInBalance: target.checked});
   };
 
   const onChangeItem = ({target}) => {
@@ -89,10 +95,27 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
 
   const onClickEditButton = () => {
     if (header === "Categories") {
-      dispatch(updateCategory({id, title, userId, incomes, icon}));
+      dispatch(updateCategory({id, title, userId, incomes, icon, hidden}));
       dispatch(loadCategories(userId));
     }
     if (header === "Accounts") {
+      if (isBalanceChange) {
+        const isIncome = balanceDifference > 0 ? false : true;
+        const isShowInBalance = accountState.showInBalance;
+        //TODO: get balance id from state
+        const balanceIncome = "9oCIYOhZxiX4Gs3RYLJP";
+        const balanceExpense = "yNw8Q21h5OhXNs0JiyzD";
+
+        const sum = Math.abs(balanceDifference);
+        const expense = isIncome;
+        const date = new Date().toISOString().slice(0, -14);
+        const categoryId = isIncome ? balanceIncome: balanceExpense;
+        const accountId = id;
+        const showInBalance = isShowInBalance;
+
+        dispatch(postTransaction({sum, expense, date, categoryId, accountId, showInBalance, userId}));
+        dispatch(loadTransactions(userId));
+      }
       dispatch(updateAccount({id, title, userId, startBalance, balance}));
       dispatch(loadAccounts(userId));
     }
@@ -131,7 +154,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
         alert("This category already exists!");
         return;
       }
-      dispatch(postCategory({title, userId, incomes, icon}));
+      dispatch(postCategory({title, userId, incomes, icon, hidden}));
       dispatch(loadCategories(userId));
     }
     if (header === "Accounts") {
@@ -221,8 +244,8 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
           : null}
         {isExists(transactions, "category", prevItem.title)
           ? <div className={classes.WrapperText}>
-              <p className={classes.Text}>{JSON.parse(isExpense(transactions, prevItem.title)) ? "Expenses" : "Incomes"} in this Month - <b>{getCurrentCategorySum(filteredTransactions, prevItem.title)}€</b></p>
-              <p className={classes.Text}>{JSON.parse(isExpense(transactions, prevItem.title)) ? "Expenses" : "Incomes"} for all time - <b>{getCategoryTotalSum(transactions, prevItem.title)}€</b></p>
+              <p className={classes.Text}>{isExpense(transactions, prevItem.title) ? "Expenses" : "Incomes"} in this Month - <b>{getCurrentCategorySum(filteredTransactions, prevItem.title)}€</b></p>
+              <p className={classes.Text}>{isExpense(transactions, prevItem.title) ? "Expenses" : "Incomes"} for all time - <b>{getCategoryTotalSum(transactions, prevItem.title)}€</b></p>
             </div>
           : null}
 
@@ -239,29 +262,30 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
                   disabled={prevItem.startBalance}
                 />
               </div>
-              <div className={classes.Type}>
-                <p className={classes.Label}>Current balance</p>
+              {prevItem.startBalance
+                ? <div className={classes.Type}>
+                    <p className={classes.Label}>Current balance</p>
 
-                {isBalanceChange
-                  ? <p className={classes.Text}><b>{prevItem.id ? balance : 0}€</b></p>
+                    {isBalanceChange
+                      ? <p className={classes.Text}><b>{prevItem.id ? balance : 0}€</b></p>
+                      : null}
+
+                    <input
+                      className={classes.Input}
+                      type="number"
+                      value={accountState.balance === 0 ? "" : accountState.balance}
+                      onChange={onChangeBalance}
+                      placeholder="0.00"
+                    />
+                  </div>
                   : null}
-
-                <input
-                  className={classes.Input}
-                  type="number"
-                  value={accountState.balance === 0 ? "" : accountState.balance}
-                  onChange={onChangeBalance}
-                  placeholder="0.00"
-                  // disabled={prevItem.startBalance}
-                />
-              </div>
               {isBalanceChange
                 ? <div className={classes.Type}>
                     <input
                       type="checkbox"
-                      checked={+incomes || false}
+                      checked={accountState.showInBalance}
                       id={id}
-                      onChange={onChangeType}
+                      onChange={onClickBalanceCheck}
                       disabled={isExists(transactions, "category", prevItem.title)}
                     />
                     {balanceDifference > 0

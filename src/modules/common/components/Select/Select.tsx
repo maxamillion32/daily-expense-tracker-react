@@ -24,7 +24,7 @@ function Select ({defaultOption, options, onChange, errorMessage, valid, touched
         onChange={onChange}
       >
         <option value="" hidden>{defaultOption}</option>
-        {options.sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1).map((option) => {
+        {options.map((option) => {
           return (
             <option
               value={option.title}

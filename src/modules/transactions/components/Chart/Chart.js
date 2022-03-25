@@ -6,7 +6,7 @@ import ArrowButton from "../../../common/components/ArrowButton/ArrowButton";
 import {getMaxAmountPerYear, formatMonth, formatYear} from "../../../common/utils/utils";
 import {MONTH_EXPENSES} from "../../../statistics/components/YearExpenses/constant";
 
-import {selectAllTransactionsState, currentYear} from "../../../../reducers/transactions/transactions-slice";
+import {selectFilteredTransactions, currentYear} from "../../../../reducers/transactions/transactions-slice";
 
 //TODO: move to utils
 const getExpenses = (year, transactions, toggle) => {
@@ -35,7 +35,7 @@ const getExpenses = (year, transactions, toggle) => {
 };
 
 function Chart() {
-  const getTransactions = useSelector(selectAllTransactionsState);
+  const getTransactions = useSelector(selectFilteredTransactions);
   const getCurrentYear = useSelector(currentYear);
   const transactions = [...getTransactions];
 

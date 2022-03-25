@@ -4,7 +4,7 @@ import {useSelector} from "react-redux";
 import classes from "./Container.module.css";
 
 import {selectUserId} from "../../../reducers/user/user-slice";
-import {isCategoriesLoading, selectAllCategoriesState} from "../../../reducers/categories/categories-slice";
+import {isCategoriesLoading, selectFilteredCategories} from "../../../reducers/categories/categories-slice";
 import {isAccountsLoading, selectAllAccountsState} from "../../../reducers/accounts/accounts-slice";
 import {selectAllTransactionsState} from "../../../reducers/transactions/transactions-slice";
 
@@ -17,7 +17,7 @@ import SettingsPopup from "./Popup/Popup";
 function SettingsContainer() {
   const userId = useSelector(selectUserId);
   const transactions = useSelector(selectAllTransactionsState);
-  const getCategories = useSelector(selectAllCategoriesState);
+  const getCategories = useSelector(selectFilteredCategories);
   const getAccounts = useSelector(selectAllAccountsState);
   const loadingCategories = useSelector(isCategoriesLoading);
   const loadingAccounts = useSelector(isAccountsLoading);
@@ -33,6 +33,7 @@ function SettingsContainer() {
     startBalance: 0,
     balance: 0,
     icon: null,
+    hidden: false
   };
 
   const [item, setItem] = useState(initialItemState);

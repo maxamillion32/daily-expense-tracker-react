@@ -2,7 +2,7 @@ import React from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import {loadTransactions} from "../../../../reducers/transactions/transactions-slice";
-import {selectAllCategoriesState} from "../../../../reducers/categories/categories-slice";
+import {selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
 import {postBudget, loadBudgets, updateBudget} from "../../../../reducers/budget/budget-slice";
 
 import classes from "./Budget.module.css";
@@ -10,7 +10,7 @@ import WidgetsBudgetItem from "./Items/Item";
 
 function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget}) {
   const dispatch = useDispatch();
-  const categories = useSelector(selectAllCategoriesState);
+  const categories = useSelector(selectFilteredCategories);
 
   const prevBudget = JSON.stringify(budget) === JSON.stringify(updatedBudget);
 

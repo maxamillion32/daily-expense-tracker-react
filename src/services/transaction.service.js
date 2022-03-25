@@ -29,8 +29,8 @@ export const getAll = async (userId) => {
 };
 
 export const create = async (data) => {
-  const {sum, expense, date, categoryId, accountId, userId} = data;
-  const payload = {sum, expense, date, categoryId, accountId, userId};
+  const {sum, expense, date, categoryId, accountId, showInBalance, userId} = data;
+  const payload = {sum, expense, date, categoryId, accountId, showInBalance, userId};
   await addDoc(transactionsRef, payload);
 };
 
