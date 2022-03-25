@@ -58,6 +58,8 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
     .filter((transaction) => formatMonth(transaction.date) === month);
 
   const [accountState, setAccountState] = useState({balance, startBalance});
+  const isBalanceChange = Number(accountState.balance) !== Number(balance);
+  const balanceDifference = accountState.balance - balance;
 
   const onChangeType = async ({target}) => {
     setItem({...itemState, incomes: target.checked});
@@ -80,11 +82,10 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
     setItem({...itemState, startBalance: value});
   };
 
-  // const onChangeBalance = ({target}) => {
-  //   const value = target.value;
-  //   setAccountState({...accountState, balance: value});
-  //   setItem({...itemState, balance: value});
-  // };
+  const onChangeBalance = ({target}) => {
+    const value = target.value;
+    setAccountState({...accountState, balance: value});
+  };
 
   const onClickEditButton = () => {
     if (header === "Categories") {
@@ -154,7 +155,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
             <Button
               type="submit"
               onClick={onClickEditButton}
-              disabled={prevState || !title}
+              disabled={prevState && !isBalanceChange || !title}
             >
               Update
             </Button>
@@ -241,16 +242,33 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
               <div className={classes.Type}>
                 <p className={classes.Label}>Current balance</p>
 
-                <p className={classes.Text}><b>{prevItem.id ? accountState.balance : 0}€</b></p>
-                {/* <input
+                {isBalanceChange
+                  ? <p className={classes.Text}><b>{prevItem.id ? balance : 0}€</b></p>
+                  : null}
+
+                <input
                   className={classes.Input}
                   type="number"
                   value={accountState.balance === 0 ? "" : accountState.balance}
                   onChange={onChangeBalance}
                   placeholder="0.00"
                   // disabled={prevItem.startBalance}
-                /> */}
+                />
               </div>
+              {isBalanceChange
+                ? <div className={classes.Type}>
+                    <input
+                      type="checkbox"
+                      checked={+incomes || false}
+                      id={id}
+                      onChange={onChangeType}
+                      disabled={isExists(transactions, "category", prevItem.title)}
+                    />
+                    {balanceDifference > 0
+                      ? <label htmlFor={id}>Add <b>{Math.abs(balanceDifference)}€</b> difference as an income transaction?</label>
+                      : <label htmlFor={id}>Add <b>{Math.abs(balanceDifference)}€</b> difference as an expense transaction?</label>}
+                  </div>
+                : null}
             </>
           : null}
       </div>
