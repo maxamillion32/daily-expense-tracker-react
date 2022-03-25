@@ -121,7 +121,7 @@ export const transactionsSlice = createSlice({
 });
 
 export const selectAllTransactionsState = (state) => state.transactions.allTransactions;
-export const selectUpdateTransactionState = (state) => state.transactions.updatingTransaction;
+export const selectUpdatingTransactionState = (state) => state.transactions.updatingTransaction;
 export const isLoading = (state) => state.transactions.isLoading;
 export const isEditing = (state) => state.transactions.isEditing;
 export const hasError = (state) => state.transactions.hasError;

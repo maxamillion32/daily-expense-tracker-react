@@ -8,8 +8,7 @@ import {
   setIsAddButtonClick,
   loadTransactions,
   setIsButtonShow,
-  selectUpdateTransactionState,
-  isLoading,
+  selectUpdatingTransactionState,
   isEditing,
   setIsEditing,
   deleteTransaction
@@ -30,57 +29,54 @@ function TransactionCreateForm(){
   const getAccounts = useSelector(selectAllAccountsState);
   const categories = [...getCategories];
   const accounts = [...getAccounts];
-  const getUpdateTransaction = useSelector(selectUpdateTransactionState);
-  const getIsLoading = useSelector(isLoading);
+  const getUpdatingTransaction = useSelector(selectUpdatingTransactionState);
   const getIsEditing = useSelector(isEditing);
   const dispatch = useDispatch();
 
   const initialDate = new Date().toISOString().slice(0, -14);
-  let newTransaction = {};
+  let formTransaction = {};
 
   if (getIsEditing) {
-      newTransaction = {
-        id: getUpdateTransaction.id,
-        sum: getUpdateTransaction.sum,
-        date: getUpdateTransaction.date,
-        expense: getUpdateTransaction.expense,
-        category: getUpdateTransaction.category,
-        account: getUpdateTransaction.account,
-        categoryId: getUpdateTransaction.categoryId,
-        accountId: getUpdateTransaction.accountId,
+      formTransaction = {
+        id: getUpdatingTransaction.id,
+        sum: getUpdatingTransaction.sum,
+        date: getUpdatingTransaction.date,
+        expense: getUpdatingTransaction.expense,
+        category: getUpdatingTransaction.category,
+        account: getUpdatingTransaction.account,
+        categoryId: getUpdatingTransaction.categoryId,
+        accountId: getUpdatingTransaction.accountId,
       };
   } else {
-      newTransaction = {
+      formTransaction = {
         id:"",
         sum: "",
         date: initialDate,
         expense: true,
-        category: undefined,
-        account: undefined,
       };
   }
 
   let initialState = {
       isFormValid: false,
       formControls: updateFormControls("date", initialDate, createFormControls()),
-      newTransaction
+      formTransaction
     };
 
   const [state, setState] = useState(initialState);
 
-  const isEqual = JSON.stringify(state.newTransaction) === JSON.stringify(getUpdateTransaction);
+  const isEqual = JSON.stringify(state.formTransaction) === JSON.stringify(getUpdatingTransaction);
 
-  let {id, sum, date, expense, category, account} = state.newTransaction;
+  let {id, sum, date, expense, category, account} = state.formTransaction;
 
   const setUserInput = (name, value) => {
     if (name === "expense") {
-      value = !state.newTransaction.expense;
+      value = !state.formTransaction.expense;
     }
     if (name === "sum") {
       value = +value === 0 ? "" : +value;
     }
     return {
-      ...state.newTransaction,
+      ...state.formTransaction,
       [name]: value
     };
   };
@@ -124,7 +120,7 @@ function TransactionCreateForm(){
     }
 
     return {
-      ...state.newTransaction,
+      ...state.formTransaction,
       ...userSelect
     };
   };
@@ -135,7 +131,7 @@ function TransactionCreateForm(){
     setState({
       formControls,
       isFormValid: validateForm(formControls),
-      newTransaction: setUserInput(name, value)
+      formTransaction: setUserInput(name, value)
     });
   };
 
@@ -146,19 +142,16 @@ function TransactionCreateForm(){
     setState({
       formControls,
       isFormValid: validateForm(formControls),
-      newTransaction: setUserSelect(selector, value)
+      formTransaction: setUserSelect(selector, value)
     });
   };
 
   const updateTransactionHandler = () => {
-    dispatch(updateTransaction({...state.newTransaction}));
-
-    if (!getIsLoading) {
-      dispatch(loadTransactions(userId));
-      dispatch(setIsAddButtonClick());
-      dispatch(setIsButtonShow(true));
-      dispatch(setIsEditing(false));
-    }
+    dispatch(updateTransaction({...state.formTransaction}));
+    dispatch(loadTransactions(userId));
+    dispatch(setIsAddButtonClick());
+    dispatch(setIsButtonShow(true));
+    dispatch(setIsEditing(false));
   };
 
   const deleteTransactionHandler = () => {
@@ -178,7 +171,7 @@ function TransactionCreateForm(){
   };
 
   const addTransactionHandler = () => {
-    dispatch(postTransaction({...state.newTransaction, userId}));
+    dispatch(postTransaction({...state.formTransaction, userId}));
     dispatch(loadTransactions(userId));
     dispatch(setIsAddButtonClick());
     dispatch(setIsButtonShow(true));
@@ -214,6 +207,7 @@ function TransactionCreateForm(){
                   </Button>
                 </>
               : null}
+
             {!getIsEditing
               ? <Button
                   type="submit"
@@ -240,9 +234,7 @@ function TransactionCreateForm(){
               options={categories}
               defaultOption="Choose a category"
               onChange={onChangeSelectHandler("category")}
-
               value={category}
-
               valid={state.formControls.category.valid}
               shouldValidate={!!state.formControls.category.validation}
               touched={state.formControls.category.touched}
@@ -253,9 +245,7 @@ function TransactionCreateForm(){
               options={accounts}
               defaultOption="Choose an account"
               onChange={onChangeSelectHandler("account")}
-
               value={account}
-
               valid={state.formControls.account.valid}
               shouldValidate={!!state.formControls.account.validation}
               touched={state.formControls.account.touched}
