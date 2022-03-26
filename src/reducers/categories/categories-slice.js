@@ -69,11 +69,11 @@ export const isCategoriesLoading = (state) => state.categories.isLoading;
 export const isPending = (state) => state.categories.isPending;
 
 export const selectFilteredCategories = (state) => {
-  const allCategories = selectAllCategories(state);
+  const allCategories = [...selectAllCategories(state)];
 
   return allCategories
-          .filter((category) => category.hidden !== true)
-          .sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1);
+    .filter((category) => category.hidden !== true)
+    .sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1);
 };
 
 export default categoriesSlice.reducer;

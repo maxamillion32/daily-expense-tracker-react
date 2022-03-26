@@ -14,7 +14,7 @@ import {
   deleteTransaction
 } from "../../../../reducers/transactions/transactions-slice";
 import {selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
-import {selectAllAccountsState} from "../../../../reducers/accounts/accounts-slice";
+import {selectFilteredAccounts} from "../../../../reducers/accounts/accounts-slice";
 import {selectUserId} from "../../../../reducers/user/user-slice";
 
 import Input from "../../../common/components/Input/Input";
@@ -26,7 +26,7 @@ import {validateForm, updateFormControls, createFormControls} from "./utils";
 function TransactionCreateForm(){
   const userId = useSelector(selectUserId);
   const getCategories = useSelector(selectFilteredCategories);
-  const getAccounts = useSelector(selectAllAccountsState);
+  const getAccounts = useSelector(selectFilteredAccounts);
   const categories = [...getCategories];
   const accounts = [...getAccounts];
   const getUpdatingTransaction = useSelector(selectUpdatingTransactionState);

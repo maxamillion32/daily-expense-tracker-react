@@ -5,7 +5,7 @@ import classes from "./Container.module.css";
 
 import {selectUserId} from "../../../reducers/user/user-slice";
 import {isCategoriesLoading, selectFilteredCategories} from "../../../reducers/categories/categories-slice";
-import {isAccountsLoading, selectAllAccountsState} from "../../../reducers/accounts/accounts-slice";
+import {isAccountsLoading, selectFilteredAccounts} from "../../../reducers/accounts/accounts-slice";
 import {selectAllTransactionsState} from "../../../reducers/transactions/transactions-slice";
 
 import Loader from "../../common/components/Loader/Loader";
@@ -18,7 +18,7 @@ function SettingsContainer() {
   const userId = useSelector(selectUserId);
   const transactions = useSelector(selectAllTransactionsState);
   const getCategories = useSelector(selectFilteredCategories);
-  const getAccounts = useSelector(selectAllAccountsState);
+  const getAccounts = useSelector(selectFilteredAccounts);
   const loadingCategories = useSelector(isCategoriesLoading);
   const loadingAccounts = useSelector(isAccountsLoading);
   const categories = [...getCategories];

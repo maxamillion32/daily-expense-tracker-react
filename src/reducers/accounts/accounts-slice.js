@@ -68,6 +68,13 @@ export const selectNewAccountsState = (state) => state.accounts.newAccount;
 export const isAccountsLoading = (state) => state.accounts.isLoading;
 export const isPending = (state) => state.accounts.isPending;
 
+export const selectFilteredAccounts = (state) => {
+  const allAccounts = [...selectAllAccountsState(state)];
+
+  return allAccounts
+    .sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1);
+};
+
 export const selectAccountBalance = (state) => {
   const allCategories = selectAllAccountsState(state);
 

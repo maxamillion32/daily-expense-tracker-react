@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 
 import {selectAllTransactionsState} from "../../../../reducers/transactions/transactions-slice";
 import {selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
-import {selectAllAccountsState} from "../../../../reducers/accounts/accounts-slice";
+import {selectFilteredAccounts} from "../../../../reducers/accounts/accounts-slice";
 
 import {formatYear} from "../../../common/utils/utils";
 import TransactionsItemsYearGroup from "./Items/YearGroup";
@@ -12,7 +12,7 @@ import classes from "./Container.module.css";
 function TransactionsListContainer({isLoading}) {
   const getTransactions = useSelector(selectAllTransactionsState);
   const getCategories = useSelector(selectFilteredCategories);
-  const getAccounts = useSelector(selectAllAccountsState);
+  const getAccounts = useSelector(selectFilteredAccounts);
   const transactions = [...getTransactions];
   const categories = [...getCategories];
   const accounts = [...getAccounts];
