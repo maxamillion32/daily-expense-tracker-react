@@ -76,4 +76,16 @@ export const selectFilteredCategories = (state) => {
     .sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1);
 };
 
+export const getBalanceIncomesId = (state) => {
+  const allCategories = [...selectAllCategories(state)];
+
+  return allCategories.find((category) => category.title === "Balance" && category.incomes === true);
+};
+
+export const getBalanceExpensesId = (state) => {
+  const allCategories = [...selectAllCategories(state)];
+
+  return allCategories.find((category) => category.title === "Balance" && category.incomes === true);
+};
+
 export default categoriesSlice.reducer;

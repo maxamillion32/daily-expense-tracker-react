@@ -4,10 +4,10 @@ import {useSelector, useDispatch} from "react-redux";
 import classes from "./Popup.module.css";
 
 import {
-  updateCategory, loadCategories, deleteCategory, postCategory
+  updateCategory, loadCategories, deleteCategory, postCategory, getBalanceIncomesId, getBalanceExpensesId
 } from "../../../../reducers/categories/categories-slice";
 import {
-  currentMonth, currentYear, postTransaction, loadTransactions
+  currentMonth, currentYear, postTransaction, loadTransactions, deleteTransaction, selectAllTransactionsState
 } from "../../../../reducers/transactions/transactions-slice";
 import {
   deleteAccount, postAccount, updateAccount, loadAccounts
@@ -23,7 +23,7 @@ const isExists = (data, type, item) => {
 };
 
 const isDelete = (data, type, id) => {
-  return data.find((it) => it[`${type}Id`] === id) ? true : false;
+  return data.find((it) => it[`${type}Id`] === id && it.showInBalance === true) ? true : false;
 };
 
 const isExpense = (transactions, title) => {
@@ -32,6 +32,11 @@ const isExpense = (transactions, title) => {
   .map((transaction) => transaction.expense))]);
 
   return result;
+};
+
+const getTransactionsByAccountId = (transactions, accountId) => {
+  const transaction = transactions.filter((transaction) => transaction.accountId === accountId);
+  return transaction;
 };
 
 const getCategoryTotalSum = (transactions, title) => {
@@ -52,6 +57,9 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
   const dispatch = useDispatch();
   const month = useSelector(currentMonth);
   const year = useSelector(currentYear);
+  const allTransactions = useSelector(selectAllTransactionsState);
+  const balanceIncomesId = useSelector(getBalanceIncomesId);
+  const balanceExpensesId = useSelector(getBalanceExpensesId);
   const {id, title, userId, incomes, header, startBalance, balance, icon, hidden} = itemState;
 
   const prevState = JSON.stringify(itemState) === JSON.stringify(prevItem);
@@ -102,21 +110,20 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
       if (isBalanceChange) {
         const isIncome = balanceDifference > 0 ? false : true;
         const isShowInBalance = accountState.showInBalance;
-        //TODO: get balance id from state
-        const balanceIncome = "9oCIYOhZxiX4Gs3RYLJP";
-        const balanceExpense = "yNw8Q21h5OhXNs0JiyzD";
+        const balanceIncome = balanceIncomesId.id;
+        const balanceExpense = balanceExpensesId.id;
 
         const sum = Math.abs(balanceDifference);
         const expense = isIncome;
         const date = new Date().toISOString().slice(0, -14);
-        const categoryId = isIncome ? balanceIncome: balanceExpense;
-        const accountId = id;
+        const balanceCategoryId = isIncome ? balanceIncome: balanceExpense;
         const showInBalance = isShowInBalance;
 
-        dispatch(postTransaction({sum, expense, date, categoryId, accountId, showInBalance, userId}));
+        dispatch(postTransaction({sum, expense, date, categoryId: balanceCategoryId, accountId: id, showInBalance, userId}));
         dispatch(loadTransactions(userId));
       }
-      dispatch(updateAccount({id, title, userId, startBalance, balance}));
+      dispatch(updateAccount({id, title, userId, startBalance, balance: accountState.balance}));
+      dispatch(loadTransactions(userId));
       dispatch(loadAccounts(userId));
     }
     setShowPopup();
@@ -140,8 +147,18 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
           alert("This account is already in use and cannot be deleted!");
           return;
         }
+
+        const transactionsByAccountId = getTransactionsByAccountId(allTransactions, id);
+
+        if (transactionsByAccountId) {
+            transactionsByAccountId.forEach((transaction) => {
+            dispatch(deleteTransaction(transaction.id));
+          });
+        }
+
         dispatch(deleteAccount(id));
         dispatch(loadAccounts(userId));
+        dispatch(loadTransactions(userId));
       }
 
       setShowPopup();
@@ -259,10 +276,10 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
                   value={accountState.startBalance === 0 ? "" : accountState.startBalance}
                   onChange={onChangeStartBalance}
                   placeholder="0.00"
-                  disabled={prevItem.startBalance}
+                  disabled={prevItem.startBalance || prevItem.title}
                 />
               </div>
-              {prevItem.startBalance
+              {prevItem.startBalance || prevItem.title
                 ? <div className={classes.Type}>
                     <p className={classes.Label}>Current balance</p>
 

@@ -23,9 +23,9 @@ export const deleteId = async (id) => {
     await deleteDoc(docRef);
 };
 
-export const update = async (id, title, userId, startBalance) => {
+export const update = async (id, title, userId, startBalance, balance) => {
   const docRef = doc(accountsRef, id);
-  const payload = {title, userId, startBalance};
+  const payload = {title, userId, startBalance, balance};
 
   updateDoc(docRef, payload);
 };

@@ -34,7 +34,6 @@ function SettingsList({
         </div>
 
           {items
-            .filter((item) => item.hidden !== true)
             .map((item) => {
               const startBalance = getAccountStartBalance(items, item.title);
               const currentBalance = getCurrentAccountBalance(transactions, item.title);

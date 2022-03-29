@@ -3,8 +3,7 @@ import {useDispatch} from "react-redux";
 import {setUserId} from "../reducers/user/user-slice";
 
 import {initializeApp} from "firebase/app";
-import {getFirestore} from "firebase/firestore";
-import {setDoc, doc} from "firebase/firestore";
+import {getFirestore, setDoc, doc, addDoc, collection} from "firebase/firestore";
 import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from "firebase/auth";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
@@ -30,10 +29,29 @@ const auth = getAuth();
 export async function singUp(email, password) {
   await createUserWithEmailAndPassword(auth, email, password)
   .then(async(userCredential) => {
-      const userId = userCredential.user.uid;
-      const usersRef = doc(db, "users", userId);
-      await setDoc(usersRef, {userId});
-    });
+    const userId = userCredential.user.uid;
+    const usersRef = doc(db, "users", userId);
+    const categoriesRef = collection(db, "categories");
+
+    const balanceIncomes = {
+      userId,
+      title: "Balance",
+      incomes: true,
+      icon: "fa-asterisk",
+      hidden: true
+    };
+    const balanceExpenses = {
+      userId,
+      title: "Balance",
+      incomes: false,
+      icon: "fa-asterisk",
+      hidden: true
+    };
+
+    await setDoc(usersRef, {userId});
+    await addDoc(categoriesRef, balanceIncomes);
+    await addDoc(categoriesRef, balanceExpenses);
+  });
 }
 
 export function login(email, password) {
