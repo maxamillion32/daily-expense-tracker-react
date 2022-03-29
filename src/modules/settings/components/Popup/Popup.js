@@ -4,10 +4,12 @@ import {useSelector, useDispatch} from "react-redux";
 import classes from "./Popup.module.css";
 
 import {
-  updateCategory, loadCategories, deleteCategory, postCategory, getBalanceIncomesId, getBalanceExpensesId
+  updateCategory, loadCategories, deleteCategory,
+  postCategory, getBalanceIncomesId, getBalanceExpensesId
 } from "../../../../reducers/categories/categories-slice";
 import {
-  currentMonth, currentYear, postTransaction, loadTransactions, deleteTransaction, selectAllTransactionsState
+  currentMonth, currentYear, postTransaction,
+  loadTransactions, deleteTransaction, selectAllTransactionsState
 } from "../../../../reducers/transactions/transactions-slice";
 import {
   deleteAccount, postAccount, updateAccount, loadAccounts
@@ -17,41 +19,10 @@ import ScrollToTop from "../../../common/hooks/ScrollToTop/ScrollToTop";
 import PopupIconList from "./IconList/IconList";
 import Button from "../../../common/components/Button/Button";
 import {formatYear, formatMonth} from "../../../common/utils/utils";
-
-const isExists = (data, type, item) => {
-  return data.find((it) => it[type].title === item) ? true : false;
-};
-
-const isDelete = (data, type, id) => {
-  return data.find((it) => it[`${type}Id`] === id && it.showInBalance === true) ? true : false;
-};
-
-const isExpense = (transactions, title) => {
-  const result = JSON.parse([...new Set(transactions
-  .filter((transaction) => transaction.category.title === title)
-  .map((transaction) => transaction.expense))]);
-
-  return result;
-};
-
-const getTransactionsByAccountId = (transactions, accountId) => {
-  const transaction = transactions.filter((transaction) => transaction.accountId === accountId);
-  return transaction;
-};
-
-const getCategoryTotalSum = (transactions, title) => {
-  return transactions
-  .filter((transaction) => transaction.category.title === title)
-  .map((transaction) => transaction.sum)
-  .reduce((a, b) => a + b, 0).toFixed(2);
-};
-
-const getCurrentCategorySum = (filteredTransactions, title) => {
-  return filteredTransactions
-  .filter((transaction) => transaction.category.title === title)
-  .map((transaction) => transaction.sum)
-  .reduce((a, b) => a + b, 0).toFixed(2);
-};
+import {
+  isExists, isDelete, isExpense, getTransactionsByAccountId,
+  getCategoryTotalSum, getCurrentCategorySum
+} from "./utils";
 
 function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup}) {
   const dispatch = useDispatch();
@@ -62,6 +33,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
   const balanceExpensesId = useSelector(getBalanceExpensesId);
   const {id, title, userId, incomes, header, startBalance, balance, icon, hidden} = itemState;
 
+  //TODO: rename prevState
   const prevState = JSON.stringify(itemState) === JSON.stringify(prevItem);
   const filteredTransactions = transactions
     .filter((transaction) => formatYear(transaction.date) === year)
@@ -165,6 +137,11 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
     }
   }
 
+  /**
+   * TODO: needed refactoring!!!
+   * DRY principle
+   */
+
   const onClickCreateButton = () => {
     if (header === "Categories") {
       if (isExists(transactions, "category", title)) {
@@ -185,6 +162,11 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
 
     setShowPopup();
   };
+
+  /**
+   * TODO: needed refactoring!!!
+   * split into smaller components
+   */
 
   return (
     <section className={classes.Settings}>
