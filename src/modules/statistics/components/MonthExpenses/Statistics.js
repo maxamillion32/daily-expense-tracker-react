@@ -106,12 +106,14 @@ export class Statistics {
     if (!this.isBudget) {
       return averageValue > 0
       ? `${averageValue}€ below typical`
+      : isNaN(averageValue) ? ""
+      : averageValue === "0.00" ? "equal to typical"
       : `${Math.abs(averageValue)}€ above typical`;
     }
 
     return averageValue > 0
       ? `${averageValue}€ below budget`
-      : isNaN(averageValue) ? "equal to budget"
+      : isNaN(averageValue) ? ""
       : averageValue === "0.00" ? "equal to budget"
       : `${Math.abs(averageValue)}€ above budget`;
   }
