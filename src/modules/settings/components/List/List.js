@@ -33,8 +33,7 @@ function SettingsList({
           >Create</button>
         </div>
 
-          {items
-            .map((item) => {
+          {items.map((item) => {
               const startBalance = getAccountStartBalance(items, item.title);
               const currentBalance = getCurrentAccountBalance(transactions, item.title);
               const balance = getAccountTotalBalance(startBalance, currentBalance);
