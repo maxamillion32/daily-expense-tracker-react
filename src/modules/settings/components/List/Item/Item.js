@@ -2,12 +2,12 @@ import React from "react";
 import classes from "../List.module.css";
 import {getAccountStartBalance} from "../../utils";
 
-function SettingsListItem({id, title, incomes, header, balance, icon, userId, setItem, setPrevItem, accounts, showPopup, setShowPopup}) {
+function SettingsListItem({id, title, incomes, header, balance, icon, userId, date, setItem, setPrevItem, accounts, showPopup, setShowPopup}) {
   const onClickItem = async () => {
     if (header === "Accounts") {
       const startBalance = getAccountStartBalance(accounts, title);
 
-      setItem({id, title, userId, incomes: !!+incomes.toString(), header, startBalance, balance});
+      setItem({id, title, userId, incomes: !!+incomes.toString(), header, startBalance, balance, date});
       setPrevItem({id, title, userId, incomes: !!+incomes.toString(), header, startBalance, balance});
       setShowPopup(!showPopup);
     } else {

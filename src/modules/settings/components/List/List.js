@@ -48,6 +48,7 @@ function SettingsList({
                   balance={balance}
                   icon={item.icon}
                   userId={item.userId}
+                  date={state.date}
                   setItem={setItem}
                   setPrevItem={setPrevItem}
                   accounts={accounts}
