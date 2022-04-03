@@ -31,7 +31,7 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
   const allTransactions = useSelector(selectAllTransactionsState);
   const balanceIncomesId = useSelector(getBalanceIncomesId);
   const balanceExpensesId = useSelector(getBalanceExpensesId);
-  const {id, title, userId, incomes, header, startBalance, balance, icon, hidden} = itemState;
+  const {id, title, userId, incomes, header, startBalance, balance, icon, hidden, date} = itemState;
 
   //TODO: rename prevState
   const prevState = JSON.stringify(itemState) === JSON.stringify(prevItem);
@@ -68,6 +68,11 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
     setItem({...itemState, startBalance: value});
   };
 
+  const onChangeDate = ({target}) => {
+    const date = target.value;
+    setItem({...itemState, date});
+  };
+
   const onChangeBalance = ({target}) => {
     const value = target.value;
     setAccountState({...accountState, balance: value});
@@ -87,7 +92,6 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
 
         const sum = Math.abs(balanceDifference);
         const expense = isIncome;
-        const date = new Date().toISOString().slice(0, -14);
         const balanceCategoryId = isIncome ? balanceIncome: balanceExpense;
         const showInBalance = isShowInBalance;
 
@@ -292,6 +296,14 @@ function SettingsPopup({itemState, prevItem, setItem, transactions, setShowPopup
                       : <label htmlFor={id}>Add <b>{Math.abs(balanceDifference)}€</b> difference as an expense transaction?</label>}
                   </div>
                 : null}
+                {isBalanceChange && accountState.showInBalance
+                  ? <input
+                      className={classes.Input}
+                      type="date"
+                      value={date}
+                      onChange={onChangeDate}
+                    />
+                  : null}
             </>
           : null}
       </div>

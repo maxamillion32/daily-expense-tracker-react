@@ -23,7 +23,7 @@ function Select ({defaultOption, options, onChange, errorMessage, valid, touched
         value={value ? value : ""}
         onChange={onChange}
       >
-        <option value="" hidden>{defaultOption}</option>
+        <option value="" hidden>{value ? value : defaultOption}</option>
         {options.map((option) => {
           return (
             <option
