@@ -51,7 +51,7 @@ export const transactionsSlice = createSlice({
     currentYear: formatYear(new Date()),
     isAddButtonClick: false,
     isButtonShow: false,
-    isAddTransactionClick: false,
+    IsTransactionTypeClick: false,
     isExpense: true
   },
   reducers: {
@@ -79,16 +79,16 @@ export const transactionsSlice = createSlice({
         isButtonShow: action.payload === "" ? !state.isButtonShow : action.payload,
       };
     },
-    setIsAddButtonClick: (state) => {
+    setIsAddButtonClick: (state, action) => {
       return {
         ...state,
-        isAddButtonClick: !state.isAddButtonClick,
+        isAddButtonClick: !action.payload ? !state.isAddButtonClick : action.payload,
       };
     },
-    setIsAddTransactionClick: (state) => {
+    setIsTransactionTypeClick: (state) => {
       return {
         ...state,
-        isAddTransactionClick: !state.isAddTransactionClick,
+        IsTransactionTypeClick: !state.IsTransactionTypeClick,
       };
     },
     setIsEditing: (state, action) => {
@@ -144,7 +144,7 @@ export const currentMonth = (state) => state.transactions.currentMonth;
 export const currentYear = (state) => state.transactions.currentYear;
 export const isAddButtonClick = (state) => state.transactions.isAddButtonClick;
 export const isButtonShow = (state) => state.transactions.isButtonShow;
-export const isAddTransactionClick = (state) => state.transactions.isAddTransactionClick;
+export const IsTransactionTypeClick = (state) => state.transactions.IsTransactionTypeClick;
 export const isExpense = (state) => state.transactions.isExpense;
 
 export const selectFilteredTransactions = (state) => {
@@ -186,7 +186,7 @@ export const {
   setIsAddButtonClick,
   setIsButtonShow,
   setIsEditing,
-  setIsAddTransactionClick,
+  setIsTransactionTypeClick,
   setTransactionType
 } = transactionsSlice.actions;
 export default transactionsSlice.reducer;

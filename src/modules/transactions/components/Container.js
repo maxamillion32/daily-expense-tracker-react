@@ -5,10 +5,11 @@ import classes from "./Container.module.css";
 import {
   setIsButtonShow,
   isLoading,
-  isAddTransactionClick,
+  IsTransactionTypeClick,
   selectAllTransactionsState,
   setIsEditing,
-  setIsAddTransactionClick
+  setIsTransactionTypeClick,
+  setIsAddButtonClick
 } from "../../../reducers/transactions/transactions-slice";
 import {selectUserId} from "../../../reducers/user/user-slice";
 
@@ -27,14 +28,15 @@ function TransactionsContainer() {
   const transactions = [...getTransactions];
   const userId = useSelector(selectUserId);
   const loading = useSelector(isLoading);
-  const showPopup = useSelector(isAddTransactionClick);
+  const showPopup = useSelector(IsTransactionTypeClick);
   const dispatch = useDispatch();
 
   const isLoader = loading && userId;
   const isTransactions = transactions.length !== 0;
 
   const handlePopupClose = () => {
-      dispatch(setIsAddTransactionClick());
+      dispatch(setIsTransactionTypeClick());
+      dispatch(setIsAddButtonClick());
       dispatch(setIsButtonShow(true));
       dispatch(setIsEditing(false));
   };

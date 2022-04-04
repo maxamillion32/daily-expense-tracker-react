@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 
 import classes from "./Menu.module.css";
-import {isButtonShow, setIsAddButtonClick, isAddButtonClick, setIsButtonShow, setIsAddTransactionClick,
+import {isButtonShow, setIsAddButtonClick, isAddButtonClick, setIsButtonShow, setIsTransactionTypeClick,
 setTransactionType} from "../../../reducers/transactions/transactions-slice";
 import {selectFilteredCategories} from "../../../reducers/categories/categories-slice";
 import {selectFilteredAccounts} from "../../../reducers/accounts/accounts-slice";
@@ -44,21 +44,26 @@ function Menu() {
 
   const onIncomeButtonClick = () => {
     dispatch(setIsAddButtonClick());
-    dispatch(setIsAddTransactionClick());
+    dispatch(setIsTransactionTypeClick());
     dispatch(setTransactionType(false));
   };
 
   const onExpenseButtonClick = () => {
     dispatch(setIsAddButtonClick());
-    dispatch(setIsAddTransactionClick());
+    dispatch(setIsTransactionTypeClick());
     dispatch(setTransactionType(true));
+  };
+
+  const onBackgroundClick = () => {
+    dispatch(setIsAddButtonClick());
+    dispatch(setIsButtonShow(true));
   };
 
   return (
     <>
 
       {getIsAddButtonClick
-        ? <div className={classes.btnBackground}>
+        ? <div className={classes.btnBackground} onClick={onBackgroundClick}>
             <div className={`${classes.btnWrapper} ${classes.menuAddPlusBtn}`}>
               <p className={classes.btnTitle}>Income</p>
               <button

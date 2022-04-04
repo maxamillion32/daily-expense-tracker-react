@@ -5,7 +5,7 @@ import classes from "./Form.module.css";
 import {
   postTransaction,
   updateTransaction,
-  setIsAddTransactionClick,
+  setIsTransactionTypeClick,
   loadTransactions,
   setIsButtonShow,
   selectUpdatingTransactionState,
@@ -143,7 +143,7 @@ function TransactionCreateForm(){
   const updateTransactionHandler = () => {
     dispatch(updateTransaction({...state.formTransaction}));
     dispatch(loadTransactions(userId));
-    dispatch(setIsAddTransactionClick());
+    dispatch(setIsTransactionTypeClick());
     dispatch(setIsButtonShow(true));
     dispatch(setIsEditing(false));
   };
@@ -154,7 +154,7 @@ function TransactionCreateForm(){
     if (confirm) {
       dispatch(deleteTransaction(id));
       dispatch(loadTransactions(userId));
-      dispatch(setIsAddTransactionClick());
+      dispatch(setIsTransactionTypeClick());
       dispatch(setIsButtonShow(true));
       dispatch(setIsEditing(false));
     }
@@ -167,7 +167,7 @@ function TransactionCreateForm(){
   const addTransactionHandler = () => {
     dispatch(postTransaction({...state.formTransaction, userId}));
     dispatch(loadTransactions(userId));
-    dispatch(setIsAddTransactionClick());
+    dispatch(setIsTransactionTypeClick());
     dispatch(setIsButtonShow(true));
     dispatch(setIsEditing(false));
 
