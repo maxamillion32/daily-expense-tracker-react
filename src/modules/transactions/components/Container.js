@@ -21,6 +21,7 @@ import Chart from "./Chart/Chart";
 import Popup from "../../common/components/Popup/Popup";
 import TransactionCreateForm from "../../common/components/CreateForm/Form";
 import WithNavigation from "../../common/hoc/WithNavigation/WithNavigation";
+import TransactionsChoiceTypePopup from "./ChoiceTypePopup/Popup";
 
 function TransactionsContainer() {
   const getTransactions = useSelector(selectAllTransactionsState);
@@ -55,6 +56,12 @@ function TransactionsContainer() {
               setShowPopup={handlePopupClose}>
               <TransactionCreateForm />
             </Popup>
+
+            {/* <Popup
+              showPopup={showPopup}
+              setShowPopup={handlePopupClose}>
+              <TransactionsChoiceTypePopup />
+            </Popup> */}
 
             {isLoader
               ? <Loader />
