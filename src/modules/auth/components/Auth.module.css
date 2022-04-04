@@ -1,5 +1,5 @@
 .Main {
-  z-index: 100;
+  z-index: 200;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-end;

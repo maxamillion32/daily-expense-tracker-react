@@ -5,10 +5,10 @@ import classes from "./Container.module.css";
 import {
   setIsButtonShow,
   isLoading,
-  setIsAddButtonClick,
-  isAddButtonClick,
+  isAddTransactionClick,
   selectAllTransactionsState,
-  setIsEditing
+  setIsEditing,
+  setIsAddTransactionClick
 } from "../../../reducers/transactions/transactions-slice";
 import {selectUserId} from "../../../reducers/user/user-slice";
 
@@ -21,21 +21,20 @@ import Chart from "./Chart/Chart";
 import Popup from "../../common/components/Popup/Popup";
 import TransactionCreateForm from "../../common/components/CreateForm/Form";
 import WithNavigation from "../../common/hoc/WithNavigation/WithNavigation";
-import TransactionsChoiceTypePopup from "./ChoiceTypePopup/Popup";
 
 function TransactionsContainer() {
   const getTransactions = useSelector(selectAllTransactionsState);
   const transactions = [...getTransactions];
   const userId = useSelector(selectUserId);
   const loading = useSelector(isLoading);
-  const showPopup = useSelector(isAddButtonClick);
+  const showPopup = useSelector(isAddTransactionClick);
   const dispatch = useDispatch();
 
   const isLoader = loading && userId;
   const isTransactions = transactions.length !== 0;
 
   const handlePopupClose = () => {
-      dispatch(setIsAddButtonClick());
+      dispatch(setIsAddTransactionClick());
       dispatch(setIsButtonShow(true));
       dispatch(setIsEditing(false));
   };
@@ -56,12 +55,6 @@ function TransactionsContainer() {
               setShowPopup={handlePopupClose}>
               <TransactionCreateForm />
             </Popup>
-
-            {/* <Popup
-              showPopup={showPopup}
-              setShowPopup={handlePopupClose}>
-              <TransactionsChoiceTypePopup />
-            </Popup> */}
 
             {isLoader
               ? <Loader />

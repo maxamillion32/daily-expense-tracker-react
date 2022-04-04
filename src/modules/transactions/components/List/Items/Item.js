@@ -4,7 +4,7 @@ import {CSSTransition} from "react-transition-group";
 
 import classes from "../Container.module.css";
 
-import {setIsAddButtonClick, setIsButtonShow, updatingTransaction, setIsEditing} from "../../../../../reducers/transactions/transactions-slice";
+import {setIsAddTransactionClick, setIsButtonShow, updatingTransaction, setIsEditing} from "../../../../../reducers/transactions/transactions-slice";
 
 function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, date, accountId, categoryId, ...rest}) {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, 
   };
 
   const onItemClick = () => {
-    dispatch(setIsAddButtonClick());
+    dispatch(setIsAddTransactionClick());
     dispatch(setIsButtonShow());
     dispatch(setIsEditing(true));
     dispatch(updatingTransaction({id, sum, date, expense, category: categoryTitle, account: accountTitle, categoryId, accountId}));
