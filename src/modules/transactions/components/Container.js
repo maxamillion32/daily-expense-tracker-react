@@ -36,7 +36,7 @@ function TransactionsContainer() {
 
   const handlePopupClose = () => {
       dispatch(setIsTransactionTypeClick());
-      dispatch(setIsAddButtonClick());
+      dispatch(setIsAddButtonClick(false));
       dispatch(setIsButtonShow(true));
       dispatch(setIsEditing(false));
   };

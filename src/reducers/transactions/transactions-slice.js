@@ -82,7 +82,7 @@ export const transactionsSlice = createSlice({
     setIsAddButtonClick: (state, action) => {
       return {
         ...state,
-        isAddButtonClick: !action.payload ? !state.isAddButtonClick : action.payload,
+        isAddButtonClick: action.payload === "" ? !state.isAddButtonClick : action.payload,
       };
     },
     setIsTransactionTypeClick: (state) => {

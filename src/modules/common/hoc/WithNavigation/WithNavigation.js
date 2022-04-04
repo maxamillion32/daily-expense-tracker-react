@@ -47,8 +47,10 @@ function WithNavigation({children}) {
       } else {
           if ( yDiff > 0 ) {
             dispatch(setIsButtonShow(false)); //up swipe
+            console.log("🚀 ~ file: WithNavigation.js ~ line 50 ~ handleTouchMove ~ up swipe", "up swipe");
           } else {
             dispatch(setIsButtonShow(true)); //down swipe
+            console.log("🚀 ~ file: WithNavigation.js ~ line 53 ~ handleTouchMove ~ down swipe", "down swipe");
           }
       }
       //reset values
