@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Input.module.css";
-import {isInvalid} from "../CreateForm/utils";
+import {isInvalid} from "../../../transactions/components/CreateForm/utils";
 
 interface InputProps {
   name: string,

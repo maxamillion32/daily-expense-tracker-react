@@ -20,7 +20,7 @@ import Loader from "../../common/components/Loader/Loader";
 import Welcome from "../../welcome/components/Welcome";
 import Chart from "./Chart/Chart";
 import Popup from "../../common/components/Popup/Popup";
-import TransactionCreateForm from "../../common/components/CreateForm/Form";
+import TransactionCreateForm from "./CreateForm/Form";
 import WithNavigation from "../../common/hoc/WithNavigation/WithNavigation";
 
 function TransactionsContainer() {

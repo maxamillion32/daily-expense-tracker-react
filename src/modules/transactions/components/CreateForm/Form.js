@@ -3,15 +3,9 @@ import {useSelector, useDispatch} from "react-redux";
 import classes from "./Form.module.css";
 
 import {
-  postTransaction,
-  updateTransaction,
-  setIsTransactionTypeClick,
-  loadTransactions,
-  setIsButtonShow,
-  selectUpdatingTransactionState,
-  isEditing,
-  setIsEditing,
-  deleteTransaction,
+  postTransaction, updateTransaction, setIsTransactionTypeClick,
+  loadTransactions, setIsButtonShow, selectUpdatingTransactionState,
+  isEditing, setIsEditing, deleteTransaction,
   isExpense
 } from "../../../../reducers/transactions/transactions-slice";
 import {selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
@@ -63,10 +57,9 @@ function TransactionCreateForm() {
     };
 
   const [state, setState] = useState(initialState);
-
-  const isEqual = JSON.stringify(state.formTransaction) === JSON.stringify(getUpdatingTransaction);
-
   let {id, sum, date, expense, category, account} = state.formTransaction;
+
+  const isFormStateEqual = JSON.stringify(state.formTransaction) === JSON.stringify(getUpdatingTransaction);
 
   const setUserInput = (name, value) => {
     if (name === "expense") {
@@ -193,7 +186,7 @@ function TransactionCreateForm() {
                   <Button
                     type="submit"
                     onClick={updateTransactionHandler}
-                    disabled={isEqual}
+                    disabled={isFormStateEqual}
                   >
                     Update
                   </Button>
@@ -201,7 +194,7 @@ function TransactionCreateForm() {
                   <Button
                     type="submit"
                     onClick={deleteTransactionHandler}
-                    disabled={!isEqual}
+                    disabled={!isFormStateEqual}
                   >
                     Delete
                   </Button>
