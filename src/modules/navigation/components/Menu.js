@@ -24,7 +24,6 @@ function Menu() {
 
   const dispatch = useDispatch();
 
-  //TODO: rename isEmpty
   const isEmpty = categories.length === 0 || accounts.length === 0;
 
   const isActiveLink = ({isActive}) => (isActive ? `${classes.active}` : "");
@@ -38,24 +37,26 @@ function Menu() {
   }, [getIsAddButtonClick]);
 
   const onAddButtonClick = () => {
-    dispatch(setIsAddButtonClick());
+    dispatch(setIsAddButtonClick(true));
     dispatch(setIsButtonShow(false));
   };
 
-  const onIncomeButtonClick = () => {
-    dispatch(setIsAddButtonClick());
+  const onIncomeButtonClick = (event) => {
+    event.stopPropagation();
+    dispatch(setIsAddButtonClick(false));
     dispatch(setIsTransactionTypeClick());
     dispatch(setTransactionType(false));
   };
 
-  const onExpenseButtonClick = () => {
-    dispatch(setIsAddButtonClick());
+  const onExpenseButtonClick = (event) => {
+    event.stopPropagation();
+    dispatch(setIsAddButtonClick(false));
     dispatch(setIsTransactionTypeClick());
     dispatch(setTransactionType(true));
   };
 
   const onBackgroundClick = () => {
-    dispatch(setIsAddButtonClick());
+    dispatch(setIsAddButtonClick(false));
     dispatch(setIsButtonShow(true));
   };
 

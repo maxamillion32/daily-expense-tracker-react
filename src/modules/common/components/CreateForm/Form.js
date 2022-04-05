@@ -24,7 +24,13 @@ import Button from "../../../common/components/Button/Button";
 
 import {validateForm, updateFormControls, createFormControls} from "./utils";
 
-function TransactionCreateForm(){
+const filteredCategories = (categories, type, isEditing) => {
+  return isEditing
+    ? categories
+    : categories.filter((category) => type ? !category.incomes : category.incomes);
+};
+
+function TransactionCreateForm() {
   const userId = useSelector(selectUserId);
   const getCategories = useSelector(selectFilteredCategories);
   const getAccounts = useSelector(selectFilteredAccounts);
@@ -225,7 +231,7 @@ function TransactionCreateForm(){
             />
 
             <Select
-              options={categories}
+              options={filteredCategories(categories, getIsExpense, getIsEditing)}
               defaultOption="Choose a category"
               onChange={onChangeSelectHandler("category")}
               value={category}
