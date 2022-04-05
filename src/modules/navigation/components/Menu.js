@@ -2,6 +2,8 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 
+import {TransitionGroup, CSSTransition} from "react-transition-group";
+
 import classes from "./Menu.module.css";
 import {isButtonShow, setIsAddButtonClick, isAddButtonClick, setIsButtonShow, setIsTransactionTypeClick,
 setTransactionType} from "../../../reducers/transactions/transactions-slice";
@@ -60,34 +62,49 @@ function Menu() {
     dispatch(setIsButtonShow(true));
   };
 
+  const nodeRef = React.useRef(null);
+
   return (
     <>
+      <TransitionGroup>
+        {getIsAddButtonClick
+          ?
+              <CSSTransition
+                in={getIsAddButtonClick}
+                classNames={{
+                  enterDone: `${classes.EnterDone}`,
+                  enterActive: `${classes.EnterActive}`,
+                  exitActive: `${classes.ExitActive}`,
+                }}
+                timeout={150}
+                unmountOnExit
+                nodeRef={nodeRef}
+              >
+                <div className={classes.btnBackground} onClick={onBackgroundClick} ref={nodeRef}>
+                  <div className={`${classes.btnWrapper} ${classes.menuAddPlusBtn}`}>
+                    <p className={classes.btnTitle}>Income</p>
+                    <button
+                      className={`${classes.menuAddBtn} fa fa-plus`}
+                      onClick={onIncomeButtonClick}
+                    />
+                  </div>
 
-      {getIsAddButtonClick
-        ? <div className={classes.btnBackground} onClick={onBackgroundClick}>
-            <div className={`${classes.btnWrapper} ${classes.menuAddPlusBtn}`}>
-              <p className={classes.btnTitle}>Income</p>
-              <button
-                className={`${classes.menuAddBtn} fa fa-plus`}
-                onClick={onIncomeButtonClick}
-              />
-            </div>
-
-            <div className={`${classes.btnWrapper} ${classes.menuAddMinusBtn}`}>
-              <p className={classes.btnTitle}>Expense</p>
-              <button
-                className={`${classes.menuAddBtn} fa fa-minus`}
-                onClick={onExpenseButtonClick}
-              />
-            </div>
-          </div>
-        : null}
+                  <div className={`${classes.btnWrapper} ${classes.menuAddMinusBtn}`}>
+                    <p className={classes.btnTitle}>Expense</p>
+                    <button
+                      className={`${classes.menuAddBtn} fa fa-minus`}
+                      onClick={onExpenseButtonClick}
+                    />
+                  </div>
+                </div>
+              </CSSTransition>
+          : null}
+        </TransitionGroup>
 
       <nav className={classes.menu}>
         <div className={classes.wrapper}>
           {showAddButton
-            ?
-              <AddButton
+            ? <AddButton
                 cssClass={ADD_BUTTON_TYPES.PLUS}
                 onClick={onAddButtonClick}
                 isDisabled={isEmpty}
