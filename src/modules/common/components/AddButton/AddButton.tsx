@@ -1,19 +1,24 @@
 import React from "react";
+import classes from "./AddButton.module.css";
 
 interface AddButtonProps {
   cssClass: string,
   onClick: () => void,
-  nodeRef: string,
-  isEmpty: boolean
+  isDisabled: boolean
 }
 
-function AddButton({cssClass, onClick, nodeRef, isEmpty}: AddButtonProps) {
+function AddButton({cssClass, onClick, isDisabled}: AddButtonProps) {
+const classesAddBtn = [
+  classes.menuAddBtn,
+  "fa",
+  cssClass
+].join(" ");
+
   return (
     <button
-      className={cssClass}
+      className={classesAddBtn}
       onClick={onClick}
-      ref={nodeRef}
-      disabled={isEmpty}
+      disabled={isDisabled}
     />
   );
 }

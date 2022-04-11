@@ -1,0 +1,48 @@
+.form {
+  z-index: 100;
+  max-width: 440px;
+  width: 100%;
+}
+
+.form input,
+.form select {
+  margin: 5px 0;
+}
+
+.formWrapper {
+  overflow: hidden;
+}
+
+.formContainer {
+  box-sizing: border-box;
+}
+
+.inputTypeWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.inputTypeWrapper label {
+  cursor: pointer;
+}
+
+.addFormEnterActive {
+  animation: showForm 300ms ease-out forwards;
+}
+
+.addFormExitActive {
+  animation: showForm 500ms ease-in alternate-reverse;
+}
+
+@keyframes showForm {
+  0% {
+    transform: translateY(307px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}

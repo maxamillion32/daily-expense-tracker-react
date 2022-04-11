@@ -5,10 +5,11 @@ import classes from "./Container.module.css";
 import {
   setIsButtonShow,
   isLoading,
-  setIsAddButtonClick,
-  isAddButtonClick,
+  IsTransactionTypeClick,
   selectAllTransactionsState,
-  setIsEditing
+  setIsEditing,
+  setIsTransactionTypeClick,
+  setIsAddButtonClick
 } from "../../../reducers/transactions/transactions-slice";
 import {selectUserId} from "../../../reducers/user/user-slice";
 
@@ -19,7 +20,7 @@ import Loader from "../../common/components/Loader/Loader";
 import Welcome from "../../welcome/components/Welcome";
 import Chart from "./Chart/Chart";
 import Popup from "../../common/components/Popup/Popup";
-import TransactionCreateForm from "../../common/components/CreateForm/Form";
+import TransactionCreateForm from "./CreateForm/Form";
 import WithNavigation from "../../common/hoc/WithNavigation/WithNavigation";
 
 function TransactionsContainer() {
@@ -27,14 +28,15 @@ function TransactionsContainer() {
   const transactions = [...getTransactions];
   const userId = useSelector(selectUserId);
   const loading = useSelector(isLoading);
-  const showPopup = useSelector(isAddButtonClick);
+  const showPopup = useSelector(IsTransactionTypeClick);
   const dispatch = useDispatch();
 
   const isLoader = loading && userId;
   const isTransactions = transactions.length !== 0;
 
   const handlePopupClose = () => {
-      dispatch(setIsAddButtonClick());
+      dispatch(setIsTransactionTypeClick());
+      dispatch(setIsAddButtonClick(false));
       dispatch(setIsButtonShow(true));
       dispatch(setIsEditing(false));
   };
