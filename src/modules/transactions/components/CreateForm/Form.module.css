@@ -1,11 +1,7 @@
 .form {
-  /* position: absolute; */
-  /* left: 0;
-  bottom: 72px; */
   z-index: 100;
   max-width: 440px;
   width: 100%;
-  /* margin-top: 35px; */
 }
 
 .form input,
@@ -13,24 +9,15 @@
   margin: 5px 0;
 }
 
-.dialogWrapper {
+.formWrapper {
   overflow: hidden;
 }
 
-.dialog {
-  /* max-height: 307px; */
-  /* padding: 30px 30px 20px; */
+.formContainer {
   box-sizing: border-box;
-  /* background-color: #f1f1f1; */
 }
 
-.dialogTypeWrapper {
-  display: flex;
-  justify-content: flex-end;
-  padding: 5px 0;
-}
-
-.dialogType {
+.inputTypeWrapper {
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -38,7 +25,7 @@
   margin-bottom: 10px;
 }
 
-.dialogType label {
+.inputTypeWrapper label {
   cursor: pointer;
 }
 

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {Children, useState} from "react";
 import {useSelector, useDispatch} from "react-redux";
 import classes from "./Form.module.css";
 
@@ -23,6 +23,18 @@ const filteredCategories = (categories, type, isEditing) => {
     ? categories
     : categories.filter((category) => type ? !category.incomes : category.incomes);
 };
+
+const FormContainer = ({children, onSubmit, nodeRef}) => (
+  <section className={classes.form} >
+      <div className={classes.formWrapper}>
+        <form onSubmit={onSubmit}>
+          <div className={classes.formContainer} ref={nodeRef}>
+            {children}
+          </div>
+        </form>
+      </div>
+    </section>
+);
 
 function TransactionCreateForm() {
   const userId = useSelector(selectUserId);
@@ -176,101 +188,97 @@ function TransactionCreateForm() {
   const nodeRef = React.useRef(null);
 
   return (
-    <section className={classes.form} >
-      <div className={classes.dialogWrapper}>
-        <form onSubmit={onClickSubmitButton}>
-          <div className={classes.dialog} ref={nodeRef}>
+    <FormContainer
+      onSubmit={onClickSubmitButton}
+      nodeRef={nodeRef}
+    >
+      {getIsEditing
+        ? <>
+            <Button
+              type="submit"
+              onClick={updateTransactionHandler}
+              disabled={isFormStateEqual}
+            >
+              Update
+            </Button>
 
-            {getIsEditing
-              ? <>
-                  <Button
-                    type="submit"
-                    onClick={updateTransactionHandler}
-                    disabled={isFormStateEqual}
-                  >
-                    Update
-                  </Button>
+            <Button
+              type="submit"
+              onClick={deleteTransactionHandler}
+              disabled={!isFormStateEqual}
+            >
+              Delete
+            </Button>
+          </>
+        : null}
 
-                  <Button
-                    type="submit"
-                    onClick={deleteTransactionHandler}
-                    disabled={!isFormStateEqual}
-                  >
-                    Delete
-                  </Button>
-                </>
-              : null}
+      {!getIsEditing
+        ? <Button
+            type="submit"
+            onClick={addTransactionHandler}
+            disabled={!state.isFormValid}
+          >
+            Create
+          </Button>
+        : null}
 
-            {!getIsEditing
-              ? <Button
-                  type="submit"
-                  onClick={addTransactionHandler}
-                  disabled={!state.isFormValid}
-                >
-                  Create
-                </Button>
-              : null}
+      <Input
+        type="number"
+        name="sum"
+        placeholder="0.00"
+        value={sum}
+        valid={state.formControls.sum.valid}
+        shouldValidate={!!state.formControls.sum.validation}
+        touched={state.formControls.sum.touched}
+        errorMessage={state.formControls.sum.errorMessage}
+        onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
+      />
 
+      <Select
+        options={filteredCategories(categories, getIsExpense, getIsEditing)}
+        defaultOption="Choose a category"
+        onChange={onChangeSelectHandler("category")}
+        value={category}
+        valid={state.formControls.category.valid}
+        shouldValidate={!!state.formControls.category.validation}
+        touched={state.formControls.category.touched}
+        errorMessage={state.formControls.category.errorMessage}
+      />
+
+      <Select
+        options={accounts}
+        defaultOption="Choose an account"
+        onChange={onChangeSelectHandler("account")}
+        value={account}
+        valid={state.formControls.account.valid}
+        shouldValidate={!!state.formControls.account.validation}
+        touched={state.formControls.account.touched}
+        errorMessage={state.formControls.account.errorMessage}
+      />
+
+      <Input
+        type="date"
+        name="date"
+        value={date}
+        valid={state.formControls.date.valid}
+        shouldValidate={!!state.formControls.date.validation}
+        touched={state.formControls.date.touched}
+        errorMessage={state.formControls.date.errorMessage}
+        onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
+      />
+
+      {getIsEditing
+        ? <div className={classes.inputTypeWrapper}>
             <Input
-              type="number"
-              name="sum"
-              placeholder="0.00"
-              value={sum}
-              valid={state.formControls.sum.valid}
-              shouldValidate={!!state.formControls.sum.validation}
-              touched={state.formControls.sum.touched}
-              errorMessage={state.formControls.sum.errorMessage}
+              label={"Income"}
+              type="checkbox"
+              name="expense"
+              checked={!expense}
               onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
             />
-
-            <Select
-              options={filteredCategories(categories, getIsExpense, getIsEditing)}
-              defaultOption="Choose a category"
-              onChange={onChangeSelectHandler("category")}
-              value={category}
-              valid={state.formControls.category.valid}
-              shouldValidate={!!state.formControls.category.validation}
-              touched={state.formControls.category.touched}
-              errorMessage={state.formControls.category.errorMessage}
-            />
-
-            <Select
-              options={accounts}
-              defaultOption="Choose an account"
-              onChange={onChangeSelectHandler("account")}
-              value={account}
-              valid={state.formControls.account.valid}
-              shouldValidate={!!state.formControls.account.validation}
-              touched={state.formControls.account.touched}
-              errorMessage={state.formControls.account.errorMessage}
-            />
-
-            <Input
-              type="date"
-              name="date"
-              value={date}
-              valid={state.formControls.date.valid}
-              shouldValidate={!!state.formControls.date.validation}
-              touched={state.formControls.date.touched}
-              errorMessage={state.formControls.date.errorMessage}
-              onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
-            />
-
-            {getIsEditing
-              ? <div className={classes.dialogType}>
-                <Input
-                  label={"Income"}
-                  type="checkbox"
-                  name="expense"
-                  checked={!expense}
-                  onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
-                />
-              </div>
-              : null}
           </div>
-        </form>
-      </div>
-    </section>
+        : null}
+    </FormContainer>
   );
 }
 
