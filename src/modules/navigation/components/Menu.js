@@ -16,6 +16,51 @@ import settings from "../../../assets/img/settings.png";
 import AddButton from "../../common/components/AddButton/AddButton";
 import {ADD_BUTTON_TYPES} from "../../common/components/AddButton/AddButtonTypes";
 
+const OptionsButton = ({type, onClick, typeClass, title}) => (
+  <div className={`${classes.btnWrapper} ${typeClass}`}>
+    <p className={classes.btnTitle}>{title}</p>
+    <button
+      className={`${classes.menuAddBtn} fa ${type}`}
+      onClick={onClick}
+    />
+  </div>
+);
+
+const OptionsButtonBackground = ({children, onClick, nodeRef, ...props}) => (
+  <CSSTransition
+    {...props}
+    classNames={{
+      enterDone: `${classes.EnterDone}`,
+      enterActive: `${classes.EnterActive}`,
+      exitActive: `${classes.ExitActive}`,
+    }}
+    timeout={150}
+    unmountOnExit
+    nodeRef={nodeRef}
+  >
+    <div className={classes.btnBackground} onClick={onClick} ref={nodeRef}>
+      {children}
+    </div>
+  </CSSTransition>
+);
+
+const NavContainer = ({children}) => (
+  <nav className={classes.menu}>
+    <div className={classes.wrapper}>
+      {children}
+    </div>
+  </nav>
+);
+
+const NavButton = ({to, className, src}) => (
+  <NavLink
+    to={to}
+    className={className}
+  >
+    <img src={src} width="30"/>
+  </NavLink>
+);
+
 function Menu() {
   const showAddButton = useSelector(isButtonShow);
   const getCategories = useSelector(selectFilteredCategories);
@@ -69,71 +114,55 @@ function Menu() {
       <TransitionGroup>
         {getIsAddButtonClick
           ?
-              <CSSTransition
-                in={getIsAddButtonClick}
-                classNames={{
-                  enterDone: `${classes.EnterDone}`,
-                  enterActive: `${classes.EnterActive}`,
-                  exitActive: `${classes.ExitActive}`,
-                }}
-                timeout={150}
-                unmountOnExit
-                nodeRef={nodeRef}
-              >
-                <div className={classes.btnBackground} onClick={onBackgroundClick} ref={nodeRef}>
-                  <div className={`${classes.btnWrapper} ${classes.menuAddPlusBtn}`}>
-                    <p className={classes.btnTitle}>Income</p>
-                    <button
-                      className={`${classes.menuAddBtn} fa fa-plus`}
-                      onClick={onIncomeButtonClick}
-                    />
-                  </div>
-
-                  <div className={`${classes.btnWrapper} ${classes.menuAddMinusBtn}`}>
-                    <p className={classes.btnTitle}>Expense</p>
-                    <button
-                      className={`${classes.menuAddBtn} fa fa-minus`}
-                      onClick={onExpenseButtonClick}
-                    />
-                  </div>
-                </div>
-              </CSSTransition>
-          : null}
-        </TransitionGroup>
-
-      <nav className={classes.menu}>
-        <div className={classes.wrapper}>
-          {showAddButton
-            ? <AddButton
-                cssClass={ADD_BUTTON_TYPES.PLUS}
-                onClick={onAddButtonClick}
-                isDisabled={isEmpty}
+            <OptionsButtonBackground
+              in={getIsAddButtonClick}
+              onClick={onBackgroundClick}
+              nodeRef={nodeRef}
+            >
+              <OptionsButton
+                onClick={onIncomeButtonClick}
+                typeClass={classes.menuAddPlusBtn}
+                type={"fa-plus"}
+                title={"Income"}
               />
-            : null}
+              <OptionsButton
+                onClick={onExpenseButtonClick}
+                typeClass={classes.menuAddMinusBtn}
+                type={"fa-minus"}
+                title={"Expense"}
+              />
+            </OptionsButtonBackground>
+          : null}
+      </TransitionGroup>
 
-          <NavLink
-            to={"/"}
-            className={isActiveLink}
-          >
-            <img src={transactions} width="30"/>
-          </NavLink>
+      <NavContainer>
+        {showAddButton
+          ? <AddButton
+              cssClass={ADD_BUTTON_TYPES.PLUS}
+              onClick={onAddButtonClick}
+              isDisabled={isEmpty}
+            />
+          : null}
 
-          <NavLink
-            to={"/statistics"}
-            className={isActiveLink}
-          >
-            <img src={statistics}  width="30"/>
-          </NavLink>
+        <NavButton
+          to={"/"}
+          className={isActiveLink}
+          src={transactions}
+        />
 
-          <NavLink
-            to={"/settings"}
-            className={isActiveLink}
-          >
-            <img src={settings} width="30"/>
-          </NavLink>
+        <NavButton
+          to={"/statistics"}
+          className={isActiveLink}
+          src={statistics}
+        />
 
-        </div>
-      </nav>
+        <NavButton
+          to={"/settings"}
+          className={isActiveLink}
+          src={settings}
+        />
+
+      </NavContainer>
     </>
   );
 }
