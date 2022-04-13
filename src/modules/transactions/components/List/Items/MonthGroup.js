@@ -13,9 +13,9 @@ function TransactionsItemsMonthGroup({transactions, month}) {
   const nodeRef = React.useRef(null);
 
   return (
-    <ul className="transactions__list">
+    <li className="transactions__list">
       <p className={classes.TransactionsMonth} ref={nodeRef}>{month}</p>
-      <TransitionGroup>
+      <TransitionGroup component={"ul"}>
         {transactionsDates.map((transactionDate) =>
           (
             <TransactionsItemsDateGroupWrapper
@@ -26,7 +26,7 @@ function TransactionsItemsMonthGroup({transactions, month}) {
           )
         )}
       </TransitionGroup>
-    </ul>
+    </li>
   );
 }
 

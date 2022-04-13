@@ -2,6 +2,13 @@ import React from "react";
 import classes from "./MonthBalance.module.css";
 import {formatMonth, formatYear} from "../../../common/utils/utils";
 
+const BalanceItem = ({sum, title}) => (
+  <li className={classes.Wrapper}>
+    <p>{title}:</p>
+    <p className={classes.Balance}>{title === "incomes" ? "+" : "-"}{sum} €</p>
+  </li>
+);
+
 function WidgetsMonthBalance({currentYear, currentMonth, transactions}) {
   // move to utils
   const filteredTransactions = transactions
@@ -20,14 +27,8 @@ function WidgetsMonthBalance({currentYear, currentMonth, transactions}) {
     <section className={classes.MonthBalance}>
       <h2>{currentMonth}</h2>
       <ul className={classes.List}>
-        <li className={classes.Wrapper}>
-          <p>incomes:</p>
-          <p className={classes.Balance}>+{sumIncomes} €</p>
-        </li>
-        <li className={classes.Wrapper}>
-          <p>expenses:</p>
-          <p className={classes.Balance}>-{sumExpenses} €</p>
-        </li>
+        <BalanceItem sum={sumIncomes} title={"incomes"} />
+        <BalanceItem sum={sumExpenses} title={"expenses"} />
       </ul>
     </section>
   );

@@ -1,12 +1,32 @@
 import React from "react";
 import {useSelector, useDispatch} from "react-redux";
 
-import {loadTransactions} from "../../../../reducers/transactions/transactions-slice";
+// import {loadTransactions} from "../../../../reducers/transactions/transactions-slice";
 import {selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
 import {postBudget, loadBudgets, updateBudget} from "../../../../reducers/budget/budget-slice";
 
 import classes from "./Budget.module.css";
 import WidgetsBudgetItem from "./Items/Item";
+
+const BudgetContentWrapper = ({children}) => (
+  <div className={classes.Content}>
+    {children}
+  </div>
+);
+
+const BudgetHeader = ({onClick, isDisabled}) => (
+  <div className={classes.HeaderWrapper}>
+    <p className={classes.Header}>Budget</p>
+    <button
+        className={classes.Button}
+        type="submit"
+        onClick={onClick}
+        disabled={isDisabled}
+      >
+        Update
+      </button>
+  </div>
+);
 
 function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget}) {
   const dispatch = useDispatch();
@@ -35,19 +55,12 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
 
   return (
     <section className={classes.BudgetWrapper}>
-      <div className={classes.HeaderWrapper}>
-        <p className={classes.Header}>Budget</p>
-        <button
-            className={classes.Button}
-            type="submit"
-            onClick={onEditClick}
-            disabled={prevBudget}
-          >
-            Update
-          </button>
-      </div>
+      <BudgetHeader
+        onClick={onEditClick}
+        isDisabled={prevBudget}
+      />
 
-      <div className={classes.Content}>
+      <BudgetContentWrapper>
         <WidgetsBudgetItem
           title={"Expenses"}
           dataType={"expenses"}
@@ -72,9 +85,9 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
             />
           ))
         }
-      </div>
+      </BudgetContentWrapper>
 
-      <div className={classes.Content}>
+      <BudgetContentWrapper>
         <WidgetsBudgetItem
           title={"Incomes"}
           dataType={"incomes"}
@@ -99,7 +112,7 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
             />
           ))
         }
-      </div>
+      </BudgetContentWrapper>
     </section>
   );
 }
