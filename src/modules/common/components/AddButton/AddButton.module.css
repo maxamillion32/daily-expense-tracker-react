@@ -15,7 +15,6 @@
   border-radius: 25px;
   border: none;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.50);
-  transition: transform .3s, width .22s, height .22s ease-in;
 }
 
 .menuAddBtn:hover {

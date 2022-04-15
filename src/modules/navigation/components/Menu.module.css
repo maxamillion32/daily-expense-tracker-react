@@ -88,7 +88,6 @@
 
   cursor: pointer;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.50);
-  transition: transform .3s, width .22s, height .22s ease-in;
 }
 
 .menuAddMinusBtn {
@@ -103,22 +102,4 @@
 
 .menuAddBtn:hover {
   cursor: pointer;
-}
-
-.EnterActive {
-  animation: show 200ms ease-out forwards;
-}
-
-.ExitActive {
-  animation: show 200ms ease-in alternate-reverse;
-}
-
-@keyframes show {
-  0% {
-    transform: translateY(100vh);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
 }

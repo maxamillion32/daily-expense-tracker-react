@@ -2,11 +2,14 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 
-import {TransitionGroup, CSSTransition} from "react-transition-group";
+import {TransitionGroup} from "react-transition-group";
 
 import classes from "./Menu.module.css";
-import {isButtonShow, setIsAddButtonClick, isAddButtonClick, setIsButtonShow, setIsTransactionTypeClick,
-setTransactionType} from "../../../reducers/transactions/transactions-slice";
+import {
+  isButtonShow, setIsAddButtonClick, isAddButtonClick,
+  setIsButtonShow, setIsTransactionTypeClick,
+  setTransactionType
+} from "../../../reducers/transactions/transactions-slice";
 import {selectFilteredCategories} from "../../../reducers/categories/categories-slice";
 import {selectFilteredAccounts} from "../../../reducers/accounts/accounts-slice";
 
@@ -15,6 +18,8 @@ import statistics from "../../../assets/img/statistics.png";
 import settings from "../../../assets/img/settings.png";
 import AddButton from "../../common/components/AddButton/AddButton";
 import {ADD_BUTTON_TYPES} from "../../common/components/AddButton/AddButtonTypes";
+
+import WithCSSTransition from "../../common/hoc/WithCSSTransition/WithCSSTransition";
 
 const OptionsButton = ({type, onClick, typeClass, title}) => (
   <div className={`${classes.btnWrapper} ${typeClass}`}>
@@ -26,22 +31,16 @@ const OptionsButton = ({type, onClick, typeClass, title}) => (
   </div>
 );
 
-const OptionsButtonBackground = ({children, onClick, nodeRef, ...props}) => (
-  <CSSTransition
-    {...props}
-    classNames={{
-      enterDone: `${classes.EnterDone}`,
-      enterActive: `${classes.EnterActive}`,
-      exitActive: `${classes.ExitActive}`,
-    }}
-    timeout={150}
-    unmountOnExit
-    nodeRef={nodeRef}
+const OptionsButtonBackground = ({children, onClick, nodeRef, ...rest}) => (
+  <WithCSSTransition
+      timeout={200}
+      nodeRef={nodeRef}
+      {...rest}
   >
     <div className={classes.btnBackground} onClick={onClick} ref={nodeRef}>
       {children}
     </div>
-  </CSSTransition>
+  </WithCSSTransition>
 );
 
 const NavContainer = ({children}) => (
@@ -107,7 +106,8 @@ function Menu() {
     dispatch(setIsButtonShow(true));
   };
 
-  const nodeRef = React.useRef(null);
+  const nodeRefOptBtn = React.useRef(null);
+  const nodeRefAddBtn = React.useRef(null);
 
   return (
     <>
@@ -117,7 +117,7 @@ function Menu() {
             <OptionsButtonBackground
               in={getIsAddButtonClick}
               onClick={onBackgroundClick}
-              nodeRef={nodeRef}
+              nodeRef={nodeRefOptBtn}
             >
               <OptionsButton
                 onClick={onIncomeButtonClick}
@@ -136,13 +136,22 @@ function Menu() {
       </TransitionGroup>
 
       <NavContainer>
-        {showAddButton
-          ? <AddButton
-              cssClass={ADD_BUTTON_TYPES.PLUS}
-              onClick={onAddButtonClick}
-              isDisabled={isEmpty}
-            />
-          : null}
+        <TransitionGroup component={null}>
+          {showAddButton
+            ? <WithCSSTransition
+                timeout={200}
+                {...{"in": showAddButton}}
+                nodeRef={nodeRefAddBtn}
+              >
+                <AddButton
+                  cssClass={ADD_BUTTON_TYPES.PLUS}
+                  onClick={onAddButtonClick}
+                  isDisabled={isEmpty}
+                  nodeRef={nodeRefAddBtn}
+                />
+              </WithCSSTransition>
+            : null}
+        </TransitionGroup>
 
         <NavButton
           to={"/"}
