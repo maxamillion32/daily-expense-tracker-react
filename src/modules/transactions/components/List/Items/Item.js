@@ -1,10 +1,10 @@
 import React, {useState} from "react";
 import {useDispatch} from "react-redux";
-import {CSSTransition} from "react-transition-group";
 
 import classes from "../Container.module.css";
 
 import {setIsTransactionTypeClick, setIsButtonShow, updatingTransaction, setIsEditing} from "../../../../../reducers/transactions/transactions-slice";
+import WithCSSTransition from "../../../../common/hoc/WithCSSTransition/WithCSSTransition";
 
 function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, date, accountId, categoryId, ...rest}) {
   const dispatch = useDispatch();
@@ -24,17 +24,10 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, 
   const nodeRef = React.useRef(null);
 
   return (
-    <CSSTransition
-      {...rest}
-      classNames={{
-        enter: `${classes.enter}`,
-        enterActive: `${classes.enterActive}`,
-        exit: `${classes.exit}`,
-        exitActive: `${classes.exitActive}`,
-        exitDone: `${classes.exitDone}`,
-      }}
+    <WithCSSTransition
       timeout={300}
       nodeRef={nodeRef}
+      {...rest}
     >
       <li
         className={classes.TransactionsList}
@@ -56,7 +49,7 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, 
           </div>
         </div>
       </li>
-    </CSSTransition>
+    </WithCSSTransition>
   );
 }
 

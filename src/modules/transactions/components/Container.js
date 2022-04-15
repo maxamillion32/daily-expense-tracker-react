@@ -21,7 +21,7 @@ import Welcome from "../../welcome/components/Welcome";
 import Chart from "./Chart/Chart";
 import Popup from "../../common/components/Popup/Popup";
 import TransactionCreateForm from "./CreateForm/Form";
-import WithNavigation from "../../common/hoc/WithNavigation/WithNavigation";
+// import WithNavigation from "../../common/hoc/WithNavigation/WithNavigation";
 
 function TransactionsContainer() {
   const getTransactions = useSelector(selectAllTransactionsState);

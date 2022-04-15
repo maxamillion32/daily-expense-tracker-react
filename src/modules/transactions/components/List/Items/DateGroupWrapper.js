@@ -1,27 +1,18 @@
 import React from "react";
-import {CSSTransition} from "react-transition-group";
-import classes from "../Container.module.css";
 import TransactionItemsDateGroup from "./DateGroup";
 import TransactionsDateHeader from "./DateHeader";
+import WithCSSTransition from "../../../../common/hoc/WithCSSTransition/WithCSSTransition";
 
 function TransactionsItemsDateGroupWrapper({date, transactions, ...rest}) {
   const nodeRef = React.useRef(null);
 
   return (
-    <CSSTransition
-      {...rest}
-      classNames={{
-        enter: `${classes.enter}`,
-        enterActive: `${classes.enterActive}`,
-        exit: `${classes.exit}`,
-        exitActive: `${classes.exitActive}`,
-        exitDone: `${classes.exitDone}`,
-      }}
+    <WithCSSTransition
       timeout={300}
-      key={date}
       nodeRef={nodeRef}
+      {...rest}
     >
-      <li ref={nodeRef}>
+      <li ref={nodeRef} key={date}>
         <TransactionsDateHeader
           date={date}
           transactions={transactions}
@@ -32,7 +23,7 @@ function TransactionsItemsDateGroupWrapper({date, transactions, ...rest}) {
           transactions={transactions}
         />
       </li>
-    </CSSTransition>
+    </WithCSSTransition>
   );
 }
 

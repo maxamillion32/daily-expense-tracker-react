@@ -6,7 +6,6 @@
   padding: 10px;
   font-weight: 700;
   text-align: center;
-  /* border-bottom: 1px dashed #d4d4d4; */
 }
 
 .TransactionsMonth {
@@ -107,27 +106,6 @@
 
 .TransactionsHidden {
   display: none;
-}
-.enter {
-  opacity: 0;
-}
-
-.enterActive {
-  opacity: 1;
-  transition: opacity 1s;
-}
-
-.exit {
-  opacity: 1;
-}
-
-.exitActive {
-  opacity: 0;
-  transition: opacity 1s;
-}
-
-.exitDone {
-  opacity: 0;
 }
 
 .Message {
