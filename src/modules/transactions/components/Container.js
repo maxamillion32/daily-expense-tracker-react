@@ -68,9 +68,9 @@ function TransactionsContainer() {
 
             {isTransactions ? <Search /> : null}
 
-            <WithNavigation>
+            {/* <WithNavigation> */}
               <TransactionsListContainer isLoading={isLoader} />
-            </WithNavigation>
+            {/* </WithNavigation> */}
           </section>
 
         : <Welcome />
