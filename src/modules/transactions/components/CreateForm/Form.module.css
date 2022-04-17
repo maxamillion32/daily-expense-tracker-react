@@ -15,6 +15,7 @@
 
 .formContainer {
   box-sizing: border-box;
+  padding-right: 10px;
 }
 
 .inputTypeWrapper {

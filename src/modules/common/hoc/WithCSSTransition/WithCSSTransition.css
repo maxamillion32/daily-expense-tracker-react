@@ -29,11 +29,11 @@
 }
 
 .backInUp-enter-active {
-  animation: backInUp 300ms ease-out forwards;
+  animation: backInUp 250ms ease-out forwards;
 }
 
 .backInUp-exit-active {
-  animation: backInUp 300ms ease-in alternate-reverse;
+  animation: backInUp 250ms ease-in alternate-reverse;
 }
 
 @keyframes backInUp {
