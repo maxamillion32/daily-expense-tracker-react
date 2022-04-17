@@ -21,19 +21,20 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, 
     dispatch(updatingTransaction({id, sum, date, expense, category: categoryTitle, account: accountTitle, categoryId, accountId}));
   };
 
-  const nodeRef = React.useRef(null);
+  const nodeRefItem = React.useRef(null);
 
   return (
     <WithCSSTransition
+      inProp={rest.in}
+      animationType={"fade"}
       timeout={300}
-      nodeRef={nodeRef}
-      {...rest}
+      nodeRef={nodeRefItem}
     >
       <li
         className={classes.TransactionsList}
         onMouseOver={handleDeleteButtonToggle}
         onMouseOut={handleDeleteButtonToggle}
-        ref={nodeRef}
+        ref={nodeRefItem}
         onClick={onItemClick}
       >
         <div className={classes.IconWrapper}>

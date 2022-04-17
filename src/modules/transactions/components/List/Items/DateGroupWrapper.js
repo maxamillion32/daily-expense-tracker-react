@@ -4,15 +4,16 @@ import TransactionsDateHeader from "./DateHeader";
 import WithCSSTransition from "../../../../common/hoc/WithCSSTransition/WithCSSTransition";
 
 function TransactionsItemsDateGroupWrapper({date, transactions, ...rest}) {
-  const nodeRef = React.useRef(null);
+  const nodeRefGroupWrapper = React.useRef(null);
 
   return (
     <WithCSSTransition
+      inProp={rest.in}
+      animationType={"fade"}
       timeout={300}
-      nodeRef={nodeRef}
-      {...rest}
+      nodeRef={nodeRefGroupWrapper}
     >
-      <li ref={nodeRef} key={date}>
+      <li ref={nodeRefGroupWrapper} key={date}>
         <TransactionsDateHeader
           date={date}
           transactions={transactions}

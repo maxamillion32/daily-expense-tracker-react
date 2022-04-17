@@ -1,21 +1,18 @@
 import React from "react";
 import {CSSTransition} from "react-transition-group";
 
-import classes from "./WithCSSTransition.module.css";
+import "./WithCSSTransition.css";
 
-function WithCSSTransition({children, timeout, nodeRef, ...rest}) {
+function WithCSSTransition({children, timeout, animationType, nodeRef, inProp, ...rest}) {
   return (
     <CSSTransition
-      {...rest}
-      classNames={{
-        enter: `${classes.enter}`,
-        enterActive: `${classes.enterActive}`,
-        exit: `${classes.exit}`,
-        exitActive: `${classes.exitActive}`,
-        exitDone: `${classes.exitDone}`,
-      }}
+      in={inProp}
+      classNames={animationType}
       timeout={timeout}
       nodeRef={nodeRef}
+      mountOnEnter
+      unmountOnExit
+      {...rest}
     >
       {children}
     </CSSTransition>

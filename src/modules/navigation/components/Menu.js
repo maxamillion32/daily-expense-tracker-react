@@ -2,8 +2,6 @@ import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 
-import {TransitionGroup} from "react-transition-group";
-
 import classes from "./Menu.module.css";
 import {
   isButtonShow, setIsAddButtonClick, isAddButtonClick,
@@ -17,9 +15,10 @@ import transactions from "../../../assets/img/transactions.png";
 import statistics from "../../../assets/img/statistics.png";
 import settings from "../../../assets/img/settings.png";
 import AddButton from "../../common/components/AddButton/AddButton";
+import WithCSSTransition from "../../common/hoc/WithCSSTransition/WithCSSTransition";
+
 import {ADD_BUTTON_TYPES} from "../../common/components/AddButton/AddButtonTypes";
 
-import WithCSSTransition from "../../common/hoc/WithCSSTransition/WithCSSTransition";
 
 const OptionsButton = ({type, onClick, typeClass, title}) => (
   <div className={`${classes.btnWrapper} ${typeClass}`}>
@@ -31,17 +30,22 @@ const OptionsButton = ({type, onClick, typeClass, title}) => (
   </div>
 );
 
-const OptionsButtonBackground = ({children, onClick, nodeRef, ...rest}) => (
-  <WithCSSTransition
-      timeout={200}
-      nodeRef={nodeRef}
-      {...rest}
-  >
-    <div className={classes.btnBackground} onClick={onClick} ref={nodeRef}>
-      {children}
-    </div>
-  </WithCSSTransition>
-);
+const OptionsButtonBackground = ({children, onClick, inProp}) => {
+  const nodeRefOptionsBtn = React.useRef(null);
+
+  return (
+    <WithCSSTransition
+        inProp={inProp}
+        animationType={"fade"}
+        timeout={200}
+        nodeRef={nodeRefOptionsBtn}
+    >
+      <div className={classes.btnBackground} onClick={onClick} ref={nodeRefOptionsBtn}>
+        {children}
+      </div>
+    </WithCSSTransition>
+  );
+};
 
 const NavContainer = ({children}) => (
   <nav className={classes.menu}>
@@ -73,6 +77,8 @@ function Menu() {
   const isEmpty = categories.length === 0 || accounts.length === 0;
 
   const isActiveLink = ({isActive}) => (isActive ? `${classes.active}` : "");
+
+  const nodeRefAddBtn = React.useRef(null);
 
   useEffect(() => {
     if (getIsAddButtonClick) {
@@ -106,52 +112,39 @@ function Menu() {
     dispatch(setIsButtonShow(true));
   };
 
-  const nodeRefOptBtn = React.useRef(null);
-  const nodeRefAddBtn = React.useRef(null);
-
   return (
     <>
-      <TransitionGroup>
-        {getIsAddButtonClick
-          ?
-            <OptionsButtonBackground
-              in={getIsAddButtonClick}
-              onClick={onBackgroundClick}
-              nodeRef={nodeRefOptBtn}
-            >
-              <OptionsButton
-                onClick={onIncomeButtonClick}
-                typeClass={classes.menuAddPlusBtn}
-                type={"fa-plus"}
-                title={"Income"}
-              />
-              <OptionsButton
-                onClick={onExpenseButtonClick}
-                typeClass={classes.menuAddMinusBtn}
-                type={"fa-minus"}
-                title={"Expense"}
-              />
-            </OptionsButtonBackground>
-          : null}
-      </TransitionGroup>
+      <OptionsButtonBackground
+        inProp={getIsAddButtonClick}
+        onClick={onBackgroundClick}
+      >
+        <OptionsButton
+          onClick={onIncomeButtonClick}
+          typeClass={classes.menuAddPlusBtn}
+          type={"fa-plus"}
+          title={"Income"}
+        />
+        <OptionsButton
+          onClick={onExpenseButtonClick}
+          typeClass={classes.menuAddMinusBtn}
+          type={"fa-minus"}
+          title={"Expense"}
+        />
+      </OptionsButtonBackground>
 
       <NavContainer>
-        <TransitionGroup component={null}>
-          {showAddButton
-            ? <WithCSSTransition
-                timeout={200}
-                {...{"in": showAddButton}}
-                nodeRef={nodeRefAddBtn}
-              >
-                <AddButton
-                  cssClass={ADD_BUTTON_TYPES.PLUS}
-                  onClick={onAddButtonClick}
-                  isDisabled={isEmpty}
-                  nodeRef={nodeRefAddBtn}
-                />
-              </WithCSSTransition>
-            : null}
-        </TransitionGroup>
+        <WithCSSTransition
+          inProp={showAddButton}
+          animationType={"fade"}
+          timeout={200}
+          nodeRef={nodeRefAddBtn}
+        >
+          <AddButton
+            cssClass={ADD_BUTTON_TYPES.PLUS}
+            onClick={onAddButtonClick}
+            isDisabled={isEmpty}
+          />
+        </WithCSSTransition>
 
         <NavButton
           to={"/"}

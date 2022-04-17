@@ -1,14 +1,11 @@
 .Welcome {
   padding: 20px;
-  /* background-color: white;
-  text-align: center; */
 }
 
 .Input {
   box-sizing: border-box;
   width: 100%;
   height: 30px;
-  margin-right: 10px;
   padding: 0;
   border: none;
   border-bottom: 1px solid #646464;
@@ -38,16 +35,13 @@
   align-items: center;
   justify-content: flex-start;
   flex-wrap: wrap;
-  /* flex-direction: column; */
   margin-right: 10px;
   margin-bottom: 10px;
   padding-top: 5px;
   width: 100%;
-  /* margin-left: auto; */
-  /* flex-grow: 1; */
 }
 
-.Type input {
+.Type input[type=checkbox] {
   margin-right: 5px;
 }
 
@@ -61,9 +55,6 @@
 }
 
 .Label {
-  /* position: absolute;
-  top: -13px;
-  left: 0; */
   width: 100%;
   font-size: 10px;
   line-height: 12px;
@@ -82,7 +73,6 @@
 
 .Text {
   display: block;
-  /* margin-top: 10px; */
   font-size: 14px;
   color: #000;
   line-height: 30px;

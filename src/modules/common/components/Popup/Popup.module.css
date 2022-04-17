@@ -9,30 +9,8 @@
   background-color: #fff;
 }
 
-.EnterDone {
-  position: fixed;
-}
-
-.EnterActive {
-  animation: show 300ms ease-out forwards;
-}
-
-.ExitActive {
-  animation: show 300ms ease-in alternate-reverse;
-}
-
 .CloseBtn {
   position: absolute;
   top: 15px;
   right: 20px;
-}
-
-@keyframes show {
-  0% {
-    transform: translateY(100vh);
-  }
-
-  100% {
-    transform: translateY(0);
-  }
 }

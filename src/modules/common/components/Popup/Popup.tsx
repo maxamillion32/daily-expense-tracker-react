@@ -1,7 +1,9 @@
 import React, {useEffect} from "react";
 import classes from "./Popup.module.css";
-import CloseButton from "../CloseButton/CloseButton";
 import {CSSTransition} from "react-transition-group";
+
+import CloseButton from "../CloseButton/CloseButton";
+import WithCSSTransition from "../../hoc/WithCSSTransition/WithCSSTransition";
 
 interface PopupProps {
   children: React.ReactNode
@@ -10,7 +12,7 @@ interface PopupProps {
 }
 
 function Popup({children, showPopup, setShowPopup}: PopupProps) {
-  const nodeRef = React.useRef(null);
+  const nodeRefPopup = React.useRef(null);
 
   useEffect(() => {
     const htmlTag = document.querySelector("html");
@@ -31,24 +33,19 @@ function Popup({children, showPopup, setShowPopup}: PopupProps) {
   }, [showPopup]);
 
   return (
-    <CSSTransition
-      in={showPopup}
-      timeout={250}
-      classNames={{
-        enterDone: `${classes.EnterDone}`,
-        enterActive: `${classes.EnterActive}`,
-        exitActive: `${classes.ExitActive}`,
-      }}
-      unmountOnExit
-      nodeRef={nodeRef}
+    <WithCSSTransition
+      inProp={showPopup}
+      animationType={"backInUp"}
+      timeout={200}
+      nodeRef={nodeRefPopup}
     >
-      <section className={classes.Container} ref={nodeRef}>
+      <section className={classes.Container} ref={nodeRefPopup}>
         <div className={classes.CloseBtn}>
           <CloseButton onClick={setShowPopup}/>
         </div>
         {children}
       </section>
-    </CSSTransition>
+    </WithCSSTransition>
   );
 }
 

@@ -1,0 +1,47 @@
+/* fade */
+
+.fade-enter {
+  opacity: 0;
+}
+
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+}
+
+/* backInUp */
+
+.backInUp-exit-done {
+  opacity: 0;
+}
+
+.backInUp-enter-done {
+  position: fixed;
+}
+
+.backInUp-enter-active {
+  animation: backInUp 300ms ease-out forwards;
+}
+
+.backInUp-exit-active {
+  animation: backInUp 300ms ease-in alternate-reverse;
+}
+
+@keyframes backInUp {
+  0% {
+    transform: translateY(100vh);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
