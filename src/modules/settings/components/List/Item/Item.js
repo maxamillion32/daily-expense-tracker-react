@@ -4,33 +4,32 @@ import {getAccountStartBalance} from "../../utils";
 
 function SettingsListItem(
   {
-    id, title, incomes,
-    header, balance, icon,
-    userId, date, setItem,
-    setPrevItem, accounts,
-    showPopup, setShowPopup
+    setItemState,
+    setPrevItemState, accounts,
+    showPopup, setShowPopup,
+    itemData
   }) {
+  const {id, title, userId, incomes, header, icon, balance, date} = itemData;
+
   const onClickItem = async () => {
     if (header === "Accounts") {
       const startBalance = getAccountStartBalance(accounts, title);
+      const accountData = {id, title, userId, header, startBalance, balance, date};
 
-      setItem({id, title, userId, incomes: !!+incomes.toString(), header, startBalance, balance, date});
-      setPrevItem({id, title, userId, incomes: !!+incomes.toString(), header, startBalance, balance});
+      setItemState(accountData);
+      setPrevItemState(accountData);
       setShowPopup(!showPopup);
     } else {
-      const startBalance = "";
-      const balance = "";
+      const categoryData = {id, title, userId, incomes: !!+incomes.toString(), header, icon};
 
-      setItem({id, title, userId, incomes: !!+incomes.toString(), header, startBalance, balance, icon});
-      setPrevItem({id, title, userId, incomes: !!+incomes.toString(), header, startBalance, balance, icon});
+      setItemState(categoryData);
+      setPrevItemState(categoryData);
       setShowPopup(!showPopup);
     }
   };
+
   return (
-    <div
-      className={classes.Item}
-      onClick={onClickItem}
-    >
+    <div className={classes.Item} onClick={onClickItem}>
       <p>{title}</p>
       {header === "Accounts" && <p>balance: <b>{balance}€</b></p>}
     </div>

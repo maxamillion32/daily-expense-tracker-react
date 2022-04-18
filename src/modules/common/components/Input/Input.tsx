@@ -14,9 +14,16 @@ interface InputProps {
   touched: boolean,
   shouldValidate: boolean,
   checked: boolean,
+  isDisabled: boolean
 }
 
-function Input ({name, type, placeholder, onChange, label, errorMessage, value, valid, touched, shouldValidate, checked}: InputProps) {
+function Input (
+  {
+    name, type, placeholder, onChange,
+    label, errorMessage, value, valid,
+    touched, shouldValidate, checked,
+    isDisabled
+  }: InputProps) {
   const inputType = type || "text";
   const cls = [classes.Input];
   const htmlFor = `${inputType}-${Math.random()}`;
@@ -39,6 +46,7 @@ function Input ({name, type, placeholder, onChange, label, errorMessage, value, 
         onChange={onChange}
         autoFocus={name === "sum" ? true : false}
         autoComplete="off"
+        disabled={isDisabled}
       />
       <label htmlFor={htmlFor}>{label}</label>
 

@@ -43,6 +43,18 @@
   cursor: pointer;
 }
 
+.Type {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding-top: 5px;
+  width: 100%;
+}
+
 @media (max-width: 350px) {
   .IconWrapper {
     width: 38px;

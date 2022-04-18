@@ -2,7 +2,6 @@
   width: 70px;
   height: 30px;
   margin-right: 10px;
-  margin-bottom: 20px;
   font-size: 14px;
   font-weight: 400;
   color: #fff;
@@ -10,6 +9,10 @@
   border-radius: 5px;
   background-color: #646464;
   cursor: pointer;
+}
+
+.Button:last-of-type {
+  margin-right: 0;
 }
 
 .Button:active {

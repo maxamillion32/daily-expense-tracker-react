@@ -2,16 +2,14 @@ import React from "react";
 import classes from "./Button.module.css";
 
 interface ButtonProps {
-  type: string,
+  title: string,
   onClick: () => void,
   disabled: boolean,
-  children: React.ReactNode
 }
 
-function Button ({type, onClick, disabled, children}: ButtonProps) {
+function Button ({title, onClick, disabled}: ButtonProps) {
   const cls = [
     classes.Button,
-    classes[type]
   ].join(" ");
   return (
     <button
@@ -19,7 +17,7 @@ function Button ({type, onClick, disabled, children}: ButtonProps) {
       className={cls}
       disabled={disabled}
     >
-      {children}
+      {title}
     </button>
   );
 }

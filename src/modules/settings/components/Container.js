@@ -55,8 +55,8 @@ function SettingsContainer() {
               header={"Accounts"}
               accounts={accounts}
               transactions={transactions}
-              setItem={setItem}
-              setPrevItem={setPrevItem}
+              setItemState={setItem}
+              setPrevItemState={setPrevItem}
               showPopup={showPopup}
               setShowPopup={setShowPopup}
               userId={userId}
@@ -67,8 +67,8 @@ function SettingsContainer() {
               items={categories}
               header={"Categories"}
               transactions={transactions}
-              setItem={setItem}
-              setPrevItem={setPrevItem}
+              setItemState={setItem}
+              setPrevItemState={setPrevItem}
               showPopup={showPopup}
               setShowPopup={setShowPopup}
               userId={userId}
@@ -83,8 +83,8 @@ function SettingsContainer() {
       >
         <SettingsPopup
           itemState={item}
-          prevItem={prevItem}
-          setItem={setItem}
+          prevItemState={prevItem}
+          setItemState={setItem}
           transactions={transactions}
           setShowPopup={setShowPopup}
         />

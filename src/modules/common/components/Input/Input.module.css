@@ -2,6 +2,7 @@
   display: flex;
   align-items: center;
   flex-wrap: wrap;
+  width: 100%;
 }
 
 .Input span {
@@ -16,7 +17,7 @@
   height: 35px;
   padding: 0;
   border: none;
-  border-bottom: 1px solid #000;
+  border-bottom: 1px solid #646464;
   border-radius: 0;
   outline: none;
   outline-color: #000;
@@ -38,4 +39,9 @@
   margin: 0;
   margin-right: 5px;
   cursor: pointer;
+}
+
+.Input input:disabled {
+  background-color: #fff;
+  border-bottom: none;
 }

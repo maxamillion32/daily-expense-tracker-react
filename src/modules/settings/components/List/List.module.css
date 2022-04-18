@@ -27,21 +27,3 @@
   cursor: pointer;
   background-color: #f1f1f1;
 }
-
-.Button {
-  width: 70px;
-  height: 30px;
-  font-size: 14px;
-  /* font-weight: 700; */
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-  background-color: #646464;
-  cursor: pointer;
-}
-
-.Button:disabled {
-  background: #ccc;
-  /* color: #000; */
-  cursor: not-allowed;
-}
