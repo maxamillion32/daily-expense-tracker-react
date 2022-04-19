@@ -195,31 +195,25 @@ function TransactionCreateForm() {
       {getIsEditing
         ? <>
             <Button
-              type="submit"
+              title="Update"
               onClick={updateTransactionHandler}
               disabled={isFormStateEqual}
-            >
-              Update
-            </Button>
+            />
 
             <Button
-              type="submit"
+              title="Delete"
               onClick={deleteTransactionHandler}
               disabled={!isFormStateEqual}
-            >
-              Delete
-            </Button>
+            />
           </>
         : null}
 
       {!getIsEditing
         ? <Button
-            type="submit"
+            title="Create"
             onClick={addTransactionHandler}
             disabled={!state.isFormValid}
-          >
-            Create
-          </Button>
+          />
         : null}
 
       <Input

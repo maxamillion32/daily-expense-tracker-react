@@ -54,7 +54,6 @@ function SettingsPopup({itemState, prevItemState, setItemState, transactions, se
 
   const onChangeItem = ({target}) => {
     const value = target.value;
-    // const type = incomes ? incomes : false;
     setItemState({...itemState, title: value});
   };
 
@@ -80,8 +79,10 @@ function SettingsPopup({itemState, prevItemState, setItemState, transactions, se
   };
 
   const onClickEditButton = () => {
+    const trimTitle = title.trim();
+
     if (header === "Categories") {
-      dispatch(updateCategory({id, title, userId, incomes, icon}));
+      dispatch(updateCategory({id, title: trimTitle, userId, incomes, icon}));
       dispatch(loadCategories(userId));
     }
     if (header === "Accounts") {
@@ -99,7 +100,7 @@ function SettingsPopup({itemState, prevItemState, setItemState, transactions, se
         dispatch(postTransaction({sum, expense, date, categoryId: balanceCategoryId, accountId: id, showInBalance, userId}));
         dispatch(loadTransactions(userId));
       }
-      dispatch(updateAccount({id, title, userId, startBalance, balance: accountState.balance}));
+      dispatch(updateAccount({id, title: trimTitle, userId, startBalance, balance: accountState.balance}));
       dispatch(loadTransactions(userId));
       dispatch(loadAccounts(userId));
     }
