@@ -41,7 +41,8 @@
 
 .TransactionsDateWrapper p {
   font-size: 12px;
-  color: #727272;
+  color: #000000;
+  font-weight: 700;
 }
 
 .GroupWrapper{

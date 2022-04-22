@@ -206,15 +206,12 @@ function TransactionCreateForm() {
               disabled={!isFormStateEqual}
             />
           </>
-        : null}
-
-      {!getIsEditing
-        ? <Button
+        : <Button
             title="Create"
             onClick={addTransactionHandler}
             disabled={!state.isFormValid}
           />
-        : null}
+      }
 
       <Input
         type="number"
