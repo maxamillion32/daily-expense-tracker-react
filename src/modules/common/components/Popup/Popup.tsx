@@ -1,6 +1,5 @@
 import React, {useEffect} from "react";
 import classes from "./Popup.module.css";
-import {CSSTransition} from "react-transition-group";
 
 import CloseButton from "../CloseButton/CloseButton";
 import WithCSSTransition from "../../hoc/WithCSSTransition/WithCSSTransition";

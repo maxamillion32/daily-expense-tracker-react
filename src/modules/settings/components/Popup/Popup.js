@@ -151,7 +151,6 @@ function SettingsPopup({itemState, prevItemState, setItemState, transactions, se
       type === "category"
         ? dispatch(postCategory({title, userId, incomes, icon, hidden}))
         : dispatch(postAccount({title, userId, startBalance, balance}));
-          dispatch(loadAccounts(userId));
   };
 
   const onClickCreateButton = () => {

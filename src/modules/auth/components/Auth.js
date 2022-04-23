@@ -1,6 +1,8 @@
 import React, {useRef, useState} from "react";
 import classes from "./Auth.module.css";
-import {singUp, logout, login, useAuth} from "../../../services/firebase.service";
+import {
+  // singUp,
+  logout, login, useAuth} from "../../../services/firebase.service";
 import {NavLink} from "react-router-dom";
 
 function Auth() {
@@ -10,15 +12,15 @@ function Auth() {
   const emailRef = useRef();
   const passwordRef = useRef();
 
-  const handleSignup = async () => {
-    setLoading(true);
-    try {
-      await singUp(emailRef.current.value, passwordRef.current.value);
-    } catch {
-      alert("Email already in use!");
-    }
-    setLoading(false);
-  };
+  // const handleSignup = async () => {
+  //   setLoading(true);
+  //   try {
+  //     await singUp(emailRef.current.value, passwordRef.current.value);
+  //   } catch {
+  //     alert("Email already in use!");
+  //   }
+  //   setLoading(false);
+  // };
 
   const handleLogin = async () => {
     setLoading(true);

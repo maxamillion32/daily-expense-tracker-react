@@ -34,7 +34,8 @@ function SettingsContainer() {
     balance: 0,
     icon: null,
     hidden: false,
-    date: new Date().toISOString().slice(0, -14)
+    date: new Date().toISOString().slice(0, -14),
+    incomes: false
   };
 
   const [item, setItem] = useState(initialItemState);
