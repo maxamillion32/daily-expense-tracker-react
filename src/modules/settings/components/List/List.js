@@ -4,12 +4,19 @@ import {getAccountStartBalance, getCurrentAccountBalance, getAccountTotalBalance
 import SettingsListItem from "./Item/Item";
 import Button from "../../../common/components/Button/Button";
 
+const Header = ({classes, header, onClick, showButton=true}) => (
+  <div className={classes}>
+    <h4>{header}</h4>
+    {showButton ? <Button title={"Create"} onClick={onClick} /> : null }
+  </div>
+);
+
 function SettingsList({
   userId, items, header,
   accounts, transactions,
-  onClickItem, showPopup,
-  state, setItemState,
+  showPopup, state, setItemState,
   setPrevItemState, setShowPopup,
+  showCreateButton
 }) {
   const onClickCreateButton = async () => {
     setItemState({...state, header, userId});
@@ -20,32 +27,50 @@ function SettingsList({
   return (
     <>
       <section className={classes.Wrapper}>
-        <div className={classes.Content}>
-          <p className={classes.Header}>{header}</p>
-          <Button title={"Create"} onClick={onClickCreateButton} />
-        </div>
+        <Header
+          classes={classes.Header}
+          header={header}
+          onClick={onClickCreateButton}
+          showButton={showCreateButton}
+        />
 
           {items.map((item) => {
-              const startBalance = getAccountStartBalance(items, item.title);
-              const currentBalance = getCurrentAccountBalance(transactions, item.title);
-              const balance = getAccountTotalBalance(startBalance, currentBalance);
+              let startBalance = "";
+              let currentBalance = "";
+              let balance = "";
+              let itemData = {};
 
-              const itemData = {
-                id: item.id,
-                title: item.title,
-                incomes: +item.incomes ? +item.incomes : "",
-                header: header,
-                balance: balance,
-                icon: item.icon,
-                userId: item.userId,
-                date: state.date
-              };
+              if (header === "Accounts") {
+                startBalance = getAccountStartBalance(items, item.title);
+                currentBalance = getCurrentAccountBalance(transactions, item.title);
+                balance = getAccountTotalBalance(startBalance, currentBalance);
+              }
+
+              if (header === "Accounts" || header === "Categories") {
+                itemData = {
+                  id: item.id,
+                  title: item.title,
+                  incomes: +item.incomes ? +item.incomes : "",
+                  header,
+                  balance,
+                  icon: item.icon,
+                  userId: item.userId,
+                  date: state.date
+                };
+              }
+
+              if (header === "User account") {
+                itemData = {
+                  title: item.title,
+                  userId,
+                  header
+                };
+              }
 
               return (
                 <SettingsListItem
                   itemData={itemData}
 
-                  onClickItem={onClickItem}
                   setItemState={setItemState}
                   setPrevItemState={setPrevItemState}
                   accounts={accounts}

@@ -3,15 +3,11 @@
   /* background-color: #f1f1f1; */
 }
 
-.Content {
+.Header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 15px;
-}
-
-.Header {
-  font-weight: 700;
 }
 
 .Item {
