@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "../List.module.css";
 import {getAccountStartBalance} from "../../utils";
+import {deleteUserByID} from "../../../../../services/firebase.service";
 
 function SettingsListItem(
   {
@@ -31,10 +32,10 @@ function SettingsListItem(
 
     if (header === "User account") {
       const confirm = window.confirm("Are you sure?");
-      const userData = {userId};
+      // const userData = {userId};
 
       if (confirm) {
-        alert("Your user account is deleted!");
+        deleteUserByID(userId);
         return;
       }
     }
