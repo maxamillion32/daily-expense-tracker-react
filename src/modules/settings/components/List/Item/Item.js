@@ -32,7 +32,6 @@ function SettingsListItem(
 
     if (header === "User account") {
       const confirm = window.confirm("Are you sure?");
-      // const userData = {userId};
 
       if (confirm) {
         deleteUserByID(userId);

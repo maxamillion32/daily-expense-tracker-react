@@ -3,8 +3,16 @@ import {useDispatch} from "react-redux";
 import {setUserId} from "../reducers/user/user-slice";
 
 import {initializeApp} from "firebase/app";
-import {getFirestore, setDoc, doc, addDoc, collection, query, where, getDocs, deleteDoc} from "firebase/firestore";
-import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut, deleteUser} from "firebase/auth";
+import {
+  getFirestore, setDoc, doc, addDoc,
+  collection, query, where, getDocs,
+  deleteDoc
+} from "firebase/firestore";
+import {
+  getAuth, createUserWithEmailAndPassword,
+  onAuthStateChanged, signInWithEmailAndPassword,
+  signOut, deleteUser
+} from "firebase/auth";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const APP_ID = process.env.REACT_APP_ID;
@@ -25,6 +33,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
+
+const getCollectionDoc = (snapshot) => {
+  return snapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
+};
+
+const deleteDocByCollection = async (items, collection) => {
+  return await items.forEach(async(item) => {
+    await deleteDoc(doc(db, collection, item.id));
+  });
+};
 
 export async function singUp(email, password) {
   await createUserWithEmailAndPassword(auth, email, password)
@@ -76,21 +94,13 @@ export async function deleteUserByID(userId) {
   const snapshotCategories = await getDocs(categoriesQuery);
   const snapshotAccounts = await getDocs(accountsQuery);
 
-  const categories = snapshotCategories.docs.map((doc) => ({...doc.data(), id: doc.id}));
-  const accounts = snapshotAccounts.docs.map((doc) => ({...doc.data(), id: doc.id}));
-  const transactions = snapshotTransactions.docs.map((doc) => ({...doc.data(), id: doc.id}));
+  const categories = getCollectionDoc(snapshotCategories);
+  const accounts = getCollectionDoc(snapshotAccounts);
+  const transactions = getCollectionDoc(snapshotTransactions);
 
-  await categories.forEach(async(category) => {
-    await deleteDoc(doc(db, "categories", category.id));
-  });
-
-  await accounts.forEach(async(account) => {
-    await deleteDoc(doc(db, "accounts", account.id));
-  });
-
-  await transactions.forEach(async(transaction) => {
-    await deleteDoc(doc(db, "transactions", transaction.id));
-  });
+  deleteDocByCollection(categories, "categories");
+  deleteDocByCollection(accounts, "accounts");
+  deleteDocByCollection(transactions, "transactions");
 
   await deleteDoc(doc(db, "users", userId));
   await deleteDoc(doc(db, "budgets", userId));
