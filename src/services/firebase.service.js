@@ -34,8 +34,12 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
 
-const getCollectionDoc = (snapshot) => {
-  return snapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
+function getDocData(doc) {
+  return doc.exists === true ? {id: doc.id, ...doc.data()} : null;
+}
+
+const getCollectionData = (collection) => {
+  return collection.docs.map(getDocData);
 };
 
 const deleteDocByCollection = async (items, collection) => {
@@ -94,9 +98,9 @@ export async function deleteUserByID(userId) {
   const snapshotCategories = await getDocs(categoriesQuery);
   const snapshotAccounts = await getDocs(accountsQuery);
 
-  const categories = getCollectionDoc(snapshotCategories);
-  const accounts = getCollectionDoc(snapshotAccounts);
-  const transactions = getCollectionDoc(snapshotTransactions);
+  const categories = getCollectionData(snapshotCategories);
+  const accounts = getCollectionData(snapshotAccounts);
+  const transactions = getCollectionData(snapshotTransactions);
 
   deleteDocByCollection(categories, "categories");
   deleteDocByCollection(accounts, "accounts");
