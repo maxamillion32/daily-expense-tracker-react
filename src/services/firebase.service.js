@@ -3,8 +3,16 @@ import {useDispatch} from "react-redux";
 import {setUserId} from "../reducers/user/user-slice";
 
 import {initializeApp} from "firebase/app";
-import {getFirestore, setDoc, doc, addDoc, collection} from "firebase/firestore";
-import {getAuth, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signOut} from "firebase/auth";
+import {
+  getFirestore, setDoc, doc, addDoc,
+  collection, query, where, getDocs,
+  deleteDoc
+} from "firebase/firestore";
+import {
+  getAuth, createUserWithEmailAndPassword,
+  onAuthStateChanged, signInWithEmailAndPassword,
+  signOut, deleteUser
+} from "firebase/auth";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const APP_ID = process.env.REACT_APP_ID;
@@ -25,6 +33,16 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
+
+const getCollectionDoc = (snapshot) => {
+  return snapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
+};
+
+const deleteDocByCollection = async (items, collection) => {
+  return await items.forEach(async(item) => {
+    await deleteDoc(doc(db, collection, item.id));
+  });
+};
 
 export async function singUp(email, password) {
   await createUserWithEmailAndPassword(auth, email, password)
@@ -60,6 +78,40 @@ export function login(email, password) {
 
 export function logout() {
   return signOut(auth);
+}
+
+export async function deleteUserByID(userId) {
+  const user = auth.currentUser;
+
+  const transactionsRef = collection(db, "transactions");
+  const categoriesRef = collection(db, "categories");
+  const accountsRef = collection(db, "accounts");
+
+  const transactionsQuery = query(transactionsRef, where("userId", "==", userId));
+  const categoriesQuery = query(categoriesRef, where("userId", "==", userId));
+  const accountsQuery = query(accountsRef, where("userId", "==", userId));
+  const snapshotTransactions = await getDocs(transactionsQuery);
+  const snapshotCategories = await getDocs(categoriesQuery);
+  const snapshotAccounts = await getDocs(accountsQuery);
+
+  const categories = getCollectionDoc(snapshotCategories);
+  const accounts = getCollectionDoc(snapshotAccounts);
+  const transactions = getCollectionDoc(snapshotTransactions);
+
+  deleteDocByCollection(categories, "categories");
+  deleteDocByCollection(accounts, "accounts");
+  deleteDocByCollection(transactions, "transactions");
+
+  await deleteDoc(doc(db, "users", userId));
+  await deleteDoc(doc(db, "budgets", userId));
+
+  await deleteUser(user)
+    .then(() => {
+      alert("Successfully deleted user!");
+    })
+    .catch((error) => {
+      console.log("Error deleting user:", error);
+    });
 }
 
 export function useAuth() {

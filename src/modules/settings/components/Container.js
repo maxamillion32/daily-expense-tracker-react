@@ -23,6 +23,7 @@ function SettingsContainer() {
   const loadingAccounts = useSelector(isAccountsLoading);
   const categories = [...getCategories];
   const accounts = [...getAccounts];
+  const userAccount = [{id: userId, title: "Delete account"}];
 
   const isLoader = (loadingCategories || loadingAccounts) && userId;
 
@@ -74,6 +75,20 @@ function SettingsContainer() {
               setShowPopup={setShowPopup}
               userId={userId}
               state={initialItemState}
+            />
+
+            <SettingsList
+              items={userAccount}
+              header={"User account"}
+              // transactions={transactions}
+              // setItemState={setItem}
+              // setPrevItemState={setPrevItem}
+              // showPopup={showPopup}
+              // setShowPopup={setShowPopup}
+              userId={userId}
+              state={initialItemState}
+
+              showCreateButton={false}
             />
           </>
         : null}

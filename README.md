@@ -16,7 +16,7 @@ Website: https://expense-tracker-4e13a.web.app/
 ## Technologies
 The stack used for this project was:
 - React.js
-- Redux
+- Redux, @reduxjs/toolkit
 - Firebase
 - Git
 
