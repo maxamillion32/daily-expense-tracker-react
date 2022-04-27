@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 
@@ -18,6 +18,7 @@ import AddButton from "../../common/components/AddButton/AddButton";
 import WithCSSTransition from "../../common/hoc/WithCSSTransition/WithCSSTransition";
 
 import {ADD_BUTTON_TYPES} from "../../common/components/AddButton/AddButtonTypes";
+import {useLockBodyScroll} from "../../common/hooks/useLockBodyScroll/useLockBodyScroll";
 
 
 const OptionsButton = ({type, onClick, typeClass, title}) => (
@@ -32,6 +33,8 @@ const OptionsButton = ({type, onClick, typeClass, title}) => (
 
 const OptionsButtonBackground = ({children, onClick, inProp}) => {
   const nodeRefOptionsBtn = React.useRef(null);
+
+  useLockBodyScroll(inProp);
 
   return (
     <WithCSSTransition
@@ -80,13 +83,7 @@ function Menu() {
 
   const nodeRefAddBtn = React.useRef(null);
 
-  useEffect(() => {
-    if (getIsAddButtonClick) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
-  }, [getIsAddButtonClick]);
+ 
 
   const onAddButtonClick = () => {
     dispatch(setIsAddButtonClick(true));

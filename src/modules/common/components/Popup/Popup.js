@@ -1,35 +1,15 @@
-import React, {useEffect} from "react";
+import React from "react";
 import classes from "./Popup.module.css";
 
 import CloseButton from "../CloseButton/CloseButton";
 import WithCSSTransition from "../../hoc/WithCSSTransition/WithCSSTransition";
+import {useLockBodyScroll} from "../../hooks/useLockBodyScroll/useLockBodyScroll";
 
-interface PopupProps {
-  children: React.ReactNode
-  showPopup: boolean,
-  setShowPopup: () => void,
-}
 
-function Popup({children, showPopup, setShowPopup}: PopupProps) {
+function Popup({children, showPopup, setShowPopup}) {
   const nodeRefPopup = React.useRef(null);
 
-  useEffect(() => {
-    const htmlTag = document.querySelector("html");
-
-    if (showPopup) {
-      document.body.style.overflow = "hidden";
-
-      if (htmlTag !== null) {
-        htmlTag.style.overflow = "hidden";
-      }
-    } else {
-      document.body.style.overflow = "unset";
-
-      if (htmlTag !== null) {
-        htmlTag.style.overflow = "unset";
-      }
-    }
-  }, [showPopup]);
+  useLockBodyScroll(showPopup);
 
   return (
     <WithCSSTransition
