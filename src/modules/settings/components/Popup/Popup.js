@@ -25,6 +25,7 @@ import {
 
 import {formatYear, formatMonth} from "../../../common/utils/utils";
 import {isExists, isDelete, getTransactionsByAccountId} from "./utils";
+import {isEqual} from "../../../utils";
 
 function SettingsPopup({itemState, prevItemState, setItemState, transactions, setShowPopup}) {
   const dispatch = useDispatch();
@@ -35,7 +36,7 @@ function SettingsPopup({itemState, prevItemState, setItemState, transactions, se
   const balanceExpensesId = useSelector(getBalanceExpensesId);
   const {id, title, userId, incomes, header, startBalance, balance, icon, hidden, date} = itemState;
 
-  const isStateChange = JSON.stringify(itemState) !== JSON.stringify(prevItemState);
+  const isStateChange = isEqual(itemState, prevItemState);
   const filteredTransactions = transactions
     .filter((transaction) => formatYear(transaction.date) === year)
     .filter((transaction) => formatMonth(transaction.date) === month);
@@ -175,7 +176,7 @@ function SettingsPopup({itemState, prevItemState, setItemState, transactions, se
         onClickEditButton={onClickEditButton}
         onClickDeleteButton={onClickDeleteButton}
         prevItemState={prevItemState}
-        isStateChange={isStateChange}
+        isStateChange={!isStateChange}
         isBalanceChange={isBalanceChange}
         title={title}
       />

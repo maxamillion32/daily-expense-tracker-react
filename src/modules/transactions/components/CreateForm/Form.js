@@ -17,6 +17,7 @@ import Select from "../../../common/components/Select/Select";
 import Button from "../../../common/components/Button/Button";
 
 import {validateForm, updateFormControls, createFormControls} from "./utils";
+import {isEqual} from "../../../utils";
 
 const filteredCategories = (categories, type, isEditing) => {
   return isEditing
@@ -71,7 +72,7 @@ function TransactionCreateForm() {
   const [state, setState] = useState(initialState);
   let {id, sum, date, expense, category, account} = state.formTransaction;
 
-  const isFormStateEqual = JSON.stringify(state.formTransaction) === JSON.stringify(getUpdatingTransaction);
+  const isFormStateEqual = isEqual(state.formTransaction, getUpdatingTransaction);
 
   const setUserInput = (name, value) => {
     if (name === "expense") {
