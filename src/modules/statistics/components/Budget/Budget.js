@@ -4,7 +4,7 @@ import {useSelector, useDispatch} from "react-redux";
 // import {loadTransactions} from "../../../../reducers/transactions/transactions-slice";
 import {selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
 import {postBudget, loadBudgets, updateBudget} from "../../../../reducers/budget/budget-slice";
-import {isEqual} from "../../../utils";
+import {isEqual} from "../../../common/utils/utils";
 
 import classes from "./Budget.module.css";
 import WidgetsBudgetItem from "./Items/Item";

@@ -80,11 +80,6 @@ function SettingsContainer() {
             <SettingsList
               items={userAccount}
               header={"User account"}
-              // transactions={transactions}
-              // setItemState={setItem}
-              // setPrevItemState={setPrevItem}
-              // showPopup={showPopup}
-              // setShowPopup={setShowPopup}
               userId={userId}
               state={initialItemState}
 

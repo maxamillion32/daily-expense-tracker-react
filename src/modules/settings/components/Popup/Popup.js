@@ -23,9 +23,8 @@ import {
   StartBalance, CurrentBalance, ChangeBalance, DateOfBalance
 } from "./Items";
 
-import {formatYear, formatMonth} from "../../../common/utils/utils";
-import {isExists, isDelete, getTransactionsByAccountId} from "./utils";
-import {isEqual} from "../../../utils";
+import {formatYear, formatMonth, isEqual} from "../../../common/utils/utils";
+import {isExists, isDelete, getTransactionsByAccountId} from "./utils-popup";
 
 function SettingsPopup({itemState, prevItemState, setItemState, transactions, setShowPopup}) {
   const dispatch = useDispatch();

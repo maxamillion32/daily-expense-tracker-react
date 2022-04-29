@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./List.module.css";
-import {getAccountStartBalance, getCurrentAccountBalance, getAccountTotalBalance} from "../utils";
+import {getAccountStartBalance, getCurrentAccountBalance, getAccountTotalBalance} from "../utils-settings";
 import SettingsListItem from "./Item/Item";
 import Button from "../../../common/components/Button/Button";
 

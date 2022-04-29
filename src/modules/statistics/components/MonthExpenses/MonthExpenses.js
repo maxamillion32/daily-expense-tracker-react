@@ -2,7 +2,7 @@ import React from "react";
 import WidgetsMonthExpensesItem from "./Items/Item";
 import {formatMonth, formatYear} from "../../../common/utils/utils";
 import {Statistics} from "./Statistics";
-import {TRANSACTION_TYPE} from "./const";
+import {TRANSACTION_TYPE} from "./const-statistics";
 
 function WidgetsMonthExpenses({currentYear, currentMonth, transactions, budget, userId, allCategories}) {
   const monthTransactions = transactions

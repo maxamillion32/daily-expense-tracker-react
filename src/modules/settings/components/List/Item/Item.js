@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "../List.module.css";
-import {getAccountStartBalance} from "../../utils";
+import {getAccountStartBalance} from "../../utils-settings";
 import {deleteUserByID} from "../../../../../services/firebase.service";
 
 function SettingsListItem(
