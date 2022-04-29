@@ -3,11 +3,11 @@ import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 
 import classes from "./Menu.module.css";
+import {setTransactionType} from "../../../reducers/transactions/transactions-slice";
 import {
   isButtonShow, setIsAddButtonClick, isAddButtonClick,
-  setIsButtonShow, setIsTransactionTypeClick,
-  setTransactionType
-} from "../../../reducers/transactions/transactions-slice";
+  setIsButtonShow, setIsTransactionTypeClick
+} from "../../../reducers/navigation/navigation-slice";
 import {selectFilteredCategories} from "../../../reducers/categories/categories-slice";
 import {selectFilteredAccounts} from "../../../reducers/accounts/accounts-slice";
 

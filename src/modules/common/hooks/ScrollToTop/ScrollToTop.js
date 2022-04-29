@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import {useLocation} from "react-router-dom";
 import {useSelector, useDispatch} from "react-redux";
-import {setIsAddButtonClick, isAddButtonClick} from "../../../../reducers/transactions/transactions-slice";
+import {setIsAddButtonClick, isAddButtonClick} from "../../../../reducers/navigation/navigation-slice";
 
 export default function ScrollToTop() {
   const {pathname} = useLocation();

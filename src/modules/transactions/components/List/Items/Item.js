@@ -3,7 +3,8 @@ import {useDispatch} from "react-redux";
 
 import classes from "../Container.module.css";
 
-import {setIsTransactionTypeClick, setIsButtonShow, updatingTransaction, setIsEditing} from "../../../../../reducers/transactions/transactions-slice";
+import {updatingTransaction, setIsEditing} from "../../../../../reducers/transactions/transactions-slice";
+import {setIsTransactionTypeClick, setIsButtonShow} from "../../../../../reducers/navigation/navigation-slice";
 import WithCSSTransition from "../../../../common/hoc/WithCSSTransition/WithCSSTransition";
 
 function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, date, accountId, categoryId, ...rest}) {

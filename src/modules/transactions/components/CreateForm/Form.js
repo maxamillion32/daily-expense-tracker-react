@@ -3,11 +3,12 @@ import {useSelector, useDispatch} from "react-redux";
 import classes from "./Form.module.css";
 
 import {
-  postTransaction, updateTransaction, setIsTransactionTypeClick,
-  loadTransactions, setIsButtonShow, selectUpdatingTransactionState,
+  postTransaction, updateTransaction,
+  loadTransactions, selectUpdatingTransactionState,
   isEditing, setIsEditing, deleteTransaction,
   isExpense
 } from "../../../../reducers/transactions/transactions-slice";
+import {setIsButtonShow, setIsTransactionTypeClick} from "../../../../reducers/navigation/navigation-slice";
 import {selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
 import {selectFilteredAccounts} from "../../../../reducers/accounts/accounts-slice";
 import {selectUserId} from "../../../../reducers/user/user-slice";

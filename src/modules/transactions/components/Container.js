@@ -3,14 +3,14 @@ import {useSelector, useDispatch} from "react-redux";
 
 import classes from "./Container.module.css";
 import {
-  setIsButtonShow,
   isLoading,
-  IsTransactionTypeClick,
   selectAllTransactionsState,
-  setIsEditing,
-  setIsTransactionTypeClick,
-  setIsAddButtonClick
+  setIsEditing
 } from "../../../reducers/transactions/transactions-slice";
+import {
+  setIsAddButtonClick, IsTransactionTypeClick,
+  setIsButtonShow, setIsTransactionTypeClick
+} from "../../../reducers/navigation/navigation-slice";
 import {selectUserId} from "../../../reducers/user/user-slice";
 
 import Search from "./Search/Search";
