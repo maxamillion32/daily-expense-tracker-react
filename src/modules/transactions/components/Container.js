@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, {useEffect, lazy, Suspense} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import classes from "./Container.module.css";
@@ -14,16 +14,17 @@ import {
 import {selectUserId} from "../../../reducers/user/user-slice";
 
 import Search from "./Search/Search";
-import Balance from "./Balance/Balance";
-import TransactionsListContainer from "./List/Container";
 import Loader from "../../common/components/Loader/Loader";
 import Welcome from "../../welcome/components/Welcome";
-import Chart from "./Chart/Chart";
 import Popup from "../../common/components/Popup/Popup";
 import TransactionCreateForm from "./CreateForm/Form";
 // import WithNavigation from "../../common/hoc/WithNavigation/WithNavigation";
 
 function TransactionsContainer() {
+  const TransactionsListContainer = lazy(() => import("./List/Container"));
+  const Balance = lazy(() => import("./Balance/Balance"));
+  const Chart = lazy(() => import("./Chart/Chart"));
+
   const getTransactions = useSelector(selectAllTransactionsState);
   const transactions = [...getTransactions];
   const userId = useSelector(selectUserId);
@@ -58,19 +59,16 @@ function TransactionsContainer() {
               <TransactionCreateForm />
             </Popup>
 
-            {isLoader
-              ? <Loader />
-              : <>
-                  <Chart />
-                  <Balance />
-                </>
-              }
+            <Suspense fallback={<Loader />}>
+              <Chart />
+              <Balance />
 
-            {isTransactions ? <Search /> : null}
+              {isTransactions ? <Search /> : null}
 
-            {/* <WithNavigation> */}
-              <TransactionsListContainer isLoading={isLoader} />
-            {/* </WithNavigation> */}
+              {/* <WithNavigation> */}
+                <TransactionsListContainer isLoading={isLoader} />
+              {/* </WithNavigation> */}
+            </Suspense>
           </section>
 
         : <Welcome />
