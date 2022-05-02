@@ -3,7 +3,6 @@ import {useSelector, useDispatch} from "react-redux";
 
 import classes from "./Container.module.css";
 import {
-  isLoading,
   selectAllTransactionsState,
   setIsEditing
 } from "../../../reducers/transactions/transactions-slice";
@@ -28,11 +27,9 @@ function TransactionsContainer() {
   const getTransactions = useSelector(selectAllTransactionsState);
   const transactions = [...getTransactions];
   const userId = useSelector(selectUserId);
-  const loading = useSelector(isLoading);
   const showPopup = useSelector(IsTransactionTypeClick);
   const dispatch = useDispatch();
 
-  const isLoader = loading && userId;
   const isTransactions = transactions.length !== 0;
 
   const handlePopupClose = () => {
@@ -66,7 +63,7 @@ function TransactionsContainer() {
               {isTransactions ? <Search /> : null}
 
               {/* <WithNavigation> */}
-                <TransactionsListContainer isLoading={isLoader} />
+                <TransactionsListContainer />
               {/* </WithNavigation> */}
             </Suspense>
           </section>

@@ -1,31 +1,27 @@
-import React, {useState} from "react";
+import React, {useState, lazy, Suspense} from "react";
 import {useSelector} from "react-redux";
 
 import classes from "./Container.module.css";
 
 import {selectUserId} from "../../../reducers/user/user-slice";
-import {isCategoriesLoading, selectFilteredCategories} from "../../../reducers/categories/categories-slice";
-import {isAccountsLoading, selectFilteredAccounts} from "../../../reducers/accounts/accounts-slice";
+import {selectFilteredCategories} from "../../../reducers/categories/categories-slice";
+import {selectFilteredAccounts} from "../../../reducers/accounts/accounts-slice";
 import {selectAllTransactionsState} from "../../../reducers/transactions/transactions-slice";
 
 import Loader from "../../common/components/Loader/Loader";
-import SettingsList from "./List/List";
-
 import Popup from "../../common/components/Popup/Popup";
 import SettingsPopup from "./Popup/Popup";
 
 function SettingsContainer() {
+  const SettingsList = lazy(() => import("./List/List"));
+
   const userId = useSelector(selectUserId);
   const transactions = useSelector(selectAllTransactionsState);
   const getCategories = useSelector(selectFilteredCategories);
   const getAccounts = useSelector(selectFilteredAccounts);
-  const loadingCategories = useSelector(isCategoriesLoading);
-  const loadingAccounts = useSelector(isAccountsLoading);
   const categories = [...getCategories];
   const accounts = [...getAccounts];
   const userAccount = [{id: userId, title: "Delete account"}];
-
-  const isLoader = (loadingCategories || loadingAccounts) && userId;
 
   const initialItemState = {
     id: "",
@@ -49,9 +45,8 @@ function SettingsContainer() {
 
   return (
     <section className={classes.Container}>
-      {isLoader ? <Loader /> : null}
       {userId
-        ? <>
+        ? <Suspense fallback={<Loader />}>
             <SettingsList
               items={accounts}
               header={"Accounts"}
@@ -85,7 +80,7 @@ function SettingsContainer() {
 
               showCreateButton={false}
             />
-          </>
+          </Suspense>
         : null}
 
       <Popup

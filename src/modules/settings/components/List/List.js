@@ -18,6 +18,8 @@ function SettingsList({
   setPrevItemState, setShowPopup,
   showCreateButton
 }) {
+  const isEmpty = items.length === 0;
+
   const onClickCreateButton = async () => {
     setItemState({...state, header, userId});
     setPrevItemState({...state, header, userId});
@@ -33,6 +35,14 @@ function SettingsList({
           onClick={onClickCreateButton}
           showButton={showCreateButton}
         />
+
+        {isEmpty
+          ? <SettingsListItem
+              itemData={{header}}
+              key={header}
+            />
+          : null
+        }
 
           {items.map((item) => {
               let startBalance = "";

@@ -12,6 +12,8 @@ function SettingsListItem(
   }) {
   const {id, title, userId, incomes, header, icon, balance, date} = itemData;
 
+  const isEmpty = itemData.title;
+
   const onClickItem = async () => {
     if (header === "Accounts") {
       const startBalance = getAccountStartBalance(accounts, title);
@@ -41,10 +43,23 @@ function SettingsListItem(
   };
 
   return (
-    <div className={classes.Item} onClick={onClickItem}>
-      <p>{title}</p>
-      {header === "Accounts" ? <p>balance: <b>{balance}€</b></p> : null}
-    </div>
+    <>
+        {!isEmpty
+        ? <p className={classes.Message}>
+            Create your first {
+              header === "Accounts" ? "account"
+                  : header === "Categories" ? "category"
+                : null
+              }
+          </p>
+        : <>
+            <div className={classes.Item} onClick={onClickItem}>
+              <p>{title}</p>
+              {header === "Accounts" ? <p>balance: <b>{balance}€</b></p> : null}
+            </div>
+          </>
+        }
+    </>
   );
 }
 

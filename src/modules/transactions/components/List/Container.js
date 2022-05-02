@@ -9,7 +9,7 @@ import {formatYear} from "../../../common/utils/utils";
 import TransactionsItemsYearGroup from "./Items/YearGroup";
 import classes from "./Container.module.css";
 
-function TransactionsListContainer({isLoading}) {
+function TransactionsListContainer() {
   const getTransactions = useSelector(selectAllTransactionsState);
   const getCategories = useSelector(selectFilteredCategories);
   const getAccounts = useSelector(selectFilteredAccounts);
@@ -23,7 +23,7 @@ function TransactionsListContainer({isLoading}) {
   return (
     <section className="transactions">
 
-      {!isLoading && isEmpty
+      {isEmpty
         ? <p className={classes.Message}>
             Create categories and accounts
             <br/>
@@ -31,7 +31,7 @@ function TransactionsListContainer({isLoading}) {
           </p>
         : null}
 
-      {!isLoading && !isEmpty && transactions.length === 0
+      {!isEmpty && transactions.length === 0
         ? <p className={classes.Message}>
             Create your first transaction!
           </p>

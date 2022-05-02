@@ -2,7 +2,6 @@ import React from "react";
 import {useDispatch} from "react-redux";
 
 import {updateMonth, updateYear} from "../../../../reducers/transactions/transactions-slice";
-import {setIsLoading} from "../../../../reducers/budget/budget-slice";
 
 import classes from "./YearExpenses.module.css";
 import Indicator from "./Indicator/Indicator";
@@ -35,7 +34,6 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
 
   const monthHandler = ({target}) => {
     dispatch(updateMonth(target.id));
-    dispatch(setIsLoading(true));
   };
 
   const handleClick = ({target}) => {
@@ -45,7 +43,6 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
     id === "left" ? --year : ++year;
 
     dispatch(updateYear(String(year)));
-    dispatch(setIsLoading(true));
   };
 
 

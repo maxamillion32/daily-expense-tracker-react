@@ -11,7 +11,7 @@ import {
   selectFilteredTransactions
 } from "../../../reducers/transactions/transactions-slice";
 import {
-  selectAllBudgetState, selectUpdatedBudgetState, isLoading, setIsLoading
+  selectAllBudgetState, selectUpdatedBudgetState
 } from "../../../reducers/budget/budget-slice";
 import {
   selectFilteredCategories
