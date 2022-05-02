@@ -140,22 +140,29 @@ export async function deleteDemoAccount(userId) {
   deleteDocByCollection(accounts, "accounts");
   deleteDocByCollection(transactions, "transactions");
 
-  // await deleteDoc(doc(db, "users", userId));
   await deleteDoc(doc(db, "budgets", userId));
 }
 
-export async function fillDemoAccount(userId) {
+export async function fillDemoAccount() {
   const accountsRef = collection(db, "accounts");
   const categoriesRef = collection(db, "categories");
+  const transactionsRef = collection(db, "transactions");
 
   await accounts.forEach(async (account) => {
-    const payload = {...account};
-    await addDoc(accountsRef, payload);
+    const {id, balance, startBalance, title, userId} = account;
+    const payload = {balance, startBalance, title, userId};
+    await setDoc(doc(accountsRef, id), payload);
   });
 
   await categories.forEach(async (category) => {
+    const {id, icon, incomes, title, userId, hidden} = category;
+    const payload = {icon, incomes, title, userId, hidden};
+    await setDoc(doc(categoriesRef, id), payload);
+  });
+
+  await transactions.forEach(async (category) => {
     const payload = {...category};
-    await addDoc(categoriesRef, payload);
+    await addDoc(transactionsRef, payload);
   });
 }
 

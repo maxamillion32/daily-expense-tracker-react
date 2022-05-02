@@ -19,8 +19,8 @@ export const create = async (category) => {
 };
 
 export const deleteId = async (id) => {
-    const docRef = doc(categoriesRef, id);
-    await deleteDoc(docRef);
+  const docRef = doc(categoriesRef, id);
+  await deleteDoc(docRef);
 };
 
 export const update = async (id, data) => {

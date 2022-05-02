@@ -2,7 +2,7 @@ import {nanoid} from "nanoid";
 
 const MAX_ID_LENGTH = 6;
 
-const titles = [
+const categoriesTitles = [
   "Salary",
   "Rent",
   "Groceries",
@@ -66,7 +66,7 @@ const getId = (items) => {
   return items.map((item) => item.id);
 };
 
-const generateAccounts = (count) => (Array(count).fill({}).map((i) => ({
+const generateAccounts = (count) => (Array(count).fill({}).map(() => ({
     id: nanoid(MAX_ID_LENGTH),
     balance: getRandomInt(1, 500),
     startBalance: getRandomInt(1, 500),
@@ -79,14 +79,14 @@ const generateCategories = (count) => (Array(count).fill({}).map(() => ({
     id: nanoid(MAX_ID_LENGTH),
     icon: icons[getRandomInt(0, icons.length - 1)],
     incomes: Boolean(Math.round(Math.random())),
-    title: titles[getRandomInt(0, titles.length - 1)],
+    title: categoriesTitles[getRandomInt(0, categoriesTitles.length - 1)],
     userId,
     hidden: false
   }))
 );
 
 export const accounts = generateAccounts(2);
-export const categories = generateCategories(2);
+export const categories = generateCategories(8);
 
 const accountsIds = getId(accounts);
 const categoriesIds = getId(categories);
@@ -101,4 +101,4 @@ const generateTransactions = (count, accounts, categories) => (Array(count).fill
   }))
 );
 
-export const transactions = generateTransactions(5, accounts, categories);
+export const transactions = generateTransactions(50, accounts, categories);
