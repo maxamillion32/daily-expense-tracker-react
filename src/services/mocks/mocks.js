@@ -2,40 +2,56 @@ import {nanoid} from "nanoid";
 
 const MAX_ID_LENGTH = 6;
 
-export const categories = [
-  {id: nanoid(MAX_ID_LENGTH), title: "Salary"},
-  {id: nanoid(MAX_ID_LENGTH), title: "Rent"},
-  {id: nanoid(MAX_ID_LENGTH), title: "Groceries"},
-  {id: nanoid(MAX_ID_LENGTH), title: "Parking fees"},
-  {id: nanoid(MAX_ID_LENGTH), title: "Clothing & shoes"},
-  {id: nanoid(MAX_ID_LENGTH), title: "Family"},
-  {id: nanoid(MAX_ID_LENGTH), title: "Coffee"},
-  {id: nanoid(MAX_ID_LENGTH), title: "Health"},
+const titles = [
+  "Salary",
+  "Rent",
+  "Groceries",
+  "Parking fees",
+  "Clothing & shoes",
+  "Family",
+  "Coffee",
+  "Health"
 ];
 
-export const accounts = [
-  {id: nanoid(MAX_ID_LENGTH), title: "Cash", balance: 2000, startBalance: 0, archive: false},
-  {id: nanoid(MAX_ID_LENGTH), title: "Postbank", balance: 55000, startBalance: 0, archive: false},
-  {id: nanoid(MAX_ID_LENGTH), title: "N26", balance: 550000, startBalance: 0, archive: false},
-];
+const icons = [
+    "fa-shopping-cart",
+    "fa-id-card",
+    "fa-coffee",
+    "fa-bath",
+    "fa-subway",
+    "fa-home",
+    "fa-shopping-bag",
+    "fa-briefcase",
+    "fa-hand-holding-usd",
+    "fa-cut",
+    "fa-gifts",
+    "fa-utensils",
+    "fa-asterisk",
+    "fa-baby-carriage",
+    "fa-basketball-ball",
+    "fa-beer",
+    "fa-cat",
+    "fa-envelope",
+    "fa-faucet",
+    "fa-film",
+    "fa-gas-pump",
+    "fa-graduation-cap",
+    "fa-hamburger",
+    "fa-hotel",
+    "fa-plane",
+    "fa-socks",
+    "fa-theater-masks",
+    "fa-tv",
+    "fa-umbrella-beach",
+    "fa-wrench",
+  ];
+
+const userId = "64PX99A3tQNHepIlUmorFUXKOhl2";
 
 const getRandomInt = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-const getRandomSubarray = (items) => {
-  items = items.slice();
-  let count = 1;
-  const result = [];
-  while (count--) {
-    result.push(
-        ...items.splice(
-            getRandomInt(0, items.length - 1), 1)
-    );
-  }
-  return result[0];
 };
 
 const getRandomDate = () => {
@@ -46,14 +62,43 @@ const getRandomDate = () => {
   return date.toISOString().slice(0, -14);
 };
 
-const generateTransactions = (count, accounts, categories) => (Array(count).fill({}).map(() => ({
+const getId = (items) => {
+  return items.map((item) => item.id);
+};
+
+const generateAccounts = (count) => (Array(count).fill({}).map((i) => ({
     id: nanoid(MAX_ID_LENGTH),
-    sum: getRandomInt(1, 500),
-    date: getRandomDate(),
-    expense: Boolean(Math.round(Math.random())),
-    account: getRandomSubarray(accounts),
-    category: getRandomSubarray(categories),
+    balance: getRandomInt(1, 500),
+    startBalance: getRandomInt(1, 500),
+    title: getRandomDate(),
+    userId,
   }))
 );
 
-export const transactions = generateTransactions(100, accounts, categories);
+const generateCategories = (count) => (Array(count).fill({}).map(() => ({
+    id: nanoid(MAX_ID_LENGTH),
+    icon: icons[getRandomInt(0, icons.length - 1)],
+    incomes: Boolean(Math.round(Math.random())),
+    title: titles[getRandomInt(0, titles.length - 1)],
+    userId,
+    hidden: false
+  }))
+);
+
+export const accounts = generateAccounts(2);
+export const categories = generateCategories(2);
+
+const accountsIds = getId(accounts);
+const categoriesIds = getId(categories);
+
+const generateTransactions = (count, accounts, categories) => (Array(count).fill({}).map(() => ({
+    accountId: accountsIds[getRandomInt(0, accounts.length - 1)],
+    categoryId: categoriesIds[getRandomInt(0, categories.length - 1)],
+    date: getRandomDate(),
+    expense: Boolean(Math.round(Math.random())),
+    sum: getRandomInt(1, 500),
+    userId,
+  }))
+);
+
+export const transactions = generateTransactions(5, accounts, categories);

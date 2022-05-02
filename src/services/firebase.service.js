@@ -14,6 +14,8 @@ import {
   signOut, deleteUser
 } from "firebase/auth";
 
+import {categories, accounts, transactions} from "./mocks/mocks";
+
 const API_KEY = process.env.REACT_APP_API_KEY;
 const APP_ID = process.env.REACT_APP_ID;
 const MESSAGING_SENDER_ID = process.env.REACT_APP_MESSAGING_SENDER_ID;
@@ -35,7 +37,7 @@ const db = getFirestore(app);
 const auth = getAuth();
 
 function getDocData(doc) {
-  return doc.exists === true ? {id: doc.id, ...doc.data()} : null;
+  return {id: doc.id, ...doc.data()};
 }
 
 const getCollectionData = (collection) => {
@@ -116,6 +118,45 @@ export async function deleteUserByID(userId) {
     .catch((error) => {
       console.log("Error deleting user:", error);
     });
+}
+
+export async function deleteDemoAccount(userId) {
+  const transactionsRef = collection(db, "transactions");
+  const categoriesRef = collection(db, "categories");
+  const accountsRef = collection(db, "accounts");
+
+  const transactionsQuery = query(transactionsRef, where("userId", "==", userId));
+  const categoriesQuery = query(categoriesRef, where("userId", "==", userId));
+  const accountsQuery = query(accountsRef, where("userId", "==", userId));
+  const snapshotTransactions = await getDocs(transactionsQuery);
+  const snapshotCategories = await getDocs(categoriesQuery);
+  const snapshotAccounts = await getDocs(accountsQuery);
+
+  const categories = getCollectionData(snapshotCategories);
+  const accounts = getCollectionData(snapshotAccounts);
+  const transactions = getCollectionData(snapshotTransactions);
+
+  deleteDocByCollection(categories, "categories");
+  deleteDocByCollection(accounts, "accounts");
+  deleteDocByCollection(transactions, "transactions");
+
+  // await deleteDoc(doc(db, "users", userId));
+  await deleteDoc(doc(db, "budgets", userId));
+}
+
+export async function fillDemoAccount(userId) {
+  const accountsRef = collection(db, "accounts");
+  const categoriesRef = collection(db, "categories");
+
+  await accounts.forEach(async (account) => {
+    const payload = {...account};
+    await addDoc(accountsRef, payload);
+  });
+
+  await categories.forEach(async (category) => {
+    const payload = {...category};
+    await addDoc(categoriesRef, payload);
+  });
 }
 
 export function useAuth() {
