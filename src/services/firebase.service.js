@@ -14,7 +14,7 @@ import {
   signOut, deleteUser
 } from "firebase/auth";
 
-import {categories, accounts, transactions} from "./mocks/mocks";
+import {categoriesForFirebase, accountsForFirebase, transactionsForFirebase} from "./mocks/mocks";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const APP_ID = process.env.REACT_APP_ID;
@@ -148,19 +148,19 @@ export async function fillDemoAccount() {
   const categoriesRef = collection(db, "categories");
   const transactionsRef = collection(db, "transactions");
 
-  await accounts.forEach(async (account) => {
+  await accountsForFirebase.forEach(async (account) => {
     const {id, balance, startBalance, title, userId} = account;
     const payload = {balance, startBalance, title, userId};
     await setDoc(doc(accountsRef, id), payload);
   });
 
-  await categories.forEach(async (category) => {
+  await categoriesForFirebase.forEach(async (category) => {
     const {id, icon, incomes, title, userId, hidden} = category;
     const payload = {icon, incomes, title, userId, hidden};
     await setDoc(doc(categoriesRef, id), payload);
   });
 
-  await transactions.forEach(async (category) => {
+  await transactionsForFirebase.forEach(async (category) => {
     const payload = {...category};
     await addDoc(transactionsRef, payload);
   });

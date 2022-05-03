@@ -1,104 +1,109 @@
 import {nanoid} from "nanoid";
+import {getRandomInt, getRandomDate} from "./utils";
+import {
+  MAX_ID_LENGTH, RANGE, SALARY_RANGE,
+  accounts, categories, userId
+} from "./mocks-config";
 
-const MAX_ID_LENGTH = 6;
-
-const categoriesTitles = [
-  "Salary",
-  "Rent",
-  "Groceries",
-  "Parking fees",
-  "Clothing & shoes",
-  "Family",
-  "Coffee",
-  "Health"
+export const accountsForFirebase = [
+  {
+    id: nanoid(MAX_ID_LENGTH),
+    balance: getRandomInt(RANGE.MIN, RANGE.MAX),
+    startBalance: getRandomInt(SALARY_RANGE.MIN, SALARY_RANGE.MAX),
+    title: accounts[0],
+    userId,
+  },
+  {
+    id: nanoid(MAX_ID_LENGTH),
+    balance: getRandomInt(RANGE.MIN, RANGE.MAX),
+    startBalance: getRandomInt(SALARY_RANGE.MIN, SALARY_RANGE.MAX),
+    title: accounts[1],
+    userId,
+  },
 ];
 
-const icons = [
-    "fa-shopping-cart",
-    "fa-id-card",
-    "fa-coffee",
-    "fa-bath",
-    "fa-subway",
-    "fa-home",
-    "fa-shopping-bag",
-    "fa-briefcase",
-    "fa-hand-holding-usd",
-    "fa-cut",
-    "fa-gifts",
-    "fa-utensils",
-    "fa-asterisk",
-    "fa-baby-carriage",
-    "fa-basketball-ball",
-    "fa-beer",
-    "fa-cat",
-    "fa-envelope",
-    "fa-faucet",
-    "fa-film",
-    "fa-gas-pump",
-    "fa-graduation-cap",
-    "fa-hamburger",
-    "fa-hotel",
-    "fa-plane",
-    "fa-socks",
-    "fa-theater-masks",
-    "fa-tv",
-    "fa-umbrella-beach",
-    "fa-wrench",
-  ];
-
-const userId = "64PX99A3tQNHepIlUmorFUXKOhl2";
-
-const getRandomInt = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-};
-
-const getRandomDate = () => {
-  const startPoint = new Date().getTime();
-  const endPoint = startPoint - new Date(360 * (24 * 3600 * 1000)).getTime();
-  const date = new Date(endPoint + Math.random() * (startPoint - endPoint));
-
-  return date.toISOString().slice(0, -14);
-};
-
-const getId = (items) => {
-  return items.map((item) => item.id);
-};
-
-const generateAccounts = (count) => (Array(count).fill({}).map(() => ({
+export const categoriesForFirebase = [
+  {
     id: nanoid(MAX_ID_LENGTH),
-    balance: getRandomInt(1, 500),
-    startBalance: getRandomInt(1, 500),
-    title: getRandomDate(),
-    userId,
-  }))
-);
-
-const generateCategories = (count) => (Array(count).fill({}).map(() => ({
-    id: nanoid(MAX_ID_LENGTH),
-    icon: icons[getRandomInt(0, icons.length - 1)],
-    incomes: Boolean(Math.round(Math.random())),
-    title: categoriesTitles[getRandomInt(0, categoriesTitles.length - 1)],
+    icon: categories[0].icon,
+    incomes: categories[0].incomes,
+    title: categories[0].title,
     userId,
     hidden: false
-  }))
-);
-
-export const accounts = generateAccounts(2);
-export const categories = generateCategories(8);
-
-const accountsIds = getId(accounts);
-const categoriesIds = getId(categories);
-
-const generateTransactions = (count, accounts, categories) => (Array(count).fill({}).map(() => ({
-    accountId: accountsIds[getRandomInt(0, accounts.length - 1)],
-    categoryId: categoriesIds[getRandomInt(0, categories.length - 1)],
-    date: getRandomDate(),
-    expense: Boolean(Math.round(Math.random())),
-    sum: getRandomInt(1, 500),
+  },
+  {
+    id: nanoid(MAX_ID_LENGTH),
+    icon: categories[1].icon,
+    incomes: categories[1].incomes,
+    title: categories[1].title,
     userId,
-  }))
+    hidden: false
+  },
+  {
+    id: nanoid(MAX_ID_LENGTH),
+    icon: categories[2].icon,
+    incomes: categories[2].incomes,
+    title: categories[2].title,
+    userId,
+    hidden: false
+  },
+  {
+    id: nanoid(MAX_ID_LENGTH),
+    icon: categories[3].icon,
+    incomes: categories[3].incomes,
+    title: categories[3].title,
+    userId,
+    hidden: false
+  },
+  {
+    id: nanoid(MAX_ID_LENGTH),
+    icon: categories[4].icon,
+    incomes: categories[4].incomes,
+    title: categories[4].title,
+    userId,
+    hidden: false
+  },
+  {
+    id: nanoid(MAX_ID_LENGTH),
+    icon: categories[5].icon,
+    incomes: categories[5].incomes,
+    title: categories[5].title,
+    userId,
+    hidden: false
+  },
+  {
+    id: nanoid(MAX_ID_LENGTH),
+    icon: categories[6].icon,
+    incomes: categories[6].incomes,
+    title: categories[6].title,
+    userId,
+    hidden: false
+  },
+  {
+    id: nanoid(MAX_ID_LENGTH),
+    icon: categories[7].icon,
+    incomes: categories[7].incomes,
+    title: categories[7].title,
+    userId,
+    hidden: false
+  },
+];
+
+const generateTransactions = (count, accountsForFirebase, categoriesForFirebase) => (
+  Array(count).fill({}).map(() => {
+    const categoryRandomIndex = getRandomInt(0, categoriesForFirebase.length - 1);
+    const accountsRandomIndex = getRandomInt(0, accountsForFirebase.length - 1);
+    return {
+      accountId: accountsForFirebase[accountsRandomIndex].id,
+      categoryId: categoriesForFirebase[categoryRandomIndex].id,
+      date: getRandomDate(),
+      expense: !categoriesForFirebase[categoryRandomIndex].incomes,
+      sum: categoriesForFirebase[categoryRandomIndex].incomes
+        ? getRandomInt(SALARY_RANGE.MIN, SALARY_RANGE.MAX)
+        : getRandomInt(RANGE.MIN, RANGE.MAX),
+      userId,
+    };
+  })
 );
 
-export const transactions = generateTransactions(50, accounts, categories);
+export const transactionsForFirebase = generateTransactions(40, accountsForFirebase, categoriesForFirebase);
