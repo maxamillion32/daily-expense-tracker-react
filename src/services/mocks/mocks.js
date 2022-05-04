@@ -4,8 +4,7 @@ import {
   MAX_ID_LENGTH, RANGE, SALARY_RANGE,
   accounts, categories
 } from "./mocks-config";
-
-const userId = "64PX99A3tQNHepIlUmorFUXKOhl2";
+import {DEMO_USER_ID} from "../firebase/firebase-config";
 
 export const accountsForFirebase = [
   {
@@ -13,14 +12,14 @@ export const accountsForFirebase = [
     balance: getRandomInt(RANGE.MIN, RANGE.MAX),
     startBalance: getRandomInt(SALARY_RANGE.MIN, SALARY_RANGE.MAX),
     title: accounts[0],
-    userId,
+    userId: DEMO_USER_ID,
   },
   {
     id: nanoid(MAX_ID_LENGTH),
     balance: getRandomInt(RANGE.MIN, RANGE.MAX),
     startBalance: getRandomInt(SALARY_RANGE.MIN, SALARY_RANGE.MAX),
     title: accounts[1],
-    userId,
+    userId: DEMO_USER_ID,
   },
 ];
 
@@ -30,7 +29,7 @@ export const categoriesForFirebase = [
     icon: categories[0].icon,
     incomes: categories[0].incomes,
     title: categories[0].title,
-    userId,
+    userId: DEMO_USER_ID,
     hidden: false
   },
   {
@@ -38,7 +37,7 @@ export const categoriesForFirebase = [
     icon: categories[1].icon,
     incomes: categories[1].incomes,
     title: categories[1].title,
-    userId,
+    userId: DEMO_USER_ID,
     hidden: false
   },
   {
@@ -46,7 +45,7 @@ export const categoriesForFirebase = [
     icon: categories[2].icon,
     incomes: categories[2].incomes,
     title: categories[2].title,
-    userId,
+    userId: DEMO_USER_ID,
     hidden: false
   },
   {
@@ -54,7 +53,7 @@ export const categoriesForFirebase = [
     icon: categories[3].icon,
     incomes: categories[3].incomes,
     title: categories[3].title,
-    userId,
+    userId: DEMO_USER_ID,
     hidden: false
   },
   {
@@ -62,7 +61,7 @@ export const categoriesForFirebase = [
     icon: categories[4].icon,
     incomes: categories[4].incomes,
     title: categories[4].title,
-    userId,
+    userId: DEMO_USER_ID,
     hidden: false
   },
   {
@@ -70,7 +69,7 @@ export const categoriesForFirebase = [
     icon: categories[5].icon,
     incomes: categories[5].incomes,
     title: categories[5].title,
-    userId,
+    userId: DEMO_USER_ID,
     hidden: false
   },
   {
@@ -78,7 +77,7 @@ export const categoriesForFirebase = [
     icon: categories[6].icon,
     incomes: categories[6].incomes,
     title: categories[6].title,
-    userId,
+    userId: DEMO_USER_ID,
     hidden: false
   },
   {
@@ -86,7 +85,7 @@ export const categoriesForFirebase = [
     icon: categories[7].icon,
     incomes: categories[7].incomes,
     title: categories[7].title,
-    userId,
+    userId: DEMO_USER_ID,
     hidden: false
   },
 ];
@@ -103,9 +102,9 @@ const generateTransactions = (count, accountsForFirebase, categoriesForFirebase)
       sum: categoriesForFirebase[categoryRandomIndex].incomes
         ? getRandomInt(SALARY_RANGE.MIN, SALARY_RANGE.MAX)
         : getRandomInt(RANGE.MIN, RANGE.MAX),
-      userId,
+      userId: DEMO_USER_ID,
     };
   })
 );
 
-export const transactionsForFirebase = generateTransactions(40, accountsForFirebase, categoriesForFirebase);
+export const transactionsForFirebase = generateTransactions(200, accountsForFirebase, categoriesForFirebase);

@@ -15,3 +15,4 @@ export const firebaseConfig = {
 };
 
 export const DEMO_ACCOUNT_LOGIN = "demo@demo.com";
+export const DEMO_USER_ID = "64PX99A3tQNHepIlUmorFUXKOhl2";

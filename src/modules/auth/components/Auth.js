@@ -1,5 +1,5 @@
 import React, {useRef, useState} from "react";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {NavLink} from "react-router-dom";
 
 import classes from "./Auth.module.css";
@@ -12,14 +12,13 @@ import {loadTransactions} from "../../../reducers/transactions/transactions-slic
 import {loadCategories} from "../../../reducers/categories/categories-slice";
 import {loadAccounts} from "../../../reducers/accounts/accounts-slice";
 import {loadBudgets} from "../../../reducers/budget/budget-slice";
-import {setIsDemoAccount, selectUserId} from "../../../reducers/user/user-slice";
+import {setIsDemoAccount} from "../../../reducers/user/user-slice";
 
-const DEMO_ACCOUNT = "demo@demo.com";
+import {DEMO_USER_ID, DEMO_ACCOUNT_LOGIN} from "../../../services/firebase/firebase-config";
 
 function Auth() {
   const [loading, setLoading] = useState(false);
   const currentUser = useAuth();
-  const userId = useSelector(selectUserId);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -42,21 +41,19 @@ function Auth() {
     try {
       await login(emailRef.current.value, passwordRef.current.value);
 
-      if (emailRef.current.value === DEMO_ACCOUNT) {
+      if (emailRef.current.value === DEMO_ACCOUNT_LOGIN) {
 
-        const userId = "64PX99A3tQNHepIlUmorFUXKOhl2";
-        await deleteDemoAccount(userId);
-        await fillDemoAccount(userId);
+        await deleteDemoAccount(DEMO_USER_ID);
+        await fillDemoAccount(DEMO_USER_ID);
 
-        dispatch(loadTransactions(userId));
-        dispatch(loadCategories(userId));
-        dispatch(loadAccounts(userId));
-        dispatch(loadBudgets(userId));
+        dispatch(loadTransactions(DEMO_USER_ID));
+        dispatch(loadCategories(DEMO_USER_ID));
+        dispatch(loadAccounts(DEMO_USER_ID));
+        dispatch(loadBudgets(DEMO_USER_ID));
         dispatch(setIsDemoAccount(true));
       }
     } catch (e) {
-      console.log("🚀 ~ file: Auth.js ~ line 56 ~ handleLogin ~ e", e);
-      alert("Wrong email or password", e);
+      alert("Wrong email or password");
     }
     setLoading(false);
   };
