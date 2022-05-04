@@ -98,12 +98,11 @@ function SettingsPopup({itemState, prevItemState, setItemState, transactions, se
         const showInBalance = isShowInBalance;
 
         dispatch(postTransaction({sum, expense, date, categoryId: balanceCategoryId, accountId: id, showInBalance, userId}));
-        dispatch(loadTransactions(userId));
       }
       dispatch(updateAccount({id, title: trimTitle, userId, startBalance, balance: accountState.balance}));
-      dispatch(loadTransactions(userId));
       dispatch(loadAccounts(userId));
     }
+    dispatch(loadTransactions(userId));
     setShowPopup();
   };
 
