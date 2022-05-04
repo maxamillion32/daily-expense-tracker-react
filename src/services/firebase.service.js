@@ -120,7 +120,7 @@ export async function deleteUserByID(userId) {
       alert("Successfully deleted user!");
     })
     .catch((error) => {
-      console.log("Error deleting user:", error);
+      alert("Error deleting user:", error);
     });
 }
 
