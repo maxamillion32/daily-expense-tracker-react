@@ -1,5 +1,5 @@
 import React, {useRef, useState} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 
 import classes from "./Auth.module.css";
@@ -12,10 +12,14 @@ import {loadTransactions} from "../../../reducers/transactions/transactions-slic
 import {loadCategories} from "../../../reducers/categories/categories-slice";
 import {loadAccounts} from "../../../reducers/accounts/accounts-slice";
 import {loadBudgets} from "../../../reducers/budget/budget-slice";
+import {setIsDemoAccount, selectUserId} from "../../../reducers/user/user-slice";
+
+const DEMO_ACCOUNT = "demo@demo.com";
 
 function Auth() {
   const [loading, setLoading] = useState(false);
   const currentUser = useAuth();
+  const userId = useSelector(selectUserId);
 
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -34,11 +38,11 @@ function Auth() {
 
   const handleLogin = async () => {
     setLoading(true);
+    dispatch(setIsDemoAccount(false));
     try {
       await login(emailRef.current.value, passwordRef.current.value);
 
-      if (emailRef.current.value === "demo@demo.com") {
-        const userId = "64PX99A3tQNHepIlUmorFUXKOhl2";
+      if (emailRef.current.value === DEMO_ACCOUNT) {
         await deleteDemoAccount(userId);
         await fillDemoAccount(userId);
 
@@ -46,8 +50,9 @@ function Auth() {
         dispatch(loadCategories(userId));
         dispatch(loadAccounts(userId));
         dispatch(loadBudgets(userId));
+        dispatch(setIsDemoAccount(true));
       }
-    } catch {
+    } catch (e) {
       alert("Wrong email or password");
     }
     setLoading(false);

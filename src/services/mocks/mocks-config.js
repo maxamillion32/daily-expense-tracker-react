@@ -10,8 +10,6 @@ export const SALARY_RANGE = {
   MAX: 50000
 };
 
-export const userId = "64PX99A3tQNHepIlUmorFUXKOhl2";
-
 export const categories = [
   {
     title: "Salary",

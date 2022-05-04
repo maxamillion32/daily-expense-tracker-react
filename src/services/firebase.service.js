@@ -15,6 +15,7 @@ import {
 } from "firebase/auth";
 
 import {categoriesForFirebase, accountsForFirebase, transactionsForFirebase} from "./mocks/mocks";
+import {setIsDemoAccount} from "../reducers/user/user-slice";
 
 const API_KEY = process.env.REACT_APP_API_KEY;
 const APP_ID = process.env.REACT_APP_ID;
@@ -31,6 +32,9 @@ const firebaseConfig = {
   messagingSenderId: MESSAGING_SENDER_ID,
   appId: APP_ID
 };
+
+// TODO:
+const DEMO_ACCOUNT = "demo@demo.com";
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -174,11 +178,17 @@ export function useAuth() {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         const userId = user.uid;
+        const userEmail = user.email;
+
+        if (userEmail === DEMO_ACCOUNT) {
+          dispatch(setIsDemoAccount(true));
+        }
+
         dispatch(setUserId(userId));
       } else {
         dispatch(setUserId(null));
       }
-        setCurrentUser(user);
+      setCurrentUser(user);
     });
   }, []);
 
