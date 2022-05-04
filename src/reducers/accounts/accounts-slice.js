@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 
-import {getAll, create, update, deleteId} from "../../services/account.service";
+import {getAll, create, update, deleteId} from "../../services/account-service";
 
 export const loadAccounts = createAsyncThunk(
   "accounts/loadData",

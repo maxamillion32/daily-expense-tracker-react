@@ -7,7 +7,7 @@ export const RANGE = {
 
 export const SALARY_RANGE = {
   MIN: 2000,
-  MAX: 50000
+  MAX: 10000
 };
 
 export const categories = [

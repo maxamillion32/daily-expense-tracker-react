@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {getAll, create, update, deleteId} from "../../services/transaction.service";
+import {getAll, create, update, deleteId} from "../../services/transaction-service";
 import {selectSearchTerm} from "../search/search-slice";
 import {formatMonth, formatYear} from "../../modules/common/utils/utils";
 

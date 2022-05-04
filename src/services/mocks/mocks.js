@@ -1,13 +1,11 @@
-import {useSelector} from "react-redux";
 import {nanoid} from "nanoid";
 import {getRandomInt, getRandomDate} from "./utils";
 import {
   MAX_ID_LENGTH, RANGE, SALARY_RANGE,
   accounts, categories
 } from "./mocks-config";
-import {selectUserId} from "../../reducers/user/user-slice";
 
-const userId = () => (useSelector(selectUserId));
+const userId = "64PX99A3tQNHepIlUmorFUXKOhl2";
 
 export const accountsForFirebase = [
   {

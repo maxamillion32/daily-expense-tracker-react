@@ -1,6 +1,6 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
 
-import {getAll, create, deleteId, update} from "../../services/category.service";
+import {getAll, create, deleteId, update} from "../../services/category-service";
 
 export const loadCategories = createAsyncThunk(
   "categories/loadData",

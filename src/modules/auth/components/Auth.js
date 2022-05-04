@@ -6,7 +6,7 @@ import classes from "./Auth.module.css";
 import {
   singUp,
   deleteDemoAccount, fillDemoAccount,
-  logout, login, useAuth} from "../../../services/firebase.service";
+  logout, login, useAuth} from "../../../services/firebase/firebase-service";
 
 import {loadTransactions} from "../../../reducers/transactions/transactions-slice";
 import {loadCategories} from "../../../reducers/categories/categories-slice";
@@ -43,6 +43,8 @@ function Auth() {
       await login(emailRef.current.value, passwordRef.current.value);
 
       if (emailRef.current.value === DEMO_ACCOUNT) {
+
+        const userId = "64PX99A3tQNHepIlUmorFUXKOhl2";
         await deleteDemoAccount(userId);
         await fillDemoAccount(userId);
 
@@ -53,7 +55,8 @@ function Auth() {
         dispatch(setIsDemoAccount(true));
       }
     } catch (e) {
-      alert("Wrong email or password");
+      console.log("🚀 ~ file: Auth.js ~ line 56 ~ handleLogin ~ e", e);
+      alert("Wrong email or password", e);
     }
     setLoading(false);
   };

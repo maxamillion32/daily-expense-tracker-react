@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useDispatch} from "react-redux";
-import {setUserId} from "../reducers/user/user-slice";
+import {setUserId} from "../../reducers/user/user-slice";
 
 import {initializeApp} from "firebase/app";
 import {
@@ -14,45 +14,15 @@ import {
   signOut, deleteUser
 } from "firebase/auth";
 
-import {categoriesForFirebase, accountsForFirebase, transactionsForFirebase} from "./mocks/mocks";
-import {setIsDemoAccount} from "../reducers/user/user-slice";
+import {categoriesForFirebase, accountsForFirebase, transactionsForFirebase} from "../mocks/mocks";
+import {setIsDemoAccount} from "../../reducers/user/user-slice";
 
-const API_KEY = process.env.REACT_APP_API_KEY;
-const APP_ID = process.env.REACT_APP_ID;
-const MESSAGING_SENDER_ID = process.env.REACT_APP_MESSAGING_SENDER_ID;
-const AUTH_DOMAIN = process.env.REACT_APP_AUTH_DOMAIN;
-const PROJECT_ID = process.env.REACT_APP_PROJECT_ID;
-const STORAGE_BUCKET = process.env.REACT_APP_STORAGE_BUCKET;
-
-const firebaseConfig = {
-  apiKey: API_KEY,
-  authDomain: AUTH_DOMAIN,
-  projectId: PROJECT_ID,
-  storageBucket: STORAGE_BUCKET,
-  messagingSenderId: MESSAGING_SENDER_ID,
-  appId: APP_ID
-};
-
-// TODO:
-const DEMO_ACCOUNT = "demo@demo.com";
+import {firebaseConfig, DEMO_ACCOUNT_LOGIN} from "./firebase-config";
+import {getCollectionData, deleteDocByCollection} from "./firebase-utils";
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth();
-
-function getDocData(doc) {
-  return {id: doc.id, ...doc.data()};
-}
-
-const getCollectionData = (collection) => {
-  return collection.docs.map(getDocData);
-};
-
-const deleteDocByCollection = async (items, collection) => {
-  return await items.forEach(async(item) => {
-    await deleteDoc(doc(db, collection, item.id));
-  });
-};
 
 export async function singUp(email, password) {
   await createUserWithEmailAndPassword(auth, email, password)
@@ -108,9 +78,9 @@ export async function deleteUserByID(userId) {
   const accounts = getCollectionData(snapshotAccounts);
   const transactions = getCollectionData(snapshotTransactions);
 
-  deleteDocByCollection(categories, "categories");
-  deleteDocByCollection(accounts, "accounts");
-  deleteDocByCollection(transactions, "transactions");
+  deleteDocByCollection(categories, "categories", deleteDoc, doc, db);
+  deleteDocByCollection(accounts, "accounts", deleteDoc, doc, db);
+  deleteDocByCollection(transactions, "transactions", deleteDoc, doc, db);
 
   await deleteDoc(doc(db, "users", userId));
   await deleteDoc(doc(db, "budgets", userId));
@@ -140,17 +110,36 @@ export async function deleteDemoAccount(userId) {
   const accounts = getCollectionData(snapshotAccounts);
   const transactions = getCollectionData(snapshotTransactions);
 
-  deleteDocByCollection(categories, "categories");
-  deleteDocByCollection(accounts, "accounts");
-  deleteDocByCollection(transactions, "transactions");
+  deleteDocByCollection(categories, "categories",deleteDoc, doc, db);
+  deleteDocByCollection(accounts, "accounts", deleteDoc, doc, db);
+  deleteDocByCollection(transactions, "transactions", deleteDoc, doc, db);
 
   await deleteDoc(doc(db, "budgets", userId));
 }
 
-export async function fillDemoAccount() {
+export async function fillDemoAccount(userId) {
   const accountsRef = collection(db, "accounts");
   const categoriesRef = collection(db, "categories");
   const transactionsRef = collection(db, "transactions");
+
+  const balanceIncomes = {
+    userId,
+    title: "Balance",
+    incomes: true,
+    icon: "fa-asterisk",
+    hidden: true
+  };
+
+  const balanceExpenses = {
+    userId,
+    title: "Balance",
+    incomes: false,
+    icon: "fa-asterisk",
+    hidden: true
+  };
+
+  await addDoc(categoriesRef, balanceIncomes);
+  await addDoc(categoriesRef, balanceExpenses);
 
   await accountsForFirebase.forEach(async (account) => {
     const {id, balance, startBalance, title, userId} = account;
@@ -168,6 +157,9 @@ export async function fillDemoAccount() {
     const payload = {...category};
     await addDoc(transactionsRef, payload);
   });
+
+  await addDoc(categoriesRef, balanceIncomes);
+  await addDoc(categoriesRef, balanceExpenses);
 }
 
 export function useAuth() {
@@ -180,7 +172,7 @@ export function useAuth() {
         const userId = user.uid;
         const userEmail = user.email;
 
-        if (userEmail === DEMO_ACCOUNT) {
+        if (userEmail === DEMO_ACCOUNT_LOGIN) {
           dispatch(setIsDemoAccount(true));
         }
 

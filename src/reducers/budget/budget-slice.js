@@ -1,5 +1,5 @@
 import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
-import {getAll, update} from "../../services/budget.service";
+import {getAll, update} from "../../services/budget-service";
 
 const getOverall = (budget, type, month, year) => {
     if (Object.keys(budget[year][month][type]).length === 0) {
