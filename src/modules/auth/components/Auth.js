@@ -6,7 +6,8 @@ import classes from "./Auth.module.css";
 import {
   singUp,
   deleteDemoAccount, fillDemoAccount,
-  logout, login, useAuth} from "../../../services/firebase/firebase-service";
+  logout, login, useAuth
+} from "../../../services/firebase/firebase-service";
 
 import {loadTransactions} from "../../../reducers/transactions/transactions-slice";
 import {loadCategories} from "../../../reducers/categories/categories-slice";

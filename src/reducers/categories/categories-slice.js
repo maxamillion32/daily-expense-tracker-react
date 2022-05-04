@@ -41,9 +41,6 @@ export const categoriesSlice = createSlice({
     popupItem: {},
     popupPrevItem: {},
     isLoading: false,
-    hasError: false,
-    isPending: false,
-    isFailedToCreate: false,
   },
   reducers: {},
   extraReducers: {
@@ -65,8 +62,7 @@ export const categoriesSlice = createSlice({
 
 export const selectAllCategories = (state) => state.categories.allCategories;
 export const selectNewCategoryState = (state) => state.categories.newCategory;
-export const isCategoriesLoading = (state) => state.categories.isLoading;
-export const isPending = (state) => state.categories.isPending;
+export const selectIsLoading = (state) => state.categories.isLoading;
 
 export const selectFilteredCategories = (state) => {
   const allCategories = [...selectAllCategories(state)];
@@ -76,13 +72,13 @@ export const selectFilteredCategories = (state) => {
     .sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1);
 };
 
-export const getBalanceIncomesId = (state) => {
+export const selectBalanceIncomes = (state) => {
   const allCategories = [...selectAllCategories(state)];
 
   return allCategories.find((category) => category.title === "Balance" && category.incomes === true);
 };
 
-export const getBalanceExpensesId = (state) => {
+export const selectBalanceExpenses = (state) => {
   const allCategories = [...selectAllCategories(state)];
 
   return allCategories.find((category) => category.title === "Balance" && category.incomes === true);

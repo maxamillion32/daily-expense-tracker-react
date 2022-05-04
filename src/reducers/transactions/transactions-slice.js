@@ -46,7 +46,6 @@ export const transactionsSlice = createSlice({
     },
     isEditing: false,
     isLoading: false,
-    hasError: false,
     currentMonth: formatMonth(new Date()),
     currentYear: formatYear(new Date()),
     isExpense: true
@@ -86,42 +85,35 @@ export const transactionsSlice = createSlice({
   extraReducers: {
     [loadTransactions.pending]: (state) => {
       state.isLoading = true;
-      state.hasError = false;
     },
     [loadTransactions.fulfilled]: (state, action) => {
       state.allTransactions = action.payload;
       state.isLoading = false;
-      state.hasError = false;
       state.showDelete = false;
     },
     [loadTransactions.rejected]: (state) => {
       state.isLoading = false;
-      state.hasError = true;
     },
     [updateTransaction.pending]: (state) => {
       state.isLoading = true;
-      state.hasError = false;
     },
     [updateTransaction.fulfilled]: (state) => {
       state.isLoading = false;
-      state.hasError = false;
       state.showDelete = false;
     },
     [updateTransaction.rejected]: (state) => {
       state.isLoading = false;
-      state.hasError = true;
     },
   },
 });
 
 export const selectAllTransactionsState = (state) => state.transactions.allTransactions;
 export const selectUpdatingTransactionState = (state) => state.transactions.updatingTransaction;
-export const isLoading = (state) => state.transactions.isLoading;
-export const isEditing = (state) => state.transactions.isEditing;
-export const hasError = (state) => state.transactions.hasError;
-export const currentMonth = (state) => state.transactions.currentMonth;
-export const currentYear = (state) => state.transactions.currentYear;
-export const isExpense = (state) => state.transactions.isExpense;
+export const selectIsLoading = (state) => state.transactions.isLoading;
+export const selectIsEditing = (state) => state.transactions.isEditing;
+export const selectCurrentMonth = (state) => state.transactions.currentMonth;
+export const selectCurrentYear = (state) => state.transactions.currentYear;
+export const selectIsExpense = (state) => state.transactions.isExpense;
 
 export const selectFilteredTransactions = (state) => {
   const allTransactions = selectAllTransactionsState(state);

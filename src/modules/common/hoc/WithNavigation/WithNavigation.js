@@ -1,9 +1,9 @@
 import {useEffect} from "react";
 import {useSelector, useDispatch} from "react-redux";
-import {setIsButtonShow, isAddButtonClick} from "../../../../reducers/transactions/transactions-slice";
+import {setIsButtonShow, selectIsAddButtonClick} from "../../../../reducers/transactions/transactions-slice";
 
 function WithNavigation({children}) {
-  const getIsAddButtonClick = useSelector(isAddButtonClick);
+  const isAddButtonClick = useSelector(selectIsAddButtonClick);
   const dispatch = useDispatch();
 
   const handleNavigation = (event) => {
@@ -61,7 +61,7 @@ function WithNavigation({children}) {
     document.addEventListener("touchstart", handleTouchStart, false);
     document.addEventListener("touchmove", handleTouchMove, false);
 
-    if (getIsAddButtonClick) {
+    if (isAddButtonClick) {
       document.removeEventListener("wheel", handleNavigation, false);
       document.removeEventListener("touchstart", handleTouchStart, false);
       document.removeEventListener("touchmove", handleTouchMove, false);
@@ -71,7 +71,7 @@ function WithNavigation({children}) {
       document.removeEventListener("touchstart", handleTouchStart, false);
       document.removeEventListener("touchmove", handleTouchMove, false);
     };
-  }, [getIsAddButtonClick]);
+  }, [isAddButtonClick]);
 
   return (children);
 }

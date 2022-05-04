@@ -29,9 +29,9 @@ export const navigationSlice = createSlice({
   },
 });
 
-export const isAddButtonClick = (state) => state.navigation.isAddButtonClick;
-export const isButtonShow = (state) => state.navigation.isButtonShow;
-export const IsTransactionTypeClick = (state) => state.navigation.IsTransactionTypeClick;
+export const selectIsAddButtonClick = (state) => state.navigation.isAddButtonClick;
+export const selectIsButtonShow = (state) => state.navigation.isButtonShow;
+export const selectIsTransactionTypeClick = (state) => state.navigation.IsTransactionTypeClick;
 
 export const {
   setIsAddButtonClick,

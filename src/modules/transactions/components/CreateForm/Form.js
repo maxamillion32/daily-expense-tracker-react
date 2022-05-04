@@ -5,8 +5,8 @@ import classes from "./Form.module.css";
 import {
   postTransaction, updateTransaction,
   loadTransactions, selectUpdatingTransactionState,
-  isEditing, setIsEditing, deleteTransaction,
-  isExpense
+  selectIsEditing, setIsEditing, deleteTransaction,
+  selectIsExpense
 } from "../../../../reducers/transactions/transactions-slice";
 import {setIsButtonShow, setIsTransactionTypeClick} from "../../../../reducers/navigation/navigation-slice";
 import {selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
@@ -42,11 +42,11 @@ function TransactionCreateForm() {
   const userId = useSelector(selectUserId);
   const getCategories = useSelector(selectFilteredCategories);
   const getAccounts = useSelector(selectFilteredAccounts);
-  const getIsExpense = useSelector(isExpense);
+  const getIsExpense = useSelector(selectIsExpense);
   const categories = [...getCategories];
   const accounts = [...getAccounts];
   const getUpdatingTransaction = useSelector(selectUpdatingTransactionState);
-  const getIsEditing = useSelector(isEditing);
+  const getIsEditing = useSelector(selectIsEditing);
   const dispatch = useDispatch();
 
   const initialDate = new Date().toISOString().slice(0, -14);

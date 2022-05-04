@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 import classes from "./Menu.module.css";
 import {setTransactionType} from "../../../reducers/transactions/transactions-slice";
 import {
-  isButtonShow, setIsAddButtonClick, isAddButtonClick,
+  selectIsButtonShow, setIsAddButtonClick, selectIsAddButtonClick,
   setIsButtonShow, setIsTransactionTypeClick
 } from "../../../reducers/navigation/navigation-slice";
 import {selectFilteredCategories} from "../../../reducers/categories/categories-slice";
@@ -68,12 +68,12 @@ const NavButton = ({to, className, src}) => (
 );
 
 function Menu() {
-  const showAddButton = useSelector(isButtonShow);
   const getCategories = useSelector(selectFilteredCategories);
   const getAccounts = useSelector(selectFilteredAccounts);
   const categories = [...getCategories];
   const accounts = [...getAccounts];
-  const getIsAddButtonClick = useSelector(isAddButtonClick);
+  const isButtonShow = useSelector(selectIsButtonShow);
+  const isAddButtonClick = useSelector(selectIsAddButtonClick);
 
   const dispatch = useDispatch();
 
@@ -83,7 +83,7 @@ function Menu() {
 
   const nodeRefAddBtn = React.useRef(null);
 
- 
+
 
   const onAddButtonClick = () => {
     dispatch(setIsAddButtonClick(true));
@@ -112,7 +112,7 @@ function Menu() {
   return (
     <>
       <OptionsButtonBackground
-        inProp={getIsAddButtonClick}
+        inProp={isAddButtonClick}
         onClick={onBackgroundClick}
       >
         <OptionsButton
@@ -131,7 +131,7 @@ function Menu() {
 
       <NavContainer>
         <WithCSSTransition
-          inProp={showAddButton}
+          inProp={isButtonShow}
           animationType={"fade"}
           timeout={200}
           nodeRef={nodeRefAddBtn}

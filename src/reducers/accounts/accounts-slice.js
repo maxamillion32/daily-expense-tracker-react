@@ -41,32 +41,25 @@ export const accountsSlice = createSlice({
       archive: false
     },
     isLoading: false,
-    hasError: false,
-    isPending: false,
-    isFailedToCreate: false,
   },
   reducers: {},
   extraReducers: {
     [loadAccounts.pending]: (state) => {
       state.isLoading = true;
-      state.hasError = false;
     },
     [loadAccounts.fulfilled]: (state, action) => {
       state.allAccounts = action.payload;
       state.isLoading = false;
-      state.hasError = false;
     },
     [loadAccounts.rejected]: (state) => {
       state.isLoading = false;
-      state.hasError = true;
     },
   },
 });
 
 export const selectAllAccountsState = (state) => state.accounts.allAccounts;
 export const selectNewAccountsState = (state) => state.accounts.newAccount;
-export const isAccountsLoading = (state) => state.accounts.isLoading;
-export const isPending = (state) => state.accounts.isPending;
+export const selectIsLoading = (state) => state.accounts.isLoading;
 
 export const selectFilteredAccounts = (state) => {
   const allAccounts = [...selectAllAccountsState(state)];
