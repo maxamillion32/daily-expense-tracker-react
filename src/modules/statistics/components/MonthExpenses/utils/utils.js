@@ -1,4 +1,4 @@
-export const getSum = (transactions, type) => {
+export const getMonthSum = (transactions, type) => {
     return transactions
       .map((transaction) => (type === "expenses" ? transaction.expense : !transaction.expense)
       ? transaction = +transaction.sum
@@ -6,7 +6,7 @@ export const getSum = (transactions, type) => {
       .reduce((acc, sum) => acc + sum, 0).toFixed(2);
 };
 
-export const getBalance = (category, type, transactions) => {
+export const getCategoryBalance = (category, type, transactions) => {
   const balance = transactions
     .filter((transaction) => transaction.category.title === category)
     .map((transaction) => (type === "incomes" ? !transaction.expense : transaction.expense) ? transaction = +transaction.sum : transaction = null)
@@ -33,6 +33,6 @@ export const getMonthAverageSum = (sum, transactions, category) => {
       ? getMonthCountPerCategory(transactions, category)
       : getMonthCount(transactions))).toFixed(2);
 };
-export const getTotalPercentPerMonth = (balance, sum, transactions, category) => {
+export const getMonthTotalPercent = (balance, sum, transactions, category) => {
   return (balance / getMonthAverageSum(+sum, transactions, category) * 100).toFixed(2);
 };

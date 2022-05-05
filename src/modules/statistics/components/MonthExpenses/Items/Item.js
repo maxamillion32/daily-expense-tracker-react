@@ -1,15 +1,15 @@
 import React from "react";
 import Indicator from "./Indicator/Indicator";
 import classes from "./Item.module.css";
-import {getBalance} from "../utils/utils";
+import {getCategoryBalance} from "../utils/utils";
 import {formatMonth} from "../../../../common/utils/utils";
 
 function WidgetsMonthExpensesItem(
     {
       categories, excessPercent,
       excessCategoryPercent, totalPercent,
-      totalCategoryPercent, balanceOfCurrent,
-      balanceCategoryOfCurrent, categoryPercent,
+      totalCategoryPercent, currentBalance,
+      balanceCurrentCategory, categoryPercent,
       transactionsSum, type, title,
       monthTransactions,
       month
@@ -36,7 +36,7 @@ function WidgetsMonthExpensesItem(
       }
       <Indicator
         excessPercent={excessPercent}
-        balanceOfCurrent={balanceOfCurrent}
+        currentBalance={currentBalance}
         totalPercent={totalPercent}
         transactionsSum={transactionsSum}
         type={type}
@@ -48,11 +48,11 @@ function WidgetsMonthExpensesItem(
             <li className={classes.Wrapper} key={category}>
               <Indicator
                 excessPercent={excessCategoryPercent(category, type)}
-                balanceOfCurrent={balanceCategoryOfCurrent(category, type)}
+                currentBalance={balanceCurrentCategory(category, type)}
                 totalPercent={totalCategoryPercent(category, type)}
-                transactionsSum={getBalance(category, type, monthTransactions)}
+                transactionsSum={getCategoryBalance(category, type, monthTransactions)}
                 type={type}
-                title={`${categoryPercent(getBalance(category, type, monthTransactions), transactionsSum)}%
+                title={`${categoryPercent(getCategoryBalance(category, type, monthTransactions), transactionsSum)}%
                   ${category}`}
               />
             </li>
