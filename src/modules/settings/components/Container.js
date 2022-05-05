@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 
 import classes from "./Container.module.css";
 
-import {selectUserId} from "../../../reducers/user/user-slice";
+import {selectUserId, selectIsDemoAccount} from "../../../reducers/user/user-slice";
 import {selectFilteredCategories} from "../../../reducers/categories/categories-slice";
 import {selectFilteredAccounts} from "../../../reducers/accounts/accounts-slice";
 import {selectAllTransactionsState} from "../../../reducers/transactions/transactions-slice";
@@ -16,6 +16,7 @@ function SettingsContainer() {
   const SettingsList = lazy(() => import("./List/List"));
 
   const userId = useSelector(selectUserId);
+  const isDemoAccount = useSelector(selectIsDemoAccount);
   const transactions = useSelector(selectAllTransactionsState);
   const getCategories = useSelector(selectFilteredCategories);
   const getAccounts = useSelector(selectFilteredAccounts);
@@ -72,14 +73,16 @@ function SettingsContainer() {
               state={initialItemState}
             />
 
-            <SettingsList
-              items={userAccount}
-              header={"User account"}
-              userId={userId}
-              state={initialItemState}
+            {!isDemoAccount
+              ? <SettingsList
+                  items={userAccount}
+                  header={"User account"}
+                  userId={userId}
+                  state={initialItemState}
 
-              showCreateButton={false}
-            />
+                  showCreateButton={false}
+                />
+              : null}
           </Suspense>
         : null}
 

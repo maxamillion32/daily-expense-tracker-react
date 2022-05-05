@@ -5,10 +5,10 @@ import classes from "../Container.module.css";
 import TransactionsItemsMonthGroup from "./MonthGroup";
 import {formatYear, formatMonth} from "../../../../common/utils/utils";
 
-import {currentYear, selectFilteredTransactions} from "../../../../../reducers/transactions/transactions-slice";
+import {selectCurrentYear, selectFilteredTransactions} from "../../../../../reducers/transactions/transactions-slice";
 
 function TransactionsItemsYearGroup({year}) {
-  const getCurrentYear = useSelector(currentYear);
+  const getCurrentYear = useSelector(selectCurrentYear);
   const getFilteredTransactions = useSelector(selectFilteredTransactions);
   const filteredTransactions = [...getFilteredTransactions];
 

@@ -18,7 +18,9 @@ function TransactionsListContainer() {
   const accounts = [...getAccounts];
 
   const isEmpty = categories.length === 0 || accounts.length === 0;
-  const years = [...new Set(transactions.map(date => formatYear(date.date)))];
+  const years = [...new Set(transactions
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .map(date => formatYear(date.date)))];
 
   return (
     <section className="transactions">

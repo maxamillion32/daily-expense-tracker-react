@@ -7,7 +7,7 @@ import {
   setIsEditing
 } from "../../../reducers/transactions/transactions-slice";
 import {
-  setIsAddButtonClick, IsTransactionTypeClick,
+  setIsAddButtonClick, selectIsTransactionTypeClick,
   setIsButtonShow, setIsTransactionTypeClick
 } from "../../../reducers/navigation/navigation-slice";
 import {selectUserId} from "../../../reducers/user/user-slice";
@@ -27,7 +27,7 @@ function TransactionsContainer() {
   const getTransactions = useSelector(selectAllTransactionsState);
   const transactions = [...getTransactions];
   const userId = useSelector(selectUserId);
-  const showPopup = useSelector(IsTransactionTypeClick);
+  const isPopupShow = useSelector(selectIsTransactionTypeClick);
   const dispatch = useDispatch();
 
   const isTransactions = transactions.length !== 0;
@@ -51,7 +51,7 @@ function TransactionsContainer() {
       {userId
         ? <section className={classes.Container}>
             <Popup
-              showPopup={showPopup}
+              showPopup={isPopupShow}
               setShowPopup={handlePopupClose}>
               <TransactionCreateForm />
             </Popup>

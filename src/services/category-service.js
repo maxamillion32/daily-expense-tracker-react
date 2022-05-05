@@ -1,5 +1,5 @@
 import {addDoc, collection, setDoc, doc, deleteDoc, getDocs, query, where} from "@firebase/firestore";
-import db from "./firebase.service";
+import db from "./firebase/firebase-service";
 
 const categoriesRef = collection(db, "categories");
 
@@ -19,8 +19,8 @@ export const create = async (category) => {
 };
 
 export const deleteId = async (id) => {
-    const docRef = doc(categoriesRef, id);
-    await deleteDoc(docRef);
+  const docRef = doc(categoriesRef, id);
+  await deleteDoc(docRef);
 };
 
 export const update = async (id, data) => {

@@ -5,10 +5,10 @@ import classes from "./Popup.module.css";
 
 import {
   updateCategory, loadCategories, deleteCategory,
-  postCategory, getBalanceIncomesId, getBalanceExpensesId
+  postCategory, selectBalanceIncomes, selectBalanceExpenses
 } from "../../../../reducers/categories/categories-slice";
 import {
-  currentMonth, currentYear, postTransaction,
+  selectCurrentMonth, selectCurrentYear, postTransaction,
   loadTransactions, deleteTransaction, selectAllTransactionsState
 } from "../../../../reducers/transactions/transactions-slice";
 import {
@@ -28,11 +28,11 @@ import {isExists, isDelete, getTransactionsByAccountId} from "./utils-popup";
 
 function SettingsPopup({itemState, prevItemState, setItemState, transactions, setShowPopup}) {
   const dispatch = useDispatch();
-  const month = useSelector(currentMonth);
-  const year = useSelector(currentYear);
+  const month = useSelector(selectCurrentMonth);
+  const year = useSelector(selectCurrentYear);
   const allTransactions = useSelector(selectAllTransactionsState);
-  const balanceIncomesId = useSelector(getBalanceIncomesId);
-  const balanceExpensesId = useSelector(getBalanceExpensesId);
+  const balanceIncomes = useSelector(selectBalanceIncomes);
+  const balanceExpenses = useSelector(selectBalanceExpenses);
   const {id, title, userId, incomes, header, startBalance, balance, icon, hidden, date} = itemState;
 
   const isStateChange = isEqual(itemState, prevItemState);
@@ -89,8 +89,8 @@ function SettingsPopup({itemState, prevItemState, setItemState, transactions, se
       if (isBalanceChange) {
         const isIncome = balanceDifference > 0 ? false : true;
         const isShowInBalance = accountState.showInBalance;
-        const balanceIncome = balanceIncomesId.id;
-        const balanceExpense = balanceExpensesId.id;
+        const balanceIncome = balanceIncomes.id;
+        const balanceExpense = balanceExpenses.id;
 
         const sum = Math.abs(balanceDifference);
         const expense = isIncome;
@@ -98,12 +98,11 @@ function SettingsPopup({itemState, prevItemState, setItemState, transactions, se
         const showInBalance = isShowInBalance;
 
         dispatch(postTransaction({sum, expense, date, categoryId: balanceCategoryId, accountId: id, showInBalance, userId}));
-        dispatch(loadTransactions(userId));
       }
       dispatch(updateAccount({id, title: trimTitle, userId, startBalance, balance: accountState.balance}));
-      dispatch(loadTransactions(userId));
       dispatch(loadAccounts(userId));
     }
+    dispatch(loadTransactions(userId));
     setShowPopup();
   };
 

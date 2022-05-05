@@ -5,7 +5,7 @@ import {
   selectUserId
 } from "../../../reducers/user/user-slice";
 import {
-  currentMonth, currentYear
+  selectCurrentMonth, selectCurrentYear
 } from "../../../reducers/transactions/transactions-slice";
 import {
   selectFilteredTransactions
@@ -29,8 +29,8 @@ function StatisticsContainer() {
 
   const filteredTransactions = useSelector(selectFilteredTransactions);
   const allCategories = useSelector(selectFilteredCategories);
-  const month = useSelector(currentMonth);
-  const year = useSelector(currentYear);
+  const month = useSelector(selectCurrentMonth);
+  const year = useSelector(selectCurrentYear);
   const budget = useSelector(selectAllBudgetState);
   const updatedBudget = useSelector(selectUpdatedBudgetState);
   const userId = useSelector(selectUserId);
