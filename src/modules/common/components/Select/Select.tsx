@@ -1,6 +1,6 @@
 import React from "react";
 import classes from "./Select.module.css";
-import {isInvalid} from "../../../transactions/components/CreateForm/utils-form";
+import {isInvalid} from "../../../transactions/components/CreateForm/utils/utils";
 
 interface SelectProps {
   defaultOption: string,

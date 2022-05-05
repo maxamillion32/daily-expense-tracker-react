@@ -17,7 +17,7 @@ import Input from "../../../common/components/Input/Input";
 import Select from "../../../common/components/Select/Select";
 import Button from "../../../common/components/Button/Button";
 
-import {validateForm, updateFormControls, createFormControls} from "./utils-form";
+import {validateForm, updateFormControls, createFormControls} from "./utils/utils";
 import {isEqual} from "../../../common/utils/utils";
 
 const filteredCategories = (categories, type, isEditing) => {

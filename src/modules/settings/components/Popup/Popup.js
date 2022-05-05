@@ -24,7 +24,7 @@ import {
 } from "./Items";
 
 import {formatYear, formatMonth, isEqual} from "../../../common/utils/utils";
-import {isExists, isDelete, getTransactionsByAccountId} from "./utils-popup";
+import {isExists, isDelete, getTransactionsByAccountId} from "./utils/utils";
 
 function SettingsPopup({itemState, prevItemState, setItemState, transactions, setShowPopup}) {
   const dispatch = useDispatch();

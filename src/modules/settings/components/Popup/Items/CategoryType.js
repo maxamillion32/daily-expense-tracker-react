@@ -1,6 +1,6 @@
 import React from "react";
 import Input from "../../../../common/components/Input/Input";
-import {isExists} from "../utils-popup";
+import {isExists} from "../utils/utils";
 
 export const CategoryType = ({transactions, prevItemState, incomes, onChange, classes}) => (
   <div className={classes.Type}>

@@ -1,5 +1,5 @@
 import React from "react";
-import {isExists, isExpense, getCurrentCategorySum, getCategoryTotalSum} from "../utils-popup";
+import {isExists, isExpense, getCurrentCategorySum, getCategoryTotalSum} from "../utils/utils";
 
 export const CategoryExpenses = ({transactions, prevItemState, filteredTransactions, classes}) => (
   <>

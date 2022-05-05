@@ -1,7 +1,7 @@
 import React from "react";
 import Indicator from "./Indicator/Indicator";
 import classes from "./Item.module.css";
-import {getBalance} from "../utils-statistics";
+import {getBalance} from "../utils/utils";
 import {formatMonth} from "../../../../common/utils/utils";
 
 function WidgetsMonthExpensesItem(

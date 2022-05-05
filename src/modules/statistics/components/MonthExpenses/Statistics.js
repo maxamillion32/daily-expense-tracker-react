@@ -4,8 +4,8 @@ import {
   getTotalPercentPerMonth,
   getBalance,
   getMonthCountPerCategory
-} from "./utils-statistics";
-import {TRANSACTION_TYPE} from "./const-statistics";
+} from "./utils/utils";
+import {TRANSACTION_TYPE} from "./utils/constants";
 
 export class Statistics {
   constructor(transactions, type, budget, monthTransactions, currentMonth, currentYear, userId, allCategories) {
