@@ -54,7 +54,7 @@ function Chart() {
   };
 
   return (
-    <div className={classes.Chart}>
+    <section className={classes.Chart}>
       <ArrowButton direction={"left"} onClick={handleClick} style={{top: 13}} />
 
       <h3>{header}</h3>
@@ -95,7 +95,7 @@ function Chart() {
       </ResponsiveContainer>
 
       <ArrowButton direction={"right"} onClick={handleClick} style={{top: 13}} />
-    </div>
+    </section>
   );
 }
 
