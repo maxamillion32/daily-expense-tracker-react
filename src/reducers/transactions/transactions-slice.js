@@ -75,7 +75,7 @@ export const transactionsSlice = createSlice({
         isEditing: action.payload,
       };
     },
-    setTransactionType: (state, action) => {
+    setIsExpense: (state, action) => {
       return {
         ...state,
         isExpense: action.payload
@@ -152,6 +152,6 @@ export const {
   updateYear,
   updatingTransaction,
   setIsEditing,
-  setTransactionType
+  setIsExpense
 } = transactionsSlice.actions;
 export default transactionsSlice.reducer;

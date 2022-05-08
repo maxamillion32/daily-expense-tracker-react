@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 
 import classes from "./Menu.module.css";
-import {setTransactionType} from "../../../reducers/transactions/transactions-slice";
+import {setIsExpense} from "../../../reducers/transactions/transactions-slice";
 import {
   selectIsButtonShow, setIsAddButtonClick, selectIsAddButtonClick,
   setIsButtonShow, setIsTransactionTypeClick
@@ -94,14 +94,14 @@ function Menu() {
     event.stopPropagation();
     dispatch(setIsAddButtonClick(false));
     dispatch(setIsTransactionTypeClick());
-    dispatch(setTransactionType(false));
+    dispatch(setIsExpense(false));
   };
 
   const onExpenseButtonClick = (event) => {
     event.stopPropagation();
     dispatch(setIsAddButtonClick(false));
     dispatch(setIsTransactionTypeClick());
-    dispatch(setTransactionType(true));
+    dispatch(setIsExpense(true));
   };
 
   const onBackgroundClick = () => {
