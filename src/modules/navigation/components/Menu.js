@@ -8,8 +8,6 @@ import {
   selectIsButtonShow, setIsAddButtonClick, selectIsAddButtonClick,
   setIsButtonShow, setIsTransactionTypeClick
 } from "../../../reducers/navigation/navigation-slice";
-import {selectFilteredCategories} from "../../../reducers/categories/categories-slice";
-import {selectFilteredAccounts} from "../../../reducers/accounts/accounts-slice";
 
 import transactions from "../../../assets/img/transactions.png";
 import statistics from "../../../assets/img/statistics.png";
@@ -17,7 +15,6 @@ import settings from "../../../assets/img/settings.png";
 import AddButton from "../../common/components/AddButton/AddButton";
 import WithCSSTransition from "../../common/hoc/WithCSSTransition/WithCSSTransition";
 
-import {ADD_BUTTON_TYPES} from "../../common/components/AddButton/AddButtonTypes";
 import {useLockBodyScroll} from "../../common/hooks/useLockBodyScroll/useLockBodyScroll";
 
 
@@ -31,19 +28,26 @@ const OptionsButton = ({type, onClick, typeClass, title}) => (
   </div>
 );
 
-const OptionsButtonBackground = ({children, onClick, inProp}) => {
+const OptionsButtonBackground = ({children}) => {
+  const isAddButtonClick = useSelector(selectIsAddButtonClick);
   const nodeRefOptionsBtn = React.useRef(null);
+  const dispatch = useDispatch();
 
-  useLockBodyScroll(inProp);
+  const onBackgroundClick = () => {
+    dispatch(setIsAddButtonClick(false));
+    dispatch(setIsButtonShow(true));
+  };
+
+  useLockBodyScroll(isAddButtonClick);
 
   return (
     <WithCSSTransition
-        inProp={inProp}
+        inProp={isAddButtonClick}
         animationType={"fade"}
         timeout={200}
         nodeRef={nodeRefOptionsBtn}
     >
-      <div className={classes.btnBackground} onClick={onClick} ref={nodeRefOptionsBtn}>
+      <div className={classes.btnBackground} onClick={onBackgroundClick} ref={nodeRefOptionsBtn}>
         {children}
       </div>
     </WithCSSTransition>
@@ -68,27 +72,12 @@ const NavButton = ({to, className, src}) => (
 );
 
 function Menu() {
-  const getCategories = useSelector(selectFilteredCategories);
-  const getAccounts = useSelector(selectFilteredAccounts);
-  const categories = [...getCategories];
-  const accounts = [...getAccounts];
   const isButtonShow = useSelector(selectIsButtonShow);
-  const isAddButtonClick = useSelector(selectIsAddButtonClick);
-
   const dispatch = useDispatch();
-
-  const isEmpty = categories.length === 0 || accounts.length === 0;
 
   const isActiveLink = ({isActive}) => (isActive ? `${classes.active}` : "");
 
   const nodeRefAddBtn = React.useRef(null);
-
-
-
-  const onAddButtonClick = () => {
-    dispatch(setIsAddButtonClick(true));
-    dispatch(setIsButtonShow(false));
-  };
 
   const onIncomeButtonClick = (event) => {
     event.stopPropagation();
@@ -104,17 +93,9 @@ function Menu() {
     dispatch(setIsExpense(true));
   };
 
-  const onBackgroundClick = () => {
-    dispatch(setIsAddButtonClick(false));
-    dispatch(setIsButtonShow(true));
-  };
-
   return (
     <>
-      <OptionsButtonBackground
-        inProp={isAddButtonClick}
-        onClick={onBackgroundClick}
-      >
+      <OptionsButtonBackground>
         <OptionsButton
           onClick={onIncomeButtonClick}
           typeClass={classes.menuAddPlusBtn}
@@ -136,11 +117,7 @@ function Menu() {
           timeout={200}
           nodeRef={nodeRefAddBtn}
         >
-          <AddButton
-            cssClass={ADD_BUTTON_TYPES.PLUS}
-            onClick={onAddButtonClick}
-            isDisabled={isEmpty}
-          />
+          <AddButton />
         </WithCSSTransition>
 
         <NavButton

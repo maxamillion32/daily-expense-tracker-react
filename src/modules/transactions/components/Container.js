@@ -19,6 +19,24 @@ import Popup from "../../common/components/Popup/Popup";
 import TransactionCreateForm from "./CreateForm/Form";
 // import WithNavigation from "../../common/hoc/WithNavigation/WithNavigation";
 
+const CreateFormPopup = () => {
+  const isPopupShow = useSelector(selectIsTransactionTypeClick);
+  const dispatch = useDispatch();
+
+  const handlePopupClose = () => {
+      dispatch(setIsTransactionTypeClick());
+      dispatch(setIsAddButtonClick(false));
+      dispatch(setIsButtonShow(true));
+      dispatch(setIsEditing(false));
+  };
+  return (
+    <Popup
+      showPopup={isPopupShow}
+      setShowPopup={handlePopupClose}>
+      <TransactionCreateForm />
+    </Popup>);
+  };
+
 function TransactionsContainer() {
   const TransactionsListContainer = lazy(() => import("./List/Container"));
   const Balance = lazy(() => import("./Balance/Balance"));
@@ -27,34 +45,22 @@ function TransactionsContainer() {
   const getTransactions = useSelector(selectAllTransactionsState);
   const transactions = [...getTransactions];
   const userId = useSelector(selectUserId);
-  const isPopupShow = useSelector(selectIsTransactionTypeClick);
   const dispatch = useDispatch();
 
   const isTransactions = transactions.length !== 0;
-
-  const handlePopupClose = () => {
-      dispatch(setIsTransactionTypeClick());
-      dispatch(setIsAddButtonClick(false));
-      dispatch(setIsButtonShow(true));
-      dispatch(setIsEditing(false));
-  };
 
   useEffect(() => {
     dispatch(setIsButtonShow(true));
     return () => {
       dispatch(setIsButtonShow(false));
     };
-  }, [userId]);
+  }, []);
 
   return (
     <>
       {userId
         ? <section className={classes.Container}>
-            <Popup
-              showPopup={isPopupShow}
-              setShowPopup={handlePopupClose}>
-              <TransactionCreateForm />
-            </Popup>
+            <CreateFormPopup />
 
             <Suspense fallback={<Loader />}>
               <Chart />
