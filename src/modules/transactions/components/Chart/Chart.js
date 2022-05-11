@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useMemo} from "react";
 import {useSelector} from "react-redux";
 import classes from "./Chart.module.css";
 import {AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer} from "recharts";
@@ -36,15 +36,15 @@ const getExpenses = (year, transactions, toggle) => {
 
 function Chart() {
   const getTransactions = useSelector(selectFilteredTransactions);
-  const getCurrentYear = useSelector(selectCurrentYear);
+  const currentYear = useSelector(selectCurrentYear);
   const transactions = [...getTransactions];
 
   const [toggle, setToggle] = useState(true);
 
-  const data = getExpenses(getCurrentYear, transactions, toggle);
+  const data = useMemo(() => getExpenses(currentYear, transactions, toggle), [currentYear]);
 
-  const maxMonthExpensePerYear = getMaxAmountPerYear(getCurrentYear, "expenses", transactions);
-  const maxMonthIncomePerYear = getMaxAmountPerYear(getCurrentYear, "income", transactions);
+  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear]);
+  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear]);
 
   const header = toggle ? "Expenses" : "Incomes";
   const yRange = toggle ? maxMonthExpensePerYear * 2 : maxMonthIncomePerYear * 2;
