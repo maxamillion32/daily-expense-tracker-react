@@ -1,3 +1,5 @@
+import {MONTH_EXPENSES} from "../../statistics/components/YearExpenses/constant";
+
 export function formatDay (dateString) {
   const date = new Date(dateString);
   const options = {
@@ -48,6 +50,7 @@ export function formatMonthShort (dateString) {
 }
 
 export const getMaxAmountPerYear = (year, type, transactions) => {
+console.log("🚀 ~ getMaxAmountPerYear");
   const months = [...new Set(transactions
     .filter((transaction) => formatYear(transaction.date) === year)
     .map((transaction) => formatMonth(transaction.date)))];
@@ -66,4 +69,29 @@ export const getMaxAmountPerYear = (year, type, transactions) => {
 
 export const isEqual = (a, b) => {
   return JSON.stringify(a) === JSON.stringify(b);
+};
+
+export const getExpenses = (year, transactions, toggle) => {
+  return MONTH_EXPENSES.map(item => {
+    const month = item ? {name: item.toString().substr(0, 3)} : null;
+    const prevYear = (+year-1).toString();
+
+    return {
+      ...month,
+      current: transactions
+        .filter((transaction) => formatYear(transaction.date) === year)
+        .filter(transaction => formatMonth(transaction.date) === item)
+        .map((transaction) => (toggle ? transaction.expense : !transaction.expense)
+        ? transaction = +transaction.sum
+        : transaction = null)
+        .reduce((acc, sum) => acc + sum, 0).toFixed(2),
+      previous: transactions
+        .filter((transaction) => formatYear(transaction.date) === prevYear)
+        .filter(transaction => formatMonth(transaction.date) === item)
+        .map((transaction) => (toggle ? transaction.expense : !transaction.expense)
+        ? transaction = +transaction.sum
+        : transaction = null)
+        .reduce((acc, sum) => acc + sum, 0).toFixed(2)
+    };
+  });
 };

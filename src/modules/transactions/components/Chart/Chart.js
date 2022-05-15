@@ -1,50 +1,24 @@
-import React, {useState, useMemo} from "react";
+import React, {useState, useMemo, useCallback} from "react";
 import {useSelector} from "react-redux";
 import classes from "./Chart.module.css";
 import {AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer} from "recharts";
 import ArrowButton from "../../../common/components/ArrowButton/ArrowButton";
-import {getMaxAmountPerYear, formatMonth, formatYear} from "../../../common/utils/utils";
-import {MONTH_EXPENSES} from "../../../statistics/components/YearExpenses/constant";
+import {getMaxAmountPerYear, getExpenses} from "../../../common/utils/utils";
 
-import {selectFilteredTransactions, selectCurrentYear} from "../../../../reducers/transactions/transactions-slice";
-
-//TODO: move to utils
-const getExpenses = (year, transactions, toggle) => {
-  return MONTH_EXPENSES.map(item => {
-    const month = item ? {name: item.toString().substr(0, 3)} : null;
-    const prevYear = (+year-1).toString();
-
-    return {
-      ...month,
-      current: transactions
-        .filter((transaction) => formatYear(transaction.date) === year)
-        .filter(transaction => formatMonth(transaction.date) === item)
-        .map((transaction) => (toggle ? transaction.expense : !transaction.expense)
-        ? transaction = +transaction.sum
-        : transaction = null)
-        .reduce((acc, sum) => acc + sum, 0).toFixed(2),
-      previous: transactions
-        .filter((transaction) => formatYear(transaction.date) === prevYear)
-        .filter(transaction => formatMonth(transaction.date) === item)
-        .map((transaction) => (toggle ? transaction.expense : !transaction.expense)
-        ? transaction = +transaction.sum
-        : transaction = null)
-        .reduce((acc, sum) => acc + sum, 0).toFixed(2)
-    };
-  });
-};
+import {selectFilteredTransactions, selectCurrentYear, selectIsLoading} from "../../../../reducers/transactions/transactions-slice";
 
 function Chart() {
-  const getTransactions = useSelector(selectFilteredTransactions);
+  const transactions = useSelector(selectFilteredTransactions);
   const currentYear = useSelector(selectCurrentYear);
-  const transactions = [...getTransactions];
+  const isLoading = useSelector(selectIsLoading);
+  // const transactions = [...getTransactions];
 
   const [toggle, setToggle] = useState(true);
 
-  const data = useMemo(() => getExpenses(currentYear, transactions, toggle), [currentYear]);
+  const data = useCallback(getExpenses(currentYear, transactions, toggle), [currentYear, transactions, toggle]);
 
-  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear]);
-  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear]);
+  const maxMonthExpensePerYear = useCallback(getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear, transactions]);
+  const maxMonthIncomePerYear = useCallback(getMaxAmountPerYear(currentYear, "income", transactions), [currentYear, transactions]);
 
   const header = toggle ? "Expenses" : "Incomes";
   const yRange = toggle ? maxMonthExpensePerYear * 2 : maxMonthIncomePerYear * 2;
