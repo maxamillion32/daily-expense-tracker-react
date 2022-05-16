@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useMemo} from "react";
 import {useDispatch} from "react-redux";
 
 import {updateMonth, updateYear} from "../../../../reducers/transactions/transactions-slice";
@@ -12,8 +12,8 @@ import {MONTH_EXPENSES} from "./constant";
 function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
   const dispatch = useDispatch();
 
-  const maxMonthExpensePerYear = getMaxAmountPerYear(currentYear, "expenses", transactions);
-  const maxMonthIncomePerYear = getMaxAmountPerYear(currentYear, "income", transactions);
+  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear]);
+  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear]);
 
   const maxMonthTransaction = Math.max(maxMonthExpensePerYear, maxMonthIncomePerYear);
 

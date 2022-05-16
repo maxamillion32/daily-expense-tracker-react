@@ -50,7 +50,6 @@ export function formatMonthShort (dateString) {
 }
 
 export const getMaxAmountPerYear = (year, type, transactions) => {
-console.log("🚀 ~ getMaxAmountPerYear");
   const months = [...new Set(transactions
     .filter((transaction) => formatYear(transaction.date) === year)
     .map((transaction) => formatMonth(transaction.date)))];

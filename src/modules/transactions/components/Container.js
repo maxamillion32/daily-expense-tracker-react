@@ -4,7 +4,7 @@ import {useSelector, useDispatch} from "react-redux";
 import classes from "./Container.module.css";
 import {
   selectAllTransactionsState,
-  setIsEditing
+  setIsEditing, selectIsLoading
 } from "../../../reducers/transactions/transactions-slice";
 import {
   setIsAddButtonClick, selectIsTransactionTypeClick,
@@ -45,6 +45,7 @@ function TransactionsContainer() {
   const getTransactions = useSelector(selectAllTransactionsState);
   const transactions = [...getTransactions];
   const userId = useSelector(selectUserId);
+  const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
 
   const isTransactions = transactions.length !== 0;
@@ -58,7 +59,7 @@ function TransactionsContainer() {
 
   return (
     <>
-      {userId
+      {!isLoading && userId
         ? <section className={classes.Container}>
             <CreateFormPopup />
 

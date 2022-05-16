@@ -1,24 +1,21 @@
-import React, {useState, useMemo, useCallback} from "react";
+import React, {useState, useMemo} from "react";
 import {useSelector} from "react-redux";
 import classes from "./Chart.module.css";
 import {AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer} from "recharts";
 import ArrowButton from "../../../common/components/ArrowButton/ArrowButton";
 import {getMaxAmountPerYear, getExpenses} from "../../../common/utils/utils";
 
-import {selectFilteredTransactions, selectCurrentYear, selectIsLoading} from "../../../../reducers/transactions/transactions-slice";
+import {selectFilteredTransactions, selectCurrentYear} from "../../../../reducers/transactions/transactions-slice";
 
 function Chart() {
   const transactions = useSelector(selectFilteredTransactions);
   const currentYear = useSelector(selectCurrentYear);
-  const isLoading = useSelector(selectIsLoading);
-  // const transactions = [...getTransactions];
 
   const [toggle, setToggle] = useState(true);
 
-  const data = useCallback(getExpenses(currentYear, transactions, toggle), [currentYear, transactions, toggle]);
-
-  const maxMonthExpensePerYear = useCallback(getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear, transactions]);
-  const maxMonthIncomePerYear = useCallback(getMaxAmountPerYear(currentYear, "income", transactions), [currentYear, transactions]);
+  const data = useMemo(() => getExpenses(currentYear, transactions, toggle), [currentYear]);
+  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear]);
+  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear]);
 
   const header = toggle ? "Expenses" : "Incomes";
   const yRange = toggle ? maxMonthExpensePerYear * 2 : maxMonthIncomePerYear * 2;
