@@ -13,9 +13,9 @@ function Chart() {
 
   const [toggle, setToggle] = useState(true);
 
-  const data = useMemo(() => getExpenses(currentYear, transactions, toggle), [currentYear]);
-  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear]);
-  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear]);
+  const data = useMemo(() => getExpenses(currentYear, transactions, toggle), [currentYear, toggle, transactions]);
+  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear, transactions]);
+  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear, transactions]);
 
   const header = toggle ? "Expenses" : "Incomes";
   const yRange = toggle ? maxMonthExpensePerYear * 2 : maxMonthIncomePerYear * 2;
