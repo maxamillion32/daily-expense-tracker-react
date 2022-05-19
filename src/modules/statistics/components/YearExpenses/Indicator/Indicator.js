@@ -1,16 +1,32 @@
-import React from "react";
+import React, {useMemo} from "react";
 import classes from "./Indicator.module.css";
+import {formatMonth, formatYear, isEqual, usePrevious} from "../../../../common/utils/utils";
 
-function WidgetsYearExpensesIndicator({year, month, getPercent, type}) {
+const getPercent = (year, month, type, transactions, maxMonthTransaction) => {
+  const incomes = transactions
+  .filter((transaction) => formatYear(transaction.date) === year)
+  .filter((transaction) => formatMonth(transaction.date) === month)
+  .map((transaction) => (type === "expenses" ? transaction.expense : !transaction.expense)
+  ? transaction = +transaction.sum
+  : transaction = null)
+  .reduce((acc, sum) => acc + sum, 0);
+
+  const percent = (incomes / maxMonthTransaction * 100);
+  let incomesPercent = percent >= 100 ? percent : percent;
+
+  return incomesPercent;
+};
+
+function WidgetsYearExpensesIndicator({year, month, type, transactions, maxMonthTransaction}) {
+  const isTransactionsEqual = isEqual(transactions, usePrevious(transactions));
   let cls = [];
-
   type === "expenses" ? cls.push(classes.Expenses) : cls.push(classes.Incomes);
 
   return (
     <div
       className={cls.join(" ")}
       id={month}
-      style={{height: `${getPercent(year, month, type)}%`}}
+      style={{height: `${useMemo(() => getPercent(year, month, type, transactions, maxMonthTransaction), [year, month, type, isTransactionsEqual, maxMonthTransaction])}%`}}
     ></div>
   );
 }

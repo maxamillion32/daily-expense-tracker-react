@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback, useMemo} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 // import {loadTransactions} from "../../../../reducers/transactions/transactions-slice";
@@ -33,7 +33,7 @@ function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget
   const dispatch = useDispatch();
   const categories = useSelector(selectFilteredCategories);
 
-  const prevBudget = isEqual(budget, updatedBudget);
+  const prevBudget = useMemo(() => isEqual(budget, updatedBudget), [budget, updatedBudget]);
 
   const onInputChange = ({target}) => {
     const id = target.id;

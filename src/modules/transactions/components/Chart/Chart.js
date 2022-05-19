@@ -3,7 +3,7 @@ import {useSelector} from "react-redux";
 import classes from "./Chart.module.css";
 import {AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer} from "recharts";
 import ArrowButton from "../../../common/components/ArrowButton/ArrowButton";
-import {getMaxAmountPerYear, getExpenses} from "../../../common/utils/utils";
+import {getMaxAmountPerYear, getExpenses, usePrevious, isEqual} from "../../../common/utils/utils";
 
 import {selectFilteredTransactions, selectCurrentYear} from "../../../../reducers/transactions/transactions-slice";
 
@@ -13,9 +13,11 @@ function Chart() {
 
   const [toggle, setToggle] = useState(true);
 
-  const data = useMemo(() => getExpenses(currentYear, transactions, toggle), [currentYear, toggle, transactions]);
-  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear, transactions]);
-  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear, transactions]);
+  const isTransactionsEqual = isEqual(transactions, usePrevious(transactions));
+
+  const data = useMemo(() => getExpenses(currentYear, transactions, toggle), [currentYear, toggle, isTransactionsEqual]);
+  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear, isTransactionsEqual]);
+  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear, isTransactionsEqual]);
 
   const header = toggle ? "Expenses" : "Incomes";
   const yRange = toggle ? maxMonthExpensePerYear * 2 : maxMonthIncomePerYear * 2;

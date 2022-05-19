@@ -5,9 +5,7 @@ import {
   selectUserId
 } from "../../../reducers/user/user-slice";
 import {
-  selectCurrentMonth, selectCurrentYear
-} from "../../../reducers/transactions/transactions-slice";
-import {
+  selectCurrentMonth, selectCurrentYear,
   selectFilteredTransactions
 } from "../../../reducers/transactions/transactions-slice";
 import {
@@ -41,16 +39,8 @@ function StatisticsContainer() {
   return (
     <section className={classes.Container}>
       <Suspense fallback={<Loader />} >
-        <MonthBalance
-          currentYear={year}
-          currentMonth={month}
-          transactions={filteredTransactions}
-        />
-        <YearExpenses
-          currentYear={year}
-          currentMonth={month}
-          transactions={filteredTransactions}
-        />
+        <MonthBalance />
+        <YearExpenses />
         <MonthExpenses
           currentYear={year}
           currentMonth={month}

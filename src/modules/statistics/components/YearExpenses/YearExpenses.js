@@ -1,36 +1,29 @@
 import React, {useMemo} from "react";
-import {useDispatch} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 
-import {updateMonth, updateYear} from "../../../../reducers/transactions/transactions-slice";
+import {
+  updateMonth, updateYear, selectCurrentMonth,
+  selectCurrentYear, selectFilteredTransactions
+} from "../../../../reducers/transactions/transactions-slice";
 
 import classes from "./YearExpenses.module.css";
 import Indicator from "./Indicator/Indicator";
 import ArrowButton from "../../../common/components/ArrowButton/ArrowButton";
-import {getMaxAmountPerYear, formatMonth, formatYear} from "../../../common/utils/utils";
+import {getMaxAmountPerYear, isEqual, usePrevious} from "../../../common/utils/utils";
 import {MONTH_EXPENSES} from "./constant";
 
-function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
+function WidgetsYearExpenses() {
+  const transactions = useSelector(selectFilteredTransactions);
+  const currentMonth = useSelector(selectCurrentMonth);
+  const currentYear = useSelector(selectCurrentYear);
   const dispatch = useDispatch();
 
-  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear, transactions]);
-  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear, transactions]);
+  const isTransactionsEqual = isEqual(transactions, usePrevious(transactions));
+
+  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear, isTransactionsEqual]);
+  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear, isTransactionsEqual]);
 
   const maxMonthTransaction = Math.max(maxMonthExpensePerYear, maxMonthIncomePerYear);
-
-  const getPercent = (year, month, type) => {
-    const incomes = transactions
-    .filter((transaction) => formatYear(transaction.date) === year)
-    .filter((transaction) => formatMonth(transaction.date) === month)
-    .map((transaction) => (type === "expenses" ? transaction.expense : !transaction.expense)
-    ? transaction = +transaction.sum
-    : transaction = null)
-    .reduce((acc, sum) => acc + sum, 0);
-
-    const percent = (incomes / maxMonthTransaction * 100);
-    let incomesPercent = percent >= 100 ? percent : percent;
-
-    return incomesPercent;
-  };
 
   const monthHandler = ({target}) => {
     dispatch(updateMonth(target.id));
@@ -67,15 +60,17 @@ function WidgetsYearExpenses({currentYear, currentMonth, transactions}) {
                 <Indicator
                   year={currentYear}
                   month={month}
-                  getPercent={getPercent}
+                  transactions={transactions}
                   type={"incomes"}
+                  maxMonthTransaction={maxMonthTransaction}
                 />
 
                 <Indicator
                   year={currentYear}
                   month={month}
-                  getPercent={getPercent}
+                  transactions={transactions}
                   type={"expenses"}
+                  maxMonthTransaction={maxMonthTransaction}
                 />
               </div>
               <p id={month}>{month.slice(0, 3)}</p>

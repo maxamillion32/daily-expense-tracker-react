@@ -1,3 +1,5 @@
+import React from "react";
+
 import {MONTH_EXPENSES} from "../../statistics/components/YearExpenses/constant";
 
 export function formatDay (dateString) {
@@ -50,7 +52,7 @@ export function formatMonthShort (dateString) {
 }
 
 export const getMaxAmountPerYear = (year, type, transactions) => {
-  console.log("object");
+  // console.log("getMaxAmountPerYear");
   const months = [...new Set(transactions
     .filter((transaction) => formatYear(transaction.date) === year)
     .map((transaction) => formatMonth(transaction.date)))];
@@ -95,3 +97,11 @@ export const getExpenses = (year, transactions, toggle) => {
     };
   });
 };
+
+export function usePrevious(value) {
+  const ref = React.useRef();
+  React.useEffect(() => {
+    ref.current = value;
+  },[value]);
+  return ref.current;
+}

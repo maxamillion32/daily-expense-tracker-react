@@ -1,5 +1,10 @@
-import React from "react";
+import React, {useMemo} from "react";
+import {useSelector} from "react-redux";
 import classes from "./MonthBalance.module.css";
+import {
+  selectCurrentMonth,
+  selectCurrentYear, selectFilteredTransactions
+} from "../../../../reducers/transactions/transactions-slice";
 import {formatMonth, formatYear} from "../../../common/utils/utils";
 
 const BalanceItem = ({sum, title}) => (
@@ -9,19 +14,23 @@ const BalanceItem = ({sum, title}) => (
   </li>
 );
 
-function WidgetsMonthBalance({currentYear, currentMonth, transactions}) {
+function WidgetsMonthBalance() {
+  const transactions = useSelector(selectFilteredTransactions);
+  const currentMonth = useSelector(selectCurrentMonth);
+  const currentYear = useSelector(selectCurrentYear);
+
   // move to utils
-  const filteredTransactions = transactions
+  const filteredTransactions = useMemo(() => transactions
     .filter((transaction) => formatYear(transaction.date) === currentYear)
-    .filter((transaction) => formatMonth(transaction.date) === currentMonth);
+    .filter((transaction) => formatMonth(transaction.date) === currentMonth), [currentMonth, currentYear]);
 
-  const sumExpenses = filteredTransactions.map((transaction) => {
+  const sumExpenses = useMemo(() => filteredTransactions.map((transaction) => {
       return transaction.expense ? transaction = +transaction.sum : transaction = null;
-    }).reduce((a, b) => a + b, 0).toFixed(2);
+    }).reduce((a, b) => a + b, 0).toFixed(2), [filteredTransactions]);
 
-  const sumIncomes = filteredTransactions.map((item) => {
+  const sumIncomes = useMemo(() => filteredTransactions.map((item) => {
     return !item.expense ? item = +item.sum : item = null;
-  }).reduce((a, b) => a + b, 0).toFixed(2);
+  }).reduce((a, b) => a + b, 0).toFixed(2), [filteredTransactions]);
 
   return (
     <section className={classes.MonthBalance}>
