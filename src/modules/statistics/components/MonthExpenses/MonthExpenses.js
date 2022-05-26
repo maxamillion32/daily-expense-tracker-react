@@ -1,16 +1,39 @@
-import React from "react";
+import React, {useMemo, useCallback} from "react";
+import {useSelector} from "react-redux";
+
+import {
+  selectCurrentMonth,
+  selectCurrentYear, selectFilteredTransactions
+} from "../../../../reducers/transactions/transactions-slice";
+import {selectUserId} from "../../../../reducers/user/user-slice";
+import {selectAllBudgetState} from "../../../../reducers/budget/budget-slice";
+import {selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
+
 import WidgetsMonthExpensesItem from "./Items/Item";
-import {formatMonth, formatYear} from "../../../common/utils/utils";
 import {Statistics} from "./Statistics";
+
+import {formatMonth, formatYear, isEqual, usePrevious} from "../../../common/utils/utils";
 import {TRANSACTION_TYPE} from "./utils/constants";
 
-function WidgetsMonthExpenses({currentYear, currentMonth, transactions, budget, userId, allCategories}) {
-  const monthTransactions = transactions
+function WidgetsMonthExpenses() {
+  const transactions = useSelector(selectFilteredTransactions);
+  const allCategories = useSelector(selectFilteredCategories);
+  const budget = useSelector(selectAllBudgetState);
+  const currentMonth = useSelector(selectCurrentMonth);
+  const currentYear = useSelector(selectCurrentYear);
+  const userId = useSelector(selectUserId);
+
+  const isTransactionsEqual = isEqual(transactions, usePrevious(transactions));
+
+  const monthTransactions = useMemo(() => {
+    console.log("monthTransactions");
+    return transactions
     .filter((transaction) => formatYear(transaction.date) === currentYear)
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
+  }, [isTransactionsEqual, currentYear, currentMonth]);
 
-  const expenses = new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget, monthTransactions, currentMonth, currentYear, userId, allCategories);
-  const incomes = new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget, monthTransactions, currentMonth, currentYear, userId, allCategories);
+  const expenses = useCallback(new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget, monthTransactions, currentMonth, currentYear, userId, allCategories), [isTransactionsEqual, currentYear, currentMonth]);
+  const incomes = useCallback(new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget, monthTransactions, currentMonth, currentYear, userId, allCategories), [isTransactionsEqual, currentYear, currentMonth]);
 
   return (
     <>

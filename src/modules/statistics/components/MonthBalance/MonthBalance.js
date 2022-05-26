@@ -5,7 +5,8 @@ import {
   selectCurrentMonth,
   selectCurrentYear, selectFilteredTransactions
 } from "../../../../reducers/transactions/transactions-slice";
-import {formatMonth, formatYear} from "../../../common/utils/utils";
+import Loader from "../../../common/components/Loader/Loader";
+import {formatMonth, formatYear, isEqual, usePrevious} from "../../../common/utils/utils";
 
 const BalanceItem = ({sum, title}) => (
   <li className={classes.Wrapper}>
@@ -19,10 +20,13 @@ function WidgetsMonthBalance() {
   const currentMonth = useSelector(selectCurrentMonth);
   const currentYear = useSelector(selectCurrentYear);
 
+
+  const isTransactionsEqual = isEqual(transactions, usePrevious(transactions));
+
   // move to utils
   const filteredTransactions = useMemo(() => transactions
     .filter((transaction) => formatYear(transaction.date) === currentYear)
-    .filter((transaction) => formatMonth(transaction.date) === currentMonth), [currentMonth, currentYear]);
+    .filter((transaction) => formatMonth(transaction.date) === currentMonth), [currentMonth, currentYear, isTransactionsEqual]);
 
   const sumExpenses = useMemo(() => filteredTransactions.map((transaction) => {
       return transaction.expense ? transaction = +transaction.sum : transaction = null;
@@ -32,13 +36,20 @@ function WidgetsMonthBalance() {
     return !item.expense ? item = +item.sum : item = null;
   }).reduce((a, b) => a + b, 0).toFixed(2), [filteredTransactions]);
 
+  const isLoader = filteredTransactions.length === 0 && sumExpenses === 0 && sumIncomes === 0;
+
   return (
     <section className={classes.MonthBalance}>
-      <h2>{currentMonth}</h2>
-      <ul className={classes.List}>
-        <BalanceItem sum={sumIncomes} title={"incomes"} />
-        <BalanceItem sum={sumExpenses} title={"expenses"} />
-      </ul>
+      {isLoader ? <Loader /> : null}
+      {!isLoader
+        ? <>
+            <h2>{currentMonth}</h2>
+            <ul className={classes.List}>
+              <BalanceItem sum={sumIncomes} title={"incomes"} />
+              <BalanceItem sum={sumExpenses} title={"expenses"} />
+            </ul>
+          </>
+        : null}
     </section>
   );
 }

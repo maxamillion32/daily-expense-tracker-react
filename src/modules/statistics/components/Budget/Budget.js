@@ -1,9 +1,15 @@
-import React, {useCallback, useMemo} from "react";
+import React, {useMemo} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
-// import {loadTransactions} from "../../../../reducers/transactions/transactions-slice";
+import {
+  selectCurrentMonth, selectCurrentYear
+} from "../../../../reducers/transactions/transactions-slice";
 import {selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
-import {postBudget, loadBudgets, updateBudget} from "../../../../reducers/budget/budget-slice";
+import {
+  postBudget, loadBudgets, updateBudget,
+  selectAllBudgetState, selectUpdatedBudgetState
+} from "../../../../reducers/budget/budget-slice";
+import {selectUserId} from "../../../../reducers/user/user-slice";
 import {isEqual} from "../../../common/utils/utils";
 
 import classes from "./Budget.module.css";
@@ -29,9 +35,17 @@ const BudgetHeader = ({onClick, isDisabled}) => (
   </div>
 );
 
-function WidgetsBudget({currentYear, currentMonth, budget, userId, updatedBudget}) {
-  const dispatch = useDispatch();
+function WidgetsBudget() {
+  const currentMonth = useSelector(selectCurrentMonth);
+  const currentYear = useSelector(selectCurrentYear);
+  const userId = useSelector(selectUserId);
   const categories = useSelector(selectFilteredCategories);
+  const budget = useSelector(selectAllBudgetState);
+  const updatedBudget = useSelector(selectUpdatedBudgetState);
+  const dispatch = useDispatch();
+
+  // const newBudget = budget && Object.keys(budget).length !== 0 && budget;
+  // const newUpdatedBudget = updatedBudget && Object.keys(updatedBudget).length !== 0 && updatedBudget;
 
   const prevBudget = useMemo(() => isEqual(budget, updatedBudget), [budget, updatedBudget]);
 

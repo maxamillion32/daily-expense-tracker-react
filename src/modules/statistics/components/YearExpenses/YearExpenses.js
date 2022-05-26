@@ -9,6 +9,8 @@ import {
 import classes from "./YearExpenses.module.css";
 import Indicator from "./Indicator/Indicator";
 import ArrowButton from "../../../common/components/ArrowButton/ArrowButton";
+import Loader from "../../../common/components/Loader/Loader";
+
 import {getMaxAmountPerYear, isEqual, usePrevious} from "../../../common/utils/utils";
 import {MONTH_EXPENSES} from "./constant";
 
@@ -24,6 +26,8 @@ function WidgetsYearExpenses() {
   const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear, isTransactionsEqual]);
 
   const maxMonthTransaction = Math.max(maxMonthExpensePerYear, maxMonthIncomePerYear);
+
+  const isLoader = maxMonthTransaction === 0;
 
   const monthHandler = ({target}) => {
     dispatch(updateMonth(target.id));
@@ -42,6 +46,8 @@ function WidgetsYearExpenses() {
   return (
     <>
       <section className={classes.YearExpenses}>
+        {isLoader ? <Loader /> : null}
+
         <ArrowButton direction={"left"} onClick={handleClick} style={{top: -55}} />
 
         <h4>{currentYear}</h4>
