@@ -10,6 +10,8 @@ import TransactionsItemsYearGroup from "./Items/YearGroup";
 import classes from "./Container.module.css";
 
 function TransactionsListContainer() {
+// console.log("TransactionsListContainer");
+
   const getTransactions = useSelector(selectAllTransactionsState);
   const getCategories = useSelector(selectFilteredCategories);
   const getAccounts = useSelector(selectFilteredAccounts);

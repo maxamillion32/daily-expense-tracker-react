@@ -74,6 +74,7 @@ export const isEqual = (a, b) => {
 };
 
 export const getExpenses = (year, transactions, toggle) => {
+  // console.log("getExpenses");
   return MONTH_EXPENSES.map(item => {
     const month = item ? {name: item.toString().substr(0, 3)} : null;
     const prevYear = (+year-1).toString();

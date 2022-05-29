@@ -19,6 +19,10 @@ import Popup from "../../common/components/Popup/Popup";
 import TransactionCreateForm from "./CreateForm/Form";
 // import WithNavigation from "../../common/hoc/WithNavigation/WithNavigation";
 
+// import TransactionsListContainer from "./List/Container";
+// import Balance from "./Balance/Balance";
+// import Chart from "./Chart/Chart";
+
 const CreateFormPopup = () => {
   const isPopupShow = useSelector(selectIsTransactionTypeClick);
   const dispatch = useDispatch();
@@ -59,22 +63,22 @@ function TransactionsContainer() {
 
   return (
     <>
-      {!isLoading && userId
-        ? <section className={classes.Container}>
-            <CreateFormPopup />
+      {userId
+        ? !isLoading ?
+            <section className={classes.Container}>
+                <CreateFormPopup />
 
-            <Suspense fallback={<Loader />}>
-              <Chart />
-              <Balance />
+                <Suspense fallback={<Loader />}>
+                  <Chart />
+                  <Balance />
 
-              {isTransactions ? <Search /> : null}
+                  {isTransactions ? <Search /> : null}
 
-              {/* <WithNavigation> */}
-                <TransactionsListContainer />
-              {/* </WithNavigation> */}
-            </Suspense>
-          </section>
-
+                  {/* <WithNavigation> */}
+                    <TransactionsListContainer />
+                  {/* </WithNavigation> */}
+                </Suspense>
+              </section> : null
         : <Welcome />
       }
     </>

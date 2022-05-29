@@ -6,6 +6,7 @@ import CloseButton from "../../../common/components/CloseButton/CloseButton";
 import classes from "./Search.module.css";
 
 function Search() {
+  // console.log("Search");
   const searchTerm = useSelector(selectSearchTerm);
   const getTransactions = useSelector(selectFilteredTransactions);
   const transactions = [...getTransactions];

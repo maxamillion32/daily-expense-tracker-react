@@ -6,6 +6,7 @@ import {formatMonth, formatYear} from "../../modules/common/utils/utils";
 export const loadTransactions = createAsyncThunk(
   "transactions/loadData",
   async (userId) => {
+    console.log("🚀 ~ file: transactions-slice.js ~ line 12 ~ loadTransactions");
     return await getAll(userId);
   }
 );

@@ -11,7 +11,6 @@ import {loadAccounts} from "./reducers/accounts/accounts-slice";
 import {loadBudgets} from "./reducers/budget/budget-slice";
 import {selectUserId} from "./reducers/user/user-slice";
 
-
 function App() {
   const TransactionsContainer = lazy(() => import("./modules/transactions/components/Container"));
   const StatisticsContainer = lazy(() => import("./modules/statistics/components/Container"));

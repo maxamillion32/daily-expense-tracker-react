@@ -26,7 +26,7 @@ function WidgetsMonthExpenses() {
   const isTransactionsEqual = isEqual(transactions, usePrevious(transactions));
 
   const monthTransactions = useMemo(() => {
-    console.log("monthTransactions");
+    // console.log("monthTransactions");
     return transactions
     .filter((transaction) => formatYear(transaction.date) === currentYear)
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
