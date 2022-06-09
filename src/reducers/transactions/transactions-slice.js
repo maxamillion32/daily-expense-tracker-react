@@ -6,7 +6,6 @@ import {formatMonth, formatYear} from "../../modules/common/utils/utils";
 export const loadTransactions = createAsyncThunk(
   "transactions/loadData",
   async (userId) => {
-    console.log("🚀 ~ file: transactions-slice.js ~ line 12 ~ loadTransactions");
     return await getAll(userId);
   }
 );
@@ -145,6 +144,10 @@ export const selectCurrentBalance = (state) => {
 
   return getCurrentBalance(allTransactions);
 };
+
+export const selectYears = ((state) => [...new Set(selectFilteredTransactions(state)
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .map(date => formatYear(date.date)))]);
 
 export const {
   setTransactionId,
