@@ -9,11 +9,6 @@ import WithCSSTransition from "../../../../common/hoc/WithCSSTransition/WithCSST
 
 function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, date, accountId, categoryId, ...rest}) {
   const dispatch = useDispatch();
-  const [showDeleteBtn, setShowDeleteBtn] = useState(false);
-
-  const handleDeleteButtonToggle = () => {
-    setShowDeleteBtn(!showDeleteBtn);
-  };
 
   const onItemClick = () => {
     dispatch(setIsTransactionTypeClick());
@@ -33,8 +28,6 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, 
     >
       <li
         className={classes.TransactionsList}
-        onMouseOver={handleDeleteButtonToggle}
-        onMouseOut={handleDeleteButtonToggle}
         ref={nodeRefItem}
         onClick={onItemClick}
       >

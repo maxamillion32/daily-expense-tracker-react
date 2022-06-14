@@ -13,30 +13,6 @@ export const getAll = async (userId) => {
   return results;
 };
 
-const accounts = [
-    {
-        "id": "CknNK0lyxWDYVd3AYko3",
-        "title": "N26",
-        "balance": "639.66",
-        "startBalance": "152.66",
-        "userId": "F3fNhbY88QZ5Dow6Zd1xlC2gm5w2"
-    },
-    {
-        "startBalance": "450.38",
-        "title": "Cash",
-        "id": "vI7VZRiqCCxqJEhJvqXH",
-        "balance": "159.09",
-        "userId": "F3fNhbY88QZ5Dow6Zd1xlC2gm5w2"
-    }
-];
-
-export const copyAccounts = async () => {
-  accounts.forEach(async(account) => {
-    const payload = {...account};
-    await setDoc(doc(accountsRef, account.id), payload);
-  });
-};
-
 export const create = async (account) => {
   const payload = {...account};
   await addDoc(accountsRef, payload);
