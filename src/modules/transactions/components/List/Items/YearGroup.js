@@ -7,13 +7,18 @@ import {formatYear, formatMonth} from "../../../../common/utils/utils";
 
 import {selectCurrentYear, selectFilteredTransactions} from "../../../../../reducers/transactions/transactions-slice";
 
+const PAGINATION = {
+  INITIAL_AMOUNT: 50,
+  SHIFT: 20,
+};
+
 function TransactionsItemsYearGroup({year}) {
   const getCurrentYear = useSelector(selectCurrentYear);
   const getFilteredTransactions = useSelector(selectFilteredTransactions);
   const filteredTransactions = [...getFilteredTransactions];
 
   const [transaction, setTransactions] = useState([]);
-  const [currentPage, setCurrentPage] = useState(10);
+  const [currentPage, setCurrentPage] = useState(PAGINATION.INITIAL_AMOUNT);
   const [prevPage, setPrevPage] = useState(0);
   const [fetching, setFetching] = useState(true);
   const [totalCount, setTotalCount] = useState(0);
@@ -21,8 +26,8 @@ function TransactionsItemsYearGroup({year}) {
   useEffect(() => {
     if (fetching) {
       setTransactions([...transaction, ...filteredTransactions.slice(prevPage, currentPage)]);
-      setCurrentPage((prevState) => prevState + 10);
-      setPrevPage((prevState) => prevState + 10);
+      setCurrentPage((prevState) => prevState + PAGINATION.SHIFT);
+      setPrevPage((prevState) => prevState + PAGINATION.SHIFT);
       setTotalCount(transaction.length);
       setFetching(false);
     }
@@ -49,7 +54,9 @@ function TransactionsItemsYearGroup({year}) {
     const scrollTop = e.target.documentElement.scrollTop;
     const innerHeight = window.innerHeight;
 
-    if (scrollHeight - (scrollTop + innerHeight) < 100 && totalCount < filteredTransactions.length) {
+    if (scrollHeight - (scrollTop + innerHeight) < 100
+          && totalCount < filteredTransactions.length
+          || scrollHeight < innerHeight) {
       setFetching(true);
     } else {
       setFetching(false);
