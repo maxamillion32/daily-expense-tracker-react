@@ -70,6 +70,9 @@ export const getMaxAmountPerYear = (year, type, transactions) => {
 };
 
 export const isEqual = (a, b) => {
+  if (!a || !b) {
+    return true;
+  }
   return JSON.stringify(a) === JSON.stringify(b);
 };
 

@@ -12,12 +12,19 @@ function Chart() {
   const currentYear = useSelector(selectCurrentYear);
 
   const [toggle, setToggle] = useState(true);
-
   const isTransactionsEqual = isEqual(transactions, usePrevious(transactions));
 
-  const data = useMemo(() => getExpenses(currentYear, transactions, toggle), [currentYear, toggle, isTransactionsEqual]);
-  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear, isTransactionsEqual]);
-  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear, isTransactionsEqual]);
+  const data = useMemo(() => {
+    return getExpenses(currentYear, transactions, toggle);
+  }, [currentYear, toggle, isTransactionsEqual]);
+
+  const maxMonthExpensePerYear = useMemo(() => {
+    return getMaxAmountPerYear(currentYear, "expenses", transactions);
+  }, [currentYear, isTransactionsEqual]);
+
+  const maxMonthIncomePerYear = useMemo(() => {
+    return getMaxAmountPerYear(currentYear, "income", transactions);
+  }, [currentYear, isTransactionsEqual]);
 
   const header = toggle ? "Expenses" : "Incomes";
   const yRange = toggle ? maxMonthExpensePerYear * 2 : maxMonthIncomePerYear * 2;
@@ -72,4 +79,4 @@ function Chart() {
   );
 }
 
-export default Chart;
+export default React.memo(Chart);
