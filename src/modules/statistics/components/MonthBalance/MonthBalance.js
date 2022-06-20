@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {useMemo, useState} from "react";
 import {useSelector} from "react-redux";
 import classes from "./MonthBalance.module.css";
 import {
@@ -6,7 +6,7 @@ import {
   selectCurrentYear, selectFilteredTransactions
 } from "../../../../reducers/transactions/transactions-slice";
 import Loader from "../../../common/components/Loader/Loader";
-import {formatMonth, formatYear, isEqual, usePrevious} from "../../../common/utils/utils";
+import {formatMonth, formatYear} from "../../../common/utils/utils";
 
 const BalanceItem = ({sum, title}) => (
   <li className={classes.Wrapper}>
@@ -16,25 +16,23 @@ const BalanceItem = ({sum, title}) => (
 );
 
 function WidgetsMonthBalance() {
-  const transactions = useSelector(selectFilteredTransactions);
+  const getTransactions = useSelector(selectFilteredTransactions);
   const currentMonth = useSelector(selectCurrentMonth);
   const currentYear = useSelector(selectCurrentYear);
 
+  const [transactions, setTransactions] = useState(getTransactions);
 
-  const isTransactionsEqual = isEqual(transactions, usePrevious(transactions));
-
-  // move to utils
   const filteredTransactions = useMemo(() => transactions
     .filter((transaction) => formatYear(transaction.date) === currentYear)
-    .filter((transaction) => formatMonth(transaction.date) === currentMonth), [currentMonth, currentYear, isTransactionsEqual]);
+    .filter((transaction) => formatMonth(transaction.date) === currentMonth), [currentMonth, currentYear, transactions]);
 
   const sumExpenses = useMemo(() => filteredTransactions.map((transaction) => {
       return transaction.expense ? transaction = +transaction.sum : transaction = null;
-    }).reduce((a, b) => a + b, 0).toFixed(2), [filteredTransactions]);
+    }).reduce((a, b) => a + b, 0).toFixed(2), [currentYear, currentMonth, filteredTransactions]);
 
   const sumIncomes = useMemo(() => filteredTransactions.map((item) => {
     return !item.expense ? item = +item.sum : item = null;
-  }).reduce((a, b) => a + b, 0).toFixed(2), [filteredTransactions]);
+  }).reduce((a, b) => a + b, 0).toFixed(2), [currentYear, currentMonth, filteredTransactions]);
 
   const isLoader = filteredTransactions.length === 0 && sumExpenses === 0 && sumIncomes === 0;
 
