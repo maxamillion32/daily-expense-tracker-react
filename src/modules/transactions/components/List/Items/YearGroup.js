@@ -54,9 +54,7 @@ function TransactionsItemsYearGroup({year}) {
     const scrollTop = e.target.documentElement.scrollTop;
     const innerHeight = window.innerHeight;
 
-    if (scrollHeight - (scrollTop + innerHeight) < 100
-          && totalCount < filteredTransactions.length
-          || scrollHeight < innerHeight) {
+    if (scrollHeight - (scrollTop + innerHeight) < 100 && totalCount < filteredTransactions.length) {
       setFetching(true);
     } else {
       setFetching(false);
