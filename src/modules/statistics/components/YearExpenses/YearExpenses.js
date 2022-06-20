@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {useState, useMemo} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import {
@@ -11,19 +11,19 @@ import Indicator from "./Indicator/Indicator";
 import ArrowButton from "../../../common/components/ArrowButton/ArrowButton";
 import Loader from "../../../common/components/Loader/Loader";
 
-import {getMaxAmountPerYear, isEqual, usePrevious} from "../../../common/utils/utils";
+import {getMaxAmountPerYear} from "../../../common/utils/utils";
 import {MONTH_EXPENSES} from "./constant";
 
 function WidgetsYearExpenses() {
-  const transactions = useSelector(selectFilteredTransactions);
+  const getTransactions = useSelector(selectFilteredTransactions);
   const currentMonth = useSelector(selectCurrentMonth);
   const currentYear = useSelector(selectCurrentYear);
   const dispatch = useDispatch();
 
-  const isTransactionsEqual = isEqual(transactions, usePrevious(transactions));
+  const [transactions, setTransactions] = useState(getTransactions);
 
-  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear, isTransactionsEqual]);
-  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear, isTransactionsEqual]);
+  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear, transactions]);
+  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear, transactions]);
 
   const maxMonthTransaction = Math.max(maxMonthExpensePerYear, maxMonthIncomePerYear);
 
