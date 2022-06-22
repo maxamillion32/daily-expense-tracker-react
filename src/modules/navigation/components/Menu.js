@@ -67,7 +67,7 @@ const NavButton = ({to, className, src}) => (
     to={to}
     className={className}
   >
-    <img src={src} width="30"/>
+    <img src={src} width="30" alt="menu button"/>
   </NavLink>
 );
 
@@ -96,6 +96,13 @@ function Menu() {
   return (
     <>
       <OptionsButtonBackground>
+        <OptionsButton
+          onClick={onIncomeButtonClick}
+          typeClass={classes.menuAddTransferBtn}
+          type={"fa-exchange"}
+          title={"Transfer"}
+        />
+
         <OptionsButton
           onClick={onIncomeButtonClick}
           typeClass={classes.menuAddPlusBtn}
