@@ -3,7 +3,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {NavLink} from "react-router-dom";
 
 import classes from "./Menu.module.css";
-import {setIsExpense} from "../../../reducers/transactions/transactions-slice";
+import {setIsExpense, setIsTransfer} from "../../../reducers/transactions/transactions-slice";
 import {
   selectIsButtonShow, setIsAddButtonClick, selectIsAddButtonClick,
   setIsButtonShow, setIsTransactionTypeClick
@@ -93,11 +93,18 @@ function Menu() {
     dispatch(setIsExpense(true));
   };
 
+  const onTransferButtonClick = (event) => {
+    event.stopPropagation();
+    dispatch(setIsAddButtonClick(false));
+    dispatch(setIsTransactionTypeClick());
+    dispatch(setIsTransfer(true));
+  };
+
   return (
     <>
       <OptionsButtonBackground>
         <OptionsButton
-          onClick={onIncomeButtonClick}
+          onClick={onTransferButtonClick}
           typeClass={classes.menuAddTransferBtn}
           type={"fa-exchange"}
           title={"Transfer"}

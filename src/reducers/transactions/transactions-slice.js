@@ -48,7 +48,9 @@ export const transactionsSlice = createSlice({
     isLoading: false,
     currentMonth: formatMonth(new Date()),
     currentYear: formatYear(new Date()),
-    isExpense: true
+    isExpense: true,
+    isTransfer: false,
+
   },
   reducers: {
     updatingTransaction: (state, action) => {
@@ -79,6 +81,12 @@ export const transactionsSlice = createSlice({
       return {
         ...state,
         isExpense: action.payload
+      };
+    },
+    setIsTransfer: (state, action) => {
+      return {
+        ...state,
+        isTransfer: action.payload
       };
     },
   },
@@ -114,6 +122,7 @@ export const selectIsEditing = (state) => state.transactions.isEditing;
 export const selectCurrentMonth = (state) => state.transactions.currentMonth;
 export const selectCurrentYear = (state) => state.transactions.currentYear;
 export const selectIsExpense = (state) => state.transactions.isExpense;
+export const selectIsTransfer = (state) => state.transactions.isTransfer;
 
 export const selectFilteredTransactions = (state) => {
   const allTransactions = selectAllTransactionsState(state);
@@ -156,6 +165,7 @@ export const {
   updateYear,
   updatingTransaction,
   setIsEditing,
-  setIsExpense
+  setIsExpense,
+  setIsTransfer
 } = transactionsSlice.actions;
 export default transactionsSlice.reducer;

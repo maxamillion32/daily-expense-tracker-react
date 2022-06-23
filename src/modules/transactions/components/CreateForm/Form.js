@@ -6,7 +6,7 @@ import {
   postTransaction, updateTransaction,
   loadTransactions, selectUpdatingTransactionState,
   selectIsEditing, setIsEditing, deleteTransaction,
-  selectIsExpense
+  selectIsExpense, selectIsTransfer
 } from "../../../../reducers/transactions/transactions-slice";
 import {setIsButtonShow, setIsTransactionTypeClick} from "../../../../reducers/navigation/navigation-slice";
 import {selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
@@ -38,11 +38,34 @@ const FormContainer = ({children, onSubmit, nodeRef}) => (
     </section>
 );
 
+// const FormContainer = ({getIsEditing}) => {
+//   return (getIsEditing ? <>
+//                           <Button
+//                             title="Update"
+//                             onClick={updateTransactionHandler}
+//                             disabled={isFormStateEqual}
+//                           />
+//
+//                           <Button
+//                             title="Delete"
+//                             onClick={deleteTransactionHandler}
+//                             disabled={!isFormStateEqual}
+//                           />
+//                         </>
+//                       : <Button
+//                         title="Create"
+//                         onClick={addTransactionHandler}
+//                         disabled={!state.isFormValid}
+//                         />
+//   );
+// };
+
 function TransactionCreateForm() {
   const userId = useSelector(selectUserId);
   const getCategories = useSelector(selectFilteredCategories);
   const getAccounts = useSelector(selectFilteredAccounts);
   const getIsExpense = useSelector(selectIsExpense);
+  const getIsTransfer = useSelector(selectIsTransfer);
   const categories = [...getCategories];
   const accounts = [...getAccounts];
   const getUpdatingTransaction = useSelector(selectUpdatingTransactionState);
@@ -53,22 +76,22 @@ function TransactionCreateForm() {
   let formTransaction = {};
 
   if (getIsEditing) {
-      formTransaction = {...getUpdatingTransaction};
+    formTransaction = {...getUpdatingTransaction};
   } else {
-      formTransaction = {
-        id:"",
-        sum: "",
-        date: initialDate,
-        expense: getIsExpense,
-        showInBalance: true
-      };
+    formTransaction = {
+      id: "",
+      sum: "",
+      date: initialDate,
+      expense: getIsExpense,
+      showInBalance: true
+    };
   }
 
   let initialState = {
-      isFormValid: false,
-      formControls: updateFormControls("date", initialDate, createFormControls()),
-      formTransaction
-    };
+    isFormValid: false,
+    formControls: updateFormControls("date", initialDate, createFormControls()),
+    formTransaction
+  };
 
   const [state, setState] = useState(initialState);
   let {id, sum, date, expense, category, account} = state.formTransaction;
@@ -194,26 +217,25 @@ function TransactionCreateForm() {
       onSubmit={onClickSubmitButton}
       nodeRef={nodeRef}
     >
-      {getIsEditing
-        ? <>
-            <Button
-              title="Update"
-              onClick={updateTransactionHandler}
-              disabled={isFormStateEqual}
-            />
 
-            <Button
-              title="Delete"
-              onClick={deleteTransactionHandler}
-              disabled={!isFormStateEqual}
-            />
-          </>
-        : <Button
-            title="Create"
-            onClick={addTransactionHandler}
-            disabled={!state.isFormValid}
-          />
-      }
+      {getIsEditing ? <>
+                        <Button
+                          title="Update"
+                          onClick={updateTransactionHandler}
+                          disabled={isFormStateEqual}
+                        />
+
+                        <Button
+                          title="Delete"
+                          onClick={deleteTransactionHandler}
+                          disabled={!isFormStateEqual}
+                        />
+                      </>
+                    : <Button
+                        title="Create"
+                        onClick={addTransactionHandler}
+                        disabled={!state.isFormValid}
+                      />}
 
       <Input
         type="number"
@@ -225,18 +247,32 @@ function TransactionCreateForm() {
         touched={state.formControls.sum.touched}
         errorMessage={state.formControls.sum.errorMessage}
         onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
+        checked={null}
+        isDisabled={false}
+        label={null}
       />
 
-      <Select
-        options={filteredCategories(categories, getIsExpense, getIsEditing)}
-        defaultOption="Choose a category"
-        onChange={onChangeSelectHandler("category")}
-        value={category}
-        valid={state.formControls.category.valid}
-        shouldValidate={!!state.formControls.category.validation}
-        touched={state.formControls.category.touched}
-        errorMessage={state.formControls.category.errorMessage}
-      />
+      {!getIsTransfer ? <Select
+                          options={filteredCategories(categories, getIsExpense, getIsEditing)}
+                          defaultOption="Choose a category"
+                          onChange={onChangeSelectHandler("category")}
+                          value={category}
+                          valid={state.formControls.category.valid}
+                          shouldValidate={!!state.formControls.category.validation}
+                          touched={state.formControls.category.touched}
+                          errorMessage={state.formControls.category.errorMessage}
+                          label={null}
+                          />
+                      : <Select
+                          options={accounts}
+                          defaultOption="Choose an account"
+                          onChange={onChangeSelectHandler("account")}
+                          value={account}
+                          valid={state.formControls.account.valid}
+                          shouldValidate={!!state.formControls.account.validation}
+                          touched={state.formControls.account.touched}
+                          errorMessage={state.formControls.account.errorMessage}
+                          label={null}/>}
 
       <Select
         options={accounts}
@@ -247,7 +283,7 @@ function TransactionCreateForm() {
         shouldValidate={!!state.formControls.account.validation}
         touched={state.formControls.account.touched}
         errorMessage={state.formControls.account.errorMessage}
-      />
+        label={null}/>
 
       <Input
         type="date"
@@ -258,19 +294,27 @@ function TransactionCreateForm() {
         touched={state.formControls.date.touched}
         errorMessage={state.formControls.date.errorMessage}
         onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
-      />
+        checked={null}
+        isDisabled={false}
+        label={null}
+        placeholder={null}/>
 
-      {getIsEditing
-        ? <div className={classes.inputTypeWrapper}>
-            <Input
-              label={"Income"}
-              type="checkbox"
-              name="expense"
-              checked={!expense}
-              onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
-            />
-          </div>
-        : null}
+      {getIsEditing ? <div className={classes.inputTypeWrapper}>
+                        <Input
+                          label={"Income"}
+                          type="checkbox"
+                          name="expense"
+                          checked={!expense}
+                          onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
+                          errorMessage={null}
+                          isDisabled={false}
+                          placeholder={null}
+                          shouldValidate={null}
+                          touched={null}
+                          valid={null}
+                          value={""}/>
+                      </div>
+                    : null}
     </FormContainer>
   );
 }
