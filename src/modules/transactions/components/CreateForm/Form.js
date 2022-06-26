@@ -38,27 +38,27 @@ const FormContainer = ({children, onSubmit, nodeRef}) => (
     </section>
 );
 
-// const FormContainer = ({getIsEditing}) => {
-//   return (getIsEditing ? <>
-//                           <Button
-//                             title="Update"
-//                             onClick={updateTransactionHandler}
-//                             disabled={isFormStateEqual}
-//                           />
-//
-//                           <Button
-//                             title="Delete"
-//                             onClick={deleteTransactionHandler}
-//                             disabled={!isFormStateEqual}
-//                           />
-//                         </>
-//                       : <Button
-//                         title="Create"
-//                         onClick={addTransactionHandler}
-//                         disabled={!state.isFormValid}
-//                         />
-//   );
-// };
+const FormButtons = ({getIsEditing, update, remove, create, isStateEqual, state}) => {
+  return (getIsEditing ? <>
+                          <Button
+                            title="Update"
+                            onClick={update}
+                            disabled={isStateEqual}
+                          />
+
+                          <Button
+                            title="Delete"
+                            onClick={remove}
+                            disabled={!isStateEqual}
+                          />
+                        </>
+                      : <Button
+                        title="Create"
+                        onClick={create}
+                        disabled={!state.isFormValid}
+                        />
+  );
+};
 
 function TransactionCreateForm() {
   const userId = useSelector(selectUserId);
@@ -83,7 +83,8 @@ function TransactionCreateForm() {
       sum: "",
       date: initialDate,
       expense: getIsExpense,
-      showInBalance: true
+      showInBalance: true,
+      transfer: getIsTransfer
     };
   }
 
@@ -94,7 +95,7 @@ function TransactionCreateForm() {
   };
 
   const [state, setState] = useState(initialState);
-  let {id, sum, date, expense, category, account} = state.formTransaction;
+  let {id, sum, date, category, account, transfer} = state.formTransaction;
 
   const isFormStateEqual = isEqual(state.formTransaction, getUpdatingTransaction);
 
@@ -218,24 +219,14 @@ function TransactionCreateForm() {
       nodeRef={nodeRef}
     >
 
-      {getIsEditing ? <>
-                        <Button
-                          title="Update"
-                          onClick={updateTransactionHandler}
-                          disabled={isFormStateEqual}
-                        />
-
-                        <Button
-                          title="Delete"
-                          onClick={deleteTransactionHandler}
-                          disabled={!isFormStateEqual}
-                        />
-                      </>
-                    : <Button
-                        title="Create"
-                        onClick={addTransactionHandler}
-                        disabled={!state.isFormValid}
-                      />}
+      <FormButtons
+        getIsEditing={getIsEditing}
+        update={updateTransactionHandler}
+        remove={deleteTransactionHandler}
+        create={addTransactionHandler}
+        isStateEqual={isFormStateEqual}
+        state={state}
+      />
 
       <Input
         type="number"
@@ -252,7 +243,7 @@ function TransactionCreateForm() {
         label={null}
       />
 
-      {!getIsTransfer ? <Select
+      {!transfer ? <Select
                           options={filteredCategories(categories, getIsExpense, getIsEditing)}
                           defaultOption="Choose a category"
                           onChange={onChangeSelectHandler("category")}
@@ -298,23 +289,6 @@ function TransactionCreateForm() {
         isDisabled={false}
         label={null}
         placeholder={null}/>
-
-      {getIsEditing ? <div className={classes.inputTypeWrapper}>
-                        <Input
-                          label={"Income"}
-                          type="checkbox"
-                          name="expense"
-                          checked={!expense}
-                          onChange={(event) => onChangeUserInput(event.target.value, event.target.name)}
-                          errorMessage={null}
-                          isDisabled={false}
-                          placeholder={null}
-                          shouldValidate={null}
-                          touched={null}
-                          valid={null}
-                          value={""}/>
-                      </div>
-                    : null}
     </FormContainer>
   );
 }
