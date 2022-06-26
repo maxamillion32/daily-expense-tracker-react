@@ -17,7 +17,7 @@ import {categoriesForFirebase, accountsForFirebase, transactionsForFirebase} fro
 import {setIsDemoAccount} from "../../reducers/user/user-slice";
 
 import {firebaseConfig, DEMO_ACCOUNT_LOGIN} from "./firebase-config";
-import {createBalanceCategory, clearDB} from "./firebase-utils";
+import {createInitCategories, clearDB} from "./firebase-utils";
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -34,7 +34,7 @@ export const singUp = async (email, password) => {
     const usersRef = doc(db, "users", userId);
 
     await setDoc(usersRef, {userId});
-    createBalanceCategory(categoriesRef, userId);
+    await createInitCategories(categoriesRef, userId);
   });
 };
 
@@ -67,7 +67,7 @@ export const deleteDemoAccount = async(userId) => {
 };
 
 export const fillDemoAccount = async(userId) => {
-  createBalanceCategory(categoriesRef, userId);
+  createInitCategories(categoriesRef, userId);
 
   await accountsForFirebase.forEach(async (account) => {
     const {id, balance, startBalance, title, userId} = account;

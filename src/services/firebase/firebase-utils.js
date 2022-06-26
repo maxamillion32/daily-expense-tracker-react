@@ -20,25 +20,37 @@ export const deleteDocByCollection = (items, collection, db) => {
   });
 };
 
-export const createBalanceCategory = async (categoriesRef, userId) => {
-  const balanceForIncomes = {
+export const createInitCategories = async (categoriesRef, userId) => {
+  const incomesBalanceCategory = {
     userId,
     title: "Balance",
     incomes: true,
     icon: "fa-asterisk",
-    hidden: true
+    hidden: true,
+    transfer: false
   };
 
-  const balanceForExpenses = {
+  const expensesBalanceCategory = {
     userId,
     title: "Balance",
     incomes: false,
     icon: "fa-asterisk",
-    hidden: true
+    hidden: true,
+    transfer: false
   };
 
-  await addDoc(categoriesRef, balanceForIncomes);
-  await addDoc(categoriesRef, balanceForExpenses);
+  const transferCategory = {
+    userId,
+    title: "Transfer",
+    incomes: null,
+    icon: "fa-exchange",
+    hidden: true,
+    transfer: true
+  };
+
+  await addDoc(categoriesRef, incomesBalanceCategory);
+  await addDoc(categoriesRef, expensesBalanceCategory);
+  await addDoc(categoriesRef, transferCategory);
 };
 
 export const clearDB = async (userId, db, transactionsRef, categoriesRef, accountsRef) => {
