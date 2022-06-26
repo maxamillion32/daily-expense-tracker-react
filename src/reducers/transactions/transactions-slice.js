@@ -35,15 +35,7 @@ export const transactionsSlice = createSlice({
   name: "transactions",
   initialState: {
     allTransactions: [],
-    updatingTransaction: {
-      id: "",
-      sum: "",
-      date: "",
-      expense: "",
-      categoryTitle: "",
-      accountTitle: "",
-      showInBalance: ""
-    },
+    updatingTransaction: {},
     isEditing: false,
     isLoading: false,
     currentMonth: formatMonth(new Date()),
