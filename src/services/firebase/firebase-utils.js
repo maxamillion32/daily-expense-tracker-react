@@ -43,7 +43,7 @@ export const createInitCategories = async (categoriesRef, userId) => {
     userId,
     title: "Transfer",
     incomes: null,
-    icon: "fa-exchange",
+    icon: "fa-exchange-alt",
     hidden: true,
     transfer: true
   };
