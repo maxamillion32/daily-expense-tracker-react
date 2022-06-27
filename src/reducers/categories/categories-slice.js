@@ -72,13 +72,13 @@ export const selectFilteredCategories = (state) => {
     .sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1);
 };
 
-export const selectBalanceIncomes = (state) => {
+export const findIncomesBalanceCategory = (state) => {
   const allCategories = [...selectAllCategories(state)];
 
   return allCategories.find((category) => category.title === "Balance" && category.incomes === true);
 };
 
-export const selectBalanceExpenses = (state) => {
+export const findExpensesBalanceCategory = (state) => {
   const allCategories = [...selectAllCategories(state)];
 
   return allCategories.find((category) => category.title === "Balance" && category.incomes === true);
