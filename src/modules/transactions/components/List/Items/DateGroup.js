@@ -19,6 +19,7 @@ function TransactionsItemsDateGroup({date, transactions}) {
           date={date}
           accountId={transaction.accountId}
           categoryId={transaction.categoryId}
+          transfer={transaction.transfer}
         />
       ))}
     </TransitionGroup>
