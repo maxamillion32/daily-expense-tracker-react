@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {useDispatch} from "react-redux";
 
 import classes from "../Container.module.css";
@@ -7,14 +7,14 @@ import {updatingTransaction, setIsEditing} from "../../../../../reducers/transac
 import {setIsTransactionTypeClick, setIsButtonShow} from "../../../../../reducers/navigation/navigation-slice";
 import WithCSSTransition from "../../../../common/hoc/WithCSSTransition/WithCSSTransition";
 
-function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, date, accountId, categoryId, ...rest}) {
+function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, date, accountId, categoryId, transfer, ...rest}) {
   const dispatch = useDispatch();
 
   const onItemClick = () => {
     dispatch(setIsTransactionTypeClick());
     dispatch(setIsButtonShow());
     dispatch(setIsEditing(true));
-    dispatch(updatingTransaction({id, sum, date, expense, category: categoryTitle, account: accountTitle, categoryId, accountId}));
+    dispatch(updatingTransaction({id, sum, date, expense, category: categoryTitle, account: accountTitle, categoryId, accountId, transfer}));
   };
 
   const nodeRefItem = React.useRef(null);
