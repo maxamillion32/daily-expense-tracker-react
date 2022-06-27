@@ -1,4 +1,4 @@
-import {addDoc, setDoc, collection, updateDoc, doc, deleteDoc, getDocs, query, where} from "@firebase/firestore";
+import {addDoc, collection, updateDoc, doc, deleteDoc, getDocs, query, where} from "@firebase/firestore";
 import db from "./firebase/firebase-service";
 
 const transactionsRef = collection(db, "transactions");
@@ -29,9 +29,7 @@ export const getAll = async (userId) => {
 };
 
 export const create = async (data) => {
-  const {sum, expense, date, categoryId, accountId, showInBalance, userId} = data;
-  const payload = {sum, expense, date, categoryId, accountId, showInBalance, userId};
-  await addDoc(transactionsRef, payload);
+  await addDoc(transactionsRef, data);
 };
 
 export const deleteId = async (id) => {
