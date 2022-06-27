@@ -5,7 +5,7 @@ import classes from "./Popup.module.css";
 
 import {
   updateCategory, loadCategories, deleteCategory,
-  postCategory, selectBalanceIncomes, selectBalanceExpenses
+  postCategory, findIncomesBalanceCategory, findExpensesBalanceCategory
 } from "../../../../reducers/categories/categories-slice";
 import {
   selectCurrentMonth, selectCurrentYear, postTransaction,
@@ -31,9 +31,9 @@ function SettingsPopup({itemState, prevItemState, setItemState, transactions, se
   const month = useSelector(selectCurrentMonth);
   const year = useSelector(selectCurrentYear);
   const allTransactions = useSelector(selectAllTransactionsState);
-  const balanceIncomes = useSelector(selectBalanceIncomes);
-  const balanceExpenses = useSelector(selectBalanceExpenses);
-  const {id, title, userId, incomes, header, startBalance, balance, icon, hidden, date} = itemState;
+  const incomesBalanceCategory = useSelector(findIncomesBalanceCategory);
+  const expensesBalanceCategory = useSelector(findExpensesBalanceCategory);
+  const {id, title, userId, incomes, header, startBalance, balance, icon, hidden, date, transfer} = itemState;
 
   const isStateChange = isEqual(itemState, prevItemState);
   const filteredTransactions = transactions
@@ -87,14 +87,12 @@ function SettingsPopup({itemState, prevItemState, setItemState, transactions, se
     }
     if (header === "Accounts") {
       if (isBalanceChange) {
-        const isIncome = balanceDifference > 0 ? false : true;
+        const isIncome = balanceDifference <= 0;
         const isShowInBalance = accountState.showInBalance;
-        const balanceIncome = balanceIncomes.id;
-        const balanceExpense = balanceExpenses.id;
 
         const sum = Math.abs(balanceDifference);
         const expense = isIncome;
-        const balanceCategoryId = isIncome ? balanceIncome: balanceExpense;
+        const balanceCategoryId = isIncome ? incomesBalanceCategory.id: expensesBalanceCategory.id;
         const showInBalance = isShowInBalance;
 
         dispatch(postTransaction({sum, expense, date, categoryId: balanceCategoryId, accountId: id, showInBalance, userId}));
@@ -148,7 +146,7 @@ function SettingsPopup({itemState, prevItemState, setItemState, transactions, se
         return;
       }
       type === "category"
-        ? dispatch(postCategory({title, userId, incomes, icon, hidden}))
+        ? dispatch(postCategory({title, userId, incomes, icon, hidden, transfer}))
         : dispatch(postAccount({title, userId, startBalance, balance}));
   };
 
