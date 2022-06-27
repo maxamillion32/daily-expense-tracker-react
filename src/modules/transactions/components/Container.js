@@ -4,7 +4,8 @@ import {useSelector, useDispatch} from "react-redux";
 import classes from "./Container.module.css";
 import {
   selectAllTransactionsState,
-  setIsEditing, selectIsLoading
+  setIsEditing, selectIsLoading,
+  setIsTransfer
 } from "../../../reducers/transactions/transactions-slice";
 import {
   setIsAddButtonClick, selectIsTransactionTypeClick,
@@ -32,7 +33,9 @@ const CreateFormPopup = () => {
       dispatch(setIsAddButtonClick(false));
       dispatch(setIsButtonShow(true));
       dispatch(setIsEditing(false));
+      dispatch(setIsTransfer(false));
   };
+
   return (
     <Popup
       showPopup={isPopupShow}
