@@ -84,4 +84,10 @@ export const findExpensesBalanceCategory = (state) => {
   return allCategories.find((category) => category.title === "Balance" && category.incomes === true);
 };
 
+export const findTransferCategory = (state) => {
+  const allCategories = [...selectAllCategories(state)];
+
+  return allCategories.find((category) => category.title === "Transfer");
+};
+
 export default categoriesSlice.reducer;
