@@ -33,7 +33,8 @@ function SettingsContainer() {
     icon: null,
     hidden: false,
     date: new Date().toISOString().slice(0, -14),
-    incomes: false
+    incomes: false,
+    transfer: false
   };
 
   const [item, setItem] = useState(initialItemState);
