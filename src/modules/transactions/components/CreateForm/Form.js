@@ -126,7 +126,7 @@ function TransactionCreateForm() {
     if (selector === "accountFrom") {
       const selectorID = "accountIdFrom";
       id = getIdOfSelected(accounts, value);
-      getUserSelect(selectorID, selector, id);
+      userSelect = getUserSelect(selectorID, selector, id);
     }
 
     if (selector === "accountTo") {
