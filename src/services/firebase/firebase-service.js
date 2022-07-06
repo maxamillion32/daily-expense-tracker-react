@@ -49,7 +49,7 @@ export function logout() {
 export const deleteUserByID = async (userId) => {
   const user = auth.currentUser;
 
-  clearDB(userId, db, transactionsRef, categoriesRef, accountsRef);
+  await clearDB(userId, db, transactionsRef, categoriesRef, accountsRef);
 
   await deleteDoc(doc(db, "users", userId));
 
@@ -67,24 +67,24 @@ export const deleteDemoAccount = async(userId) => {
 };
 
 export const fillDemoAccount = async(userId) => {
-  createInitCategories(categoriesRef, userId);
+  await createInitCategories(categoriesRef, userId);
 
-  await accountsForFirebase.forEach(async (account) => {
+  for (const account of accountsForFirebase) {
     const {id, balance, startBalance, title, userId} = account;
     const payload = {balance, startBalance, title, userId};
     await setDoc(doc(accountsRef, id), payload);
-  });
+  }
 
-  await categoriesForFirebase.forEach(async (category) => {
+  for (const category of categoriesForFirebase) {
     const {id, icon, incomes, title, userId, hidden} = category;
     const payload = {icon, incomes, title, userId, hidden};
     await setDoc(doc(categoriesRef, id), payload);
-  });
+  }
 
-  await transactionsForFirebase.forEach(async (category) => {
-    const payload = {...category};
+  for (const transaction of transactionsForFirebase) {
+    const payload = {...transaction};
     await addDoc(transactionsRef, payload);
-  });
+  }
 };
 
 export function useAuth() {

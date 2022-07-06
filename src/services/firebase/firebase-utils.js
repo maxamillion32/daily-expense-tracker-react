@@ -11,7 +11,7 @@ export const getCollectionData = async (itemRef, userId) => {
   const itemQuery = query(itemRef, where("userId", "==", userId));
   const collection = await getDocs(itemQuery);
 
-  return await collection.docs.map(getDocData);
+  return collection.docs.map(getDocData);
 };
 
 export const deleteDocByCollection = (items, collection, db) => {

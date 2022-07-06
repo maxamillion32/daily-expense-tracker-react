@@ -1,4 +1,4 @@
-import {addDoc, setDoc, collection, updateDoc, doc, deleteDoc, getDocs, query, where} from "@firebase/firestore";
+import {addDoc, collection, updateDoc, doc, deleteDoc, getDocs, query, where} from "@firebase/firestore";
 import db from "./firebase/firebase-service";
 
 const accountsRef = collection(db, "accounts");
@@ -27,5 +27,5 @@ export const update = async (id, title, userId, startBalance, balance) => {
   const docRef = doc(accountsRef, id);
   const payload = {title, userId, startBalance, balance};
 
-  updateDoc(docRef, payload);
+  await updateDoc(docRef, payload);
 };
