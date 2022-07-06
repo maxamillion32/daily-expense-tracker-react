@@ -20,6 +20,11 @@ function TransactionsItemsDateGroup({date, transactions}) {
           accountId={transaction.accountId}
           categoryId={transaction.categoryId}
           transfer={transaction.transfer}
+          transferId={transaction.transferId}
+          accountFrom={transaction.accountFrom}
+          accountTo={transaction.accountTo}
+          accountIdFrom={transaction.accountIdFrom}
+          accountIdTo={transaction.accountIdTo}
         />
       ))}
     </TransitionGroup>

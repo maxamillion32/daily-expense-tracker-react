@@ -7,14 +7,24 @@ import {updatingTransaction, setIsEditing} from "../../../../../reducers/transac
 import {setIsTransactionTypeClick, setIsButtonShow} from "../../../../../reducers/navigation/navigation-slice";
 import WithCSSTransition from "../../../../common/hoc/WithCSSTransition/WithCSSTransition";
 
-function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, date, accountId, categoryId, transfer, ...rest}) {
+function TransactionsItem(
+  {
+    categoryTitle, accountTitle, expense, sum, id,
+    icon, date, accountId, categoryId, transfer,
+    transferId, accountFrom, accountTo, accountIdFrom, accountIdTo, ...rest
+  }) {
   const dispatch = useDispatch();
 
   const onItemClick = () => {
     dispatch(setIsTransactionTypeClick());
     dispatch(setIsButtonShow());
     dispatch(setIsEditing(true));
-    dispatch(updatingTransaction({id, sum, date, expense, category: categoryTitle, account: accountTitle, categoryId, accountId, transfer}));
+    dispatch(updatingTransaction(
+      {id, sum, date, expense,
+        category: categoryTitle,
+        account: accountTitle,
+        categoryId, accountId, transfer, transferId, accountFrom, accountTo, accountIdFrom, accountIdTo
+      }));
   };
 
   const nodeRefItem = React.useRef(null);
@@ -31,18 +41,38 @@ function TransactionsItem({categoryTitle, accountTitle, expense, sum, id, icon, 
         ref={nodeRefItem}
         onClick={onItemClick}
       >
-        <div className={classes.IconWrapper}>
-          <i className={`${classes.TransactionsIcon} fas ${icon ? icon : ""}`}></i>
-        </div>
-        <div className={classes.GroupWrapper}>
-          <div className={classes.TransactionsContentWrapper}>
-            <p>{categoryTitle}</p>
-            <p>{expense ? "-" : "+"}{sum} €</p>
-          </div>
-          <div className={classes.TransactionsContentWrapper}>
-            <p className={classes.TransactionsItemAccount}>{accountTitle}</p>
-          </div>
-        </div>
+        {transfer
+          ? <>
+              <div className={classes.IconWrapper}>
+                <i className={`${classes.TransactionsIcon} fas ${icon ? icon : ""}`}></i>
+              </div>
+              <div className={classes.GroupWrapper}>
+                <div className={classes.TransactionsContentWrapper}>
+                  <p>{categoryTitle}</p>
+                  <p>{sum} €</p>
+                </div>
+                <div className={classes.TransactionsContentWrapper}>
+                  <p className={classes.TransactionsItemAccount}>
+                    {accountFrom} <i className="fa fa-arrow-right-long"></i> {accountTo}
+                  </p>
+                </div>
+              </div>
+            </>
+          : <>
+              <div className={classes.IconWrapper}>
+                <i className={`${classes.TransactionsIcon} fas ${icon ? icon : ""}`}></i>
+              </div>
+              <div className={classes.GroupWrapper}>
+                <div className={classes.TransactionsContentWrapper}>
+                  <p>{categoryTitle}</p>
+                  <p>{expense ? "-" : "+"}{sum} €</p>
+                </div>
+                <div className={classes.TransactionsContentWrapper}>
+                  <p className={classes.TransactionsItemAccount}>{accountTitle}</p>
+                </div>
+              </div>
+            </>
+        }
       </li>
     </WithCSSTransition>
   );
