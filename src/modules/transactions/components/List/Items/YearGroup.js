@@ -33,8 +33,7 @@ function TransactionsItemsYearGroup({year}) {
     }
   }, [fetching]);
 
-  const yearTransactions = transaction
-  .filter((transaction) => formatYear(transaction.date) === year);
+  const yearTransactions = transaction.filter((transaction) => formatYear(transaction.date) === year);
   const nodeRef = React.useRef(null);
   const months = [...new Set(yearTransactions
     .map(date => formatMonth(date.date)))];

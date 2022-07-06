@@ -1,5 +1,6 @@
 import {addDoc, collection, updateDoc, doc, deleteDoc, getDocs, query, where} from "@firebase/firestore";
 import db from "./firebase/firebase-service";
+import {getCollectionData} from "./firebase/firebase-utils";
 
 const transactionsRef = collection(db, "transactions");
 const categoriesRef = collection(db, "categories");
@@ -48,9 +49,40 @@ export const deleteId = async ({id, transferId}) => {
 };
 
 export const update = async (data) => {
-  const {id, sum, expense, date, categoryId, accountId} = data;
+  const {id, sum, expense, date, categoryId, accountId, accountFrom, accountTo, transferId, accountIdFrom, accountIdTo} = data;
   const docRef = doc(transactionsRef, id);
-  const payload = {sum, expense, date, categoryId, accountId};
+  let payload = {sum, expense, date, categoryId, accountId};
 
-  updateDoc(docRef, payload);
+  if (transferId) {
+    const transactionsQuery = query(transactionsRef, where("transferId", "==", transferId));
+    const snapshotTransactions = await getDocs(transactionsQuery);
+
+    const transactions = snapshotTransactions.docs.map((doc) => ({...doc.data(), id: doc.id}));
+
+    for (const item of transactions) {
+      if (item.expense === true) {
+        payload = {
+          sum, date, categoryId,
+          accountId: accountIdFrom
+        };
+        await updateDoc(doc(transactionsRef, item.id), payload);
+      }
+      if (item.expense === false) {
+        payload = {
+          sum, date, categoryId,
+          accountId: accountIdTo
+        };
+        await updateDoc(doc(transactionsRef, item.id), payload);
+      }
+      if (item.expense === null) {
+        payload = {
+          sum, date, categoryId, accountFrom, accountTo,
+          accountId: accountIdTo
+        };
+        await updateDoc(doc(transactionsRef, item.id), payload);
+      }
+    }
+  } else {
+    await updateDoc(docRef, payload);
+  }
 };

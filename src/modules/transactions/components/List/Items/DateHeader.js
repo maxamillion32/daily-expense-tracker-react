@@ -30,7 +30,9 @@ function TransactionsDateHeader({date, transactions}) {
             <p>{formatMonthYear(date)}</p>
           </div>
         </div>
-        <p>{overallBalance < 0 ? "" : "+"}{overallBalance} €</p>
+      {overallBalance === 0
+        ? ""
+        : <p>{overallBalance < 0 ? "" : "+"}{overallBalance} €</p>}
     </div>
   );
 }

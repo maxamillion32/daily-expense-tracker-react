@@ -9,7 +9,11 @@ import {
   selectIsExpense, selectIsTransfer
 } from "../../../../reducers/transactions/transactions-slice";
 import {setIsButtonShow, setIsTransactionTypeClick} from "../../../../reducers/navigation/navigation-slice";
-import {selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
+import {
+  findIncomesBalanceCategory,
+  findTransferCategory,
+  selectFilteredCategories
+} from "../../../../reducers/categories/categories-slice";
 import {selectFilteredAccounts} from "../../../../reducers/accounts/accounts-slice";
 import {selectUserId} from "../../../../reducers/user/user-slice";
 
@@ -70,6 +74,7 @@ function TransactionCreateForm() {
   const accounts = [...getAccounts];
   const getUpdatingTransaction = useSelector(selectUpdatingTransactionState);
   const getIsEditing = useSelector(selectIsEditing);
+  const transferCategory = useSelector(findTransferCategory);
   const dispatch = useDispatch();
 
   const initialDate = new Date().toISOString().slice(0, -14);
@@ -84,7 +89,12 @@ function TransactionCreateForm() {
       date: initialDate,
       expense: getIsExpense,
       showInBalance: true,
-      transfer: getIsTransfer
+      transfer: getIsTransfer,
+      accountIdFrom: "",
+      accountIdTo: "",
+      transferId: new Date().toISOString(),
+      accountFrom: "",
+      accountTo: ""
     };
   }
 
@@ -97,7 +107,13 @@ function TransactionCreateForm() {
   };
 
   const [state, setState] = useState(initialState);
-  let {id, sum, date, category, account, transfer} = state.formTransaction;
+
+  let {
+    id, sum, date, category, account,
+    transfer, expense, showInBalance,
+    accountIdFrom, accountFrom,
+    accountIdTo, accountTo, transferId
+  } = state.formTransaction;
 
   const isFormStateEqual = isEqual(state.formTransaction, getUpdatingTransaction);
 
@@ -142,6 +158,26 @@ function TransactionCreateForm() {
       };
     }
 
+    if (selector === "accountFrom") {
+      name = "accountIdFrom";
+      id = getId(accounts, value);
+      account = value;
+      userSelect = {
+        [name]: id,
+        accountFrom: account
+      };
+    }
+
+    if (selector === "accountTo") {
+      name = "accountIdTo";
+      id = getId(accounts, value);
+      account = value;
+      userSelect = {
+        [name]: id,
+        accountTo: account
+      };
+    }
+
     if (selector === "category") {
       name = "categoryId";
       id = getId(categories, value);
@@ -179,19 +215,29 @@ function TransactionCreateForm() {
     });
   };
 
-  const updateTransactionHandler = () => {
-    dispatch(updateTransaction({...state.formTransaction}));
+  const updateTransactionHandler = async () => {
+    if (transfer) {
+      await dispatch(updateTransaction({...state.formTransaction, transferId}));
+    } else {
+      await dispatch(updateTransaction({...state.formTransaction}));
+    }
+
     dispatch(loadTransactions(userId));
     dispatch(setIsTransactionTypeClick());
     dispatch(setIsButtonShow(true));
     dispatch(setIsEditing(false));
   };
 
-  const deleteTransactionHandler = () => {
+  const deleteTransactionHandler = async () => {
     const confirm = window.confirm("Are you sure?");
 
     if (confirm) {
-      dispatch(deleteTransaction(id));
+      if (transfer) {
+        await dispatch(deleteTransaction({id, transferId}));
+      } else {
+        await dispatch(deleteTransaction(id));
+      }
+
       dispatch(loadTransactions(userId));
       dispatch(setIsTransactionTypeClick());
       dispatch(setIsButtonShow(true));
@@ -204,7 +250,35 @@ function TransactionCreateForm() {
   };
 
   const addTransactionHandler = () => {
-    dispatch(postTransaction({...state.formTransaction, userId}));
+    if (transfer) {
+      dispatch(postTransaction(
+        {
+          sum, expense, date, userId, transfer,
+          categoryId: transferCategory.id,
+          accountId: accountIdFrom,
+          showInBalance: false,
+          transferId
+        }));
+      dispatch(postTransaction(
+        {
+          sum, date, userId, transfer,
+          expense: false,
+          categoryId: transferCategory.id,
+          accountId: accountIdTo,
+          showInBalance: false,
+          transferId
+        }));
+      dispatch(postTransaction(
+        {
+          sum, date, showInBalance, userId, transfer, accountFrom, accountTo, accountIdFrom, accountIdTo,
+          expense: null,
+          categoryId: transferCategory.id,
+          accountId: accountIdTo,
+          transferId
+        }));
+    } else {
+      dispatch(postTransaction({...state.formTransaction, userId}));
+    }
     dispatch(loadTransactions(userId));
     dispatch(setIsTransactionTypeClick());
     dispatch(setIsButtonShow(true));
@@ -245,38 +319,55 @@ function TransactionCreateForm() {
         label={null}
       />
 
-      {!transfer ? <Select
-                          options={filteredCategories(categories, getIsExpense, getIsEditing)}
-                          defaultOption="Choose a category"
-                          onChange={onChangeSelectHandler("category")}
-                          value={category}
-                          valid={state.formControls.category.valid}
-                          shouldValidate={!!state.formControls.category.validation}
-                          touched={state.formControls.category.touched}
-                          errorMessage={state.formControls.category.errorMessage}
-                          label={null}
-                          />
-                      : <Select
-                          options={accounts}
-                          defaultOption="Choose an account"
-                          onChange={onChangeSelectHandler("account")}
-                          value={account}
-                          valid={state.formControls.account.valid}
-                          shouldValidate={!!state.formControls.account.validation}
-                          touched={state.formControls.account.touched}
-                          errorMessage={state.formControls.account.errorMessage}
-                          label={null}/>}
+      {transfer ? <>
+                      <Select
+                        options={accounts}
+                        defaultOption="Choose an account"
+                        onChange={onChangeSelectHandler("accountFrom")}
+                        value={accountFrom}
+                        valid={state.formControls.accountFrom.valid}
+                        shouldValidate={!!state.formControls.accountFrom.validation}
+                        touched={state.formControls.accountFrom.touched}
+                        errorMessage={state.formControls.accountFrom.errorMessage}
+                        label={null}
+                      />
+                      <Select
+                        options={accounts}
+                        defaultOption="Choose an account"
+                        onChange={onChangeSelectHandler("accountTo")}
+                        value={accountTo}
+                        valid={state.formControls.accountTo.valid}
+                        shouldValidate={!!state.formControls.accountTo.validation}
+                        touched={state.formControls.accountTo.touched}
+                        errorMessage={state.formControls.accountTo.errorMessage}
+                        label={null}
+                      />
+                    </>
+                      : <>
+                          <Select
+                            options={filteredCategories(categories, getIsExpense, getIsEditing)}
+                            defaultOption="Choose a category"
+                            onChange={onChangeSelectHandler("category")}
+                            value={category}
+                            valid={state.formControls.category.valid}
+                            shouldValidate={!!state.formControls.category.validation}
+                            touched={state.formControls.category.touched}
+                            errorMessage={state.formControls.category.errorMessage}
+                            label={null}/>
+                          <Select
+                            options={accounts}
+                            defaultOption="Choose an account"
+                            onChange={onChangeSelectHandler("account")}
+                            value={account}
+                            valid={state.formControls.account.valid}
+                            shouldValidate={!!state.formControls.account.validation}
+                            touched={state.formControls.account.touched}
+                            errorMessage={state.formControls.account.errorMessage}
+                            label={null}/>
+                        </>
+      }
 
-      <Select
-        options={accounts}
-        defaultOption="Choose an account"
-        onChange={onChangeSelectHandler("account")}
-        value={account}
-        valid={state.formControls.account.valid}
-        shouldValidate={!!state.formControls.account.validation}
-        touched={state.formControls.account.touched}
-        errorMessage={state.formControls.account.errorMessage}
-        label={null}/>
+
 
       <Input
         type="date"
