@@ -91,3 +91,9 @@ export function createFormTransferControls() {
 export function isInvalid({valid, touched, shouldValidate}) {
   return !valid && shouldValidate && touched;
 }
+
+export const filteredCategories = (categories, type, isEditing) => {
+  return isEditing
+    ? categories
+    : categories.filter((category) => type ? !category.incomes : category.incomes);
+};

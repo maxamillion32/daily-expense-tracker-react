@@ -1,68 +1,35 @@
 import React, {useState} from "react";
-import {useSelector, useDispatch} from "react-redux";
-import classes from "./Form.module.css";
-
+import {useDispatch, useSelector} from "react-redux";
+// import classes from "./Form.module.css";
 import {
-  postTransaction, updateTransaction,
-  loadTransactions, selectUpdatingTransactionState,
-  selectIsEditing, setIsEditing, deleteTransaction,
-  selectIsExpense, selectIsTransfer
+  deleteTransaction,
+  loadTransactions,
+  postTransaction,
+  selectIsEditing,
+  selectIsExpense,
+  selectIsTransfer,
+  selectUpdatingTransactionState,
+  setIsEditing,
+  updateTransaction
 } from "../../../../reducers/transactions/transactions-slice";
 import {setIsButtonShow, setIsTransactionTypeClick} from "../../../../reducers/navigation/navigation-slice";
-import {
-  findIncomesBalanceCategory,
-  findTransferCategory,
-  selectFilteredCategories
-} from "../../../../reducers/categories/categories-slice";
+import {findTransferCategory, selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
 import {selectFilteredAccounts} from "../../../../reducers/accounts/accounts-slice";
 import {selectUserId} from "../../../../reducers/user/user-slice";
 
 import Input from "../../../common/components/Input/Input";
 import Select from "../../../common/components/Select/Select";
-import Button from "../../../common/components/Button/Button";
+import FormContainer from "./Container/Container";
+import FormButtons from "./Buttons/Buttons";
 
-import {validateForm, updateFormControls, createFormControls, createFormTransferControls} from "./utils/utils";
+import {
+  createFormControls,
+  createFormTransferControls,
+  filteredCategories,
+  updateFormControls,
+  validateForm
+} from "./utils/utils";
 import {isEqual} from "../../../common/utils/utils";
-
-const filteredCategories = (categories, type, isEditing) => {
-  return isEditing
-    ? categories
-    : categories.filter((category) => type ? !category.incomes : category.incomes);
-};
-
-const FormContainer = ({children, onSubmit, nodeRef}) => (
-  <section className={classes.form} >
-      <div className={classes.formWrapper}>
-        <form onSubmit={onSubmit}>
-          <div className={classes.formContainer} ref={nodeRef}>
-            {children}
-          </div>
-        </form>
-      </div>
-    </section>
-);
-
-const FormButtons = ({getIsEditing, update, remove, create, isStateEqual, state}) => {
-  return (getIsEditing ? <>
-                          <Button
-                            title="Update"
-                            onClick={update}
-                            disabled={isStateEqual}
-                          />
-
-                          <Button
-                            title="Delete"
-                            onClick={remove}
-                            disabled={!isStateEqual}
-                          />
-                        </>
-                      : <Button
-                        title="Create"
-                        onClick={create}
-                        disabled={!state.isFormValid}
-                        />
-  );
-};
 
 function TransactionCreateForm() {
   const userId = useSelector(selectUserId);
@@ -78,7 +45,7 @@ function TransactionCreateForm() {
   const dispatch = useDispatch();
 
   const initialDate = new Date().toISOString().slice(0, -14);
-  let formTransaction = {};
+  let formTransaction;
 
   if (getIsEditing) {
     formTransaction = {...getUpdatingTransaction};
@@ -108,12 +75,10 @@ function TransactionCreateForm() {
 
   const [state, setState] = useState(initialState);
 
-  let {
-    id, sum, date, category, account,
-    transfer, expense, showInBalance,
-    accountIdFrom, accountFrom,
-    accountIdTo, accountTo, transferId
-  } = state.formTransaction;
+  let {id, sum, date, category, account,
+       transfer, expense, showInBalance,
+       accountIdFrom, accountFrom,
+       accountIdTo, accountTo, transferId} = state.formTransaction;
 
   const isFormStateEqual = isEqual(state.formTransaction, getUpdatingTransaction);
 
@@ -131,13 +96,9 @@ function TransactionCreateForm() {
   };
 
   const setUserSelect = (selector, value) => {
-    let name = "";
-    let id = "";
-    let category = "";
-    let account = "";
-    let userSelect = {};
+    let userSelect;
 
-    const getId = (data, target) => {
+    const getIdOfSelected = (data, target) => {
       let idItem;
       data.map((item) => {
         if (item.title === target) {
@@ -148,44 +109,35 @@ function TransactionCreateForm() {
       return idItem;
     };
 
-    if (selector === "account") {
-      name = "accountId";
-      id = getId(accounts, value);
-      account = value;
-      userSelect = {
-        [name]: id,
-        account,
+    const getUserSelect = (itemId, itemValue, id) => {
+      return {
+        [itemId]: id,
+        [itemValue]: value,
       };
+    };
+
+    if (selector === "account") {
+      const selectorID = "accountId";
+      id = getIdOfSelected(accounts, value);
+      userSelect = getUserSelect(selectorID, selector, id);
     }
 
     if (selector === "accountFrom") {
-      name = "accountIdFrom";
-      id = getId(accounts, value);
-      account = value;
-      userSelect = {
-        [name]: id,
-        accountFrom: account
-      };
+      const selectorID = "accountIdFrom";
+      id = getIdOfSelected(accounts, value);
+      getUserSelect(selectorID, selector, id);
     }
 
     if (selector === "accountTo") {
-      name = "accountIdTo";
-      id = getId(accounts, value);
-      account = value;
-      userSelect = {
-        [name]: id,
-        accountTo: account
-      };
+      const selectorID = "accountIdTo";
+      id = getIdOfSelected(accounts, value);
+      userSelect = getUserSelect(selectorID, selector, id);
     }
 
     if (selector === "category") {
-      name = "categoryId";
-      id = getId(categories, value);
-      category = value;
-      userSelect = {
-        [name]: id,
-        category,
-      };
+      const selectorID = "categoryId";
+      id = getIdOfSelected(categories, value);
+      userSelect = getUserSelect(selectorID, selector, id);
     }
 
     return {
@@ -253,28 +205,26 @@ function TransactionCreateForm() {
     if (transfer) {
       dispatch(postTransaction(
         {
-          sum, expense, date, userId, transfer,
+          sum, expense, date, userId, transfer, transferId,
           categoryId: transferCategory.id,
           accountId: accountIdFrom,
-          showInBalance: false,
-          transferId
+          showInBalance: false
         }));
       dispatch(postTransaction(
         {
-          sum, date, userId, transfer,
+          sum, date, userId, transfer, transferId,
           expense: false,
           categoryId: transferCategory.id,
           accountId: accountIdTo,
-          showInBalance: false,
-          transferId
+          showInBalance: false
         }));
       dispatch(postTransaction(
         {
-          sum, date, showInBalance, userId, transfer, accountFrom, accountTo, accountIdFrom, accountIdTo,
+          sum, date, showInBalance, userId, transfer, accountFrom,
+          accountTo, accountIdFrom, accountIdTo, transferId,
           expense: null,
           categoryId: transferCategory.id,
-          accountId: accountIdTo,
-          transferId
+          accountId: accountIdTo
         }));
     } else {
       dispatch(postTransaction({...state.formTransaction, userId}));
@@ -343,31 +293,29 @@ function TransactionCreateForm() {
                         label={null}
                       />
                     </>
-                      : <>
-                          <Select
-                            options={filteredCategories(categories, getIsExpense, getIsEditing)}
-                            defaultOption="Choose a category"
-                            onChange={onChangeSelectHandler("category")}
-                            value={category}
-                            valid={state.formControls.category.valid}
-                            shouldValidate={!!state.formControls.category.validation}
-                            touched={state.formControls.category.touched}
-                            errorMessage={state.formControls.category.errorMessage}
-                            label={null}/>
-                          <Select
-                            options={accounts}
-                            defaultOption="Choose an account"
-                            onChange={onChangeSelectHandler("account")}
-                            value={account}
-                            valid={state.formControls.account.valid}
-                            shouldValidate={!!state.formControls.account.validation}
-                            touched={state.formControls.account.touched}
-                            errorMessage={state.formControls.account.errorMessage}
-                            label={null}/>
-                        </>
+                  : <>
+                      <Select
+                        options={filteredCategories(categories, getIsExpense, getIsEditing)}
+                        defaultOption="Choose a category"
+                        onChange={onChangeSelectHandler("category")}
+                        value={category}
+                        valid={state.formControls.category.valid}
+                        shouldValidate={!!state.formControls.category.validation}
+                        touched={state.formControls.category.touched}
+                        errorMessage={state.formControls.category.errorMessage}
+                        label={null}/>
+                      <Select
+                        options={accounts}
+                        defaultOption="Choose an account"
+                        onChange={onChangeSelectHandler("account")}
+                        value={account}
+                        valid={state.formControls.account.valid}
+                        shouldValidate={!!state.formControls.account.validation}
+                        touched={state.formControls.account.touched}
+                        errorMessage={state.formControls.account.errorMessage}
+                        label={null}/>
+                    </>
       }
-
-
 
       <Input
         type="date"
