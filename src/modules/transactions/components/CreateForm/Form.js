@@ -17,7 +17,7 @@ import Input from "../../../common/components/Input/Input";
 import Select from "../../../common/components/Select/Select";
 import Button from "../../../common/components/Button/Button";
 
-import {validateForm, updateFormControls, createFormControls} from "./utils/utils";
+import {validateForm, updateFormControls, createFormControls, createFormTransferControls} from "./utils/utils";
 import {isEqual} from "../../../common/utils/utils";
 
 const filteredCategories = (categories, type, isEditing) => {
@@ -90,7 +90,9 @@ function TransactionCreateForm() {
 
   let initialState = {
     isFormValid: false,
-    formControls: updateFormControls("date", initialDate, createFormControls()),
+    formControls: formTransaction.transfer
+      ? updateFormControls("date", initialDate, createFormTransferControls())
+      : updateFormControls("date", initialDate, createFormControls()),
     formTransaction
   };
 

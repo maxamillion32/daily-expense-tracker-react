@@ -65,6 +65,23 @@ export function createFormControls() {
   };
 }
 
+export function createFormTransferControls() {
+  return {
+    sum: createControl({
+      errorMessage: "Please fill out this field"
+    }, {required: true}),
+    date: createControl({
+      errorMessage: "Choose a date please",
+    }, {required: true}),
+    accountFrom: createControl({
+      errorMessage: "Choose an account please",
+    }, {required: true}),
+    accountTo: createControl({
+      errorMessage: "Choose an account please",
+    }, {required: true}),
+  };
+}
+
 // interface isInvalidProps {
 //   valid: boolean,
 //   touched: boolean,
