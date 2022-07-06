@@ -32,9 +32,19 @@ export const create = async (data) => {
   await addDoc(transactionsRef, data);
 };
 
-export const deleteId = async (id) => {
-    const docRef = doc(transactionsRef, id);
+export const deleteId = async ({id, transferId}) => {
+  let docRef = doc(transactionsRef, id);
+  if (transferId) {
+    const transactionsQuery = query(transactionsRef, where("transferId", "==", transferId));
+    const snapshotTransactions = await getDocs(transactionsQuery);
+
+    const transactions = snapshotTransactions.docs.map((doc) => ({...doc.data(), id: doc.id}));
+    for (const item of transactions) {
+      await deleteDoc(doc(db, "transactions", item.id));
+    }
+  } else {
     await deleteDoc(docRef);
+  }
 };
 
 export const update = async (data) => {
