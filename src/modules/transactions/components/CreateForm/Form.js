@@ -78,7 +78,8 @@ function TransactionCreateForm() {
   let {id, sum, date, category, account,
        transfer, expense, showInBalance,
        accountIdFrom, accountFrom,
-       accountIdTo, accountTo, transferId} = state.formTransaction;
+       accountIdTo, accountTo, transferId,
+       categoryId, accountId} = state.formTransaction;
 
   const isFormStateEqual = isEqual(state.formTransaction, getUpdatingTransaction);
 
@@ -227,7 +228,7 @@ function TransactionCreateForm() {
           accountId: accountIdTo
         }));
     } else {
-      dispatch(postTransaction({...state.formTransaction, userId}));
+      dispatch(postTransaction({categoryId, accountId, date, sum, expense, showInBalance, userId}));
     }
     dispatch(loadTransactions(userId));
     dispatch(setIsTransactionTypeClick());
