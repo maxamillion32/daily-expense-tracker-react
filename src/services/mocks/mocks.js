@@ -103,8 +103,9 @@ const generateTransactions = (count, accountsForFirebase, categoriesForFirebase)
         ? getRandomInt(SALARY_RANGE.MIN, SALARY_RANGE.MAX)
         : getRandomInt(RANGE.MIN, RANGE.MAX),
       userId: DEMO_USER_ID,
+      showInBalance: true
     };
   })
 );
 
-export const transactionsForFirebase = generateTransactions(200, accountsForFirebase, categoriesForFirebase);
+export const transactionsForFirebase = generateTransactions(150, accountsForFirebase, categoriesForFirebase);
