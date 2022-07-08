@@ -1,9 +1,9 @@
 import {
-  getMonthAverageSum,
-  getMonthSum,
-  getMonthTotalPercent,
   getCategoryBalance,
-  getMonthCountPerCategory
+  getMonthAverageSum,
+  getMonthCountPerCategory,
+  getMonthSum,
+  getMonthTotalPercent
 } from "./utils/utils";
 import {TRANSACTION_TYPE} from "./utils/constants";
 
@@ -28,16 +28,12 @@ export class Statistics {
 
   _getExcessPercent(balance, sum) {
     const percent = getMonthTotalPercent(balance, sum, this.transactions);
-    const expensesPercent = percent > 100 ? percent - 100 : 0;
-
-    return expensesPercent;
+    return percent > 100 ? percent - 100 : 0;
   }
 
   _getExcessBudgetPercent(balance, sum) {
     const percent = balance / sum * 100;
-    const expensesPercent = percent > 100 ? percent - 100 : 0;
-
-    return expensesPercent;
+    return percent > 100 ? percent - 100 : 0;
   }
 
   _getTotalPercent(balance, sum) {
@@ -50,7 +46,7 @@ export class Statistics {
   }
 
   _categoryId(category, type) {
-    const isIncomes = type === "incomes" ? true : false;
+    const isIncomes = type === "incomes";
 
     return this.allCategories
       .filter((item) => item.incomes === isIncomes)
@@ -60,28 +56,30 @@ export class Statistics {
 
   categories(type) {
     const uniqueCategory = [...new Set(this.monthTransactions
-    .filter((transaction) => (type === TRANSACTION_TYPE.EXPENSES ? transaction.expense : !transaction.expense)
-      ? transaction.sum !== 0
-      : transaction = null)
-    .map(transaction => transaction.category.title))];
+      .filter((transaction) => (
+        type === TRANSACTION_TYPE.EXPENSES
+          ? transaction.expense
+          : transaction.expense === null ? null : !transaction.expense
+      )
+        ? transaction.sum !== 0
+        : transaction = null)
+      .map(transaction => transaction.category.title))];
 
-    const sortCategory = uniqueCategory
+    return uniqueCategory
       .map((category) => this.monthTransactions
-      .map((transaction) => transaction.category.title === category
-        ? (type === "expenses" ? transaction.expense : !transaction.expense)
-          ? transaction = {[category]: +transaction.sum}
-          : transaction = null
-        : null)
+        .map((transaction) => transaction.category.title === category
+          ? (type === "expenses" ? transaction.expense : !transaction.expense)
+            ? transaction = {[category]: +transaction.sum}
+            : transaction = null
+          : null)
         .filter((item) => item ? item : null)
         .reduce((acc, sum) => {
           return {
             [category]: acc[category] + sum[category]
           };
         }))
-        .sort((a, b) => Object.values(b) - Object.values(a))
-        .map((item) => Object.keys(item)).flat();
-
-    return sortCategory;
+      .sort((a, b) => Object.values(b) - Object.values(a))
+      .map((item) => Object.keys(item)).flat();
   }
 
   sum() {
@@ -128,9 +126,7 @@ export class Statistics {
 
   percentCategory(balance, sum) {
     let percent = (balance / sum * 100).toFixed(2);
-    const expensesPercent = percent > 99.9 ? 100 : percent;
-
-    return expensesPercent;
+    return percent > 99.9 ? 100 : percent;
   }
 
   excessCategoryPercent(category, type) {
@@ -142,9 +138,7 @@ export class Statistics {
     const percent = budget
       ? balance / budget * 100
       : getMonthTotalPercent(balance, balancePerCategory, this.transactions, category);
-    const expensesPercent = percent > 100 ? percent - 100 : 0;
-
-    return expensesPercent;
+    return percent > 100 ? percent - 100 : 0;
   }
 
   balanceCurrentCategory(category, type) {
