@@ -14,26 +14,8 @@ import {isEqual} from "../../../common/utils/utils";
 
 import classes from "./Budget.module.css";
 import WidgetsBudgetItem from "./Items/Item";
-
-const BudgetContentWrapper = ({children}) => (
-  <div className={classes.Content}>
-    {children}
-  </div>
-);
-
-const BudgetHeader = ({onClick, isDisabled}) => (
-  <div className={classes.HeaderWrapper}>
-    <p className={classes.Header}>Budget</p>
-    <button
-        className={classes.Button}
-        type="submit"
-        onClick={onClick}
-        disabled={isDisabled}
-      >
-        Update
-      </button>
-  </div>
-);
+import BudgetContentWrapper from "./Wrapper/Wrapper";
+import BudgetHeader from "./Header/Header";
 
 function WidgetsBudget() {
   const currentMonth = useSelector(selectCurrentMonth);
@@ -44,10 +26,7 @@ function WidgetsBudget() {
   const updatedBudget = useSelector(selectUpdatedBudgetState);
   const dispatch = useDispatch();
 
-  // const newBudget = budget && Object.keys(budget).length !== 0 && budget;
-  // const newUpdatedBudget = updatedBudget && Object.keys(updatedBudget).length !== 0 && updatedBudget;
-
-  const prevBudget = useMemo(() => isEqual(budget, updatedBudget), [budget, updatedBudget]);
+  const prevBudget = useMemo(() => isEqual(budget[currentYear][currentMonth], updatedBudget[currentYear][currentMonth]), [budget, updatedBudget, currentMonth, currentYear]);
 
   const onInputChange = ({target}) => {
     const id = target.id;
