@@ -190,7 +190,7 @@ function TransactionCreateForm() {
       if (transfer) {
         await dispatch(deleteTransaction({id, transferId}));
       } else {
-        await dispatch(deleteTransaction(id));
+        await dispatch(deleteTransaction({id}));
       }
 
       dispatch(loadTransactions(userId));
