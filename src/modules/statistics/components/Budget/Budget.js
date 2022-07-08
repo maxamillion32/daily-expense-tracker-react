@@ -26,7 +26,7 @@ function WidgetsBudget() {
   const updatedBudget = useSelector(selectUpdatedBudgetState);
   const dispatch = useDispatch();
 
-  const prevBudget = useMemo(() => isEqual(budget[currentYear][currentMonth], updatedBudget[currentYear][currentMonth]), [budget, updatedBudget, currentMonth, currentYear]);
+  const prevBudget = useMemo(() => budget.length !== 0 && updatedBudget.length !== 0 && isEqual(budget[currentYear][currentMonth], updatedBudget[currentYear][currentMonth]), [budget, updatedBudget, currentMonth, currentYear]);
 
   const onInputChange = ({target}) => {
     const id = target.id;
