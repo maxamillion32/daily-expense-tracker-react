@@ -2,47 +2,19 @@ import React, {useEffect, lazy, Suspense} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import classes from "./Container.module.css";
-import {
-  selectAllTransactionsState,
-  setIsEditing, selectIsLoading,
-  setIsTransfer
-} from "../../../reducers/transactions/transactions-slice";
-import {
-  setIsAddButtonClick, selectIsTransactionTypeClick,
-  setIsButtonShow, setIsTransactionTypeClick
-} from "../../../reducers/navigation/navigation-slice";
+import {selectAllTransactionsState, selectIsLoading} from "../../../reducers/transactions/transactions-slice";
+import {setIsButtonShow} from "../../../reducers/navigation/navigation-slice";
 import {selectUserId} from "../../../reducers/user/user-slice";
 
 import Search from "./Search/Search";
 import Loader from "../../common/components/Loader/Loader";
 import Welcome from "../../welcome/components/Welcome";
-import Popup from "../../common/components/Popup/Popup";
-import TransactionCreateForm from "./CreateForm/Form";
+import CreateFormPopup from "./Popup/Popup";
 // import WithNavigation from "../../common/hoc/WithNavigation/WithNavigation";
 
 // import TransactionsListContainer from "./List/Container";
 // import Balance from "./Balance/Balance";
 // import Chart from "./Chart/Chart";
-
-const CreateFormPopup = () => {
-  const isPopupShow = useSelector(selectIsTransactionTypeClick);
-  const dispatch = useDispatch();
-
-  const handlePopupClose = () => {
-      dispatch(setIsTransactionTypeClick());
-      dispatch(setIsAddButtonClick(false));
-      dispatch(setIsButtonShow(true));
-      dispatch(setIsEditing(false));
-      dispatch(setIsTransfer(false));
-  };
-
-  return (
-    <Popup
-      showPopup={isPopupShow}
-      setShowPopup={handlePopupClose}>
-      <TransactionCreateForm />
-    </Popup>);
-  };
 
 function TransactionsContainer() {
   const TransactionsListContainer = lazy(() => import("./List/Container"));
