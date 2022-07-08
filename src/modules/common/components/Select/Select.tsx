@@ -34,12 +34,12 @@ function Select ({defaultOption, options, onChange, errorMessage, valid, touched
             </option>
           );
         })}
-        {
+      </select>
+      {
         isInvalid({valid, touched, shouldValidate})
         ? <span>{errorMessage || "Enter correct value"}</span>
         : null
       }
-      </select>
     </div>
   );
 }
