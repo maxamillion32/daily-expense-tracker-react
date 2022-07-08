@@ -20,10 +20,58 @@ function TransactionsItem(
     dispatch(setIsButtonShow());
     dispatch(setIsEditing(true));
     dispatch(updatingTransaction(
-      {id, sum, date, expense,
-        category: categoryTitle,
-        account: accountTitle,
-        categoryId, accountId, transfer, transferId, accountFrom, accountTo, accountIdFrom, accountIdTo
+      {
+        formControls: {
+          account: {
+            errorMessage: "Please choose account",
+            touched: true,
+            valid: true,
+            validation: {required: true},
+            value: accountTitle
+          },
+          category: {
+            errorMessage: "Please choose category",
+            touched: true,
+            valid: true,
+            validation: {required: true},
+            value: categoryTitle
+          },
+          accountFrom: {
+            errorMessage: "Please choose another account",
+            touched: true,
+            valid: true,
+            validation: {required: true},
+            value: accountFrom
+          },
+          accountTo: {
+            errorMessage: "Please choose another account",
+            touched: true,
+            valid: true,
+            validation: {required: true},
+            value: accountTo
+          },
+          date: {
+            errorMessage: "Choose a date please",
+            touched: true,
+            valid: true,
+            validation: {required: true},
+            value: date
+          },
+          sum: {
+            errorMessage: "Please fill out this field",
+            touched: true,
+            valid: true,
+            validation: {required: true},
+            value: sum
+          }
+        },
+        formTransaction: {
+          id, sum, date, expense, categoryId, accountId, transfer,
+          transferId, accountFrom, accountTo, accountIdFrom, accountIdTo,
+          category: categoryTitle,
+          account: accountTitle
+        },
+        isFormValid: true
       }));
   };
 
