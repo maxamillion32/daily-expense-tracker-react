@@ -16,7 +16,7 @@ function validate(value, validation = null) {
   let isValid = true;
 
   if (validation.required) {
-    isValid = value.trim() !== "" && isValid;
+    isValid = value && value.trim() !== "" && isValid;
   }
 
   return isValid;
@@ -42,6 +42,23 @@ export function updateFormControls(name, value, state) {
   control.touched = true;
   control.value = value;
   control.valid = validate(control.value, control.validation);
+
+  if (formControls.accountFrom) {
+    if (formControls["accountFrom"].value === value) {
+      control.valid = false;
+    } else {
+      const control = {...formControls["accountFrom"]};
+      control.valid = validate(control.value, control.validation);
+      formControls["accountFrom"] = control;
+    }
+    if (formControls["accountTo"].value === value) {
+      control.valid = false;
+    } else {
+      const control = {...formControls["accountTo"]};
+      control.valid = validate(control.value, control.validation);
+      formControls["accountTo"] = control;
+    }
+  }
 
   formControls[name] = control;
 
@@ -74,10 +91,10 @@ export function createFormTransferControls() {
       errorMessage: "Choose a date please",
     }, {required: true}),
     accountFrom: createControl({
-      errorMessage: "Choose an account please",
+      errorMessage: "Please choose another account",
     }, {required: true}),
     accountTo: createControl({
-      errorMessage: "Choose an account please",
+      errorMessage: "Please choose another account",
     }, {required: true}),
   };
 }

@@ -9,7 +9,7 @@ import {
   selectIsExpense,
   selectIsTransfer,
   selectUpdatingTransactionState,
-  setIsEditing,
+  setIsEditing, setIsTransfer,
   updateTransaction
 } from "../../../../reducers/transactions/transactions-slice";
 import {setIsButtonShow, setIsTransactionTypeClick} from "../../../../reducers/navigation/navigation-slice";
@@ -45,33 +45,34 @@ function TransactionCreateForm() {
   const dispatch = useDispatch();
 
   const initialDate = new Date().toISOString().slice(0, -14);
-  let formTransaction;
 
-  if (getIsEditing) {
-    formTransaction = {...getUpdatingTransaction};
-  } else {
-    formTransaction = {
-      id: "",
-      sum: "",
-      date: initialDate,
-      expense: getIsExpense,
-      showInBalance: true,
-      transfer: getIsTransfer,
-      accountIdFrom: "",
-      accountIdTo: "",
-      transferId: new Date().toISOString(),
-      accountFrom: "",
-      accountTo: ""
-    };
-  }
-
-  let initialState = {
-    isFormValid: false,
-    formControls: formTransaction.transfer
-      ? updateFormControls("date", initialDate, createFormTransferControls())
-      : updateFormControls("date", initialDate, createFormControls()),
-    formTransaction
+  const getInitState = () => {
+    if (getIsEditing) {
+      return getUpdatingTransaction;
+    } else {
+      return {
+        formControls: getIsTransfer
+          ? updateFormControls("date", initialDate, createFormTransferControls())
+          : updateFormControls("date", initialDate, createFormControls()),
+        formTransaction: {
+          id: "",
+          sum: "",
+          date: initialDate,
+          expense: getIsExpense,
+          showInBalance: true,
+          transfer: getIsTransfer,
+          accountIdFrom: "",
+          accountIdTo: "",
+          transferId: new Date().toISOString(),
+          accountFrom: "",
+          accountTo: ""
+        },
+        isFormValid: false,
+      };
+    }
   };
+
+  let initialState = getInitState();
 
   const [state, setState] = useState(initialState);
 
@@ -81,7 +82,7 @@ function TransactionCreateForm() {
        accountIdTo, accountTo, transferId,
        categoryId, accountId} = state.formTransaction;
 
-  const isFormStateEqual = isEqual(state.formTransaction, getUpdatingTransaction);
+  const isFormStateEqual = isEqual(state, getUpdatingTransaction);
 
   const setUserInput = (name, value) => {
     if (name === "expense") {
@@ -159,13 +160,13 @@ function TransactionCreateForm() {
 
   const onChangeSelectHandler = (selector) => (e) => {
     const value = e.target.value;
-    const formControls = updateFormControls(selector, value, state.formControls);
+    let formControls = updateFormControls(selector, value, state.formControls);
 
-    setState({
-      formControls,
-      isFormValid: validateForm(formControls),
-      formTransaction: setUserSelect(selector, value)
-    });
+      setState({
+        formControls,
+        isFormValid: validateForm(formControls),
+        formTransaction: setUserSelect(selector, value)
+      });
   };
 
   const updateTransactionHandler = async () => {
@@ -179,6 +180,7 @@ function TransactionCreateForm() {
     dispatch(setIsTransactionTypeClick());
     dispatch(setIsButtonShow(true));
     dispatch(setIsEditing(false));
+    dispatch(setIsTransfer(false));
   };
 
   const deleteTransactionHandler = async () => {
@@ -195,6 +197,7 @@ function TransactionCreateForm() {
       dispatch(setIsTransactionTypeClick());
       dispatch(setIsButtonShow(true));
       dispatch(setIsEditing(false));
+      dispatch(setIsTransfer(false));
     }
   };
 
@@ -234,6 +237,7 @@ function TransactionCreateForm() {
     dispatch(setIsTransactionTypeClick());
     dispatch(setIsButtonShow(true));
     dispatch(setIsEditing(false));
+    dispatch(setIsTransfer(false));
 
     setState(initialState);
   };
