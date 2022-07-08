@@ -31,7 +31,7 @@ function TransactionsDateHeader({date, transactions}) {
           </div>
         </div>
       {overallBalance === 0
-        ? ""
+        ? "0 €"
         : <p>{overallBalance < 0 ? "" : "+"}{overallBalance} €</p>}
     </div>
   );
