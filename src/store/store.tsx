@@ -8,7 +8,7 @@ import navigationReducer from "../reducers/navigation/navigation-slice";
 import budgetReducer from "../reducers/budget/budget-slice";
 import userReducer from "../reducers/user/user-slice";
 
-export default configureStore({
+export const store = configureStore({
   reducer: {
     transactions: transactionsReducer,
     categories: categoriesReducer,
@@ -19,3 +19,6 @@ export default configureStore({
     user: userReducer,
   },
 });
+
+export type RootState = ReturnType<typeof store.getState>
+export type AppDispatch = typeof store.dispatch

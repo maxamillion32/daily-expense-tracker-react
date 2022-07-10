@@ -2,6 +2,7 @@ import {createSlice, createAsyncThunk, PayloadAction} from "@reduxjs/toolkit";
 
 import {getAll, create, update, deleteId} from "../../services/account-service";
 import {IAccounts} from "../../models/models";
+import {RootState} from "../../store/store";
 
 export const loadAccounts = createAsyncThunk(
   "accounts/loadData",
@@ -71,18 +72,18 @@ export const accountsSlice = createSlice({
   },
 });
 
-export const selectAllAccountsState = (state: {accounts: {allAccounts: IAccounts[];};}) => state.accounts.allAccounts;
-export const selectNewAccountsState = (state: {accounts: {newAccount: [];};}) => state.accounts.newAccount;
-export const selectIsLoading = (state: {accounts: {isLoading: boolean;};}) => state.accounts.isLoading;
+export const selectAllAccountsState = (state: RootState) => state.accounts.allAccounts;
+export const selectNewAccountsState = (state: RootState) => state.accounts.newAccount;
+export const selectIsLoading = (state: RootState) => state.accounts.isLoading;
 
-export const selectFilteredAccounts = (state: { accounts: { allAccounts: IAccounts[]; }; }) => {
+export const selectFilteredAccounts = (state: RootState) => {
   const allAccounts = [...selectAllAccountsState(state)];
 
   return allAccounts
     .sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1);
 };
 
-export const selectAccountBalance = (state: {accounts: {allAccounts: IAccounts[];};}) => {
+export const selectAccountBalance = (state: RootState) => {
   const allAccounts = selectAllAccountsState(state);
 
   const getStartBalance = (allAccounts: IAccounts[]) => {
