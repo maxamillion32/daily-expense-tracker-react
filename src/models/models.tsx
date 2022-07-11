@@ -25,3 +25,17 @@ export interface ITransaction {
   sum: number
   userId: boolean
 }
+
+interface ItemBudget {
+  [key: string]: number
+}
+
+interface MonthBudget {
+  expenses: ItemBudget[]
+  incomes: ItemBudget[]
+}
+
+export interface IBudget {
+  // id: string
+  [key: string]: MonthBudget[]
+}
