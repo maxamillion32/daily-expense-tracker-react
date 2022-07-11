@@ -1,10 +1,12 @@
-import {createSlice} from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {RootState} from "../../store/store";
+
 
 export const searchTermSlice = createSlice({
   name: "searchTerm",
   initialState: "",
   reducers: {
-    setSearchTerm: (state, action) => {
+    setSearchTerm: (state, action: PayloadAction<string>) => {
       return action.payload;
       },
     clearSearchTerm: () => {
@@ -13,7 +15,7 @@ export const searchTermSlice = createSlice({
     },
 });
 
-export const selectSearchTerm = (state) => state.searchTerm;
+export const selectSearchTerm = (state: RootState) => state.searchTerm;
 
 export const {
   setSearchTerm,
