@@ -1,7 +1,7 @@
 import {createSlice, createAsyncThunk, PayloadAction} from "@reduxjs/toolkit";
 
 import {getAll, create, deleteId, update} from "../../services/category-service";
-import {ICategories} from "../../models/models";
+import {ICategory} from "../../models/models";
 import {RootState} from "../../store/store";
 
 export const loadCategories = createAsyncThunk(
@@ -20,7 +20,7 @@ export const postCategory = createAsyncThunk(
 
 export const updateCategory = createAsyncThunk(
   "categories/updateData",
-  async (data: ICategories) => {
+  async (data: ICategory) => {
     const {id} = data;
     return await update(id, data);
   }
@@ -34,12 +34,12 @@ export const deleteCategory = createAsyncThunk(
 );
 
 interface CategoryState {
-  allCategories: ICategories[],
+  allCategories: ICategory[],
   newCategory: {
     title: string,
   },
-  popupItem: ICategories[],
-  popupPrevItem: ICategories[],
+  popupItem: ICategory[],
+  popupPrevItem: ICategory[],
   isLoading: boolean,
 }
 
@@ -61,7 +61,7 @@ const initialState: CategoryState = {
     [loadCategories.pending.type]: (state) => {
       state.isLoading = true;
     },
-    [loadCategories.fulfilled.type]: (state, action: PayloadAction<ICategories[]>) => {
+    [loadCategories.fulfilled.type]: (state, action: PayloadAction<ICategory[]>) => {
       state.allCategories = action.payload;
       state.isLoading = false;
     },

@@ -1,7 +1,7 @@
 import {createSlice, createAsyncThunk, PayloadAction} from "@reduxjs/toolkit";
 
 import {getAll, create, update, deleteId} from "../../services/account-service";
-import {IAccounts} from "../../models/models";
+import {IAccount} from "../../models/models";
 import {RootState} from "../../store/store";
 
 export const loadAccounts = createAsyncThunk(
@@ -20,7 +20,7 @@ export const postAccount = createAsyncThunk(
 
 export const updateAccount = createAsyncThunk(
   "accounts/updateData",
-  async ({id, title, userId, startBalance, balance}: IAccounts) => {
+  async ({id, title, userId, startBalance, balance}: IAccount) => {
     return await update(id, title, userId, startBalance, balance);
   }
 );
@@ -33,7 +33,7 @@ export const deleteAccount = createAsyncThunk(
 );
 
 interface AccountsState {
-  allAccounts: IAccounts[],
+  allAccounts: IAccount[],
   newAccount: {
     title: string,
     balance: number,
@@ -62,7 +62,7 @@ export const accountsSlice = createSlice({
     [loadAccounts.pending.type]: (state) => {
       state.isLoading = true;
     },
-    [loadAccounts.fulfilled.type]: (state, action: PayloadAction<IAccounts[]>) => {
+    [loadAccounts.fulfilled.type]: (state, action: PayloadAction<IAccount[]>) => {
       state.allAccounts = action.payload;
       state.isLoading = false;
     },
@@ -86,7 +86,7 @@ export const selectFilteredAccounts = (state: RootState) => {
 export const selectAccountBalance = (state: RootState) => {
   const allAccounts = selectAllAccountsState(state);
 
-  const getStartBalance = (allAccounts: IAccounts[]) => {
+  const getStartBalance = (allAccounts: IAccount[]) => {
     return [...new Set(allAccounts
     .map((account) => +account.startBalance))]
     .reduce((a, b) => a + b, 0);
