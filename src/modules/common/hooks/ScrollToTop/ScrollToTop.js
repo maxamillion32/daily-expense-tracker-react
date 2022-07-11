@@ -11,7 +11,7 @@ export default function ScrollToTop() {
   useEffect(() => {
     window.scrollTo(0, 0);
     if (isAddButtonClick) {
-      dispatch(setIsAddButtonClick());
+      dispatch(setIsAddButtonClick(false));
     }
   }, [pathname]);
 

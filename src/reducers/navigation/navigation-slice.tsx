@@ -20,13 +20,13 @@ export const navigationSlice = createSlice({
     setIsButtonShow: (state, action: PayloadAction<boolean>) => {
       return {
         ...state,
-        isButtonShow: action.payload === "" ? !state.isButtonShow : action.payload,
+        isButtonShow: action.payload,
       };
     },
     setIsAddButtonClick: (state, action: PayloadAction<boolean>) => {
       return {
         ...state,
-        isAddButtonClick: action.payload === "" ? !state.isAddButtonClick : action.payload,
+        isAddButtonClick: action.payload,
       };
     },
     setIsTransactionTypeClick: (state) => {

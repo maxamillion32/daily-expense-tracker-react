@@ -17,7 +17,7 @@ function TransactionsItem(
 
   const onItemClick = () => {
     dispatch(setIsTransactionTypeClick());
-    dispatch(setIsButtonShow());
+    dispatch(setIsButtonShow(false));
     dispatch(setIsEditing(true));
     dispatch(updatingTransaction(
       {
