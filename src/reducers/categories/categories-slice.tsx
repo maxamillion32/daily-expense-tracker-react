@@ -1,10 +1,12 @@
-import {createSlice, createAsyncThunk} from "@reduxjs/toolkit";
+import {createSlice, createAsyncThunk, PayloadAction} from "@reduxjs/toolkit";
 
 import {getAll, create, deleteId, update} from "../../services/category-service";
+import {ICategories} from "../../models/models";
+import {RootState} from "../../store/store";
 
 export const loadCategories = createAsyncThunk(
   "categories/loadData",
-  async (userId) => {
+  async (userId: string) => {
     return await getAll(userId);
   }
 );
@@ -18,7 +20,7 @@ export const postCategory = createAsyncThunk(
 
 export const updateCategory = createAsyncThunk(
   "categories/updateData",
-  async (data) => {
+  async (data: ICategories) => {
     const {id} = data;
     return await update(id, data);
   }
@@ -26,45 +28,54 @@ export const updateCategory = createAsyncThunk(
 
 export const deleteCategory = createAsyncThunk(
   "categories/deleteData",
-  async (categoryId) => {
+  async (categoryId: string) => {
     return await deleteId(categoryId);
   }
 );
 
-export const categoriesSlice = createSlice({
-  name: "categories",
-  initialState: {
-    allCategories: [],
-    newCategory: {
-      title: "",
-    },
-    popupItem: {},
-    popupPrevItem: {},
-    isLoading: false,
+interface CategoryState {
+  allCategories: ICategories[],
+  newCategory: {
+    title: string,
   },
+  popupItem: ICategories[],
+  popupPrevItem: ICategories[],
+  isLoading: boolean,
+}
+
+const initialState: CategoryState = {
+  allCategories: [],
+  newCategory: {
+    title: "",
+  },
+  popupItem: [],
+  popupPrevItem: [],
+  isLoading: false,
+};
+
+  export const categoriesSlice = createSlice({
+  name: "categories",
+  initialState,
   reducers: {},
   extraReducers: {
-    [loadCategories.pending]: (state) => {
+    [loadCategories.pending.type]: (state) => {
       state.isLoading = true;
-      state.hasError = false;
     },
-    [loadCategories.fulfilled]: (state, action) => {
+    [loadCategories.fulfilled.type]: (state, action: PayloadAction<ICategories[]>) => {
       state.allCategories = action.payload;
       state.isLoading = false;
-      state.hasError = false;
     },
-    [loadCategories.rejected]: (state) => {
+    [loadCategories.rejected.type]: (state) => {
       state.isLoading = false;
-      state.hasError = true;
     },
   },
 });
 
-export const selectAllCategories = (state) => state.categories.allCategories;
-export const selectNewCategoryState = (state) => state.categories.newCategory;
-export const selectIsLoading = (state) => state.categories.isLoading;
+export const selectAllCategories = (state: RootState) => state.categories.allCategories;
+export const selectNewCategoryState = (state: RootState) => state.categories.newCategory;
+export const selectIsLoading = (state: RootState) => state.categories.isLoading;
 
-export const selectFilteredCategories = (state) => {
+export const selectFilteredCategories = (state: RootState) => {
   const allCategories = [...selectAllCategories(state)];
 
   return allCategories
@@ -72,19 +83,19 @@ export const selectFilteredCategories = (state) => {
     .sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1);
 };
 
-export const findIncomesBalanceCategory = (state) => {
+export const findIncomesBalanceCategory = (state: RootState) => {
   const allCategories = [...selectAllCategories(state)];
 
   return allCategories.find((category) => category.title === "Balance" && category.incomes === true);
 };
 
-export const findExpensesBalanceCategory = (state) => {
+export const findExpensesBalanceCategory = (state: RootState) => {
   const allCategories = [...selectAllCategories(state)];
 
   return allCategories.find((category) => category.title === "Balance" && category.incomes === true);
 };
 
-export const findTransferCategory = (state) => {
+export const findTransferCategory = (state: RootState) => {
   const allCategories = [...selectAllCategories(state)];
 
   return allCategories.find((category) => category.title === "Transfer");
