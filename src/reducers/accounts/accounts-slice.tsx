@@ -13,7 +13,7 @@ export const loadAccounts = createAsyncThunk(
 
 export const postAccount = createAsyncThunk(
   "accounts/addData",
-  async (newAccount: []) => {
+  async (newAccount: IAccount) => {
     return await create(newAccount);
   }
 );

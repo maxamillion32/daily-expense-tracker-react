@@ -1,6 +1,6 @@
 export interface IAccount {
   id: string
-  balance: string
+  balance: number
   startBalance: number
   title: string
   userId: string
