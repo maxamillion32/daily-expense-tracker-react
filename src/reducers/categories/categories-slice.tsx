@@ -13,7 +13,7 @@ export const loadCategories = createAsyncThunk(
 
 export const postCategory = createAsyncThunk(
   "categories/addData",
-  async (newCategory) => {
+  async (newCategory: ICategory) => {
     return await create(newCategory);
   }
 );

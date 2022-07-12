@@ -5,6 +5,7 @@ import {IAccount} from "../models/models";
 const accountsRef = collection(db, "accounts");
 
 export const getAll = async (userId: string) => {
+  //TODO: fix that
   let results: {id: string;}[] = [];
   if (userId) {
     const q = query(accountsRef, where("userId", "==", userId));

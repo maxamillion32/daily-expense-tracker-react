@@ -1,10 +1,12 @@
 import {addDoc, collection, setDoc, doc, deleteDoc, getDocs, query, where} from "@firebase/firestore";
 import db from "./firebase/firebase-service";
+import {ICategory} from "../models/models";
 
 const categoriesRef = collection(db, "categories");
 
-export const getAll = async (userId) => {
-  let results = [];
+export const getAll = async (userId: string) => {
+  //TODO: fix that
+  let results: { id: string; }[] = [];
   if (userId) {
     const q = query(categoriesRef, where("userId", "==", userId));
     const snapshot = await getDocs(q);
@@ -13,20 +15,19 @@ export const getAll = async (userId) => {
   return results;
 };
 
-export const create = async (category) => {
+export const create = async (category: ICategory) => {
   const payload = {...category};
   await addDoc(categoriesRef, payload);
 };
 
-export const deleteId = async (id) => {
+export const deleteId = async (id: string) => {
   const docRef = doc(categoriesRef, id);
   await deleteDoc(docRef);
 };
 
-export const update = async (id, data) => {
-  // const id = data.id
+export const update = async (id: string, data: ICategory) => {
   const docRef = doc(db, "categories", id);
   const payload = {...data};
 
-  setDoc(docRef, payload, {merge:true});
+  await setDoc(docRef, payload, {merge: true});
 };
