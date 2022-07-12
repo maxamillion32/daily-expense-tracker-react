@@ -26,7 +26,7 @@ export const loadBudgets = createAsyncThunk(
 );
 
 type Data = {
-  updatedBudget: [],
+  updatedBudget: IBudget,
   userId: string
 }
 
