@@ -5,8 +5,9 @@ import {
   accounts, categories
 } from "./mocks-config";
 import {DEMO_USER_ID} from "../firebase/firebase-config";
+import {IAccount, ICategory} from "../../models/models";
 
-export const accountsForFirebase = [
+export const accountsForFirebase: IAccount[] = [
   {
     id: nanoid(MAX_ID_LENGTH),
     balance: getRandomInt(RANGE.MIN, RANGE.MAX),
@@ -23,7 +24,7 @@ export const accountsForFirebase = [
   },
 ];
 
-export const categoriesForFirebase = [
+export const categoriesForFirebase: ICategory[] = [
   {
     id: nanoid(MAX_ID_LENGTH),
     icon: categories[0].icon,
@@ -90,7 +91,7 @@ export const categoriesForFirebase = [
   },
 ];
 
-const generateTransactions = (count, accountsForFirebase, categoriesForFirebase) => (
+const generateTransactions = (count: number, accountsForFirebase: IAccount[], categoriesForFirebase: ICategory[]) => (
   Array(count).fill({}).map(() => {
     const categoryRandomIndex = getRandomInt(0, categoriesForFirebase.length - 1);
     const accountsRandomIndex = getRandomInt(0, accountsForFirebase.length - 1);
