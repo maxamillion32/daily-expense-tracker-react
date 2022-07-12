@@ -1,99 +1,50 @@
 import React from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {NavLink} from "react-router-dom";
 
 import classes from "./Menu.module.css";
 import {setIsExpense, setIsTransfer} from "../../../reducers/transactions/transactions-slice";
 import {
-  selectIsButtonShow, setIsAddButtonClick, selectIsAddButtonClick,
-  setIsButtonShow, setIsTransactionTypeClick
+  selectIsButtonShow, setIsAddButtonClick,
+  setIsTransactionTypeClick
 } from "../../../reducers/navigation/navigation-slice";
 
 import transactions from "../../../assets/img/transactions.png";
 import statistics from "../../../assets/img/statistics.png";
 import settings from "../../../assets/img/settings.png";
+
 import AddButton from "../../common/components/AddButton/AddButton";
 import WithCSSTransition from "../../common/hoc/WithCSSTransition/WithCSSTransition";
-
-import {useLockBodyScroll} from "../../common/hooks/useLockBodyScroll/useLockBodyScroll";
-
-
-const OptionsButton = ({type, onClick, typeClass, title}) => (
-  <div className={`${classes.btnWrapper} ${typeClass}`}>
-    <p className={classes.btnTitle}>{title}</p>
-    <button
-      className={`${classes.menuAddBtn} fa ${type}`}
-      onClick={onClick}
-    />
-  </div>
-);
-
-const OptionsButtonBackground = ({children}) => {
-  const isAddButtonClick = useSelector(selectIsAddButtonClick);
-  const nodeRefOptionsBtn = React.useRef(null);
-  const dispatch = useDispatch();
-
-  const onBackgroundClick = () => {
-    dispatch(setIsAddButtonClick(false));
-    dispatch(setIsButtonShow(true));
-  };
-
-  useLockBodyScroll(isAddButtonClick);
-
-  return (
-    <WithCSSTransition
-        inProp={isAddButtonClick}
-        animationType={"fade"}
-        timeout={200}
-        nodeRef={nodeRefOptionsBtn}
-    >
-      <div className={classes.btnBackground} onClick={onBackgroundClick} ref={nodeRefOptionsBtn}>
-        {children}
-      </div>
-    </WithCSSTransition>
-  );
-};
-
-const NavContainer = ({children}) => (
-  <nav className={classes.menu}>
-    <div className={classes.wrapper}>
-      {children}
-    </div>
-  </nav>
-);
-
-const NavButton = ({to, className, src}) => (
-  <NavLink
-    to={to}
-    className={className}
-  >
-    <img src={src} width="30" alt="menu button"/>
-  </NavLink>
-);
+import NavContainer from "./NavContainer/NavContainer";
+import NavButton from "./NavButton/NavButton";
+import OptionsButtonBackground from "./OptionsButtonBackground/OptionsButtonBackground";
+import OptionsButton from "./OptionsButton/OptionsButton";
 
 function Menu() {
   const isButtonShow = useSelector(selectIsButtonShow);
   const dispatch = useDispatch();
 
-  const isActiveLink = ({isActive}) => (isActive ? `${classes.active}` : "");
+  //TODO: fix that
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const isActiveLink= ({isActive}) => (isActive ? `${classes.active}` : "");
 
   const nodeRefAddBtn = React.useRef(null);
 
-  const onIncomeButtonClick = (event) => {
+  const onIncomeButtonClick = (event: MouseEvent) => {
     event.stopPropagation();
     dispatch(setIsAddButtonClick(false));
     dispatch(setIsTransactionTypeClick());
     dispatch(setIsExpense(false));
   };
 
-  const onExpenseButtonClick = (event) => {
+  const onExpenseButtonClick = (event: MouseEvent) => {
     event.stopPropagation();
     dispatch(setIsAddButtonClick(false));
     dispatch(setIsTransactionTypeClick());
     dispatch(setIsExpense(true));
   };
 
-  const onTransferButtonClick = (event) => {
+  const onTransferButtonClick = (event: MouseEvent) => {
     event.stopPropagation();
     dispatch(setIsAddButtonClick(false));
     dispatch(setIsTransactionTypeClick());
@@ -104,6 +55,9 @@ function Menu() {
     <>
       <OptionsButtonBackground>
         <OptionsButton
+          //TODO: fix that
+          //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-ignore
           onClick={onTransferButtonClick}
           typeClass={classes.menuAddTransferBtn}
           type={"fa-exchange"}
@@ -111,12 +65,18 @@ function Menu() {
         />
 
         <OptionsButton
+          //TODO: fix that
+          //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-ignore
           onClick={onIncomeButtonClick}
           typeClass={classes.menuAddPlusBtn}
           type={"fa-plus"}
           title={"Income"}
         />
         <OptionsButton
+          //TODO: fix that
+          //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-ignore
           onClick={onExpenseButtonClick}
           typeClass={classes.menuAddMinusBtn}
           type={"fa-minus"}
@@ -131,23 +91,32 @@ function Menu() {
           timeout={200}
           nodeRef={nodeRefAddBtn}
         >
-          <AddButton />
+          <AddButton nodeRef={undefined} />
         </WithCSSTransition>
 
         <NavButton
           to={"/"}
+          //TODO: fix that
+          //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-ignore
           className={isActiveLink}
           src={transactions}
         />
 
         <NavButton
           to={"/statistics"}
+          //TODO: fix that
+          //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-ignore
           className={isActiveLink}
           src={statistics}
         />
 
         <NavButton
           to={"/settings"}
+          //TODO: fix that
+          //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          //@ts-ignore
           className={isActiveLink}
           src={settings}
         />
