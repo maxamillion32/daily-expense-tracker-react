@@ -6,32 +6,26 @@ import {
   selectCurrentYear, selectFilteredTransactions
 } from "../../../../reducers/transactions/transactions-slice";
 import Loader from "../../../common/components/Loader/Loader";
+import BalanceItem from "./Item/Item";
 import {formatMonth, formatYear} from "../../../common/utils/utils";
-
-const BalanceItem = ({sum, title}) => (
-  <li className={classes.Wrapper}>
-    <p>{title}:</p>
-    <p className={classes.Balance}>{title === "incomes" ? "+" : "-"}{sum} €</p>
-  </li>
-);
 
 function WidgetsMonthBalance() {
   const getTransactions = useSelector(selectFilteredTransactions);
   const currentMonth = useSelector(selectCurrentMonth);
   const currentYear = useSelector(selectCurrentYear);
 
-  const [transactions, setTransactions] = useState(getTransactions);
+  const [transactions] = useState(getTransactions);
 
   const filteredTransactions = useMemo(() => transactions
     .filter((transaction) => formatYear(transaction.date) === currentYear)
     .filter((transaction) => formatMonth(transaction.date) === currentMonth), [currentMonth, currentYear, transactions]);
 
   const sumExpenses = useMemo(() => filteredTransactions.map((transaction) => {
-      return transaction.expense ? transaction = +transaction.sum : transaction = null;
+      return transaction.expense ? +transaction.sum : transaction = null;
     }).reduce((a, b) => a + b, 0).toFixed(2), [currentYear, currentMonth, filteredTransactions]);
 
   const sumIncomes = useMemo(() => filteredTransactions.map((item) => {
-    return !item.expense ? item = +item.sum : item = null;
+    return !item.expense ? +item.sum : item = null;
   }).reduce((a, b) => a + b, 0).toFixed(2), [currentYear, currentMonth, filteredTransactions]);
 
   const isLoader = filteredTransactions.length === 0 && sumExpenses === 0 && sumIncomes === 0;

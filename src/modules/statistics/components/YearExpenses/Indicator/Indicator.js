@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {memo, useMemo} from "react";
 import classes from "./Indicator.module.css";
 import {formatMonth, formatYear} from "../../../../common/utils/utils";
 
@@ -29,4 +29,4 @@ function WidgetsYearExpensesIndicator({year, month, type, transactions, maxMonth
   );
 }
 
-export default WidgetsYearExpensesIndicator;
+export default memo(WidgetsYearExpensesIndicator);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import classes from "./Indicator.module.css";
 
 function WidgetsMonthExpensesIndicator({
@@ -58,4 +58,4 @@ function WidgetsMonthExpensesIndicator({
   );
 }
 
-export default WidgetsMonthExpensesIndicator;
+export default memo(WidgetsMonthExpensesIndicator);
