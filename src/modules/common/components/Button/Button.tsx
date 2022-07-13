@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import classes from "./Button.module.css";
 
 interface ButtonProps {
@@ -22,4 +22,4 @@ function Button ({title, onClick, disabled}: ButtonProps) {
   );
 }
 
-export default Button;
+export default memo(Button);
