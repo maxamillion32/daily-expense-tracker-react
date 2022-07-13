@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import {useDispatch} from "react-redux";
 
 import classes from "../Container.module.css";
@@ -126,4 +126,4 @@ function TransactionsItem(
   );
 }
 
-export default TransactionsItem;
+export default memo(TransactionsItem);
