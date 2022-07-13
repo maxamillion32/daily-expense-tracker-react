@@ -21,7 +21,7 @@ function CategoryType({transactions, prevItemState, incomes, onChange, classes})
         shouldValidate={false}
         touched={false}
         valid={true}
-        value={null}
+        value={""}
       />
     </div>
   );
