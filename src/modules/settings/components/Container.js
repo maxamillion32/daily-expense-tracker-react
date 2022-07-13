@@ -47,7 +47,7 @@ function SettingsContainer() {
 
   return (
     <section className={classes.Container}>
-      {userId
+      {!showPopup && userId
         ? <Suspense fallback={<Loader />}>
             <SettingsList
               items={accounts}
@@ -87,18 +87,21 @@ function SettingsContainer() {
           </Suspense>
         : null}
 
-      <Popup
-        showPopup={showPopup}
-        setShowPopup={onPopupCloseButtonClick}
-      >
-        <SettingsPopup
-          itemState={item}
-          prevItemState={prevItem}
-          setItemState={setItem}
-          transactions={transactions}
-          setShowPopup={setShowPopup}
-        />
-      </Popup>
+      {showPopup
+        ? <Popup
+            showPopup={showPopup}
+            setShowPopup={onPopupCloseButtonClick}
+          >
+            <SettingsPopup
+              itemState={item}
+              prevItemState={prevItem}
+              setItemState={setItem}
+              transactions={transactions}
+              setShowPopup={setShowPopup}
+            />
+          </Popup>
+        : null
+        }
     </section>
   );
 }
