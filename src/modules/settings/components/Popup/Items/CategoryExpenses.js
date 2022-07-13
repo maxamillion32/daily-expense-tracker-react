@@ -1,17 +1,23 @@
-import React from "react";
+import React, {memo, useMemo} from "react";
 import {isExists, isExpense, getCurrentCategorySum, getCategoryTotalSum} from "../utils/utils";
 
-export const CategoryExpenses = ({transactions, prevItemState, filteredTransactions, classes}) => (
-  <>
-    {isExists(transactions, "category", prevItemState.title)
-      ? <div className={classes.WrapperText}>
+function CategoryExpenses({transactions, prevItemState, filteredTransactions, classes}) {
+  return (
+    <>
+      {useMemo(() => isExists(transactions, "category", prevItemState.title), [prevItemState.title])
+        ? <div className={classes.WrapperText}>
           <p className={classes.Text}>
-            {isExpense(transactions, prevItemState.title) ? "Expenses" : "Incomes"} in this Month - <b>{getCurrentCategorySum(filteredTransactions, prevItemState.title)}€</b>
+            {useMemo(() => isExpense(transactions, prevItemState.title), [prevItemState.title]) ? "Expenses" : "Incomes"} in this Month
+            - <b>{useMemo(() => getCurrentCategorySum(filteredTransactions, prevItemState.title), [prevItemState.title])}€</b>
           </p>
           <p className={classes.Text}>
-            {isExpense(transactions, prevItemState.title) ? "Expenses" : "Incomes"} for all time - <b>{getCategoryTotalSum(transactions, prevItemState.title)}€</b>
+            {useMemo(() => isExpense(transactions, prevItemState.title), [prevItemState.title]) ? "Expenses" : "Incomes"} for all time
+            - <b>{useMemo(() => getCategoryTotalSum(transactions, prevItemState.title), [prevItemState.title])}€</b>
           </p>
         </div>
-      : null}
-  </>
-);
+        : null}
+    </>
+  );
+}
+
+export default memo(CategoryExpenses);
