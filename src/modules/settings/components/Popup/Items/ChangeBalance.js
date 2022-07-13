@@ -1,16 +1,17 @@
-import React from "react";
+import React, {memo} from "react";
 import Input from "../../../../common/components/Input/Input";
 import {isExists} from "../utils/utils";
 
-export const ChangeBalance = (
+function ChangeBalance(
   {
     isBalanceChange, prevItemState, accountState,
     transactions, onClickBalanceCheck,
     balanceDifference, date, classes
-  }) => (
-  <>
-    {isBalanceChange
-      ? <div className={classes.Type}>
+  }) {
+  return (
+    <>
+      {isBalanceChange
+        ? <div className={classes.Type}>
           <Input
             type="checkbox"
             checked={accountState.showInBalance}
@@ -25,6 +26,9 @@ export const ChangeBalance = (
             }
           />
         </div>
-      : null}
-  </>
-);
+        : null}
+    </>
+  );
+}
+
+export default memo(ChangeBalance);
