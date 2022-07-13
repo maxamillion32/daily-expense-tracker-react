@@ -87,8 +87,8 @@ function SettingsContainer() {
           </Suspense>
         : null}
 
-      {showPopup
-        ? <Popup
+
+        <Popup
             showPopup={showPopup}
             setShowPopup={onPopupCloseButtonClick}
           >
@@ -100,8 +100,6 @@ function SettingsContainer() {
               setShowPopup={setShowPopup}
             />
           </Popup>
-        : null
-        }
     </section>
   );
 }
