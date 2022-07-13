@@ -1,4 +1,4 @@
-import React from "react";
+import React, {memo} from "react";
 import classes from "./Input.module.css";
 import {isInvalid} from "../../../transactions/components/CreateForm/utils/utils";
 
@@ -30,9 +30,9 @@ function Input (
 
   inputType === "checkbox" ? cls.push(classes.InputTypeCheckbox) : cls.push(classes.InputType);
 
-  if (isInvalid({valid, touched, shouldValidate})) {
-    cls.push(classes.invalid);
-  }
+  // if (isInvalid({valid, touched, shouldValidate})) {
+  //   cls.push(classes.invalid);
+  // }
 
   return (
     <div className={cls.join(" ")}>
@@ -44,7 +44,7 @@ function Input (
         value={value}
         checked={checked}
         onChange={onChange}
-        autoFocus={name === "sum" ? true : false}
+        autoFocus={name === "sum"}
         autoComplete="off"
         disabled={isDisabled}
       />
@@ -59,4 +59,4 @@ function Input (
   );
 }
 
-export default Input;
+export default memo(Input);
