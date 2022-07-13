@@ -1,40 +1,40 @@
-import React from "react";
+import React, {memo} from "react";
 import classes from "./IconList.module.css";
 
-function PopupIconList({onChange, icon}) {
-  const options = [
-    {icon: "fa-shopping-cart"},
-    {icon: "fa-id-card"},
-    {icon: "fa-coffee"},
-    {icon: "fa-bath"},
-    {icon: "fa-subway"},
-    {icon: "fa-home"},
-    {icon: "fa-shopping-bag"},
-    {icon: "fa-briefcase"},
-    {icon: "fa-hand-holding-usd"},
-    {icon: "fa-cut"},
-    {icon: "fa-gifts"},
-    {icon: "fa-utensils"},
-    {icon: "fa-asterisk"},
-    {icon: "fa-baby-carriage"},
-    {icon: "fa-basketball-ball"},
-    {icon: "fa-beer"},
-    {icon: "fa-cat"},
-    {icon: "fa-envelope"},
-    {icon: "fa-faucet"},
-    {icon: "fa-film"},
-    {icon: "fa-gas-pump"},
-    {icon: "fa-graduation-cap"},
-    {icon: "fa-hamburger"},
-    {icon: "fa-hotel"},
-    {icon: "fa-plane"},
-    {icon: "fa-socks"},
-    {icon: "fa-theater-masks"},
-    {icon: "fa-tv"},
-    {icon: "fa-umbrella-beach"},
-    {icon: "fa-wrench"},
-  ];
+const options = [
+  {icon: "fa-shopping-cart"},
+  {icon: "fa-id-card"},
+  {icon: "fa-coffee"},
+  {icon: "fa-bath"},
+  {icon: "fa-subway"},
+  {icon: "fa-home"},
+  {icon: "fa-shopping-bag"},
+  {icon: "fa-briefcase"},
+  {icon: "fa-hand-holding-usd"},
+  {icon: "fa-cut"},
+  {icon: "fa-gifts"},
+  {icon: "fa-utensils"},
+  {icon: "fa-asterisk"},
+  {icon: "fa-baby-carriage"},
+  {icon: "fa-basketball-ball"},
+  {icon: "fa-beer"},
+  {icon: "fa-cat"},
+  {icon: "fa-envelope"},
+  {icon: "fa-faucet"},
+  {icon: "fa-film"},
+  {icon: "fa-gas-pump"},
+  {icon: "fa-graduation-cap"},
+  {icon: "fa-hamburger"},
+  {icon: "fa-hotel"},
+  {icon: "fa-plane"},
+  {icon: "fa-socks"},
+  {icon: "fa-theater-masks"},
+  {icon: "fa-tv"},
+  {icon: "fa-umbrella-beach"},
+  {icon: "fa-wrench"},
+];
 
+function PopupIconList({onChange, icon}) {
   return (
     <div className={classes.Type}>
       <p className={classes.Text}>Choose an icon for the category</p>
@@ -62,4 +62,4 @@ function PopupIconList({onChange, icon}) {
   );
 }
 
-export default PopupIconList;
+export default memo(PopupIconList);
