@@ -1,22 +1,19 @@
 export const isExists = (data, type, item) => {
-  return data.find((it) => it[type].title === item) ? true : false;
+  return !!data.find((it) => it[type].title === item);
 };
 
 export const isDelete = (data, type, id) => {
-  return data.find((it) => it[`${type}Id`] === id && it.showInBalance === true) ? true : false;
+  return !!data.find((it) => it[`${type}Id`] === id && it.showInBalance === true);
 };
 
 export const isExpense = (transactions, title) => {
-  const result = JSON.parse([...new Set(transactions
-  .filter((transaction) => transaction.category.title === title)
-  .map((transaction) => transaction.expense))]);
-
-  return result;
+  return JSON.parse([...new Set(transactions
+    .filter((transaction) => transaction.category.title === title)
+    .map((transaction) => transaction.expense))]);
 };
 
 export const getTransactionsByAccountId = (transactions, accountId) => {
-  const transaction = transactions.filter((transaction) => transaction.accountId === accountId);
-  return transaction;
+  return transactions.filter((transaction) => transaction.accountId === accountId);
 };
 
 export const getCategoryTotalSum = (transactions, title) => {
