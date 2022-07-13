@@ -1,15 +1,19 @@
-import React from "react";
+import React, {memo} from "react";
 import Input from "../../../../common/components/Input/Input";
 
-export const DateOfBalance = ({isBalanceChange, onChange, accountState, date}) => (
-  <>
-    {isBalanceChange && accountState.showInBalance
-      ? <Input
+function DateOfBalance({isBalanceChange, onChange, accountState, date}) {
+  return (
+    <>
+      {isBalanceChange && accountState.showInBalance
+        ? <Input
           type="date"
           name="date"
           value={date}
           onChange={onChange}
         />
-      : null}
-  </>
-);
+        : null}
+    </>
+  );
+}
+
+export default memo(DateOfBalance);
