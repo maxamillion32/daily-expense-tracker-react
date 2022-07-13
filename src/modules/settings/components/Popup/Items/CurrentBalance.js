@@ -1,10 +1,11 @@
-import React from "react";
+import React, {memo} from "react";
 import Input from "../../../../common/components/Input/Input";
 
-export const CurrentBalance = ({isBalanceChange, prevItemState, accountState, onChange, balance, classes}) => (
-  <>
-    {prevItemState.startBalance || prevItemState.title
-      ? <div className={classes.Type}>
+function CurrentBalance({isBalanceChange, prevItemState, accountState, onChange, balance, classes}) {
+  return (
+    <>
+      {prevItemState.startBalance || prevItemState.title
+        ? <div className={classes.Type}>
           <p className={classes.Label}>Current balance</p>
 
           {isBalanceChange
@@ -20,5 +21,8 @@ export const CurrentBalance = ({isBalanceChange, prevItemState, accountState, on
           />
         </div>
         : null}
-  </>
-);
+    </>
+  );
+}
+
+export default memo(CurrentBalance);
