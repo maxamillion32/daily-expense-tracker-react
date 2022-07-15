@@ -3,9 +3,10 @@ import {useSelector} from "react-redux";
 
 import classes from "../Container.module.css";
 import TransactionsItemsMonthGroup from "./MonthGroup";
-import {formatYear, formatMonth} from "../../../../common/utils/utils";
+import {formatYear, formatMonth, usePrevious, isEqual} from "../../../../common/utils/utils";
 
 import {selectCurrentYear, selectFilteredTransactions} from "../../../../../reducers/transactions/transactions-slice";
+import {selectSearchTerm} from "../../../../../reducers/search/search-slice";
 
 const PAGINATION = {
   INITIAL_AMOUNT: 50,
@@ -16,6 +17,9 @@ function TransactionsItemsYearGroup({year}) {
   const getCurrentYear = useSelector(selectCurrentYear);
   const getFilteredTransactions = useSelector(selectFilteredTransactions);
   const filteredTransactions = [...getFilteredTransactions];
+
+  const searchTerm = useSelector(selectSearchTerm);
+  const prevSearchTerm = usePrevious(searchTerm);
 
   const [transaction, setTransactions] = useState([]);
   const [currentPage, setCurrentPage] = useState(PAGINATION.INITIAL_AMOUNT);
@@ -31,7 +35,13 @@ function TransactionsItemsYearGroup({year}) {
       setTotalCount(transaction.length);
       setFetching(false);
     }
-  }, [fetching]);
+
+    if (isEqual(searchTerm, prevSearchTerm)) {
+      setTransactions(filteredTransactions);
+      setTotalCount(transaction.length);
+      setFetching(true);
+    }
+  }, [fetching, searchTerm]);
 
   const yearTransactions = transaction.filter((transaction) => formatYear(transaction.date) === year);
   const nodeRef = React.useRef(null);
