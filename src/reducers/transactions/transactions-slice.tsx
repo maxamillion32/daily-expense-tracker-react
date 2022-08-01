@@ -148,14 +148,16 @@ export const selectCurrentBalance = (state: RootState) => {
 
   const getCurrentBalance = (allTransactions: ITransaction[]) => {
     const incomes = allTransactions
-    .filter((transaction) => !transaction.expense)
-    .map((transaction) => transaction.sum)
-    .reduce((a, b) => a + b, 0);
+      .filter((transaction) => !transaction.expense)
+      .filter((transaction) => !transaction.transfer)
+      .map((transaction) => transaction.sum)
+      .reduce((a, b) => a + b, 0);
 
     const expenses = allTransactions
-    .filter((transaction) => transaction.expense)
-    .map((transaction) => transaction.sum)
-    .reduce((a, b) => a + b, 0);
+      .filter((transaction) => transaction.expense)
+      .filter((transaction) => !transaction.transfer)
+      .map((transaction) => transaction.sum)
+      .reduce((a, b) => a + b, 0);
 
     return incomes - expenses;
   };

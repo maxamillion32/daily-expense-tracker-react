@@ -24,6 +24,7 @@ export interface ITransaction {
   showInBalance: boolean
   sum: number
   userId: boolean
+  transfer: boolean
 }
 
 interface ItemBudget {
