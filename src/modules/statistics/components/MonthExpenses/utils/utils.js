@@ -1,7 +1,8 @@
 export const getMonthSum = (transactions, type) => {
     return transactions
+      .filter((transaction) => !transaction.transfer)
       .map((transaction) => (type === "expenses" ? transaction.expense : !transaction.expense)
-      ? transaction = +transaction.sum
+      ? +transaction.sum
       : transaction = null)
       .reduce((acc, sum) => acc + sum, 0).toFixed(2);
 };
@@ -9,18 +10,16 @@ export const getMonthSum = (transactions, type) => {
 export const getCategoryBalance = (category, type, transactions) => {
   const balance = transactions
     .filter((transaction) => transaction.category.title === category)
-    .map((transaction) => (type === "incomes" ? !transaction.expense : transaction.expense) ? transaction = +transaction.sum : transaction = null)
+    .map((transaction) => (type === "incomes" ? !transaction.expense : transaction.expense) ? +transaction.sum : transaction = null)
     .reduce((acc, sum) => acc + sum, 0);
 
     return balance.toFixed(2);
 };
 
 export const getMonthCountPerCategory = (transactions, category) => {
-  const monthCount = [...new Set(transactions
+  return [...new Set(transactions
     .filter((transaction) => transaction.category.title === category)
     .map(transaction => new Date(transaction.date).toISOString().slice(0, -17)))].length;
-
-  return monthCount;
 };
 
 export const getMonthCount = (transactions) => {
