@@ -32,6 +32,10 @@ const options = [
   {icon: "fa-tv"},
   {icon: "fa-umbrella-beach"},
   {icon: "fa-wrench"},
+  {icon: "fa-taxi"},
+  {icon: "fa-laptop-code"},
+  {icon: "fa-pills"},
+  {icon: "fa-vault"},
 ];
 
 function PopupIconList({onChange, icon}) {
