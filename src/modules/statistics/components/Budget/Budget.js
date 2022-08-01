@@ -1,8 +1,8 @@
-import React, {useMemo} from "react";
+import React from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import {
-  selectCurrentMonth, selectCurrentYear
+  selectCurrentMonth, selectCurrentYear, loadTransactions
 } from "../../../../reducers/transactions/transactions-slice";
 import {selectFilteredCategories} from "../../../../reducers/categories/categories-slice";
 import {
@@ -10,7 +10,7 @@ import {
   selectAllBudgetState, selectUpdatedBudgetState
 } from "../../../../reducers/budget/budget-slice";
 import {selectUserId} from "../../../../reducers/user/user-slice";
-import {isEqual} from "../../../common/utils/utils";
+import {isBudgetEqual} from "../../../common/utils/utils";
 
 import classes from "./Budget.module.css";
 import WidgetsBudgetItem from "./Items/Item";
@@ -26,7 +26,7 @@ function WidgetsBudget() {
   const updatedBudget = useSelector(selectUpdatedBudgetState);
   const dispatch = useDispatch();
 
-  const prevBudget = useMemo(() => budget && budget.length !== 0 && updatedBudget.length !== 0 && isEqual(budget[currentYear][currentMonth], updatedBudget[currentYear][currentMonth]), [budget, updatedBudget, currentMonth, currentYear]);
+  const prevBudget = isBudgetEqual(budget, updatedBudget, currentYear, currentMonth);
 
   const onInputChange = ({target}) => {
     const id = target.id;
@@ -42,7 +42,7 @@ function WidgetsBudget() {
   const onEditClick = () => {
     dispatch(postBudget({updatedBudget, userId}));
     dispatch(loadBudgets(userId));
-    // dispatch(loadTransactions(userId));
+    dispatch(loadTransactions(userId));
   };
 
   const isBudget = (updatedBudget || "") && (updatedBudget[currentYear] || "") && (updatedBudget[currentYear][currentMonth] || "");

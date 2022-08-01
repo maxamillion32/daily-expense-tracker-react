@@ -57,16 +57,14 @@ export const getMaxAmountPerYear = (year, type, transactions) => {
     .filter((transaction) => formatYear(transaction.date) === year)
     .map((transaction) => formatMonth(transaction.date)))];
 
-  const amount = Math.max(...months
+  return Math.max(...months
     .map((month) => transactions
-    .map((transaction) => formatMonth(transaction.date) === month
-      ? (type === "expenses" ? transaction.expense : !transaction.expense)
-        ? transaction = +transaction.sum
-        : transaction = null
-      : null)
-    .reduce((acc, sum) => acc + sum, 0)));
-
-  return amount;
+      .map((transaction) => formatMonth(transaction.date) === month
+        ? (type === "expenses" ? transaction.expense : !transaction.expense)
+          ? +transaction.sum
+          : transaction = null
+        : null)
+      .reduce((acc, sum) => acc + sum, 0)));
 };
 
 export const isEqual = (a, b) => {
@@ -74,6 +72,13 @@ export const isEqual = (a, b) => {
     return true;
   }
   return JSON.stringify(a) === JSON.stringify(b);
+};
+
+export const isBudgetEqual = (a, b, year, month) => {
+  if (!a || !b) {
+    return true;
+  }
+  return JSON.stringify(a[year][month]) === JSON.stringify(b[year][month]);
 };
 
 export const getExpenses = (year, transactions, toggle) => {
@@ -88,14 +93,14 @@ export const getExpenses = (year, transactions, toggle) => {
         .filter((transaction) => formatYear(transaction.date) === year)
         .filter(transaction => formatMonth(transaction.date) === item)
         .map((transaction) => (toggle ? transaction.expense : !transaction.expense)
-        ? transaction = +transaction.sum
+        ? +transaction.sum
         : transaction = null)
         .reduce((acc, sum) => acc + sum, 0).toFixed(2),
       previous: transactions
         .filter((transaction) => formatYear(transaction.date) === prevYear)
         .filter(transaction => formatMonth(transaction.date) === item)
         .map((transaction) => (toggle ? transaction.expense : !transaction.expense)
-        ? transaction = +transaction.sum
+        ? +transaction.sum
         : transaction = null)
         .reduce((acc, sum) => acc + sum, 0).toFixed(2)
     };
