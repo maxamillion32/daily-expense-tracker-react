@@ -78,6 +78,11 @@ export const isBudgetEqual = (a, b, year, month) => {
   if (!a || !b) {
     return true;
   }
+
+  if (!a[year] || !b[year]) {
+    return true;
+  }
+
   return JSON.stringify(a[year][month]) === JSON.stringify(b[year][month]);
 };
 
