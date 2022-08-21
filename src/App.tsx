@@ -20,10 +20,12 @@ function App() {
   const userId = useAppSelector(selectUserId);
 
   useEffect(() => {
-    dispatch(loadTransactions(userId));
-    dispatch(loadCategories(userId));
-    dispatch(loadAccounts(userId));
-    dispatch(loadBudgets(userId));
+    if (userId) {
+      dispatch(loadTransactions(userId));
+      dispatch(loadCategories(userId));
+      dispatch(loadAccounts(userId));
+      dispatch(loadBudgets(userId));
+    }
   }, [userId]);
 
   return (
