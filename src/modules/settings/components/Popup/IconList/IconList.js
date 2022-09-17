@@ -37,6 +37,7 @@ const options = [
   {icon: "fa-pills"},
   {icon: "fa-vault"},
   {icon: "fa-face-grin-hearts"},
+  {icon: "fa-comments"},
 ];
 
 function PopupIconList({onChange, icon}) {
