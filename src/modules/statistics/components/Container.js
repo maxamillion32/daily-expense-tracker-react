@@ -22,12 +22,20 @@ function StatisticsContainer() {
     <section className={classes.Container}>
       {/*TODO: fix that without isLoader. isLoader allows component to be rendered on page refresh*/}
       {!isLoader &&
-        <Suspense fallback={<Loader />} >
-          <MonthBalance/>
-          <YearExpenses/>
-          <MonthExpenses/>
-          <Budget/>
-        </Suspense>}
+        <>
+          <Suspense fallback={<Loader />} >
+            <MonthBalance/>
+          </Suspense>
+          <Suspense fallback={<Loader />} >
+            <YearExpenses/>
+          </Suspense>
+          <Suspense fallback={<Loader />} >
+            <MonthExpenses/>
+          </Suspense>
+          <Suspense fallback={<Loader />} >
+            <Budget/>
+          </Suspense>
+        </>}
     </section>
   );
 }
