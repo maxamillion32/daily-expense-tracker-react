@@ -3,6 +3,9 @@ html{
   --indicatorExpenses: #ffc2c6;
   --indicatorIncomes: #cadba8;
   --indicatorTotalExpenses: #e6dfd9;
+  --navBackground: #e4e4e4;
+  --budgetBackground: #f1ebdf;
+  --statisticHeader: #faf9f8;
 }
 
 body {

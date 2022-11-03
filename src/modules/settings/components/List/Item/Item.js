@@ -54,7 +54,8 @@ function SettingsListItem(
           </p>
         : <>
             <div className={classes.Item} onClick={onClickItem}>
-              <p>{title}</p>
+              <div>{title}</div>
+
               {header === "Accounts" ? <p>balance: <b>{balance}€</b></p> : null}
             </div>
           </>

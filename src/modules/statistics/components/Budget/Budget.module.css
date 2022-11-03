@@ -1,6 +1,9 @@
 .BudgetWrapper {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
   padding: 20px 30px;
-  background-color: #f1f1f1;
+  background-color: var(--budgetBackground);
   /* border-bottom: 1px dashed #d4d4d4; */
 }
 
@@ -36,7 +39,9 @@
 }
 
 .Button:disabled {
-  background: #ccc;
-  /* color: #000; */
+  background: #f1ebdf;
+  border: 1px dashed #d4d4d4;
+  color: #000000;
+  font-weight: 400;
   cursor: not-allowed;
 }

@@ -3,7 +3,7 @@
   bottom: 0;
   box-sizing: border-box;
   padding: 20px 20px;
-  background-color: #f1f1f1;
+  background-color: var(--navBackground);
   z-index: 200;
   margin-top: auto;
 }
