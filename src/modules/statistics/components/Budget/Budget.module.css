@@ -39,7 +39,7 @@
 }
 
 .Button:disabled {
-  background: #f1ebdf;
+  background: var(--budgetBackground);
   border: 1px dashed #d4d4d4;
   color: #000000;
   font-weight: 400;
