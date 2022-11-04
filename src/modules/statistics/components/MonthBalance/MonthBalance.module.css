@@ -10,7 +10,9 @@
   /* border: 1px dashed gray; */
   /* border-radius: 5px; */
 }
-
+.MonthBalance h2 {
+ color: #e50010;
+}
 .List {
   padding: 10px 20px 20px;
 }

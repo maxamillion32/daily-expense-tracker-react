@@ -76,7 +76,7 @@
 
 .TransactionsIcon {
   font-size: 25px;
-  color: #d5d5d5;
+  color: var(--budgetBackground);
   /* color: #a1a1a1; */
 }
 
