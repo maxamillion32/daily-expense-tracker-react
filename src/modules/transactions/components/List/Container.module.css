@@ -76,7 +76,7 @@
 
 .TransactionsIcon {
   font-size: 25px;
-  color: var(--budgetBackground);
+  color: var(--indicatorTotalExpenses);
   /* color: #a1a1a1; */
 }
 
