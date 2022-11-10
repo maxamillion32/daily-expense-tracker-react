@@ -139,8 +139,7 @@ export const selectFilteredTransactions = (state: RootState) => {
 
   return allTransactions
           .filter((transaction) => transaction.showInBalance !== false)
-          .filter((transaction) => transaction.category.title.toLowerCase().includes(searchTerm.toLowerCase()))
-          .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+          .filter((transaction) => transaction.category.title.toLowerCase().includes(searchTerm.toLowerCase()));
 };
 
 export const selectCurrentBalance = (state: RootState) => {
@@ -166,7 +165,6 @@ export const selectCurrentBalance = (state: RootState) => {
 };
 
 export const selectYears = ((state: RootState) => [...new Set(selectFilteredTransactions(state)
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
     .map(date => formatYear(date.date)))]);
 
 export const {

@@ -1,15 +1,34 @@
-import {addDoc, collection, updateDoc, doc, deleteDoc, getDocs, query, where} from "@firebase/firestore";
+import {addDoc, collection, updateDoc, doc, deleteDoc, getDocs, query, where, orderBy, limit, startAfter} from "@firebase/firestore";
 import db from "./firebase/firebase-service";
-import {getCollectionData} from "./firebase/firebase-utils";
 
 const transactionsRef = collection(db, "transactions");
 const categoriesRef = collection(db, "categories");
 const accountsRef = collection(db, "accounts");
 
+const lastDocument = undefined;
+
 export const getAll = async (userId) => {
   let transactions = [];
   if (userId) {
-    const transactionsQuery = query(transactionsRef, where("userId", "==", userId));
+    let transactionsQuery;
+
+    if (lastDocument) {
+      transactionsQuery = query(
+        transactionsRef,
+        where("userId", "==", userId),
+        startAfter(lastDocument),
+        orderBy("date", "desc"),
+        limit(3)
+      );
+    } else {
+      transactionsQuery = query(
+        transactionsRef,
+        where("userId", "==", userId),
+        orderBy("date", "desc"),
+        limit(3)
+      );
+    }
+
     const categoriesQuery = query(categoriesRef, where("userId", "==", userId));
     const accountsQuery = query(accountsRef, where("userId", "==", userId));
     const snapshotTransactions = await getDocs(transactionsQuery);

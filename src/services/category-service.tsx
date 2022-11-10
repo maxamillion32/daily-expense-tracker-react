@@ -1,4 +1,4 @@
-import {addDoc, collection, setDoc, doc, deleteDoc, getDocs, query, where} from "@firebase/firestore";
+import {addDoc, collection, setDoc, doc, deleteDoc, getDocs, query, where, orderBy} from "@firebase/firestore";
 import db from "./firebase/firebase-service";
 import {ICategory} from "../models/models";
 
@@ -8,7 +8,7 @@ export const getAll = async (userId: string) => {
   //TODO: fix that
   let results: { id: string; }[] = [];
   if (userId) {
-    const q = query(categoriesRef, where("userId", "==", userId));
+    const q = query(categoriesRef, where("userId", "==", userId), orderBy("title", "asc"));
     const snapshot = await getDocs(q);
     results = snapshot.docs.map((doc) => ({...doc.data(), id: doc.id}));
   }

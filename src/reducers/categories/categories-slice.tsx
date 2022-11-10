@@ -79,8 +79,7 @@ export const selectFilteredCategories = (state: RootState) => {
   const allCategories = [...selectAllCategories(state)];
 
   return allCategories
-    .filter((category) => category.hidden !== true)
-    .sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1);
+    .filter((category) => category.hidden !== true);
 };
 
 export const findIncomesBalanceCategory = (state: RootState) => {

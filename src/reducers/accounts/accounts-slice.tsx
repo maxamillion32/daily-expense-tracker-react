@@ -1,6 +1,6 @@
-import {createSlice, createAsyncThunk, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 
-import {getAll, create, update, deleteId} from "../../services/account-service";
+import {create, deleteId, getAll, update} from "../../services/account-service";
 import {IAccount} from "../../models/models";
 import {RootState} from "../../store/store";
 
@@ -77,10 +77,7 @@ export const selectNewAccountsState = (state: RootState) => state.accounts.newAc
 export const selectIsLoading = (state: RootState) => state.accounts.isLoading;
 
 export const selectFilteredAccounts = (state: RootState) => {
-  const allAccounts = [...selectAllAccountsState(state)];
-
-  return allAccounts
-    .sort((a, b) => b.title.toLowerCase() > a.title.toLowerCase() ? -1 : 1);
+  return [...selectAllAccountsState(state)];
 };
 
 export const selectAccountBalance = (state: RootState) => {
