@@ -1,33 +1,26 @@
-import React, {useState, useMemo} from "react";
+import React from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import {
   updateMonth, updateYear, selectCurrentMonth,
-  selectCurrentYear, selectFilteredTransactions
+  selectCurrentYear, selectFilteredTransactions, selectMaxMonthExpensePerYear, selectMaxMonthIncomePerYear
 } from "../../../../reducers/transactions/transactions-slice";
 
 import classes from "./YearExpenses.module.css";
 import Indicator from "./Indicator/Indicator";
 import ArrowButton from "../../../common/components/ArrowButton/ArrowButton";
-import Loader from "../../../common/components/Loader/Loader";
 
-import {getMaxAmountPerYear} from "../../../common/utils/utils";
 import {MONTH_EXPENSES} from "./constant";
 
 function WidgetsYearExpenses() {
   const getTransactions = useSelector(selectFilteredTransactions);
   const currentMonth = useSelector(selectCurrentMonth);
   const currentYear = useSelector(selectCurrentYear);
+  const getMaxMonthExpensePerYear = useSelector(selectMaxMonthExpensePerYear);
+  const getMaxMonthIncomePerYear = useSelector(selectMaxMonthIncomePerYear);
+
   const dispatch = useDispatch();
-
-  const [transactions, setTransactions] = useState(getTransactions);
-
-  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear, transactions]);
-  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear, transactions]);
-
-  const maxMonthTransaction = Math.max(maxMonthExpensePerYear, maxMonthIncomePerYear);
-
-  const isLoader = maxMonthTransaction === 0;
+  const maxMonthTransaction = Math.max(getMaxMonthExpensePerYear, getMaxMonthIncomePerYear);
 
   const monthHandler = ({target}) => {
     dispatch(updateMonth(target.id));
@@ -46,8 +39,6 @@ function WidgetsYearExpenses() {
   return (
     <>
       <section className={classes.YearExpenses}>
-        {isLoader ? <Loader /> : null}
-
         <ArrowButton direction={"left"} onClick={handleClick} style={{top: -55}} />
 
         <h4>{currentYear}</h4>
@@ -66,7 +57,7 @@ function WidgetsYearExpenses() {
                 <Indicator
                   year={currentYear}
                   month={month}
-                  transactions={transactions}
+                  transactions={getTransactions}
                   type={"incomes"}
                   maxMonthTransaction={maxMonthTransaction}
                 />
@@ -74,7 +65,7 @@ function WidgetsYearExpenses() {
                 <Indicator
                   year={currentYear}
                   month={month}
-                  transactions={transactions}
+                  transactions={getTransactions}
                   type={"expenses"}
                   maxMonthTransaction={maxMonthTransaction}
                 />
