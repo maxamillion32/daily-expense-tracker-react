@@ -1,29 +1,26 @@
-import React, {useState, useMemo} from "react";
-import {useSelector} from "react-redux";
+import React from "react";
+import {useDispatch, useSelector} from "react-redux";
 import classes from "./Chart.module.css";
 import {AreaChart, Area, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer} from "recharts";
 import ArrowButton from "../../../common/components/ArrowButton/ArrowButton";
-import {getMaxAmountPerYear, getExpenses} from "../../../common/utils/utils";
 
-import {selectFilteredTransactions, selectCurrentYear} from "../../../../reducers/transactions/transactions-slice";
+import {
+  selectChartData, selectChartToggle, selectMaxMonthExpensePerYear, selectMaxMonthIncomePerYear, setChartToggle
+} from "../../../../reducers/transactions/transactions-slice";
 
 function Chart() {
-  const getTransactions = useSelector(selectFilteredTransactions);
-  const getCurrentYear = useSelector(selectCurrentYear);
+  const getChartData =useSelector(selectChartData);
+  const getMaxMonthExpensePerYear = useSelector(selectMaxMonthExpensePerYear);
+  const getMaxMonthIncomePerYear = useSelector(selectMaxMonthIncomePerYear);
+  const getSelectChartToggle = useSelector(selectChartToggle);
 
-  const [transactions, setTransactions] = useState(getTransactions);
-  const [currentYear, setCurrentYear] = useState(getCurrentYear);
-  const [toggle, setToggle] = useState(true);
+  const dispatch = useDispatch();
 
-  const data = useMemo(() => getExpenses(currentYear, transactions, toggle), [currentYear, toggle, transactions]);
-  const maxMonthExpensePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "expenses", transactions), [currentYear, transactions]);
-  const maxMonthIncomePerYear = useMemo(() => getMaxAmountPerYear(currentYear, "income", transactions), [currentYear, transactions]);
-
-  const header = toggle ? "Expenses" : "Incomes";
-  const yRange = toggle ? maxMonthExpensePerYear * 2 : maxMonthIncomePerYear * 2;
+  const header = getSelectChartToggle ? "Expenses" : "Incomes";
+  const yRange = getSelectChartToggle ? getMaxMonthExpensePerYear * 2 : getMaxMonthIncomePerYear * 2;
 
   const handleClick = () => {
-    setToggle(prev => !prev);
+    dispatch(setChartToggle());
   };
 
   return (
@@ -33,7 +30,7 @@ function Chart() {
       <h3>{header}</h3>
 
       <ResponsiveContainer width="100%" height="100%">
-        <AreaChart data={data} margin={{top: 15, right: 20, left: 20}}>
+        <AreaChart data={getChartData} margin={{top: 15, right: 20, left: 20}}>
           <defs>
             <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
               <stop offset="5%" stopColor="#000000" stopOpacity={0}/>

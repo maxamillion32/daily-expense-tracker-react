@@ -1,7 +1,7 @@
 import {createSlice, createAsyncThunk, PayloadAction} from "@reduxjs/toolkit";
 import {getAll, create, update, deleteId} from "../../services/transaction-service";
 import {selectSearchTerm} from "../search/search-slice";
-import {formatMonth, formatYear} from "../../modules/common/utils/utils";
+import {formatMonth, formatYear, getExpenses, getMaxAmountPerYear} from "../../modules/common/utils/utils";
 import {ITransaction} from "../../models/models";
 import {RootState} from "../../store/store";
 
@@ -47,6 +47,10 @@ interface TransactionState {
   currentYear: string,
   isExpense: boolean,
   isTransfer: boolean,
+  chartToggle: boolean,
+  charData: any,
+  maxMonthExpensePerYear: any
+  maxMonthIncomePerYear: any
 }
 
 const initialState: TransactionState = {
@@ -58,6 +62,10 @@ const initialState: TransactionState = {
   currentYear: formatYear(new Date()),
   isExpense: true,
   isTransfer: false,
+  chartToggle: true,
+  charData: [],
+  maxMonthExpensePerYear: [],
+  maxMonthIncomePerYear: []
 };
 
 export const transactionsSlice = createSlice({
@@ -100,6 +108,13 @@ export const transactionsSlice = createSlice({
         isTransfer: action.payload
       };
     },
+    setChartToggle: (state) => {
+      return {
+        ...state,
+        chartToggle: !state.chartToggle,
+        charData: getExpenses(state.currentYear, state.allTransactions, !state.chartToggle)
+      };
+    },
   },
   extraReducers: {
     [loadTransactions.pending.type]: (state) => {
@@ -108,6 +123,9 @@ export const transactionsSlice = createSlice({
     [loadTransactions.fulfilled.type]: (state, action) => {
       state.allTransactions = action.payload;
       state.isLoading = false;
+      state.charData = getExpenses(state.currentYear, state.allTransactions, state.chartToggle);
+      state.maxMonthExpensePerYear = getMaxAmountPerYear(state.currentYear, "expenses", state.allTransactions);
+      state.maxMonthIncomePerYear = getMaxAmountPerYear(state.currentYear, "income", state.allTransactions);
     },
     [loadTransactions.rejected.type]: (state) => {
       state.isLoading = false;
@@ -132,6 +150,10 @@ export const selectCurrentMonth = (state: RootState) => state.transactions.curre
 export const selectCurrentYear = (state: RootState) => state.transactions.currentYear;
 export const selectIsExpense = (state: RootState) => state.transactions.isExpense;
 export const selectIsTransfer = (state: RootState) => state.transactions.isTransfer;
+export const selectChartData = (state: RootState) => state.transactions.charData;
+export const selectMaxMonthExpensePerYear = (state: RootState) => state.transactions.maxMonthExpensePerYear;
+export const selectMaxMonthIncomePerYear = (state: RootState) => state.transactions.maxMonthIncomePerYear;
+export const selectChartToggle = (state: RootState) => state.transactions.chartToggle;
 
 export const selectFilteredTransactions = (state: RootState) => {
   const allTransactions = selectAllTransactionsState(state);
@@ -173,6 +195,7 @@ export const {
   updatingTransaction,
   setIsEditing,
   setIsExpense,
-  setIsTransfer
+  setIsTransfer,
+  setChartToggle
 } = transactionsSlice.actions;
 export default transactionsSlice.reducer;

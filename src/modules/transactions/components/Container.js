@@ -45,14 +45,8 @@ function TransactionsContainer() {
 
                 <Suspense fallback={<Loader />}>
                   <Chart />
-                </Suspense>
-                <Suspense fallback={<Loader />}>
                   <Balance />
-                </Suspense>
-                <Suspense fallback={<Loader />}>
                   {isTransactions ? <Search /> : null}
-                </Suspense>
-                <Suspense fallback={<Loader />}>
                 {/* <WithNavigation> */}
                   <TransactionsListContainer />
                 {/* </WithNavigation> */}
