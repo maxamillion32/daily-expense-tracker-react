@@ -1,6 +1,6 @@
 import React from "react";
 
-import {MONTH_EXPENSES} from "../../statistics/components/YearExpenses/constant";
+import {MONTH} from "./constant";
 
 export function formatDay (dateString) {
   const date = new Date(dateString);
@@ -88,7 +88,7 @@ export const isBudgetEqual = (a, b, year, month) => {
 
 export const getExpenses = (year, transactions, toggle) => {
   // console.log("getExpenses");
-  return MONTH_EXPENSES.map(item => {
+  return MONTH.map(item => {
     const month = item ? {name: item.toString().substr(0, 3)} : null;
     const prevYear = (+year-1).toString();
 

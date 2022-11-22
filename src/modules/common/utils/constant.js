@@ -1,4 +1,4 @@
-export const MONTH_EXPENSES = [
+export const MONTH = [
   "January", "February", "March",
   "April", "May", "June",
   "July", "August", "September",

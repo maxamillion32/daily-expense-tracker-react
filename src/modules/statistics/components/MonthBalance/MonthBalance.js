@@ -1,11 +1,10 @@
-import React, {useMemo, useState} from "react";
+import React, {useMemo} from "react";
 import {useSelector} from "react-redux";
 import classes from "./MonthBalance.module.css";
 import {
   selectCurrentMonth,
   selectCurrentYear, selectFilteredTransactions
 } from "../../../../reducers/transactions/transactions-slice";
-import Loader from "../../../common/components/Loader/Loader";
 import BalanceItem from "./Item/Item";
 import {formatMonth, formatYear} from "../../../common/utils/utils";
 
@@ -13,8 +12,7 @@ function WidgetsMonthBalance() {
   const getTransactions = useSelector(selectFilteredTransactions);
   const currentMonth = useSelector(selectCurrentMonth);
   const currentYear = useSelector(selectCurrentYear);
-
-  const [transactions] = useState(getTransactions);
+  const transactions = [...getTransactions];
 
   const filteredTransactions = useMemo(() => transactions
     .filter((transaction) => formatYear(transaction.date) === currentYear)
@@ -28,20 +26,13 @@ function WidgetsMonthBalance() {
     return !item.expense ? +item.sum : item = null;
   }).reduce((a, b) => a + b, 0).toFixed(2), [currentYear, currentMonth, filteredTransactions]);
 
-  const isLoader = filteredTransactions.length === 0 && sumExpenses === 0 && sumIncomes === 0;
-
   return (
     <section className={classes.MonthBalance}>
-      {isLoader ? <Loader /> : null}
-      {!isLoader
-        ? <>
-            <h2>{currentMonth}</h2>
-            <ul className={classes.List}>
-              <BalanceItem sum={sumIncomes} title={"incomes"} />
-              <BalanceItem sum={sumExpenses} title={"expenses"} />
-            </ul>
-          </>
-        : null}
+      <h2>{currentMonth}</h2>
+      <ul className={classes.List}>
+        <BalanceItem sum={sumIncomes} title={"incomes"} />
+        <BalanceItem sum={sumExpenses} title={"expenses"} />
+      </ul>
     </section>
   );
 }

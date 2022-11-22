@@ -4,6 +4,7 @@ import {selectSearchTerm} from "../search/search-slice";
 import {formatMonth, formatYear, getExpenses, getMaxAmountPerYear} from "../../modules/common/utils/utils";
 import {ITransaction} from "../../models/models";
 import {RootState} from "../../store/store";
+import {MONTH} from "../../modules/common/utils/constant";
 
 export const loadTransactions = createAsyncThunk(
   "transactions/loadData",
@@ -49,8 +50,9 @@ interface TransactionState {
   isTransfer: boolean,
   chartToggle: boolean,
   charData: any,
-  maxMonthExpensePerYear: any
-  maxMonthIncomePerYear: any
+  maxMonthExpensePerYear: any,
+  maxMonthIncomePerYear: any,
+  yearExpenses: any
 }
 
 const initialState: TransactionState = {
@@ -65,7 +67,8 @@ const initialState: TransactionState = {
   chartToggle: true,
   charData: [],
   maxMonthExpensePerYear: [],
-  maxMonthIncomePerYear: []
+  maxMonthIncomePerYear: [],
+  yearExpenses: []
 };
 
 export const transactionsSlice = createSlice({
@@ -126,6 +129,44 @@ export const transactionsSlice = createSlice({
       state.charData = getExpenses(state.currentYear, state.allTransactions, state.chartToggle);
       state.maxMonthExpensePerYear = getMaxAmountPerYear(state.currentYear, "expenses", state.allTransactions);
       state.maxMonthIncomePerYear = getMaxAmountPerYear(state.currentYear, "income", state.allTransactions);
+
+      const maxMonthTransaction = Math.max(state.maxMonthExpensePerYear, state.maxMonthIncomePerYear);
+
+      const getPercent = (year: string, month: string, type: string, transactions: any[], maxMonthTransaction: number) => {
+        const incomes = transactions
+          .filter((transaction) => formatYear(transaction.date) === year)
+          .filter((transaction) => formatMonth(transaction.date) === month)
+          .map((transaction) => (type === "expenses" ? transaction.expense : !transaction.expense)
+            ? +transaction.sum
+            : transaction = null)
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          .reduce((acc, sum) => acc + sum, 0);
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const percent = (incomes / maxMonthTransaction * 100);
+        return percent >= 100 ? percent : percent;
+      };
+      // eslint-disable-next-line @typescript-eslint/ban-types
+      const yearExpenses: { [x: string]: { expenses: number; incomes: number; }; }[] = [];
+      MONTH.map((month, index) => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        const result = {
+            month: month,
+            expenses: getPercent(state.currentYear, month, "expenses", state.allTransactions, maxMonthTransaction),
+            incomes: getPercent(state.currentYear, month, "incomes", state.allTransactions, maxMonthTransaction)
+        };
+
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        yearExpenses[index] = result;
+        // yearExpenses = Object.assign(yearExpenses, result);
+      });
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      state.yearExpenses = yearExpenses;
     },
     [loadTransactions.rejected.type]: (state) => {
       state.isLoading = false;
@@ -154,6 +195,7 @@ export const selectChartData = (state: RootState) => state.transactions.charData
 export const selectMaxMonthExpensePerYear = (state: RootState) => state.transactions.maxMonthExpensePerYear;
 export const selectMaxMonthIncomePerYear = (state: RootState) => state.transactions.maxMonthIncomePerYear;
 export const selectChartToggle = (state: RootState) => state.transactions.chartToggle;
+export const selectYearExpenses = (state: RootState) => state.transactions.yearExpenses;
 
 export const selectFilteredTransactions = (state: RootState) => {
   const allTransactions = selectAllTransactionsState(state);
