@@ -42,7 +42,7 @@ function WidgetsBudget() {
   const onEditClick = () => {
     dispatch(postBudget({updatedBudget, userId}));
     dispatch(loadBudgets(userId));
-    dispatch(loadTransactions(userId));
+    // dispatch(loadTransactions(userId));
   };
 
   const isBudget = (updatedBudget || "") && (updatedBudget[currentYear] || "") && (updatedBudget[currentYear][currentMonth] || "");
