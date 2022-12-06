@@ -4,14 +4,12 @@ import Layout from "./modules/common/hoc/Layout/Layout";
 import "./App.css";
 import ScrollToTop from "./modules/common/hooks/ScrollToTop/ScrollToTop";
 
-import {loadTransactions, selectIsLoading} from "./reducers/transactions/transactions-slice";
+import {loadTransactions} from "./reducers/transactions/transactions-slice";
 import {loadCategories} from "./reducers/categories/categories-slice";
 import {loadAccounts} from "./reducers/accounts/accounts-slice";
 import {loadBudgets} from "./reducers/budget/budget-slice";
 import {selectUserId} from "./reducers/user/user-slice";
 import {useAppDispatch, useAppSelector} from "./modules/common/hooks/ReduxTypedHooks/ReduxTypedHooks";
-import {useSelector} from "react-redux";
-import Loader from "./modules/common/components/Loader/Loader";
 
 function App() {
   const TransactionsContainer = lazy(() => import("./modules/transactions/components/Container"));
@@ -20,8 +18,6 @@ function App() {
 
   const dispatch = useAppDispatch();
   const userId = useAppSelector(selectUserId);
-
-  const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
     if (userId) {
@@ -34,7 +30,6 @@ function App() {
 
   return (
     <Layout>
-      {isLoading ? <Loader /> : null}
       <ScrollToTop />
         <Suspense fallback={""}>
           <Routes>

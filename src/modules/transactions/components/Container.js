@@ -2,7 +2,7 @@ import React, {useEffect, lazy, Suspense} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import classes from "./Container.module.css";
-import {selectAllTransactionsState} from "../../../reducers/transactions/transactions-slice";
+import {selectAllTransactionsState, selectIsLoading} from "../../../reducers/transactions/transactions-slice";
 import {setIsButtonShow} from "../../../reducers/navigation/navigation-slice";
 import {selectUserId} from "../../../reducers/user/user-slice";
 
@@ -12,14 +12,14 @@ import Welcome from "../../welcome/components/Welcome";
 import CreateFormPopup from "./Popup/Popup";
 // import WithNavigation from "../../common/hoc/WithNavigation/WithNavigation";
 
-// import TransactionsListContainer from "./List/Container";
-// import Balance from "./Balance/Balance";
-// import Chart from "./Chart/Chart";
+import TransactionsListContainer from "./List/Container";
+import Balance from "./Balance/Balance";
+import Chart from "./Chart/Chart";
 
 function TransactionsContainer() {
-  const TransactionsListContainer = lazy(() => import("./List/Container"));
-  const Balance = lazy(() => import("./Balance/Balance"));
-  const Chart = lazy(() => import("./Chart/Chart"));
+  // const TransactionsListContainer = lazy(() => import("./List/Container"));
+  // const Balance = lazy(() => import("./Balance/Balance"));
+  // const Chart = lazy(() => import("./Chart/Chart"));
 
   const getTransactions = useSelector(selectAllTransactionsState);
   const transactions = [...getTransactions];
@@ -27,6 +27,8 @@ function TransactionsContainer() {
   const dispatch = useDispatch();
 
   const isTransactions = transactions.length !== 0;
+
+  const isLoading = useSelector(selectIsLoading);
 
   useEffect(() => {
     dispatch(setIsButtonShow(true));
@@ -38,18 +40,18 @@ function TransactionsContainer() {
   return (
     <>
       {userId
-        ? <section className={classes.Container}>
-            <CreateFormPopup />
+        ? isLoading ? <Loader />
+          : <section className={classes.Container}>
+              <CreateFormPopup />
 
-            <Suspense fallback={<Loader />}>
-              <Chart />
-              <Balance />
-              {isTransactions ? <Search /> : null}
-            {/* <WithNavigation> */}
-              <TransactionsListContainer />
-            {/* </WithNavigation> */}
-            </Suspense>
-
+              {/*<Suspense fallback={""}>*/}
+                <Chart />
+                <Balance />
+                {isTransactions ? <Search /> : null}
+              {/* <WithNavigation> */}
+                <TransactionsListContainer />
+              {/* </WithNavigation> */}
+              {/*</Suspense>*/}
           </section>
         : <Welcome />
       }
