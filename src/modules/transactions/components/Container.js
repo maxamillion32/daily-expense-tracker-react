@@ -2,7 +2,7 @@ import React, {useEffect, lazy, Suspense} from "react";
 import {useSelector, useDispatch} from "react-redux";
 
 import classes from "./Container.module.css";
-import {selectAllTransactionsState, selectIsLoading} from "../../../reducers/transactions/transactions-slice";
+import {selectAllTransactionsState} from "../../../reducers/transactions/transactions-slice";
 import {setIsButtonShow} from "../../../reducers/navigation/navigation-slice";
 import {selectUserId} from "../../../reducers/user/user-slice";
 
@@ -24,7 +24,6 @@ function TransactionsContainer() {
   const getTransactions = useSelector(selectAllTransactionsState);
   const transactions = [...getTransactions];
   const userId = useSelector(selectUserId);
-  const isLoading = useSelector(selectIsLoading);
   const dispatch = useDispatch();
 
   const isTransactions = transactions.length !== 0;
@@ -39,20 +38,19 @@ function TransactionsContainer() {
   return (
     <>
       {userId
-        ? !isLoading ?
-            <section className={classes.Container}>
-                <CreateFormPopup />
+        ? <section className={classes.Container}>
+            <CreateFormPopup />
 
-                <Suspense fallback={<Loader />}>
-                  <Chart />
-                  <Balance />
-                  {isTransactions ? <Search /> : null}
-                {/* <WithNavigation> */}
-                  <TransactionsListContainer />
-                {/* </WithNavigation> */}
-                </Suspense>
+            <Suspense fallback={<Loader />}>
+              <Chart />
+              <Balance />
+              {isTransactions ? <Search /> : null}
+            {/* <WithNavigation> */}
+              <TransactionsListContainer />
+            {/* </WithNavigation> */}
+            </Suspense>
 
-              </section> : null
+          </section>
         : <Welcome />
       }
     </>
