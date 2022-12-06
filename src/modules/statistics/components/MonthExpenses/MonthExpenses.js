@@ -23,16 +23,16 @@ function WidgetsMonthExpenses() {
   const currentYear = useSelector(selectCurrentYear);
   const userId = useSelector(selectUserId);
 
-  const [transactions, setTransactions] = useState(getTransactions);
+  // const [transactions, setTransactions] = useState(getTransactions);
 
   const monthTransactions = useMemo(() => {
-    return transactions
+    return getTransactions
     .filter((transaction) => formatYear(transaction.date) === currentYear)
     .filter((transaction) => formatMonth(transaction.date) === currentMonth);
-  }, [transactions, currentYear, currentMonth]);
+  }, [getTransactions, currentYear, currentMonth]);
 
-  const expenses = useCallback(new Statistics(transactions, TRANSACTION_TYPE.EXPENSES, budget, monthTransactions, currentMonth, currentYear, userId, allCategories), [monthTransactions, currentYear, currentMonth]);
-  const incomes = useCallback(new Statistics(transactions, TRANSACTION_TYPE.INCOMES, budget, monthTransactions, currentMonth, currentYear, userId, allCategories), [monthTransactions, currentYear, currentMonth]);
+  const expenses = useCallback(new Statistics(getTransactions, TRANSACTION_TYPE.EXPENSES, budget, monthTransactions, currentMonth, currentYear, userId, allCategories), [monthTransactions, currentYear, currentMonth]);
+  const incomes = useCallback(new Statistics(getTransactions, TRANSACTION_TYPE.INCOMES, budget, monthTransactions, currentMonth, currentYear, userId, allCategories), [monthTransactions, currentYear, currentMonth]);
 
   return (
     <>
