@@ -130,43 +130,43 @@ export const transactionsSlice = createSlice({
       state.maxMonthExpensePerYear = getMaxAmountPerYear(state.currentYear, "expenses", state.allTransactions);
       state.maxMonthIncomePerYear = getMaxAmountPerYear(state.currentYear, "income", state.allTransactions);
 
-      const maxMonthTransaction = Math.max(state.maxMonthExpensePerYear, state.maxMonthIncomePerYear);
-
-      const getPercent = (year: string, month: string, type: string, transactions: any[], maxMonthTransaction: number) => {
-        const incomes = transactions
-          .filter((transaction) => formatYear(transaction.date) === year)
-          .filter((transaction) => formatMonth(transaction.date) === month)
-          .map((transaction) => (type === "expenses" ? transaction.expense : !transaction.expense)
-            ? +transaction.sum
-            : transaction = null)
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          .reduce((acc, sum) => acc + sum, 0);
-
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const percent = (incomes / maxMonthTransaction * 100);
-        return percent >= 100 ? percent : percent;
-      };
+      // const maxMonthTransaction = Math.max(state.maxMonthExpensePerYear, state.maxMonthIncomePerYear);
+      //
+      // const getPercent = (year: string, month: string, type: string, transactions: any[], maxMonthTransaction: number) => {
+      //   const incomes = transactions
+      //     .filter((transaction) => formatYear(transaction.date) === year)
+      //     .filter((transaction) => formatMonth(transaction.date) === month)
+      //     .map((transaction) => (type === "expenses" ? transaction.expense : !transaction.expense)
+      //       ? +transaction.sum
+      //       : transaction = null)
+      //     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //     // @ts-ignore
+      //     .reduce((acc, sum) => acc + sum, 0);
+      //
+      //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //   // @ts-ignore
+      //   const percent = (incomes / maxMonthTransaction * 100);
+      //   return percent >= 100 ? percent : percent;
+      // };
       // eslint-disable-next-line @typescript-eslint/ban-types
-      const yearExpenses: { [x: string]: { expenses: number; incomes: number; }; }[] = [];
-      MONTH.map((month, index) => {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const result = {
-            month: month,
-            expenses: getPercent(state.currentYear, month, "expenses", state.allTransactions, maxMonthTransaction),
-            incomes: getPercent(state.currentYear, month, "incomes", state.allTransactions, maxMonthTransaction)
-        };
-
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        yearExpenses[index] = result;
-        // yearExpenses = Object.assign(yearExpenses, result);
-      });
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      state.yearExpenses = yearExpenses;
+      // const yearExpenses: { [x: string]: { expenses: number; incomes: number; }; }[] = [];
+      // MONTH.map((month, index) => {
+      //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //   // @ts-ignore
+      //   const result = {
+      //       month: month,
+      //       expenses: getPercent(state.currentYear, month, "expenses", state.allTransactions, maxMonthTransaction),
+      //       incomes: getPercent(state.currentYear, month, "incomes", state.allTransactions, maxMonthTransaction)
+      //   };
+      //
+      //   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      //   // @ts-ignore
+      //   yearExpenses[index] = result;
+      //   // yearExpenses = Object.assign(yearExpenses, result);
+      // });
+      // // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // // @ts-ignore
+      // state.yearExpenses = yearExpenses;
     },
     [loadTransactions.rejected.type]: (state) => {
       state.isLoading = false;

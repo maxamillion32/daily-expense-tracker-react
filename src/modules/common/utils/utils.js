@@ -79,11 +79,11 @@ export const isBudgetEqual = (a, b, year, month) => {
     return true;
   }
 
-  if (!a[year] || !b[year]) {
-    return true;
-  }
+  // if (!a[year] || !b[year]) {
+  //   return true;
+  // }
 
-  return JSON.stringify(a[year][month]) === JSON.stringify(b[year][month]);
+  return JSON.stringify(a) === JSON.stringify(b);
 };
 
 export const getExpenses = (year, transactions, toggle) => {

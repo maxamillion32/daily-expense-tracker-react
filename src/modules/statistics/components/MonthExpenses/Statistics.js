@@ -124,7 +124,8 @@ export class Statistics {
   }
 
   percentCategory(balance, sum) {
-    let percent = (balance / sum * 100).toFixed(2);
+    let percent = +(balance / sum * 100).toFixed(2);
+    if (isNaN(percent)) return "0";
     return percent > 99.9 ? 100 : percent;
   }
 
