@@ -55,29 +55,28 @@ export class Statistics {
   }
 
   categories(type) {
-    const uniqueCategory = [...new Set(this.monthTransactions
-      .filter((transaction) => (
-        type === TRANSACTION_TYPE.EXPENSES
-          ? transaction.expense
-          : transaction.expense === null ? null : !transaction.expense
-      )
-        ? transaction.sum !== 0
-        : transaction = null)
-      .map(transaction => transaction.category.title))];
+    const uniqueCategory = [...this.allCategories
+      .filter((category) => {
+        const budget = this.isBudget && this.budget[this.currentYear][this.currentMonth][this.type][this._categoryId(category.title, type)];
+        return type === TRANSACTION_TYPE.EXPENSES
+          ? !category.incomes && budget
+          : category.incomes === null ? null : category.incomes && budget;
+      })
+      .map(category => category.title)];
 
     return uniqueCategory
       .map((category) => this.monthTransactions
         .map((transaction) => transaction.category.title === category
           ? (type === "expenses" ? transaction.expense : !transaction.expense)
-            ? transaction = {[category]: +transaction.sum}
-            : transaction = null
+            ? {[category]: +transaction.sum}
+            : null
           : null)
-        .filter((item) => item ? item : null)
+        .filter((item) => item ? item : false)
         .reduce((acc, sum) => {
           return {
             [category]: acc[category] + sum[category]
           };
-        }))
+        }, {[category]: 0}))
       .sort((a, b) => Object.values(b) - Object.values(a))
       .map((item) => Object.keys(item)).flat();
   }

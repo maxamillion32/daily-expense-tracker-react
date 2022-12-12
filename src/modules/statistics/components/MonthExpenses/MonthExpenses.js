@@ -23,8 +23,6 @@ function WidgetsMonthExpenses() {
   const currentYear = useSelector(selectCurrentYear);
   const userId = useSelector(selectUserId);
 
-  // const [transactions, setTransactions] = useState(getTransactions);
-
   const monthTransactions = useMemo(() => {
     return getTransactions
     .filter((transaction) => formatYear(transaction.date) === currentYear)
