@@ -1,4 +1,4 @@
-import React, {lazy, Suspense} from "react";
+import React from "react";
 
 import classes from "./Container.module.css";
 import Loader from "../../common/components/Loader/Loader";
@@ -11,24 +11,17 @@ import YearExpenses from "./YearExpenses/YearExpenses";
 import Budget from "./Budget/Budget";
 
 function StatisticsContainer() {
-  // const MonthBalance = lazy(() => import("./MonthBalance/MonthBalance"));
-  // const YearExpenses = lazy(() => import("./YearExpenses/YearExpenses"));
-  // const MonthExpenses = lazy(() => import("./MonthExpenses/MonthExpenses"));
-  // const Budget = lazy(() => import("./Budget/Budget"));
-
   const isLoading = useSelector(selectIsLoading);
 
   return (
     <section className={classes.Container}>
       {isLoading ? <Loader /> :
-        // <Suspense fallback={""} >
         <>
           <MonthBalance/>
           <YearExpenses/>
           <MonthExpenses/>
           <Budget/>
         </>
-        // </Suspense>
       }
     </section>
   );

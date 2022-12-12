@@ -55,7 +55,17 @@ export class Statistics {
   }
 
   categories(type) {
-    const uniqueCategory = [...this.allCategories
+    const transactionsCategories = [...new Set(this.monthTransactions
+      .filter((transaction) => (
+        type === TRANSACTION_TYPE.EXPENSES
+          ? transaction.expense
+          : transaction.expense === null ? null : !transaction.expense
+      )
+        ? transaction.sum !== 0
+        : transaction = null)
+      .map(transaction => transaction.category.title))];
+
+    const budgetCategories = [...this.allCategories
       .filter((category) => {
         const budget = this.isBudget && this.budget[this.currentYear][this.currentMonth][this.type][this._categoryId(category.title, type)];
         return type === TRANSACTION_TYPE.EXPENSES
@@ -64,7 +74,9 @@ export class Statistics {
       })
       .map(category => category.title)];
 
-    return uniqueCategory
+    const uniqueCategories = [...new Set([...transactionsCategories, ...budgetCategories])];
+
+    return uniqueCategories
       .map((category) => this.monthTransactions
         .map((transaction) => transaction.category.title === category
           ? (type === "expenses" ? transaction.expense : !transaction.expense)
